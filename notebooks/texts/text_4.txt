@@ -1,0 +1,19 @@
+hey, does your 3d printer's extruder have HDMI in? 
+no? WELL THERE'S PROBABLY A GOOD REASON FOR THAT https://t.co/ubqJjmJVlv
+HDMI is just being used because it's a cheap widely available cable.
+It's like all those PCI-e extenders that use USB 3.0 https://t.co/qosCxeONpZ
+they don't REALLY use USB 3.0, but USB 3.0 cables are cheap and easy to get and they have the right shielding properties.
+
+the only problem is that if you mix them up and plug PCIe-USB3.0 into USB3.0-USB3.0 you will probably explode both devices
+similarly, it would be a Very Bad idea to plug that HDMI cable from your 3D printer into a TV
+the worst part? the 3d printer includes a raspi running octoprint/octopi.
+meaning IT HAS ANOTHER HDMI PORT, BUT THIS ONE IS REAL HDMI https://t.co/3NHJyuO9pH
+better not mix those up or your 3d printer has just become an expensive 3d smoke generator
+still, could be worse.
+could be that PCI-e to PCI adapter that uses DVI cables for some reason
+https://t.co/35xDSmr7sf
+and at the end of the day, it's not the sex toy connector.
+you don't want to know what they use to plug in sex toys into fucking machines.
+
+but if you think you do, here's the thread that tells you what it is. I'm sorry.
+https://t.co/Hq1F7ay0jI

@@ -1,0 +1,43 @@
+this Tesla SUV ran into a traffic barrier at 70mph while on Autopilot. how could this happen? there are 3 major contributing causes, and they're *fascinating* https://t.co/IH78qovdfm
+before we dig into the causes, let's set the scene first: the southbound 101 freeway at the intersection of 85. there is a left exit ramp so commuter-lane traffic can get to the 85 southbound commuter lane. https://t.co/DmPk6M1q9z
+the Tesla was in the commuter lane, then departed that lane and headed into the strip of roadway (called the "gore") leading up to the median, crashing into the barrier. https://t.co/ysBB5qEGst
+the crash ripped off the front half of the Tesla, which started to burn. nearby drivers stopped to pull the driver out. https://t.co/FDD0oLiZwV
+the fire got worse as the emergency crews were having trouble putting it out (what with all those lithium batteries involved) and had to call Tesla for specific instructions. https://t.co/ywZMbnBEjG
+sadly, the driver died a few hours later of his injuries. his Tesla caught fire *again* a week later while in the impound facility and had to be extinguished again.
+let's take a look at the first cause. a *crash attenuator* is a mechanical device that compresses when hit in a head-on collision. it absorbs and dissipates energy from the crash to slow the vehicle to a stop. https://t.co/v1WbaSKJPW
+crash attenuators are really amazing devices that save lives all the time. the one installed here is the SCI Smart Cushion 100GM. 
+https://t.co/3RtbNqPKo9
+SCI has some really neat videos showing just how well they work. here is a head on collision at 60mph. if this were a real human, she would definitely sustain injuries, but she's likely going to survive.
+https://t.co/vTmfEHQOGe
+but something had gone wrong. the crash attenuator had already been set off 11 days before and had not been reset! CHP is supposed to let the CA DOT know, but they did not. instead, they put out some road cones and a sandwhich-board-style barricade that fell over later. https://t.co/mQqjujlvqR
+in addition, the road markings were ambigious and faded. i used to drive this route every day; this section of the freeway isn't in good shape. the road bed is torn up by heavy trucks; stripes are faded and haven't been painted in years. https://t.co/UJZLnOktlI
+in CA, left exits are not that common; many drivers have trouble navigating them if they're not familiar with the area. lots of people end up crossing over the solid white line at the last minute. in fact, this area almost looks like another lane! https://t.co/BZDqOg7VUY
+after the accident the CA DOT painted chevron markings to make it more obvious that this isn't a lane. still, every time i drive by, i see people cutting across this area. https://t.co/Zg8fDmxy9F
+turns out quite a few people ran into this particular attenuator. hopefully the newly-painted chevrons will help drivers avoid this danger. https://t.co/5PRBdkqKWl
+now lets look at the second cause: the driver was distracted by his cellphone. the NTSB investigators went through phone logs and found that he was playing a game and did not have his hands on the steering wheel for 6 seconds leading up to the crash. https://t.co/Ls6psGknqq
+the logs showed that he was turning this into a habit. must have been a pretty good game. https://t.co/aXmnmLCRE2
+the NTSB has been pushing hard for cellphone manufacturers to implement software lockouts to prevent people from using their phones while driving. statistics say that about 10% of drivers at any given moment are using their phone. 🤯
+the argument they use is that CA has already banned phone use while driving and has strictly enforced it, yet this does not deter people from doing it.
+the phone lockout alternative is a solvable problem. you need to 1) detect if the user is the driver or a passenger and 2) allow emergency use for drivers.
+
+tricky, but solvable.
+finally, the cause you've been waiting for. this is the Tesla Autopilot system. it's a level 2 self-driving system (see below chart). https://t.co/Fvgi8kGNRI
+level 2 systems are not fully self-driving, despite Tesla's marketing which implies the contrary. https://t.co/JrBNs9EpaJ
+in this case, the Autopilot system repeatedly got confused at this particular left exit. on several previous occasions, the driver noticed Autodrive steering the car to the left, tracking the wrong white line, before he corrected it manually. https://t.co/yMtrJj4fcy
+Autopilot is meant to be an augment to the driver--in other words, when Autopilot is on, the driver's role changes to become a more passive "supervisor" of the Autopilot system. this means that, although they're not controlling the vehicle, they still have to be vigilant.
+Tesla changed their firmware to try and improve the driver alerts, but the NTSB doesn't think it's enough. i agree with them, i mean, look at what crazy Tesla drivers do to disable the driver alerts, which some of them call "nanny nags." the attitude of these folks is terrifying. https://t.co/K9xwq9YdgU
+furthermore, the NTSB believes that, at a federal level, there is not enough regulation of self-driving cars, and that the National Highway Traffic Safety Administration is too hands-off in their regulatory approach.
+i don't think the NTSB went far enough.
+Level 2 vehicle automation is intrinsically unsafe because it puts the human driver in a disadvantaged state: *passive vigilance*. let's dig into this a bit more, since this has been the cause of numerous industrial accidents.
+ok fine, Tesla has disclaimers in the manual. if someone crashes while in Autopilot, it becomes their fault for not following the instructions, and not Autopilot's fault. but listen to this...
+imagine your job is to watch a TV screen all day. if, on the screen, you see a pink gorilla, you have to push a button within 3 seconds. this only happens about once a month. how well do you think you would do?🦍
+most people would fail miserably, and this job would cause them no end to misery! it is really hard to maintain focus on something that does not involve interaction. there are studies that show increased stress from jobs like this.
+there's not much in the literature about passive vigilance specifically as it applies to level 2 self-driving vehicles. you would think this is something that Tesla would be *very* interested in examining, but... https://t.co/2ZR9dWUtwz
+when you're driving, you're engaged in an active behavior and you'll be able to sustain that activity for a few hours. you'll still need breaks, for sure. but if you have to be passively vigilant, you will lose focus much faster. this system puts you, the human, at a disadvantage
+in other words, this system sets you up for failure!
+for more info, check out the NTSB report: https://t.co/U1a6mZ3yTa
+usual disclaimer: i'm not a Professional Engineer. this is not my area of expertise. i'm mostly summarizing the NTSB report. take everything with a grain of salt. salt is not provided, you must bring your own, etc.
+i was reading the "precrash activities" table in full engineering mode. had a little snarky smile when i saw "text message exchange with supervisor" from 7:22pm to 10:35pm.
+
+but then i saw "transport son to preschool" and that broke my heart. 💔😭 https://t.co/1Ow7mWMGIj
+someone pointed out the NTSB held a public board meeting about this crash investigation. https://t.co/eNjF36yPR3
