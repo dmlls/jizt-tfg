@@ -17,9 +17,8 @@
 
 """Text preprocessor class."""
 
-from nltk.tokenize import RegexpTokenizer
-from nltk import sent_tokenize
-from typing import Any, Dict, List, NamedTuple, Optional, Sequence, Tuple, Union
+from utils.tokenization import sentence_tokenize
+from typing import List, Optional, Union
 
 class TextPreprocessor:
     """Text preprocessing utilities.
@@ -42,17 +41,11 @@ class TextPreprocessor:
      
     """
     
-    def __init__(self):
-        # if next letter after period is lowercase, consider it part of the same sentence
-        # ex: "As we can see in Figure 1.1. the sentence will not be split."
-        self._tokenizer = RegexpTokenizer(r'[^.!?]+[.!?]+[^A-Z]*')
-        self._punctuation = ".,;:!?" # punctuation that shouldn't have a whitespace before
-    
     def preprocess(
         self,
         text: str,
         return_as_list: Optional[bool] = False
-    ) -> Union[List[str], str]:
+    ) -> Union[str, List[str]]:
         """Preprocess the text.
         
         Args:
@@ -67,37 +60,5 @@ class TextPreprocessor:
             Either a list containing the sentences of the preprocessed text, or
             the preprocessed text as a single string.
         """
-        
-        # if there's no final period, add it (this makes the assumption that the last
-        # sentence is not interrogative or exclamative, i.e., ends with '?' or '!')
-        if text[-1] != '.' and text[-1] != '?' and text[-1] != '!':
-            text += '.' 
-            
-        text = ' '.join(text.split()) # remove '\n', '\t', etc.
-        
-        # split sentences with self._tokenizer and ensure there's 1 whitespace at most
-        sentences = ' '.join(self._tokenizer.tokenize(text))
-        
-        # remove whitespaces before self._punctuation
-        for punct in self._punctuation:
-            sentences = sentences.replace(' ' + punct, punct)
-
-        sentences = sent_tokenize(sentences)
-
-        final_sentences = [sentences[0]]
-
-        for sent in sentences[1:]:
-            # if the previous sentence doesn't end with a '.', '!' or '?'
-            # we concatenate the current sentence to it
-            if final_sentences[-1][-1] != '.' and \
-                final_sentences[-1][-1] != '!' and \
-                final_sentences[-1][-1] != '?':
-                final_sentences[-1] += (' ' + sent)
-            # if the next sentence doesn't start with a letter or a number,
-            # we concatenate it to the previous
-            elif not sent[0].isalpha() and not sent[0].isdigit():
-                final_sentences[-1] += sent
-            else:
-                final_sentences.append(sent)
-
-        return final_sentences if return_as_list else ' '.join(final_sentences)
+        sentences = sentence_tokenize(text)
+        return sentences if return_as_list else ' '.join(sentences)

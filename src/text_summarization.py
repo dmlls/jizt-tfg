@@ -22,7 +22,7 @@ import logging
 from text_preprocessing import TextPreprocessor
 from nltk import word_tokenize, sent_tokenize
 from itertools import chain
-from typing import Any, Dict, List, NamedTuple, Optional, Sequence, Tuple, Union
+from typing import List, Optional, Union
 
 # deactivate warnings from the tokenizers
 logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
