@@ -68,8 +68,10 @@ class TextPreprocessor:
             the preprocessed text as a single string.
         """
         
-        if text[-1] != '.': # if there's not final period, add it so the regex matches the last sentence
-            text += '.'
+        # if there's no final period, add it (this makes the assumption that the last
+        # sentence is not interrogative or exclamative, i.e., ends with '?' or '!')
+        if text[-1] != '.' and text[-1] != '?' and text[-1] != '!':
+            text += '.' 
             
         text = ' '.join(text.split()) # remove '\n', '\t', etc.
         
