@@ -1,0 +1,57 @@
+In crypto, user-ownership can help drive network growth faster than any Web 2 growth hacking tricks
+
+But nailing an effective ownership distribution is one the biggest challenges (and opportunities) for teams.
+
+Best practices remain murky. 
+
+Can we fix that? Thread 👇
+Taking a step back, figuring out ownership distribution is an exercise in Mechanism Design: 
+
+"a field in economics and game theory that takes an objectives-first approach to designing economic mechanisms or incentives, toward desired objectives..."
+
+https://t.co/V5EsPlarqL
+Mechanism design assumes rational behavior, and is easiest to reason about when the designed-for objective can be verified deterministically.
+
+Miner rewards in BTC &amp; ETH are an example of mechanism design for verifiable work: PoW + transaction ordering.
+In DeFi and other crypto apps, the objectives that mechanisms are designed to reward are far more complex, the stakeholders more diverse, and the type type of work being done more subjective—making it difficult to verify.
+Each time an app runs an ownership distribution program—whether via ICO, liquidity mining, or treasury governance program—there is data to learn from and iterate on. 
+
+These learnings are happening faster and faster.
+To help accelerate this, we need a data driven approach to measuring whats worked and what hasn't. 
+
+KPIs to measure against.
+
+And from that, we can back out best practices that may be repeatable across projects, further accelerating iteration.
+Together with @eddylazzarin I put together a list of tradeoffs to measure against. 
+
+The plan is to back out data driven insights to help builders make better choices!
+So what trade-offs and metrics are interesting to measure when considering the effectiveness of ownership distribution?
+On tokens issuance:
+
+- Distribution speed: fast (YFI) vs. slow (COMP)
+- Decelerating vs. Linear vs. Accelerating
+- Retroactive vs. continuous
+- Reward based vs. sold
+On users engagement:
+
+- # Uniques
+- Median Capital Balance/Gini Coefficient
+- CAC vs. LTV (h/t @dberenzon)
+- Liquid vs. Vesting/LockedUp
+- Dividend vs. Burn vs. Pure Governance?
+- Flat vs. Delegate Governance
+On governance participation:
+
+- Continuous (MKR) vs. Discrete (UNI/COMP)
+- Mandatory (YFI) vs. Optional 
+- High Quorom (UNI) vs. Low (AAVE)
+- Foundation vs. On-Chain
+No doubt there are many more; would love to hear more ideas!
+
+I'd also like to plug a small Telegram group I'm starting for folks interested in doing this kind of rigorous analysis so we can help each other push the thinking faster. DM me for an invite!
+And finally, @VariantFund is hiring a Research Analyst to help with this kind of analysis, among other things.
+
+More on that here:
+
+https://t.co/Zr1TVvjUXe
+I'm confident we can get the learnings on this into high gear here. And when that happens, we'll be well on our way to seeing The Ownership Economy break out from L1s and DeFi to other exciting verticals that make the crypto economy more colorful.

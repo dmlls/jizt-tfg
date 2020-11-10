@@ -1,0 +1,146 @@
+This is a really neat video of a go-pro going through an electron beam irradiator. https://t.co/xHfqrmrFWG
+In the thread, @atomicthumbs explains why there's so many white dots on the sensor: x-rays are activating the CCD sensors directly, but one part I find really neat is the path the little carts take to the irradiator.
+
+it's a zig-zag, a sort of Z shape.
+and that's something I remember reading on @nyrath's (Great!) Atomic Rockets site:
+you build your reactor room with a Z-shaped entryway. 
+
+Why? Humans can go around corners. Radiation doesn't.
+which is something deeply amusing. 
+You can think about how this is an incredibly powerful deadly thing, and you've got to keep it safe, and you need to put things into it and take them out.
+what do you need, some complex airlock system with giant lead doors?
+nah, you just gotta make a zig-zag entryway. radiation doesn't curve, man. it goes in straight lines.
+anyway the real scary part is that blue glow right there. https://t.co/cmMUdmBxOB
+there's no blue bulbs in there, no blue LEDs.
+You're seeing a blue light because of cherenkov radiation, which is light created when charged particles pass through a medium going faster than the speed of light (in the medium).
+(the speed of light in a medium is slower than the speed of light in vacuum, which is the big one you can't break, so this isn't "faster than light" in the sci-fi sense)
+but this is the sort of light equivalent of a sonic boom, and the picture you always see of it is this one, from the Advanced Test Reactor (which is underwater) https://t.co/lVBe3u9Nyu
+and water is a good method for shielding... 
+so you could probably see that, and survive.
+but if you ever see cherenkov radiation IN THE AIR? 
+you better be seeing it through some very thick protective glass and/or closed circuit cameras, or you should work on your will.
+and write quickly.
+although @The_Flying_Bun points out that it might not be cherenkov radiation in this case. it might just be ionization. 
+
+either way, it's not something you should be seeing with your bare eyes.
+although the silliest part of the video is this red sign here. "restricted area, keep out"
+
+UM, NO, THAT IS NOT A GOOD WAY TO PHRASE THAT SIGN https://t.co/aZICOfpCvh
+you need to make a distinction between:
+"if you go in here, the manager will get mad and we might call the police" 
+and
+"if you go in here, you will die, and it will hurt the entire time you are dying"
+anyway go read the whole thread. as often happens with nuclear shit, it is a classic case of Things Ended Badly Because Someone Wanted To Save Money:
+https://t.co/JltkicKrdI
+BTW, if you read the description on youtube, the gopro we're seeing this from is inside a lead container, looking through leaded glass.
+that's the only reason it survived.
+you can see what happens to unshielded electronics, when that dosimeter on the left starts counting up and then the screen goes to static, and when it comes back from static, it's mysteriously completely dead.
+I'm pretty sure page 1 of the dosimeter's user guide says that if the dosimeter melts, it's time to run really fast
+BTW if you're wondering "that's neat. why the heck does this thing exist?" there's a couple of things that electron-beam irradiators get used for:
+1. polymer cross-linking
+2. recycling
+3. sterilization
+sterilization is the simplest to explain.
+DNA doesn't survive going through this process: 
+that's really handy because it means that anything living that goes through it doesn't stay that way for very long.
+so you can clear microbes and bacteria off medical devices and food packaging, as well as killing any insects hiding in bulk crops.
+the recycling and polymer cross-linking uses are neat because they're related, but in opposite ways.
+
+so when recycling you can use it to degrade the polymers: the break up into smaller chains, making them easier to process, without requiring harsh chemicals to do the same
+this sort of chain breaking (called chain scissioning, which is a fun word) is also used in manufacturing, not just recycling.
+like teflon is produced in a polymer form, but electron-beam processing turns it into short chains which can be ground into a powder.
+so along with chain-breaking, there's cross-linking. 
+you can process polymers through electron beams and they'll crosslink, becoming a thermoset polymer.
+Instead of a lot of long chains, you get a mesh of immobile, connected chains. https://t.co/aJ6zcggR1u
+thermoset polymers are, as the name pretty much implies, stable against temperature changes.
+so for example, your house might use PEX tubing.
+PEX is "cross-linked polyethylene" (it's a cute acronym, see? X instead of 'cross')
+electron beam processing isn't the only way to cross-link polyethylene, so yours may not have been made in this way, but in any case the cross-linking makes it more resilient to higher temperatures, making it a viable replacement for copper tubing in water systems
+and the neat thing about irradiation processing is that it doesn't require some chemical input or any nasty residue to dispose of afterwards.
+
+it's just electricity in, and the radiation doesn't hang around.
+BTW, I forgot something I should have mentioned, but @ryanfb reminded me of it. 
+So, radiation is invisible, right? you can't see it, except in cases like the aforementioned Cherenkov radiation.
+But some early experimenters in x-ray technology and astronauts reported seeing small flashes of light.
+How's that work? you need a lot of radiation to get Cherenkov in air, and these were in environments that weren't that intense.
+well guess what:
+you know where isn't air, but is a liquid that could have Cherenkov radiation create light in it?
+That'd be the Vitreous humour IN YOUR EYEBALLS. https://t.co/bycptjIdy4
+they were getting induced light emission by radiation going too fast INSIDE THEIR FUCKING HEAD. 
+
+try to sleep soundly after thinking about that for too long.
+and if that idea isn't scary enough, there's the case of Anatoli Bugorski.
+He was a researcher at a Soviet particle accelerator, and one of the safety mechanisms failed when he was checking it.
+and a 76 gigaelectronvolt proton beam hit him in the back of the head, going right through his brain, eye, and out his nose.
+he said he saw a flash "brighter than a thousand suns" but it didn't hurt.
+After telling people what happened, they took him to a hospital to observe him while he died, because that was clearly a fatal dose of radiation.
+but he didn't die. He's still alive, 42 years later.
+
+He lost hearing in his left ear, many of the nerves in his face were destroyed so the left side is paralyzed, and he has a form of epilepsy from the brain damage.
+He finished his PhD, and had a long career as a particle physicist, so it's not like he got an accidental lobotomy from STICKING HIS HEAD IN AN ACTIVE PARTICLE ACCELERATOR.
+I think one theory as to why he's not just a casualty of bad safety interlocks is that the beam, while very powerful, was very collimated. 
+So there was only a very thin path through his head that was affected.
+there's some fun diagrams of how the beam passed through him. and I'm wondering if that bald spot where it entered was a side effect of the testing or if the hair just fell out because of the proton beam. https://t.co/TUq5W1fgwl
+apparently when he was in the hospital after the event, half his face swelled up and his skin started peeling off.
+So I don't blame the doctors for assuming he was on the way to being Very Dead.
+ANYWAY the moral of the story is, as always, that radiation is very useful and interesting and dear god is it not to be fucked with. 
+like a lot of Really Powerful Things it can mess you up pretty bad if it's not handled properly and safely.
+so do not stick your head into a running particle accelerator, no matter how many safetly interlocks there are supposed to be. 
+and like the @atomicthumbs thread talks about, don't reach under the electron beam's business end if you enjoy having fingers.
+and I'm not gonna talk about the Goiânia accident, but if you ever find anything that seems to glow and you don't know why, DON'T FUCK WITH IT.
+BTW, fun fact about that Z-path that's used to keep the radiation from spilling out:
+those walls are made of thick concrete, but importantly, not reinforced concrete.
+
+reinforced concrete has embedded steel to make it stronger.
+But you don't want that near a radiation source because of a fun thing called bremsstrahlung radiation.
+basically, charged particles slow down as they're deflected by other particles, and the kinetic energy from the deacceleration is turned into radiation. Depending on the speeds, this might just be harmless light, or it might be x-rays.
+Atomic Rockets talks about this too: it's why, if you're building a space warship, you have two layers of armor: a light armor layer on the outside and a dense armor layer in the inside. 
+https://t.co/XWUmF6OQhp
+otherwise you get bremsstrahlung effects in your armor:
+charged particles hit the dense material and make it emit radiation itself.
+You could survive the initial impact of the cosmic rays or enemy particle beams but then die because your ship's own hull just x-ray'd you.
+so when you're building concrete structures that are exposed to radiation, it's important that they aren't reinforced, or the dense steel will absorb the radiation and re-emit it.
+now at normal levels this is unlikely to be dangerous: it's not like it's emitting enough to make the radiation effectively pass through the wall.
+but the concrete is being damaged by the radiation, albeit slowly, and using reinforced concrete will increase the damage.
+that's at normal radiation levels, though.
+There were some studies into atomic bombing of Nagasaki, and it's believed that some people survived the initial radiation, shockwave, and fireball... but they were in reinforced concrete buildings which then irradiated them
+this is one of the reasons why Operation Crossroads had so many boats near the explosion site. https://t.co/kMoY6oGrVy
+The navy was trying to figure out how much Bremsstrahlung  radiation would increase the radiation. 
+
+Because while standing on a big destroyer made of steel might be a good place to be during a conventional war, it turns out it's a really bad idea if nukes are involved.
+so in that picture, many of those boats are full of pigs, goats, mice, rats, and grains.
+That was for the Able test, then the Baker test just used pigs and rats. The Baker test was the first nuclear test that wasn't "clean", and it caused a thick cloud of radioactive fission products to contaminate everything for several miles around.
+So they tried washing down the battleships from fireboats, then after two weeks they could send people onto them to try to clean off the decks https://t.co/9aofO2zp5o
+but it didn't work. they reduced the radiation on the ships by half, which was still too dangerous to board it for more than very short trips. 
+That one with the soaping was the Prinz Eugen, which ended up sinking because they couldn't board it to fix the leaks. https://t.co/LvNiPSZtc2
+anyway I already did a thread on the Operation Crossroad tests. 
+They're why we call that two-piece swimsuit a "bikini", by the way. 
+
+https://t.co/r69qYs0nc1
+and I gotta go get lunchfast so I'm gonna stop now.
+I put this thread on my threadcollection under the title "Electron Beam Irradiators, Radiation Doesn't ZigZag, Pigs With Nukes, and Keep Your Head Out Of Particle Accelerators"
+https://t.co/efIC5QvpGs
+as always, if you enjoy this sort of thing, feel free to send me a dollar or two on ko-fi:
+https://t.co/fxSZjxyBm0
+or set up a monthly donation on Patreon. Thanks!
+https://t.co/Sd9bKPHLf2
+also, yes, "Bremsstrahlung radiation" is redundant. It's like "ATM Machine"
+"bremsen" is "to brake" and "strahlung" is "radiation".
+So it's "braking radiation", which makes sense because it's the radiation caused by charged particles slowing down.
+it's just a cross-language version of an "atm machine" sort of effect. 
+Technically it should be called just "bremsstrahlung" not "bremsstrahlung radiation" but I went for the more redundant but hopefully clearer term.
+a tangent but I want to know if there's a term for this sort of thing, and specifically the related thing I've noticed in songs:
+when you rhyme two words together but it turns out they're just the same word in different languages.
+and my go-to example of this is, of course, the Epic Rap Battles of History episode of: Freddy Krueger vs. Wolverine. 
+https://t.co/1HPbhJEBA4
+specifically:
+"What the fuck is a wolverine? Some kind of an angry beaver?
+I was more intimidated by a tiny Canadian the first time I saw Justin Bieber!"
+Because "Bieber" is German for "beaver" (usually spelled "Biber" in modern German, I think)
+So they're effectively rhyming "beaver" with "beaver", just doing it in two languages.
+anyway I recognized this one right away because before I changed my name, my last name also meant "beaver".
+I just had a weird polish-river-by-way-of-germany version of it, which no one could spell or pronounce.
+so thankfully I have that excuse for why I changed my name. 
+I didn't want a name no one could spell or pronounce, not because people were confusing me for Justin Beiber.
+
+(mine was spelled and pronounced differently anyway)

@@ -1,0 +1,56 @@
+The nitazoxanide randomized study advertised as a gamechanger by the Brazilian Ministry of Health is out as a preprint.
+I have to say I am really disappointed.
+
+Here is why
+
+https://t.co/GIa37Yd3sH
+TL/DR:
+Not really blinded
+Negative primary and secondary outcomes
+Did not respect intention to treat
+Large loss to follow up for a 2 week study (20%) (primary outcome 5 days
+Inconsistent primary outcome fidings
+No multiple comparison adjustment for 30  2a outcomes
+The study is a "double-blind placebo controlled trial" of 392 outpatints with COVID-19 randomized to nitazoxanide or placebo.
+Primary outcomes according to https://t.co/pFNxEJ8MGY (NCT04552483) are Days with fever, cough and asthenia (3 separate ones)
+Secondary outcomes: 30!!!
+TL/DR: Conclusion: The drug did not reduce symptoms in mild COVID-19 treated early. 
+
+CONCLUSION: No benefit in primary outcomes.
+
+I wish even this could be concluded. 
+Issues:
+1. Authors say drug and placebo were colored matched. Yet, anyone who has used nitazoxinide knows your urine becomes green. How did the authors blind that? As reported in the manuscript, urine color was reported as different.
+
+Thus: NOT REALLY BLINDED.
+2. Loss to follow up is incorrect. They excluded:
+a. discontinued intervention (violating intention to treat)
+b. adverse event (also violating ITT)
+c. Hospitalized (excluding those that get worse, post randomization bias)
+
+All randomized have to be in until the end. https://t.co/rksxY5kD2X
+Also from the figure, the start with 475 and end with 392. 20% loss to follow up on a 2 week study, how can it be so hard to follow up?
+***Change in primary outcomes*** 
+
+In protocol the outcomes are days of symptoms until d8. Authors report resolution at d5.
+From continuous 8d to binary at 5 or 7d. 
+Continuous has more power. Why do it binary?
+There is also issues between d5 and 1 week  f/u:
+At d5 70% drug were symptom free. at d7 78% were symptom free
+At d5 74% placebo were symptom free, at d7 57%.
+So 8% of drug improved in the last 2 days, but 17% in placebo got worse d5 &gt;&gt; d7 ??
+See figure and image such changes. https://t.co/5EivB86Ezm
+Patients had to have up to 3 days of symptoms to be included, but median day to first dose 5 (IQR 4 - 5). That means 75% were treated after 4 days.
+If 50% start treatment at d5 is it really early treatment if most improve by d7?
+*** PROTOCOL NOT RESPECTED ***
+Secondary outcomes, several are not reported such as all on day 3. Also no CRP% , MCP-1 at all.
+According to protocol biomarkers were d3 and d8, they only report d5 (??).
+Where is the other measurement and why not d8 and not update at clinicaltrials
+What about a post hoc correction for multiple comparisons given proposed 30 secondary outcomes and 15 reported (did not include the primary)?
+With Bonferroni the corrected p values are 0.09 for viral load and 0.135 for PCR status.
+
+CONCLUSION: No difference in secondary outcomes.
+Not significant but worth noting that nitazoxanide group had 2 patients in the ICU vs. 0 in placebo. Unexpected given low risk population
+There are a few other issues, but I think those major issues illustrate strong need to correct protocol, rerun the analysis and present results more clearly.
+Quick add on, they also failed to adjust for baseline viral levels. This needs a repeated measures ANOVA, a GEE or a mixed effects models, running a Mann-Whitney is incorrect.
+The baseline difference (0,4) is almost the same as post (0.5), this needs to be accounted in the model.

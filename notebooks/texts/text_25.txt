@@ -1,0 +1,194 @@
+look I may be biased as someone who has historically done a lot of webscraping (I calculated at one time that I was downloading around 4 gigabytes of JUST HTML every day), but... https://t.co/hc98WYxNHZ
+I think we should have both the death penalty and a special layer of hell for programmers who build sites that return 404/403s/etc as 200. 
+
+with summary execution if they do it with HTML.
+you have no idea how many times I've had to write code to parse HTML to find out if I got a 404 or not, because sometimes the only way to tell is to see if there's a &lt;div class="message"&gt;File Not Found&lt;/div&gt; in 40k of tag soup
+I even had one fun site back in the rapidshare era where it didn't provide 404s if the file had been deleted, but gave you a message instead, and for extra fun, it used the language of the original uploader.
+so if I uploaded the file and let it expire, it'd be &lt;div&gt;File Expired&lt;/div&gt; but someone else might upload it and the 404 page would now say &lt;div&gt;fichier expiré&lt;/div&gt; 
+
+AND THAT'S WHY I DRINK
+BTW special bonus fuck you points go to the old tumblr API which would sometimes time out while returning XML, but since it was generating XML on the fly using PHP, what you'd get was like 100k of XML and then suddenly WHOOPS IT'S HTML NOW AND IT'S TELLING YOU IT 500 ERRORED
+honestly I could write a whole book on web API sins and just use examples from tumblr
+things like "don't let users inject arbitrary binary into your XML stream"
+
+You'd get a big XML document, character encoding utf-8, but since user profiles were not unicode, just binary, they'd be inserted as-is.
+so the document would be UTF-8 and then WHOOPS this element is encoded with shift-JIS.
+
+is there any metadata to explain that? is it escaped in any way? No, fuck you.
+Then they decided to rewrite their system to always store profiles as UTF-8. So when you submit your shift-JIS profile, it gets converted to UTF-8, and stored.
+Great!
+
+EXCEPT...
+their database wasn't UTF-8.
+Their front end was, but not the database.
+Why's that a problem? Well, they were inserting UTF-8 data into the database, and letting it silently truncate the text to enforce max-length restrictions.
+and you may already have realized the horror of this:
+it was silently truncating the binary output of UTF-8 encoding, not the UTF-8 characters.
+UTF-8 characters are encoded in a variable length encoding. So if you're unlucky, what'll happen is that you'll get a 
+UTF-8 start byte, then no end bytes because it got truncated.
+but whatever, you can just substitute an error-handling decoder, right? just replace any invalid characters with ? or � or something?
+
+NOPE!
+because your decoder will see the incomplete utf-8 start characters, immediately followed by &lt;/profile&gt;, and it has no way to know that the &lt; isn't  part of the corrupted utf-8 character.
+
+So you end up with ��/profile&gt;
+and GREAT now your XML is invalid and unparseable
+the best part of tumblr is that it had several bugs (or design errors) which were known and were being taken advantage of by the community. 
+
+People actually knew how tumblr was broken and therefore would intentionally use that brokenness.
+for example, tumblr, like twitter, is one of those sites where you can change your display name and username at any time.
+And to keep everyone who follows you from getting completely confused, they provide a forward redirect from the old name to the new one
+the only problem is that they only do this from the last name you changed from to the next one.
+So if you're named "Foo", and change your name to "Bar", then change it to "Qux", there's a link from Bar-&gt;Qux, but no link from Foo to Bar or Qux.
+So it was common for people to have a dummy name in between their old and new names.
+So instead of going from "StarTrekFan47" to "IHeartLukeSkywalker", you'd go StarTrekFan47 -&gt; askjdhfrakjs -&gt; IHeartLukeSkywalker
+because on tumblr you can stop people from following you but they could always just read your blog without following you, unless you hide from them by losing them in a name change.
+Here's the problem: if you're following someone, it automatically tracks name changes.
+But say you're following 200 people, and one day, 4 of them change names.
+
+How do you know which 4 new names equal which 4 old names?
+you can rule out 196 people because their names haven't changed, and if they only changed once you can have the redirect tell you, but if they double-changed there's no redirection. You've lost that info.
+the trick I implemented back when I was actively scraping tumblr (for a thing called NewDash, an alternative interface to the site) was to look at their old posts.
+If they went Foo-&gt;Bar-&gt;Baz, you could look at what posts you knew Foo had posted, and see if those same posts existed as posts on Baz.
+If they were the same person, they would exist... assuming they didn't delete them. Tumblr users like to delete old posts a lot, btw.
+the biggest problem with this method is that it did not scale, at all.
+You're following 200 people at someone new just appeared. 
+Now either the user just followed someone new, or one of those 200 people just renamed themselves. So you have to check all 200.
+it was ever so slightly a nightmare.
+the other really fun problem was DNS, specifically invalid DNS, and how users would intentionally abuse it.
+so tumblr has a fun side-effect of subdomains where unlike twitter's twitter.egg/foone, you get foone.tumblr.egg
+
+so your usernames have to be valid DNS names, right? right. 
+so they fucked up that restriction.
+but the tricky thing is that they didn't notice, because it still worked. 
+
+So, here's a question, is a dash allowed in a domain name?
+yes, obviously.
+Penny Arcade, for example, is at:
+https://t.co/xc0dDMPuZY
+but there's a restriction on dashes:
+you can't have them at the beginning or end of a domain name part.
+So while foo-bar.tumblr.egg is fine, foobar-.tumblr.egg is not. that's invalid.
+and they screwed that up, and allowed those usernames. 
+
+But who cares? so some users can mess up their own blog and make it unreadable, what's the big deal?
+well, enter Microsoft.
+They recognized that dashes are not allowed at the beginning and end of any domain name part, so THEIR DNS RESOLVER STRIPS THEM OFF
+this means that if you try to go to foobar-.tumblr.egg on windows, windows goes "foobar-? that's invalid. I'll just do foobar, without the dash" and resolves that instead.
+and the fun thing about tumblr (at the time, at least. may not be the case anymore) is that all those subdomains for user blogs? they all resolve to the same IP.
+So while your browser was looking up the name for the WRONG BLOG, it would get the same IP anyway, and it'd work
+tumblr knew which blog you wanted because your browser would send a "Host: foobar-.tumblr.egg" header when requesting it. So you got the right one, and everything was fine.
+EXCEPT... it's not actually fine. that domain name is invalid, and shouldn't be resolvable.
+
+And you know what OSes did properly implement DNS resolution and refused to resolve that invalid hostname?
+
+ALL THE ONES NOT MADE BY MICROSOFT, THAT'S WHO
+I ended up having to ship a hacked socket library with my program because it had to intercept all DNS requests and internally rewrite them because it was running on linux and on linux those domains do not resolve.
+and I know of at least once case where a user was doing this on purpose.
+They were a highschool student who knew their teachers all used OS X, so they made sure their blog was called like banana-sandwiches-.tumblr.egg so that their teachers couldn't see it.
+anyway I yelled at tumblr and got them to realize this mistake (and several of the others: I filed a lot of bugs during that project) and they fixed, uh, half of it.
+they made the make-new-tumblr and change-tumblr-name pages no longer accept invalid dashed domains.
+
+but what about everyone who already had one? they left them alone. they could still have them today.
+and part of the reason is that despite windows thinking foobar-.tumlr.egg and foobar.tumblr.egg were the same, the tumblr interface itself certainly didn't, so there could be users named both "foobar-" and "foobar" and they're distinct.
+
+so they couldn't go back and rename all the invalid users: they'd collide with other users!
+I haven't checked recently (partially because newdash is long dead and also I'm not tumblring from linux anymore) but it's entirely possible there are still dashed users.
+there will always be dashed users, just like how there are a few twitter users who have animated GIFs as avatars, despite that having been blocked since like, what, 2010?
+anyway the tumblr API was so clusterfucked that instead of fixing it, they eventually just replaced it. 
+the new API is a completely different JSON one, instead of their previous restful XML thing.
+(which is part of what killed newdash: a lot of shortcuts I took when building it involved just storing the tumblr XML as-is, and always interpreting it on the fly as I rendered it. Replacing it with a completely unrelated JSON representation made continuing that impossible)
+the other fun thing about trying to build a replacement dash is that their API covered about 90% of the things you'd want to do, with the final 10% being stuff you had to emulate on the HTML.
+and the authentication system for API and for HTML is completely different, so you had to maintain two separate authenticated sessions and it was easy to get them out of sync, where you could successfully log into one but not the other.
+and I can't remember the exact reason it came up, but one of the stupidest ways I had to parse HTML for newdash was to extract a blog username out of javascript.
+The trick was that if you opened up the reblog page, it gave you a form, which contained some JS to check that you weren't reblogging it back to the same blog it came from.
+so there was a JS handler that looked like:
+alert("You can't reblog this to foobar-, that's where it came from!")
+and in some condition (maybe if the original blog had been deleted or renamed?) that was the only way to extract get the username of the post.
+there wasn't an API, there wasn't an HTML attribute, there wasn't even a nice JS variable you could parse.
+
+Nope, you had to regex it out of an error message in the HTML
+It's not a tumblr thing, but that silliness reminds me of one of my other favorite things I had to do back in the rapidshare days:
+extracting file sizes.
+so my site had to represent file sizes of a bunch of files on different 1-click-hosting sites like rapidshare and megaupload, but how do I get the file sizes? I can't download the files to find out, I don't have access.
+but the page will tell me, right?
+well, a lot of them would tell you sizes like "12.3 mb" or "14kb" and the amount of precision you got varied a LOT.
+Like I think megaupload only gave you integer megabytes after 20mb
+but the really fun thing is that I supported like 20 different sites... and whether those were 1024 byte kilobytes or 1000 byte kilobytes varied from site to site.
+I even found one site once that used 1024 byte kilobytes but 1,000,000 byte megabytes.
+so I had to have a special metadata collection in the software to tell which sites used which sort of kilobytes/kibibytes and megabytes/mebibytes so that it could consistently (as much as possible, at least) provide file sizes
+the reason that was important to do was because sometimes the same file would be uploaded to multiple sites and users might decide which one to download based on the file size.
+and sites confusing them might mean that one file was listed as a flat "16.0 mb" on one site, and "16.7 mb" on the other site, but the files are identical.
+this file size estimation REALLY got exciting when I was implementing the zip-peak functionality.
+See, I got a premium account for some of these sites, and zip files have their contents listed at the end of the file.
+so I thought I could set up that premium account and then just go through every ZIP file listed and download the last 64kb of so, and then use a modified zip implementation to extract their contents.
+that should be easily doable because HTTP includes a Range header which you can send to only download part of the file (this is how download resuming works)
+and I knew Rapidshare supported it because one of their big selling points was that if you got premium, you could resume downloads
+but "supported it" and "supported it correctly" are two entirely different things.
+See it seems rather than use some kind of normal web server to let you download files when you have premium access, it went through a PHP script. 
+that wouldn't normally support Range, but...
+they implemented it themselves!
+
+very badly!
+so range can be used in a couple ways. You can say "give me everything after byte N", "give me bytes between N and M", or "give me the last N bytes"
+
+they really only implemented one of those.
+they implemented the first one, because that's the only one you need for resuming files.
+
+but for extra fun, they implemented the second and third ones by making them work the same as the first one
+so if you had a 2000 byte file and asked for bytes 500-, you got the last 1500 bytes.
+you got the same thing if you asked for bytes 500-1000, or if you asked for the last 500 bytes. fuck you, it's always an offset.
+but that lack of "last 64kb" as an option meant I couldn't just tell rapidshare to give me the last 64k of every file... unless I estimated what that was from their inaccurate file sizes and turned it into an offset!
+so I had to do a regular metadata scrape on the site, pulling the file size out of the HTML, and I'd get something like "64.2  mb".
+
+I'd look in the metadata table, and see that they use 1000000 byte mb, so that's approximately 64,200,000 bytes.
+I know I want the last 64kb, so I calculate out an offset of 64,134,464 bytes, and request that.
+(I think I fudged it harder though to account for the lack of accuracy and rounding)
+so instead of cleanly getting the last 64kb, I'd get something like the last 60-200kb, and I just had to write my zip parser to handle that.
+it was one of those projects that was really neat, really useful to the users, and it's really amazing that I was able to get it to work... but I'm pretty sure my hair got like 5% greyer just by completing it.
+just a random tangent but one of my favorite clusterfucks of paginated websites that I keep running into is ones that don't do a good job of indicating how many pages there are AND implement the page limiting by clamping it to the max page.
+so you can't just see a URL like gallery?page=1 and keep incrementing it until you get a 404, because if the gallery only has 5 pages and you request page 6? you just get 5 instead.
+so that naïve scraper would just request forever.
+instead you have to check the HTML to see what pages it says there are... or in some cases, you have to check that the last two pages aren't identical.
+which reminds me of a fun setting on wakaba:
+so wakaba is an imageboard system similar to the futaba system used by 2ch/2chan, which 4chan's original code is based on.
+Wakaba used to be very common for imageboards, because it's public domain code.
+the way it works is that viewing the site requires no dynamic page generation: the site is just a bunch of static HTML pages and JPEGs. 
+The way it works is that when a user makes a new post, it rewrites those HTML pages on disk to account for the changes.
+so you have a front page, and a couple pages back of older threads. Here's the problem: it never deletes the page-files, just thread files.
+
+And wakaba instances can be configured to prune old posts in two ways: by threads, or by posts.
+when configured by threads, there'll always be the same number of pages.
+if your max thread count is 40, you have a front page with 10 threads, then 3 more pages with 10 threads each.
+but if it's by posts, it's possible that a single thread could grow so large that it triggers old threads to be pruned... and this can result in zombie pages.
+say you have a board which has 40 threads and a 40 post limit, so you have 4 pages in total.
+Users go to a thread on the front page and fill it with 10 posts.
+Now 10 threads are pruned off the back end, and your board now only has 30 threads in total... which fit into 3 pages
+so before you had pages 0.html, 1.html, 2.html, 3.html, but now that you only have 30 threads, it helpfully goes and writes out 0.html, 1.html, 2.html, and it doesn't know or care about 3.html
+
+but the file is still there on the disk. and it's still accessible.
+
+so a fun side-effect of using a naïve "just increment the number" scraper on a wakaba board is that you would often find that you'd hit a 404 on some page (say, 5.html), but it turned out that all the links you found from the page before that (4.html) lead nowhere
+because it's a zombie page with links to threads that got deleted, full of references to thumbnails that got deleted and images that got deleted.
+"but foone, why didn't you just use the API instead of scraping the HTML?"
+
+1. WHAT API
+anyway the fun thing about how wakaba functions is that this isn't the only zombie state a board could be in.
+It's easy to get it in a state where your HTML files can't be rewritten because of permissions, or new posts can't be made because of database failure
+but unlike a fully dynamic site, those errors don't result in the site being down. They just result it in being read-only, but in a way that you can't tell until you try to post to it.
+BTW, if you care about security, you should also realize that this system means that the file wakaba .pl has to rewrite the files 1.html that's in the same directory, meaning it has to have write permissions to that directory.
+fortunately the wakaba code was written in highly secure perl that no one understands and involves a complicated turing-complete HTML templating language evaluated on the fly so the possibility of security vulnerabilities is minimal.
+the other fun thing about this design is a great gotcha a friend of mine ran into when I was helping her run her imageboard:
+so, spam. wakaba spam is bad, and we didn't like it, obviously. so we stuck a recaptcha on the post page
+but wait, the captcha is on the post page. the post pages are not dynamically generated, they're part of the static HTML of the index pages or thread pages.
+So our captcha include would be generated and then embedded in the HTML, like it was written in stone
+so we implemented it, tested it, and it seemed to work fine!
+then a day later users suddenly couldn't post. The captcha tokens had expired
+because the captcha system expects you're using dynamically generated webpages and it's showing the captchas to the user immediately, and it just needs to be valid long enough for the user to finish typing their post
+and the idea that we might generate a captcha and only have it filled out a day later? that didn't fly.
+so we had to replace it with some JS-based thing, where the pages didn't include a captcha, they just had a placeholder and it would dynamically fetch one on every page load.
+anyway this concludes foone's angry web rant for today. please, please, PLEASE don't return error messages as 200 errors. I can live with all the other bullshit that happens on the web, but that never happening again is the #1 thing that would improve my life.
+and if you've done that before and want to say sorry (or you just want to support me ranting about things), my ko-fi is here, feel free to send me a dollar or two:
+https://t.co/fxSZjxyBm0
+or sign up for a monthly donation on my patreon:
+https://t.co/Sd9bKPHLf2
