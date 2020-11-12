@@ -17,10 +17,10 @@
 
 """Tokenization utilities."""
 
-__version__ = '0.1'
+__version__ = '0.2'
 
 from nltk.tokenize import RegexpTokenizer
-from nltk import sent_tokenize
+from blingfire import text_to_sentences
 from typing import List, Optional
 
 def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) -> List[str]:
@@ -54,7 +54,7 @@ def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) ->
     if tokenizer is None:
         # if next letter after period is lowercase, consider it part of the same sentence
         # ex: "As we can see in Figure 1.1. the sentence will not be split."
-        tokenizer = RegexpTokenizer(r'[^.!?]+[.!?]+[^A-Z]*')
+        tokenizer = RegexpTokenizer(r'[^.!?]+(?:(?:[A-Z][.])+|[.!?]+)+[^A-Z]*')
 
     # if there's no final period, add it (this makes the assumption that the last
     # sentence is not interrogative or exclamative, i.e., ends with '?' or '!')
@@ -70,7 +70,7 @@ def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) ->
     for punct in PUNCT_NO_PREV_WHITESPACE:
         sentences = sentences.replace(' ' + punct, punct)
 
-    sentences = sent_tokenize(sentences)
+    sentences = text_to_sentences(sentences).split('\n')
 
     final_sentences = [sentences[0]]
 
