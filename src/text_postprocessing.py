@@ -17,6 +17,8 @@
 
 """Text post-processor class."""
 
+__version__ = '0.1'
+
 from utils.tokenization import sentence_tokenize
 from truecase import get_true_case
 

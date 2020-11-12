@@ -17,6 +17,8 @@
 
 """Tokenization class with support for Hugging Face pretrained models."""
 
+__version__ = '0.1'
+
 import torch
 import logging
 from text_preprocessing import TextPreprocessor

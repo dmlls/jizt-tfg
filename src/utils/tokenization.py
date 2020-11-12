@@ -17,6 +17,8 @@
 
 """Tokenization utilities."""
 
+__version__ = '0.1'
+
 from nltk.tokenize import RegexpTokenizer
 from nltk import sent_tokenize
 from typing import List, Optional

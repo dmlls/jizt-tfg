@@ -17,6 +17,8 @@
 
 """Text preprocessor class."""
 
+__version__ = '0.1'
+
 from utils.tokenization import sentence_tokenize
 from typing import List, Optional, Union
 
