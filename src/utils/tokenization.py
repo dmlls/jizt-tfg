@@ -64,7 +64,7 @@ def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) ->
     text = ' '.join(text.split()) # remove '\n', '\t', etc.
     
     # split sentences with the regexp and ensure there's 1 whitespace at most
-    sentences = ' '.join(tokenizer.tokenize(text))
+    sentences = ' '.join(tokenizer.tokenize(text)).replace('  ', ' ')
     
     # remove whitespaces before PUNCT_WITHOUT_PREV_WHITESPACE
     for punct in PUNCT_NO_PREV_WHITESPACE:
