@@ -42,9 +42,10 @@ class TextPreprocessor:
         be true.'], respectively.
      
     """
-    
+
+    @classmethod 
     def preprocess(
-        self,
+        cls,
         text: str,
         return_as_list: Optional[bool] = False
     ) -> Union[str, List[str]]:

@@ -31,7 +31,8 @@ class TextPostprocessor:
     - Performs truecasing over the text.
     """
 
-    def postprocess(self, text: str) -> str:
+    @classmethod
+    def postprocess(cls, text: str) -> str:
         """Post-process the text.
         
         Args:

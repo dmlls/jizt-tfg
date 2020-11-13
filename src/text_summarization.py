@@ -19,11 +19,10 @@
 
 __version__ = '0.1'
 
-import torch
 import logging
 from text_preprocessing import TextPreprocessor
-from nltk import word_tokenize, sent_tokenize
-from itertools import chain
+from nltk import word_tokenize
+import copy
 from typing import List, Optional, Union
 
 # deactivate warnings from the tokenizers
@@ -77,7 +76,7 @@ class SplitterTokenizer:
         self,
         text: str,
         prefix: Optional[str] = None,
-        truncation: Union[bool, str, 'TruncationStrategy'] = False,
+        truncation: Optional[Union[bool, str, 'TruncationStrategy']] = False,
         max_length: Optional[int] = None,
         return_tensors: Optional[str] = None
     ) -> Union[List[int], 'Tensor[int]']:
@@ -107,8 +106,7 @@ class SplitterTokenizer:
                 Optional; If set, will return tensors instead of list of python integers.
                 Acceptable values are:
                 - 'pt': Return PyTorch `torch.Tensor` objects.
-                - 'np': Return Numpy `np.ndarray` objects.
-                Note: TensorFlow is not yet supported.
+                Note: TensorFlow and Numpy are not yet supported.
         
         Returns:
             A list containing lists or tensors with the encoding ids, i.e.:
@@ -151,8 +149,8 @@ class SplitterTokenizer:
             # adjust length of subdivisions and start over
             max_len_subdiv -= max_len_subdiv * VARIATION_RATE_FOR_RATIO
         
-        
-    def _divide_eagerly(self, sentences, max_len_subdiv) -> List[List[str]]:
+    @classmethod
+    def _divide_eagerly(cls, sentences, max_len_subdiv) -> List[List[str]]:
         """Subdivides the text eagerly.
         
         The sentences are divided into groups, ensuring that the length of any of these
@@ -176,7 +174,7 @@ class SplitterTokenizer:
         current_subdiv_len = 0 # in terms of tokens
         
         for sent in sentences:
-            sent_len = self._len(sent)
+            sent_len = cls._len(sent)
             if current_subdiv_len + sent_len <= max_len_subdiv:
                 current_subdiv.append(sent) # append sent
                 current_subdiv_len += sent_len
@@ -187,11 +185,12 @@ class SplitterTokenizer:
         subdivisions.append(current_subdiv) # append last subdivision
         
         return subdivisions
-    
-    def _balance_subdivisions(self, subdivisions, max_len_subdiv) -> List[List[str]]:
+
+    @classmethod 
+    def _balance_subdivisions(cls, subdivisions, max_len_subdiv) -> List[List[str]]:
         """Balances the subdivisions in terms of length.
         
-        This method is meant to be called after the self._divide_eagerly method. If needed,
+        This method is meant to be called after the _divide_eagerly method. If needed,
         it moves sentences from one subdivision to another in such way that all the subdvisions
         have the same length, approximately, and keeping the model max. length restriction.
         
@@ -204,39 +203,39 @@ class SplitterTokenizer:
             List of lists containing sentences (str), onced balanced.
         """
         
-        balanced_subdiv = subdivisions[::-1]
+        balanced_subdiv = copy.deepcopy(subdivisions)[::-1]
         # length (in terms of nltk word tokens) of each subdivision, e.g., [501, 498, 480, ...]
-        len_prev_subdivs = [self._len_subdivision(subdiv) for subdiv in balanced_subdiv]
+        len_prev_subdivs = [cls._len_subdivision(subdiv) for subdiv in balanced_subdiv]
         
         while True: # do while
             for i in range(len(balanced_subdiv) - 1):
                 # difference in lengths
-                diff_len = self._len_subdivision(balanced_subdiv[i+1]) - \
-                                self._len_subdivision(balanced_subdiv[i])
+                diff_len = cls._len_subdivision(balanced_subdiv[i+1]) - \
+                                cls._len_subdivision(balanced_subdiv[i])
                 while diff_len > 0:
-                    moved_sent_len = self._len(balanced_subdiv[i+1][-1])
+                    moved_sent_len = cls._len(balanced_subdiv[i+1][-1])
                     # check that moving the sentence doesn't result in a subdivision with
                     # n_tokens > max_len_subdiv and that the length of the moved sentence
                     # is not bigger that the difference of tokens between the subdivs
-                    if self._len_subdivision(balanced_subdiv[i]) + \
-                            moved_sent_len <= max_len_subdiv and moved_sent_len < diff_len:
+                    if cls._len_subdivision(balanced_subdiv[i]) + \
+                            moved_sent_len <= max_len_subdiv and moved_sent_len <= diff_len:
                         # move sentece from balanced_subdiv[i+1] to balanced_subdiv[i]
                         balanced_subdiv[i].insert(0, balanced_subdiv[i+1][-1]) # add sent
                         balanced_subdiv[i+1] = balanced_subdiv[i+1][:-1] # remove sent
-                        diff_len = self._len_subdivision(balanced_subdiv[i+1]) - \
-                                        self._len_subdivision(balanced_subdiv[i])
+                        diff_len = cls._len_subdivision(balanced_subdiv[i+1]) - \
+                                        cls._len_subdivision(balanced_subdiv[i])
                     else:
                         break
                         
-            len_current_subdivs = [self._len_subdivision(subdiv) for subdiv in balanced_subdiv]
+            len_current_subdivs = [cls._len_subdivision(subdiv) for subdiv in balanced_subdiv]
             
             if len_prev_subdivs == len_current_subdivs: # if there are no changes, we stop
                 return balanced_subdiv[::-1]
             
             len_prev_subdivs = len_current_subdivs
         
-    
-    def _add_prefix_to_subdivs(self, subdivisions_as_str: List[str], prefix) -> List[str]:
+    @classmethod
+    def _add_prefix_to_subdivs(cls, subdivisions_as_str: List[str], prefix) -> List[str]:
         """Adds a prefix to each subdivision.
         
         Args:
@@ -262,27 +261,44 @@ class SplitterTokenizer:
             return self._tokenizer.model_max_length * RATIO_TOKENS_TO_BART_ENCODED_TOKENS
         # elif <future supported models>
              
-    def _len(self, text):
+    @classmethod
+    def _len(cls, text):
         """Length of a text in terms of nltk word tokens."""
         return len(word_tokenize(text))
     
-    def _len_subdivision(self, subdivision) -> List[int]:
+    @classmethod
+    def _len_subdivision(cls, subdivision) -> List[int]:
         """Calculates the length of a subdivision.
         
         The length is measured in terms of nltk word tokens.
         
         Args:
             subdivision:
-                List of sentences (str), e.g., ["sent_1", "sent_2", "sent_3", ...]
+                List of sentences (str), i.e., ["sent_1", "sent_2", "sent_3", ...]
                  
         Returns:
             Length of subdivision.
         """
-        return self._len(' '.join(subdivision))
-    
-    def _check_len_subdivs(self, subdivisions, return_tensors: Union[None, str]):
+        return cls._len(' '.join(subdivision))
+
+    def _check_len_subdivs(self, subdivisions,
+                           return_tensors: Optional[str] = None):
         """Checks the length of subdivisions.
         
+        Args:
+            subdivisions:
+                List of lists with the encoded tokens, e.g.,
+                [[43, 54, 23, ...], [32, 46, 76, ...], ...],
+                or list of tensors with the encoded tokens, e.g.,
+                [tensor([[43, 54, 23, ...]]), tensor([[32, 46, 76]]), ...]
+            return_tensors:
+                Optional; If None, it is supposed the encodings are not in tensors.
+                If set, it is supposed the encodings come in tensors of the type
+                passed to the function.
+                Acceptable values for return_tensors are:
+                    - 'pt': Return PyTorch `torch.Tensor` objects.
+                Note: TensorFlow and Numpy are not yet supported.
+                
         Returns:
             False if any of the subdivisions has a length greater than the tokenzier
             maximum sequence length. True otherwise.
