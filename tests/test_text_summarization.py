@@ -26,14 +26,14 @@ from typing import List, Optional, Union
 
 @pytest.fixture(scope="module")
 def initialize_bart():
-    from transformers import BartTokenizer, BartForConditionalGeneration
+    from transformers import BartTokenizer
     bart_tokenizer = BartTokenizer.from_pretrained('facebook/bart-base')
     bart_splitter = ts.SplitterTokenizer(bart_tokenizer)
     return bart_tokenizer, bart_splitter
 
 @pytest.fixture(scope="module")
 def initialize_t5():
-    from transformers import T5Tokenizer, T5ForConditionalGeneration
+    from transformers import T5Tokenizer
     t5_tokenizer = T5Tokenizer.from_pretrained('t5-base')
     t5_splitter = ts.SplitterTokenizer(t5_tokenizer)
     return t5_tokenizer, t5_splitter
