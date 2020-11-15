@@ -18,7 +18,7 @@
 """Text pre-processing tests."""
 
 import pytest
-from tokenization import sentence_tokenize
+from utils.tokenization import sentence_tokenize
 
 passing_sentences = [
     ("How's your        day going???!It's     going...\n actually it's going \t bad.",
@@ -28,13 +28,13 @@ passing_sentences = [
     ("Mr. Elster looked worried. We didn't know why.",
      ["Mr. Elster looked worried.", "We didn't know why."]),
     ("London, capital of U.K., is quite expensive.",
-     ["London, capital of U.K., is quite expensive"]),
+     ["London, capital of U.K., is quite expensive."]),
     ("I was born in 02.28.1980 in N.Y. It's been quite some time!",
      ["I was born in 02.28.1980 in N.Y.", "It's been quite some time!"]),
     ("She asked \"How's it going?\", and I said \"Great!\"",
      ["She asked \"How's it going?\", and I said \"Great!\""]),
-    ("\"Everyone will be famous for 15 minutes.\" - Andy Warhol",
-     ["\"Everyone will be famous for 15 minutes.\" - Andy Warhol"]),
+    ("\"Everyone will be famous for 15 minutes.\" - Andy Warhol.",
+     ["\"Everyone will be famous for 15 minutes.\" - Andy Warhol."]),
     ("As we can see in Figure 1.1. the model will eventually converge.",
      ["As we can see in Figure 1.1. the model will eventually converge."]),
     ("NLP (i.e. Natural Language Processing) is great!!!No kidding!",
@@ -59,7 +59,8 @@ def test_sentence_tokenize(input_sentences, expected):
     assert sentence_tokenize(input_sentences) == expected
 
 
-@pytest.mark.xfail(condition="failing-tests", reason="For now, this errors cannot be solved.")
+@pytest.mark.xfail(condition="failing-tests",
+                   reason="For now, these errors cannot be fixed.")
 @pytest.mark.parametrize("input_sentences, expected", failing_sentences)
 def test_sentence_tokenize_fail(input_sentences, expected):
     assert sentence_tokenize(input_sentences) == expected
