@@ -27,8 +27,9 @@ class TextPostprocessor:
 
     This post-processor carries out the following preprocessing tasks over
     the texts:
-    - Formats the text correctly (e.g., removes incorrect whitespaces).
-    - Performs truecasing over the text.
+
+    * Formats the text correctly (e.g., removes incorrect whitespaces).
+    * Performs truecasing over the text.
     """
 
     @classmethod

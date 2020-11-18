@@ -27,25 +27,28 @@ def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) ->
     """Divides the text into sentences.
 
     The steps followed are:
-        - Remove characters such as '\n', '\t', etc.
-        - Splits the text into sentences, taking into account Named Entities and
+
+        * Remove characters such as '\n', '\t', etc.
+        * Splits the text into sentences, taking into account Named Entities and
         special cases such as:
-        + "I was born in 02.26.1980 in New York", "As we can see in Figure 1.1.
+
+            - "I was born in 02.26.1980 in New York", "As we can see in Figure 1.1.
             the model will not fail.": despite the periods in the date and the
             Figure number, these texts will not be split into different sentences.
-        + "Mr. Elster looked worried.", "London, capital of U.K., is famous
+            - "Mr. Elster looked worried.", "London, capital of U.K., is famous
             for its red telephone boxes": the preprocessor applies Named Entity
             Recognition and does not split the previous sentences.
-        + "Hello.Goodbye.", "Seriously??!That can't be true.": these sentences
+            - "Hello.Goodbye.", "Seriously??!That can't be true.": these sentences
             are split into: ['Hello.', 'Goodbye.'] and ['Seriously??!', 'That can't
             be true.'], respectively.
     
     Args:
-        text:
+        text (:obj:`str`):
             Text to be split in sentences.
-        tokenizer:
+        tokenizer (:obj:`nlkt.tokenize.RegexpTokenizer`, `optional`, defaults to :obj:`None`):
             Regular expression to carry out a preliminar split (the text will be
-            afterwards split once again by the NLTK `sent_tokenize` method).
+            afterwards split once again by the :mod:`blingfire` :func:`text_to_sentences`.
+            function).
     """
 
     # punctuation that shouldn't be preceeded by a whitespace

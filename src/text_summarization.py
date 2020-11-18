@@ -15,296 +15,166 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Tokenization class with support for Hugging Face pretrained models."""
+"""Summarization class with support for Hugging Face pretrained models."""
 
 __version__ = '0.1'
 
-import logging
-from text_preprocessing import TextPreprocessor
-from nltk import word_tokenize
-import copy
-from typing import List, Optional, Union
+import torch
+from utils.supported_models import SupportedModel, SupportedModelFamily
+from transformers import BartTokenizer, BartForConditionalGeneration
+from transformers import T5Tokenizer, T5ForConditionalGeneration
+from transformers import tokenization_utils_base
+from typing import List, Optional, Union, Iterable
 
-# deactivate warnings from the tokenizers
-logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
 
-# Ratio calculated thus: len(word_tokenize(text)) / len(t5_tokenizer.encode(text))
-# It shows the relation between the tokens without being encoded and the tokens
-# once encoded. The higher it is, the most likely the subdivisions will exceed the
-# model maximum sequence length.
-RATIO_TOKENS_TO_T5_ENCODED_TOKENS = 0.7 # obtained empirically
 
-# Ratio calculated thus: len(word_tokenize(text)) / len(bart_tokenizer.encode(text))
-# It shows the relation between the tokens without being encoded and the tokens
-# once encoded. The higher it is, the most likely the subdivisions will exceed the
-# model maximum sequence length.
-RATIO_TOKENS_TO_BART_ENCODED_TOKENS = 0.86 # obtained empirically
+class Summarizer:
+    """Text summarizer.
 
-# Factor of variation for the RATIO_TOKENS_TO_ENCODED_TOKENS. The new ratio is
-# calculated thus:
-# RATIO_TOKENS_TO_ENCODED_TOKENS -= RATIO_TOKENS_TO_ENCODED_TOKENS * VARIATION_RATE_FOR_RATIO
-VARIATION_RATE_FOR_RATIO = 0.015
+    This summarizer uses the :meth:`generate` method from the class
+    :class:`transformers.generation_utils.GenerationMixin` to generate the summary ids (encodings).
 
-class SplitterTokenizer:
-    """Tokenizer with splitting.
+    Then, it uses the :meth:`decode` method from the class :class:`decode` from the class
+    :class:`transformers.tokenization_utils_base.PreTrainedTokenizerBase` to convert the ids into a
+    string.
+
+    The specific model used for the generation and the decoding could be different, as long as they
+    belong to the same `family` of models, e.g. if the specific model is "bart-large" the model `family`
+    would be BART. Then, the model "bart-large" could be used for generation and the model "bart-base"
+    used for decoding, although it is advised to use the same model for generation `and` decoding. 
+
+    This summarizer is meant to be used along with the following
+    `Hugging Face pretrained models <https://huggingface.co/transformers/pretrained_models.html>`__:
     
-    This tokenizer splits the input text to adapt it to the maximum input length
-    of a specific model. The split is done in a balanced way so that each set contains
-    roughly the same number of tokens, without splitting sentences.
-    
-    This tokenizer is meant to be used along with the following Hugging Face pretrained models.
+    * ``facebook/bart-*``
+    * ``t5-*``'
     """
-    
-    def __init__(self, tokenizer: 'transformers.tokenization_utils_base.PreTrainedTokenizerBase'):
-        # check supported models
-        if type(tokenizer).__name__ == 'T5Tokenizer':
-            self._model = 't5'
-        elif type(tokenizer).__name__ == 'BartTokenizer':
-            self._model = 'bart'
+
+    def __init__(self, model: str, tokenizer: str = None):
+        model = SupportedModel(model) # checks if the model is supported
+
+        if SupportedModelFamily.BART.value in model.value: # BART model
+            self._model = BartForConditionalGeneration.from_pretrained(model.value)
+        elif SupportedModelFamily.T5.value in model.value: # T5 model
+            self._model = T5ForConditionalGeneration.from_pretrained(model.value)
+        # elif future supported models
+
+        # if no tokenizer is provided, use the same pretrained model as for model
+        if tokenizer is None:
+            self._tokenizer = model # support already checked
         else:
-            raise NotImplementedError(
-                f'The tokenizer {type(tokenizer).__name__} is currently not supported.')
-        
-        self._tokenizer = tokenizer
-        
-        
+            tokenizer = SupportedModel(tokenizer) # check model support
+            if SupportedModelFamily.BART.value in tokenizer.value: # BART tokenizer
+                self._tokenizer = BartTokenizer.from_pretrained(tokenizer.value)
+            elif SupportedModelFamily.T5.value in tokenizer.value: # T5 tokenizer
+                self._tokenizer = T5Tokenizer.from_pretrained(tokenizer.value)
+            # elif future supported models
+
     @property
     def tokenizer(self):
         return self._tokenizer
-    
-    def encode(
-        self,
-        text: str,
-        prefix: Optional[str] = None,
-        truncation: Optional[Union[bool, str, 'TruncationStrategy']] = False,
-        max_length: Optional[int] = None,
-        return_tensors: Optional[str] = None
-    ) -> Union[List[int], 'Tensor[int]']:
-        """Converts a string to a sequence of ids (integer), using the tokenizer and vocabulary.
-        
-        To avoid going over the maximum sequence length of the tokenizer, the text is first
-        split (without splitting sentences) into groups containing approximately the same
-        number of tokens.
-        
-        The division is carried out naively and 'a piori' (i.e., without actually encoding the
-        text), so it could be that one or more of the divisions generated exceeds the model maxi-
-        mum sequence length. In that case, the division is done again with a smaller subdivision
-        length. The process is repeated until none of the divisions exceeds the model max. length.
-        
+
+    @property
+    def model(self):
+        return self._model
+
+    def summarize(self,
+                  input_ids: List[Union[List[int], torch.LongTensor]],
+                  max_length: Optional[int] = 300,
+                  min_length: Optional[int] = 30,
+                  do_sample: Optional[bool] = None,
+                  early_stopping: Optional[bool] = None,
+                  num_beams: Optional[int] = 4,
+                  temperature: Optional[float] = None,
+                  top_k: Optional[int] = None,
+                  top_p: Optional[float] = None,
+                  repetition_penalty: Optional[float] = None,
+                  bad_words_ids: Optional[Iterable[int]] = None,
+                  length_penalty: Optional[float] = None,
+                  no_repeat_ngram_size: Optional[int] = 3,
+                  num_return_sequences: Optional[int] = None,
+                  use_cache: Optional[bool] = None,
+                  skip_special_tokens: Optional[bool] = False,
+                  clean_up_tokenization_spaces: Optional[bool] = True
+    ) -> str:
+        """Generates a summary from the encoded tokens (input_ids).
+
+        Decoding strategies currently supported:
+
+        * Greedy decoding.
+        * Multinomial sampling.
+        * Beam-search decoding.
+        * Beam-search multinomial sampling.
+
+        Most of these parameters are explained in more detail in `this blog post
+        <https://huggingface.co/blog/how-to-generate>`__.
+
         Args:
-            text:
-                The text to be tokenized.
-            prefix:
-                Optional; String to be added at the beginning of each subdivision.
-            truncation:
-                Optional; If True, any sentence longer than the model maximum sequence length
-                is truncated.
-            max_length:
-                Optional; If truncation is True, this argument sets the maximum length for a
-                sentence to be truncated.
-            return_tensors:
-                Optional; If set, will return tensors instead of list of python integers.
-                Acceptable values are:
-                - 'pt': Return PyTorch `torch.Tensor` objects.
-                Note: TensorFlow and Numpy are not yet supported.
-        
-        Returns:
-            A list containing lists or tensors with the encoding ids, i.e.:
-            [[ids_first_subdivision],
-             [ids_second_subdivision],
-             [ids_third_subdivision],
-             ...]
+            input_ids (:obj:`List[List[int]]` or :obj:`List[torch.LongTensor]`):
+                The sequence subdivisions used as a prompt for the summary generation.
+            max_length (:obj:`int`, `optional`, defaults to 300):
+                The maximum length of the sequence to be generated.
+            min_length (:obj:`int`, `optional`, defaults to 30):
+                The minimum length of the sequence to be generated.
+            do_sample (:obj:`bool`, `optional`, defaults to :obj:`False`):
+                Whether or not to use sampling; use greedy decoding otherwise.
+            early_stopping (:obj:`bool`, `optional`, defaults to :obj:`False`):
+                Whether to stop the beam search when at least ``num_beams`` sentences are
+                finished per batch or not.
+            num_beams (:obj:`int`, `optional`, defaults to 4):
+                Number of beams for beam search. 1 means no beam search.
+            temperature (:obj:`float`, `optional`, defaults tp 1.0):
+                The value used to module the next token probabilities.
+            top_k (:obj:`int`, `optional`, defaults to 50):
+                The number of highest probability vocabulary tokens to keep for top-k-filtering.
+            top_p (:obj:`float`, `optional`, defaults to 1.0):
+                If set to float < 1, only the most probable tokens with probabilities that add up
+                to :obj:`top_p` higher are kept for generation.
+            repetition_penalty (:obj:`float`, `optional`, defaults to 1.0):
+                The parameter for repetition penalty. 1.0 means no penalty. See `this paper
+                <https://arxiv.org/pdf/1909.05858.pdf>`__ for more details. 
+            bad_words_ids(:obj:`List[List[int]]`, `optional`):
+                List of token ids that are not allowed to be generated. In order to get the tokens of
+                the words should not appear in the generated text, use :obj:`tokenizer(bad_word,
+                add_prefix_space=True).input_ids`.
+            length_penalty (:obj:`float`, `optional`, defaults to 1.0):
+                Exponential penalty to the length. 1.0 means no penalty. Set to values < 1.0 in order
+                to encourage the model to generate shorter sequences, to a value > 1.0 in order to
+                encourage the model to produce longer sequences.
+            no_repeat_ngram_size (:obj:`int`, `optional`, defaults to 3):
+                If set to int > 0, all ngrams of that size can only occur once.
+            num_return_sequences(:obj:`int`, `optional`, defaults to 1):
+                The number of independently computed returned sequences for each element in the batch.
+            use_cache: (:obj:`bool`, `optional`, defaults to :obj:`True`):
+                Whether or not the model should use the past last key/values attentions (if applicable
+                to the model) speed up decoding.
+            skip_special_tokens (:obj:`bool`, `optional`, defaults to :obj:`False`):
+                Whether or not to remove special tokens in the decoding.
+            clean_up_tokenization_spaces (:obj:`bool`, `optional`, defaults to :obj:`True`):
+                Whether or not to clean up the tokenization spaces.
         """
-        
-        if return_tensors is not None and return_tensors not in ('pt', 'np'):
-            raise NotImplementedError(f'{return_tensors} tensors are currently not supported.')  
-        
-        textPreprocessor = TextPreprocessor()
-        
-        max_len_subdiv = self._get_max_length_subdivision() # max length per subdivision
-        sentences = textPreprocessor.preprocess(text, return_as_list=True)
-        
-        while True: # do while
-            subdivisions = self._divide_eagerly(sentences, max_len_subdiv)
-
-            balanced_subdiv = self._balance_subdivisions(subdivisions, max_len_subdiv)
-
-            # transform subdivs. from, e.g., [["sent_1", "sent_2", ...], [sent_1, sent_2, ...], ...]
-            # to ["sent_1 sent_2 ...", "sent_1 sent_2 ...", ...]
-            subdivs_as_str = [' '.join(subdiv) for subdiv in balanced_subdiv]
-            
-            if prefix is not None:
-                subdivs_as_str = self._add_prefix_to_subdivs(subdivs_as_str, prefix)
-                                
-            encoded_subdivs = [self._tokenizer.encode(subdiv,
-                                                      truncation=truncation,
-                                                      max_length=max_length,
-                                                      return_tensors=return_tensors
-                                                      ) for subdiv in subdivs_as_str]
-            
-            if self._check_len_subdivs(encoded_subdivs, return_tensors):
-                # all the subdivisions length is <= model max. length
-                return encoded_subdivs
-            
-            # adjust length of subdivisions and start over
-            max_len_subdiv -= max_len_subdiv * VARIATION_RATE_FOR_RATIO
-        
-    @classmethod
-    def _divide_eagerly(cls, sentences, max_len_subdiv) -> List[List[str]]:
-        """Subdivides the text eagerly.
-        
-        The sentences are divided into groups, ensuring that the length of any of these
-        groups (subdivisions) is always less or equal than the model max. sequence length,
-        and without splitting sentences.
-        
-        Args:
-            sentences:
-                List of sentences (str), e.g., ["sent_1", "sent_2", "sent_3", ...].
-            max_len_subdiv:
-                Maximum length each subdivision must have, measured in terms of nltk word
-                tokens.
                 
-        Returns:
-            List of lists containing the sentences (str), e.g.:
-            [[sent_1, sent_2, sent_3, ...], [sent_4, sent_5, ...], ...].       
-        """
-        
-        subdivisions = []
-        current_subdiv = []
-        current_subdiv_len = 0 # in terms of tokens
-        
-        for sent in sentences:
-            sent_len = cls._len(sent)
-            if current_subdiv_len + sent_len <= max_len_subdiv:
-                current_subdiv.append(sent) # append sent
-                current_subdiv_len += sent_len
-            else:
-                subdivisions.append(current_subdiv)
-                current_subdiv = [sent] # new subdivision
-                current_subdiv_len = sent_len
-        subdivisions.append(current_subdiv) # append last subdivision
-        
-        return subdivisions
+        summary_subdivs = []
 
-    @classmethod 
-    def _balance_subdivisions(cls, subdivisions, max_len_subdiv) -> List[List[str]]:
-        """Balances the subdivisions in terms of length.
-        
-        This method is meant to be called after the _divide_eagerly method. If needed,
-        it moves sentences from one subdivision to another in such way that all the subdvisions
-        have the same length, approximately, and keeping the model max. length restriction.
-        
-        Args:
-            subdivisions:
-                List of lists containing sentences (str), e.g.:
-                [[sent_1, sent_2, sent_3, ...], [sent_4, sent_5, ...], ...].
-        
-        Returns:
-            List of lists containing sentences (str), onced balanced.
-        """
-        
-        balanced_subdiv = copy.deepcopy(subdivisions)[::-1]
-        # length (in terms of nltk word tokens) of each subdivision, e.g., [501, 498, 480, ...]
-        len_prev_subdivs = [cls._len_subdivision(subdiv) for subdiv in balanced_subdiv]
-        
-        while True: # do while
-            for i in range(len(balanced_subdiv) - 1):
-                # difference in lengths
-                diff_len = cls._len_subdivision(balanced_subdiv[i+1]) - \
-                                cls._len_subdivision(balanced_subdiv[i])
-                while diff_len > 0:
-                    moved_sent_len = cls._len(balanced_subdiv[i+1][-1])
-                    # check that moving the sentence doesn't result in a subdivision with
-                    # n_tokens > max_len_subdiv and that the length of the moved sentence
-                    # is not bigger that the difference of tokens between the subdivs
-                    if cls._len_subdivision(balanced_subdiv[i]) + \
-                            moved_sent_len <= max_len_subdiv and moved_sent_len <= diff_len:
-                        # move sentece from balanced_subdiv[i+1] to balanced_subdiv[i]
-                        balanced_subdiv[i].insert(0, balanced_subdiv[i+1][-1]) # add sent
-                        balanced_subdiv[i+1] = balanced_subdiv[i+1][:-1] # remove sent
-                        diff_len = cls._len_subdivision(balanced_subdiv[i+1]) - \
-                                        cls._len_subdivision(balanced_subdiv[i])
-                    else:
-                        break
-                        
-            len_current_subdivs = [cls._len_subdivision(subdiv) for subdiv in balanced_subdiv]
-            
-            if len_prev_subdivs == len_current_subdivs: # if there are no changes, we stop
-                return balanced_subdiv[::-1]
-            
-            len_prev_subdivs = len_current_subdivs
-        
-    @classmethod
-    def _add_prefix_to_subdivs(cls, subdivisions_as_str: List[str], prefix) -> List[str]:
-        """Adds a prefix to each subdivision.
-        
-        Args:
-            subdivisions_as_str:
-                List of strings. Each string is considered a subdivision.
-            prefix:
-                String to insert at the beginning of each subdivision.
-        
-        Returns:
-            List of strings, i.e., the subdivisions.
-        """
-        return [prefix + subdiv for subdiv in subdivisions_as_str]
+        for ids_subdiv in input_ids:
+            summary_ids = self._model.generate(input_ids=input_ids,
+                                               max_length=max_length,
+                                               min_length=min_length,
+                                               do_sample=do_sample,
+                                               early_stopping=early_stopping,
+                                               num_beams=num_beams,
+                                               temperature=temperature,
+                                               top_k=top_k,
+                                               top_p=top_p,
+                                               repetition_penalty=repetition_penalty,
+                                               bad_words_ids=bad_words_ids,
+                                               length_penalty=length_penalty,
+                                               no_repeat_ngram_size=no_repeat_ngram_size,
+                                               num_return_sequences=num_return_sequences,
+                                               use_cache=use_cache)
+            decoded_subdiv = self._tokenizer.decode(summary_ids.squeeze().tolist(),
+                                                    skip_special_tokens=skip_special_tokens,
+                                                    clean_up_tokenization_spaces=clean_up_tokenization_spaces)
+            summary_subdivs.append(decoded_subdiv) 
 
-    def _get_max_length_subdivision(self) -> int:
-        """Calculates the maximum length of each subdivision.
-
-        The length is measured in terms of nltk word tokens.
-        """
-
-        if self._model == 't5':
-            return self._tokenizer.model_max_length * RATIO_TOKENS_TO_T5_ENCODED_TOKENS
-        elif self._model == 'bart':
-            return self._tokenizer.model_max_length * RATIO_TOKENS_TO_BART_ENCODED_TOKENS
-        # elif <future supported models>
-             
-    @classmethod
-    def _len(cls, text):
-        """Length of a text in terms of nltk word tokens."""
-        return len(word_tokenize(text))
-    
-    @classmethod
-    def _len_subdivision(cls, subdivision) -> List[int]:
-        """Calculates the length of a subdivision.
-        
-        The length is measured in terms of nltk word tokens.
-        
-        Args:
-            subdivision:
-                List of sentences (str), i.e., ["sent_1", "sent_2", "sent_3", ...]
-                 
-        Returns:
-            Length of subdivision.
-        """
-        return cls._len(' '.join(subdivision))
-
-    def _check_len_subdivs(self, subdivisions,
-                           return_tensors: Optional[str] = None):
-        """Checks the length of subdivisions.
-        
-        Args:
-            subdivisions:
-                List of lists with the encoded tokens, e.g.,
-                [[43, 54, 23, ...], [32, 46, 76, ...], ...],
-                or list of tensors with the encoded tokens, e.g.,
-                [tensor([[43, 54, 23, ...]]), tensor([[32, 46, 76]]), ...]
-            return_tensors:
-                Optional; If None, it is supposed the encodings are not in tensors.
-                If set, it is supposed the encodings come in tensors of the type
-                passed to the function.
-                Acceptable values for return_tensors are:
-                    - 'pt': Return PyTorch `torch.Tensor` objects.
-                Note: TensorFlow and Numpy are not yet supported.
-                
-        Returns:
-            False if any of the subdivisions has a length greater than the tokenzier
-            maximum sequence length. True otherwise.
-        """
-        if return_tensors is None:
-            return all(len(subdiv) <= self._tokenizer.model_max_length for subdiv in subdivisions)
-        elif return_tensors == 'pt':
-            return all(len(subdiv[0]) <= self._tokenizer.model_max_length for subdiv in subdivisions)
-        # elif <future supported tensors>
+        return " ".join(summary_subdivs)
