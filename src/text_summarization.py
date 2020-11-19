@@ -23,7 +23,6 @@ import torch
 from utils.supported_models import SupportedModel, SupportedModelFamily
 from transformers import BartTokenizer, BartForConditionalGeneration
 from transformers import T5Tokenizer, T5ForConditionalGeneration
-from transformers import tokenization_utils_base
 from typing import List, Optional, Union, Iterable
 
 
@@ -157,7 +156,7 @@ class Summarizer:
         summary_subdivs = []
 
         for ids_subdiv in input_ids:
-            summary_ids = self._model.generate(input_ids=input_ids,
+            summary_ids = self._model.generate(input_ids=ids_subdiv,
                                                max_length=max_length,
                                                min_length=min_length,
                                                do_sample=do_sample,

@@ -20,11 +20,6 @@
 import pytest
 import text_summarization as ts
 
-@pytest.fixture(scope="module")
-def initialize_bart_summarizer():
-    from transformers import BartTokenizer
-    # TODO
-
 def test_init():
     # try different initializations and check no exceptions are raised
     # correct initializations
