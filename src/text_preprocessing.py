@@ -15,7 +15,7 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Text preprocessor class."""
+"""Text pre-processor class."""
 
 __version__ = '0.1'
 
@@ -23,24 +23,23 @@ from utils.tokenization import sentence_tokenize
 from typing import List, Optional, Union
 
 class TextPreprocessor:
-    """Text preprocessing utilities.
+    """Text pre-processing utilities.
     
-    This preprocessor carries out the following preprocessing tasks over
+    This pre-processor carries out the following preprocessing tasks over
     the texts:
-    - Removes characters such as '\n', '\t', etc.
-    - Adds one whitespace after each sentence (relevant for the BART model).
-    - Splits the text into sentences, taking into account Named Entities and
+    * Removes characters such as :code:`'\n'`, :code:`'\t'`, etc.
+    * Adds one whitespace after each sentence (relevant for the BART model).
+    * Splits the text into sentences, taking into account Named Entities and
       special cases such as:
-      + "I was born in 02.26.1980 in New York", "As we can see in Figure 1.1.
+      - "I was born in 02.26.1980 in New York", "As we can see in Figure 1.1.
         the model will not fail.": despite the periods in the date and the
         Figure number, these texts will not be split into different sentences.
-      + "Mr. Elster looked worried.", "London, capital of U.K., is famous
-        for its red telephone boxes": the preprocessor applies Named Entity
+      - "Mr. Elster looked worried.", "London, capital of U.K., is famous
+        for its red telephone boxes": the pre-processor applies Named Entity
         Recognition and does not split the previous sentences.
-      + "Hello.Goodbye.", "Seriously??!That can't be true.": these sentences
-        are split into: ['Hello.', 'Goodbye.'] and ['Seriously??!', 'That can't
-        be true.'], respectively.
-     
+      - "Hello.Goodbye.", "Seriously??!That can't be true.": these sentences
+        are split into: :code:`['Hello.', 'Goodbye.']` and
+        :code:`['Seriously??!', 'That can't be true.']`, respectively.
     """
 
     @classmethod 
@@ -49,19 +48,19 @@ class TextPreprocessor:
         text: str,
         return_as_list: Optional[bool] = False
     ) -> Union[str, List[str]]:
-        """Preprocess the text.
+        """Pre-processes the text.
         
         Args:
-            text:
-                Text to be preprocessed.
-            return_as_list:
+            text (:obj:`str`):
+                The text to be pre-processed.
+            return_as_list (:obj:`bool`):
                 If True the text is split into sentences and the method returns
                 a list containing those sentences. If False, it returns the text
-                preprocessed as a single string.
+                pre-processed as a single string.
                 
         Returns:
-            Either a list containing the sentences of the preprocessed text, or
-            the preprocessed text as a single string.
+            :obj:`str` or :obj:`List[str]`: The pre-processed text.
         """
+        
         sentences = sentence_tokenize(text)
         return sentences if return_as_list else ' '.join(sentences)

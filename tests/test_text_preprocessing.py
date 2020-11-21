@@ -59,8 +59,7 @@ def test_sentence_tokenize(input_sentences, expected):
     assert sentence_tokenize(input_sentences) == expected
 
 
-@pytest.mark.xfail(condition="failing-tests",
-                   reason="For now, these errors cannot be fixed.")
+@pytest.mark.xfail(reason="for now, these errors cannot be fixed")
 @pytest.mark.parametrize("input_sentences, expected", failing_sentences)
 def test_sentence_tokenize_fail(input_sentences, expected):
     assert sentence_tokenize(input_sentences) == expected

@@ -29,19 +29,20 @@ class TextPostprocessor:
     the texts:
 
     * Formats the text correctly (e.g., removes incorrect whitespaces).
-    * Performs truecasing over the text.
+    * Performs truecasing over the text. See `this paper
+      <https://www.cs.cmu.edu/~llita/papers/lita.truecasing-acl2003.pdf>`__ for more details.
     """
 
     @classmethod
     def postprocess(cls, text: str) -> str:
-        """Post-process the text.
+        """Post-processes the text.
         
         Args:
-            text:
-                Text to be post-processed.
+            text (:obj:`str`):
+                The text to be post-processed.
 
         Returns:
-            Post-processed text as a string.
+            :obj:`str`: The post-processed text.
         """
 
         txt = ' '.join(sentence_tokenize(text))

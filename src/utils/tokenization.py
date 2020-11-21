@@ -57,6 +57,7 @@ def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) ->
     if tokenizer is None:
         # if next letter after period is lowercase, consider it part of the same sentence
         # ex: "As we can see in Figure 1.1. the sentence will not be split."
+        # Also, take acronyms as groups, e.g., U.K., U.S., B.C., D.C., etc.
         tokenizer = RegexpTokenizer(r'[^.!?]+(?:(?:[A-Z][.])+|[.!?]+)+[^A-Z]*')
 
     # if there's no final period, add it (this makes the assumption that the last

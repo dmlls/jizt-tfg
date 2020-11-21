@@ -254,4 +254,4 @@ def test_init(initialize_bart, initialize_t5):
 
 def _init(tokenizer, model_name):
     splitter = te.SplitterEncoder(model_name)
-    assert type(splitter.tokenizer) == type(tokenizer)
+    assert type(splitter.tokenizer) is type(tokenizer)

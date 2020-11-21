@@ -151,6 +151,9 @@ class Summarizer:
                 Whether or not to remove special tokens in the decoding.
             clean_up_tokenization_spaces (:obj:`bool`, `optional`, defaults to :obj:`True`):
                 Whether or not to clean up the tokenization spaces.
+
+        Returns:
+            :obj:`str`: The summary generated.
         """
                 
         summary_subdivs = []
