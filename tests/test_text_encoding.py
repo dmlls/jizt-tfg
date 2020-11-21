@@ -28,14 +28,14 @@ from typing import List, Optional, Union
 def initialize_bart():
     from transformers import BartTokenizer
     bart_tokenizer = BartTokenizer.from_pretrained('facebook/bart-base')
-    bart_splitter = te.SplitterEncoder(bart_tokenizer)
+    bart_splitter = te.SplitterEncoder('facebook/bart-base')
     return bart_tokenizer, bart_splitter
 
 @pytest.fixture(scope="module")
 def initialize_t5():
     from transformers import T5Tokenizer
     t5_tokenizer = T5Tokenizer.from_pretrained('t5-base')
-    t5_splitter = te.SplitterEncoder(t5_tokenizer)
+    t5_splitter = te.SplitterEncoder('t5-base')
     return t5_tokenizer, t5_splitter
 
 @pytest.fixture(scope="module")
@@ -129,32 +129,23 @@ divided_sents = [["The fish dreamed of escaping the fishbowl and into the toilet
 
 def test_check_len_subdivs(initialize_bart, initialize_t5):
     bart_tokenizer, bart_splitter = initialize_bart
-    encodings_short = bart_tokenizer.encode(" ".join(sentences))
-    encodings_past_max_len = bart_tokenizer.encode(" ".join(sentences*3))
-    assert bart_splitter._check_len_subdivs([encodings_short])
-    assert not bart_splitter._check_len_subdivs([encodings_past_max_len])
-    encodings_short_pt = bart_tokenizer.encode(" ".join(sentences),
-                                               return_tensors='pt')
-    encodings_past_max_len_pt = bart_tokenizer.encode(" ".join(sentences*3),
-                                                      return_tensors='pt')
-    assert bart_splitter._check_len_subdivs([encodings_short_pt],
-                                            return_tensors='pt')
-    assert not bart_splitter._check_len_subdivs([encodings_past_max_len_pt],
-                                                return_tensors='pt')
-    #####################
     t5_tokenizer, t5_splitter = initialize_t5
-    encodings_short = t5_tokenizer.encode(" ".join(sentences))
-    encodings_past_max_len = t5_tokenizer.encode(" ".join(sentences*3))
-    assert t5_splitter._check_len_subdivs([encodings_short])
-    assert not t5_splitter._check_len_subdivs([encodings_past_max_len])
-    encodings_short_pt = t5_tokenizer.encode(" ".join(sentences),
-                                               return_tensors='pt')
-    encodings_past_max_len_pt = t5_tokenizer.encode(" ".join(sentences*3),
-                                                      return_tensors='pt')
-    assert t5_splitter._check_len_subdivs([encodings_short_pt],
-                                            return_tensors='pt')
-    assert not t5_splitter._check_len_subdivs([encodings_past_max_len_pt],
-                                                return_tensors='pt')
+    _check_len_subdivs(bart_tokenizer, bart_splitter)
+    _check_len_subdivs(t5_tokenizer, t5_splitter)
+
+def _check_len_subdivs(tokenizer, splitter):
+    encodings_short = tokenizer.encode(" ".join(sentences))
+    encodings_past_max_len = tokenizer.encode(" ".join(sentences*3))
+    assert splitter._check_len_subdivs([encodings_short])
+    assert not splitter._check_len_subdivs([encodings_past_max_len])
+    encodings_short_pt = tokenizer.encode(" ".join(sentences),
+                                          return_tensors='pt')
+    encodings_past_max_len_pt = tokenizer.encode(" ".join(sentences*3),
+                                                 return_tensors='pt')
+    assert splitter._check_len_subdivs([encodings_short_pt],
+                                       return_tensors='pt')
+    assert not splitter._check_len_subdivs([encodings_past_max_len_pt],
+                                           return_tensors='pt')
 
 def test_len_subdivision(word_tokenize):
     len_sentences = len(word_tokenize(" ".join(sentences)))
@@ -166,14 +157,15 @@ def test_len(word_tokenize):
 
 def test_get_max_length_subdivision(initialize_bart, initialize_t5):
     bart_tokenizer, bart_splitter = initialize_bart
-    bart_max_len_subdiv = bart_tokenizer.model_max_length * \
-                                            te.RATIO_TOKENS_TO_BART_ENCODED_TOKENS
-    assert bart_max_len_subdiv == bart_splitter._get_max_length_subdivision()
-    #####################
     t5_tokenizer, t5_splitter = initialize_t5
-    t5_max_len_subdiv = t5_tokenizer.model_max_length * \
-                                            te.RATIO_TOKENS_TO_T5_ENCODED_TOKENS
-    assert t5_max_len_subdiv == t5_splitter._get_max_length_subdivision() 
+    _get_max_length_subdivision(bart_tokenizer, bart_splitter,
+                                te.RATIO_TOKENS_TO_BART_ENCODED_TOKENS)
+    _get_max_length_subdivision(t5_tokenizer, t5_splitter,
+                                te.RATIO_TOKENS_TO_T5_ENCODED_TOKENS)
+
+def _get_max_length_subdivision(tokenizer, splitter, ratio):
+    max_len_subdiv = tokenizer.model_max_length * ratio
+    assert max_len_subdiv == splitter._get_max_length_subdivision()
 
 def test_add_prefix_to_subdivs():
     prefixes = ["summarize: ", "translate: ", "answer: "]
@@ -222,60 +214,44 @@ def test_divide_eagerly():
     assert divided_sents == te.SplitterEncoder._divide_eagerly(sentences, max_len_subdiv)
 
 def test_encode(initialize_bart, initialize_t5):
+    bart_tokenizer, bart_splitter = initialize_bart
+    t5_tokenizer, t5_splitter = initialize_t5
+    _encode(bart_tokenizer, bart_splitter)
+    _encode(t5_tokenizer, t5_splitter)
+
+def _encode(tokenizer, splitter):
     text = " ".join(sentences*10)
     preprocessed_text = tp.TextPreprocessor.preprocess(text, return_as_list=True)
 
-    # BART
-    bart_tokenizer, bart_splitter = initialize_bart
+    encoded_sents = splitter.encode(text)
 
-    encoded_sents = bart_splitter.encode(text)
-
-    max_len = bart_splitter._get_max_length_subdivision()
+    # no tensors
+    max_len = splitter._get_max_length_subdivision()
     divided = te.SplitterEncoder._divide_eagerly(preprocessed_text, max_len)
     balanced = te.SplitterEncoder._balance_subdivisions(divided, max_len)
     expected = [' '.join(exp) for exp in balanced]
-    expected_enc_sents = [bart_tokenizer.encode(expect) for expect in expected]
+    expected_enc_sents = [tokenizer.encode(expect) for expect in expected]
     assert expected_enc_sents == encoded_sents
 
-    # BART Pytorch tensors
-    encoded_sents = bart_splitter.encode(text, return_tensors='pt')
-    expected_enc_sents = [bart_tokenizer.encode(expect, return_tensors='pt') for expect in expected]
+    # Pytorch tensors
+    encoded_sents = splitter.encode(text, return_tensors='pt')
+    expected_enc_sents = [tokenizer.encode(expect, return_tensors='pt') for expect in expected]
     for encoded, expect in zip(encoded_sents, expected_enc_sents):
         assert torch.all(encoded.eq(expect))
-
-    # T5 - no tensors
-    t5_tokenizer, t5_splitter = initialize_t5
-
-    encoded_sents = t5_splitter.encode(text)
-
-    max_len = t5_splitter._get_max_length_subdivision()
-    divided = te.SplitterEncoder._divide_eagerly(preprocessed_text, max_len)
-    balanced = te.SplitterEncoder._balance_subdivisions(divided, max_len)
-    expected = [' '.join(exp) for exp in balanced]
-    expected_enc_sents = [t5_tokenizer.encode(expect) for expect in expected]
-    assert expected_enc_sents == encoded_sents
-
-    # T5 Pytorch tensors
-    encoded_sents = t5_splitter.encode(text, return_tensors='pt')
-    expected_enc_sents = [t5_tokenizer.encode(expect, return_tensors='pt') for expect in expected]
-    for encoded, expect in zip(encoded_sents, expected_enc_sents):
-        assert torch.all(encoded.eq(expect))
-
 
     # Exception
     with pytest.raises(NotImplementedError):
-        t5_splitter.encode('', return_tensors='xd')
-        bart_splitter.encode('', return_tensors='xd')
+        splitter.encode('', return_tensors='xd')
 
 def test_init(initialize_bart, initialize_t5):
     bart_tokenizer, _ = initialize_bart
     t5_tokenizer, _ = initialize_t5
+    _init(bart_tokenizer, 'facebook/bart-base') 
+    _init(t5_tokenizer, 't5-base') 
 
-    bart_splitter = te.SplitterEncoder(bart_tokenizer)
-    assert bart_splitter.tokenizer == bart_tokenizer
+    with pytest.raises(ValueError):
+        te.SplitterEncoder("not-supported-model")
 
-    t5_splitter = te.SplitterEncoder(t5_tokenizer)
-    assert t5_splitter.tokenizer == t5_tokenizer
-
-    with pytest.raises(NotImplementedError):
-        te.SplitterEncoder(tp.TextPreprocessor())
+def _init(tokenizer, model_name):
+    splitter = te.SplitterEncoder(model_name)
+    assert type(splitter.tokenizer) == type(tokenizer)

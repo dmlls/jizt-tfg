@@ -21,10 +21,13 @@ __version__ = '0.1'
 
 import logging
 import torch
+import copy
 from text_preprocessing import TextPreprocessor
+from transformers import BartTokenizer
+from transformers import T5Tokenizer
+from utils.supported_models import SupportedModel, SupportedModelFamily
 from nltk import word_tokenize
 from transformers import tokenization_utils_base
-import copy
 from typing import List, Optional, Union
 
 # deactivate warnings from the tokenizers
@@ -64,20 +67,16 @@ class SplitterEncoder:
     `Hugging Face docs <https://huggingface.co/transformers/internal/tokenization_utils.html#transformers.tokenization_utils_base.PreTrainedTokenizerBasee>`__
     for further information on tokenization.
     """
-    
-    def __init__(self, tokenizer: tokenization_utils_base.PreTrainedTokenizerBase):
-        # check supported models
-        if type(tokenizer).__name__ == 'T5Tokenizer':
-            self._model = 't5'
-        elif type(tokenizer).__name__ == 'BartTokenizer':
-            self._model = 'bart'
-        else:
-            raise NotImplementedError(
-                f'The tokenizer {type(tokenizer).__name__} is currently not supported.')
-        
-        self._tokenizer = tokenizer
-        
-        
+
+    def __init__(self, tokenizer: str = None):
+        tokenizer = SupportedModel(tokenizer.lower()) # checks if the tokenizer is supported
+
+        if SupportedModelFamily.BART.value in tokenizer.value: # BART tokenizer
+            self._tokenizer = BartTokenizer.from_pretrained(tokenizer.value)
+        elif SupportedModelFamily.T5.value in tokenizer.value: # T5 tokenizer
+            self._tokenizer = T5Tokenizer.from_pretrained(tokenizer.value)
+        # elif future supported models
+
     @property
     def tokenizer(self):
         return self._tokenizer
@@ -288,10 +287,10 @@ class SplitterEncoder:
         The length is measured in terms of nltk word tokens.
         """
 
-        if self._model == 't5':
-            return self._tokenizer.model_max_length * RATIO_TOKENS_TO_T5_ENCODED_TOKENS
-        elif self._model == 'bart':
+        if SupportedModelFamily.BART.value in type(self._tokenizer).__name__.lower():
             return self._tokenizer.model_max_length * RATIO_TOKENS_TO_BART_ENCODED_TOKENS
+        elif SupportedModelFamily.T5.value in type(self._tokenizer).__name__.lower():
+            return self._tokenizer.model_max_length * RATIO_TOKENS_TO_T5_ENCODED_TOKENS
         # elif <future supported models>
              
     @classmethod
