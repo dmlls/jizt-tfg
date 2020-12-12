@@ -3,7 +3,7 @@
 import requests
 import json
 
-HOST = "http://0.0.0.0:5000/"
+HOST = "http://0.0.0.0:5000"
 
 text = ("GNU is       an extensive collection of wholly free software , which gave rise "
         "to the family of operating systems popularly known as Linux.  GNU is also "

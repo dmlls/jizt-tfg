@@ -77,7 +77,7 @@ class PlainText(Resource):
     def post(self):
         data = request.json
         self._validate_request_json(data)
-        response = requests.post('http://0.0.0.0:5001/v1/preprocessors/plain-text', json=data).json()
+        response = requests.post('http://172.17.0.2:5001/v1/preprocessors/plain-text', json=data).json()
         return response, 200
 
     def _validate_request_json(self, json):

@@ -3,7 +3,7 @@
 import requests
 import json
 
-HOST = "http://0.0.0.0:5001"
+HOST = "http://localhost:5000"
 
 text = ("GNU is       an extensive collection of wholly free software , which gave rise "
         "to the family of operating systems popularly known as Linux.  GNU is also "
@@ -11,7 +11,7 @@ text = ("GNU is       an extensive collection of wholly free software , which ga
         "is      licensed under the GNU Project's own General Public License (GPL).")
 
 
-response = requests.post(HOST + '/v1/preprocessors/plain-text', json={'source': text})
+response = requests.post(HOST + '/v1/summaries/plain-text', json={'source': text})
 print("VALID REQUEST")
 try:
     print("CODE:", response.status_code)
@@ -19,7 +19,7 @@ try:
 except json.decoder.JSONDecodeError as err:
     print(response)
 
-bad_request_response = requests.post(HOST + '/v1/preprocessors/plain-text', json={'bad_key': text})
+bad_request_response = requests.post(HOST + '/v1/summaries/plain-text', json={'bad_key': text})
 print("\nBAD REQUEST")
 try:
     print("CODE:", bad_request_response.status_code)
