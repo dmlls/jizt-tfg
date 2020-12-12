@@ -15,7 +15,7 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Marshmallow Schemas for DispatcherService."""
+"""Marshmallow Schemas for TextPreprocessorService."""
 
 from marshmallow import Schema, fields
 

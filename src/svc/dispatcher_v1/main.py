@@ -19,15 +19,16 @@
 
 import argparse
 import logging
-from flask import Flask, request
+import requests
+from flask import Flask, request, jsonify, make_response
 from flask_restful import Api, Resource, abort
 from marshmallow import Schema, fields, ValidationError
 from schemas import PlainTextRequestSchema, PlainTextResponseSchema
 
-#TODO: delete following modules
-from text_preprocessing import TextPreprocessor
-
 __version__ = '0.1'
+
+HOST = "0.0.0.0" # host for Flask server
+PORT = 5000 # port for Flask server
 
 # Args for Python script execution.
 parser = argparse.ArgumentParser(description='Dispatcher service. ' + \
@@ -59,11 +60,11 @@ class DispatcherService:
             datefmt='%d/%m/%Y %I:%M:%S %p'
         )
 
-        self.api.add_resource(PlainText, '/v1/summaries/plain_text',
+        self.api.add_resource(PlainText, '/v1/summaries/plain-text',
                               endpoint='preprocess_plain_text')
 
     def run(self):
-        self.app.run(debug=self.log_level)
+        self.app.run(host=HOST, port=PORT, debug=(self.log_level == logging.DEBUG))
 
 
 class PlainText(Resource):
@@ -76,17 +77,15 @@ class PlainText(Resource):
     def post(self):
         data = request.json
         self._validate_request_json(data)
-
-        # TODO: forward request to Dispatcher, not call text preprocessor
-        preprocessed_text = TextPreprocessor.preprocess(data['source'])
-        return {'preprocessed_text': preprocessed_text}
+        response = requests.post('http://0.0.0.0:5001/v1/preprocessors/plain-text', json=data).json()
+        return response, 200
 
     def _validate_request_json(self, json):
-        """Validates that JSON in the request body.
+        """Validates the JSON in the request body.
         
         The JSON will not be valid if it does not contain
-        all the fields defined in the :class:`.schemas.PlainTextRequestSchema`
-        class. 
+        all the mandatodry fields defined in the
+        :class:`.schemas.PlainTextRequestSchema` class. 
 
         If the JSON is not valid, an HTTPException is raised.
 

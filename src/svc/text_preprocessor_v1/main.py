@@ -15,15 +15,20 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""REST API v1 for the text preprocessor."""
+"""Test Preprocessor REST API v1."""
 
 import argparse
 import logging
-from flask import Flask, request, abort
-from flask_restful import Api, Resource
+import requests
+from flask import Flask, request, jsonify, make_response
+from flask_restful import Api, Resource, abort
 from text_preprocessing import TextPreprocessor
+from schemas import PlainTextRequestSchema, PlainTextResponseSchema
 
 __version__ = '0.1'
+
+HOST = "0.0.0.0" # host for Flask server
+PORT = 5001 # port for Flask server
 
 parser = argparse.ArgumentParser(description='Text pre-processing service. ' + \
                                              'Default log level is WARNING.')
@@ -44,18 +49,46 @@ class TextPreprocessorService:
             datefmt='%d/%m/%Y %I:%M:%S %p'
         )
 
-        self.api.add_resource(TextPreprocessing, 'v1/preprocessors/plain_text', endpoint='preprocess_plain_text')
+        self.api.add_resource(PlainTextPreprocessing, '/v1/preprocessors/plain-text',
+                              endpoint='preprocess_plain_text')
 
     def run(self):
-        self.app.run(debug=True)
+        self.app.run(host=HOST, port=PORT, debug=(self.log_level == logging.DEBUG))
 
 
-class TextPreprocessing(Resource):
+class PlainTextPreprocessing(Resource):
+    """Resource for plain text preprocessing."""
+
+    def __init__(self):
+        self.request_schema = PlainTextRequestSchema()
+        self.response_schema = PlainTextResponseSchema()
+
     def post(self):
+        data = request.json
+        self._validate_request_json(data)
+        preprocessed_text = TextPreprocessor.preprocess(data['source'])
+        response = {"preprocessed_text": preprocessed_text}
+        return make_response(jsonify(response), 200)
+    
+    def _validate_request_json(self, json):
+        """Validates the JSON in the request body.
+        
+        The JSON will not be valid if it does not contain
+        all the mandatodry fields defined in the
+        :class:`.schemas.PlainTextRequestSchema` class. 
 
+        If the JSON is not valid, an HTTPException is raised.
+
+        Args:
+            TODO 
+        """
+
+        errors = self.request_schema.validate(json)
+        if errors:
+            abort(400, errors=errors) # 400 BAD REQUEST
 
 if __name__ == "__main__":
-    argparse = parser.parse_args()
+    args = parser.parse_args()
     info_log_level = args.info
     debug_log_level = args.debug
 
@@ -66,3 +99,4 @@ if __name__ == "__main__":
         log_level = logging.DEBUG
     
     text_preprocessor_service = TextPreprocessorService(log_level)
+    text_preprocessor_service.run()
