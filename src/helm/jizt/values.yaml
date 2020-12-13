@@ -1,0 +1,15 @@
+# Default values for jizt chart.
+
+# Ingress configuration
+# ref: http://kubernetes.io/docs/user-guide/ingress/
+ingress:
+  hostname: "dev.jizt.it"
+
+replicaCount: 1
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80

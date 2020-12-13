@@ -1,0 +1,18 @@
+apiVersion: v2
+name: jizt 
+version: 0.0.1
+appVersion: 0.0.1
+description: Helm chart for the jizt microservices Kubernetes configuration
+keywords:
+  - jizt
+  - summarization
+home: https://www.jizt.it
+  - https://github.com/dmlls/jizt
+maintainers:
+  - name: Diego Miguel
+    email: jizt@diegomiguel.me
+# icon: todo
+dependencies:
+- name: jiztlibchart
+  version: 0.0.1
+  repository: file://../jiztlibchart

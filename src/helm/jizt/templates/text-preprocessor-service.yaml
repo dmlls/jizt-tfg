@@ -1,0 +1,15 @@
+{{- include "jiztlibchart.service" (list . "jizt.text-preprocessor-service") -}}
+{{- define "jizt.text-preprocessor-service" -}}
+{{- with $microsrv  := "text-preprocessor" -}}
+metadata:
+  name: "{{ $microsrv }}-service"
+  labels:
+    microservice: "{{ $microsrv }}"
+spec:
+  selector:
+    microservice: "{{ $microsrv }}"
+  ports:
+  - port: 5000
+    targetPort: 5001
+{{- end -}}
+{{- end -}}

@@ -1,0 +1,20 @@
+apiVersion: v2
+name: jiztlibchart
+description: A Helm library chart for deploying jizt with Kubernetes
+
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: library
+
+# Chart version
+version: 0.0.1
+
+# Version number of the application being deployed
+appVersion: 0.0.1
+
+home: https://www.jizt.it
+  - https://github.com/dmlls/jizt
+maintainers:
+  - name: Diego Miguel
+    email: jizt@diegomiguel.me

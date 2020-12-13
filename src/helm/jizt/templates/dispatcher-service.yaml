@@ -1,0 +1,15 @@
+{{- include "jiztlibchart.service" (list . "jizt.dispatcher-service") -}}
+{{- define "jizt.dispatcher-service" -}}
+{{- with $microsrv  := "dispatcher" -}}
+metadata:
+  name: "{{ $microsrv }}-service"
+  labels:
+    microservice: "{{ $microsrv }}"
+spec:
+  selector:
+    microservice: "{{ $microsrv }}"
+  ports:
+  - port: 5000
+    targetPort: 5000
+{{- end -}}
+{{- end -}}
