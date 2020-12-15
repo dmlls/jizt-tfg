@@ -11,7 +11,10 @@ spec:
   - host: {{ .Values.ingress.hostname }} 
     http:
       paths:
-      - path: /v1/summaries/plain-text
+      - path: /v1/summaries
+        pathType: Prefix
         backend:
-          serviceName: "dispatcher-service"
-          servicePort: 5000 
+          service:
+            name: "dispatcher-service"
+            port:
+              number: 5000
