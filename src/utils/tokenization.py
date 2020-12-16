@@ -23,8 +23,11 @@ from nltk.tokenize import RegexpTokenizer
 from blingfire import text_to_sentences
 from typing import List, Optional
 
-def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) -> List[str]:
-    """Divides the text into sentences.
+
+def sentence_tokenize(text: str,
+                      tokenizer: Optional[RegexpTokenizer] = None
+) -> List[str]:
+    r"""Divide the text into sentences.
 
     The steps followed are:
 
@@ -41,7 +44,7 @@ def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) ->
             - "Hello.Goodbye.", "Seriously??!That can't be true.": these sentences
             are split into: ['Hello.', 'Goodbye.'] and ['Seriously??!', 'That can't
             be true.'], respectively.
-    
+
     Args:
         text (:obj:`str`):
             Text to be split in sentences.
@@ -65,11 +68,11 @@ def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) ->
     if text[-1] != '.' and text[-1] != '?' and text[-1] != '!':
         text += '.'
 
-    text = ' '.join(text.split()) # remove '\n', '\t', etc.
-    
+    text = ' '.join(text.split())  # remove '\n', '\t', etc.
+
     # split sentences with the regexp and ensure there's 1 whitespace at most
     sentences = ' '.join(tokenizer.tokenize(text)).replace('  ', ' ')
-    
+
     # remove whitespaces before PUNCT_WITHOUT_PREV_WHITESPACE
     for punct in PUNCT_NO_PREV_WHITESPACE:
         sentences = sentences.replace(' ' + punct, punct)
@@ -81,15 +84,15 @@ def sentence_tokenize(text: str, tokenizer: Optional[RegexpTokenizer] = None) ->
     for sent in sentences[1:]:
         # if the previous sentence doesn't end with a '.', '!' or '?'
         # we concatenate the current sentence to it
-        if final_sentences[-1][-1] != '.' and \
-            final_sentences[-1][-1] != '!' and \
-            final_sentences[-1][-1] != '?':
-            final_sentences[-1] += (' ' + sent)
+        if (final_sentences[-1][-1] != '.' and
+                final_sentences[-1][-1] != '!' and
+                final_sentences[-1][-1] != '?'):
+            final_sentences[-1] += (' ' + sent))
         # if the next sentence doesn't start with a letter or a number,
         # we concatenate it to the previous
         elif not sent[0].isalpha() and not sent[0].isdigit():
             final_sentences[-1] += sent
         else:
             final_sentences.append(sent)
-    
+
     return final_sentences

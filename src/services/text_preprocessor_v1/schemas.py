@@ -21,6 +21,7 @@ from marshmallow import Schema, fields
 
 __version__ = '0.1'
 
+
 class PlainTextRequestSchema(Schema):
     """Schema for the clients' plain-text REST requests.
 

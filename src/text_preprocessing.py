@@ -22,15 +22,18 @@ __version__ = '0.1'
 from utils.tokenization import sentence_tokenize
 from typing import List, Optional, Union
 
+
 class TextPreprocessor:
-    """Text pre-processing utilities.
-    
+    r"""Text pre-processing utilities.
+
     This pre-processor carries out the following preprocessing tasks over
     the texts:
+
     * Removes characters such as :code:`'\n'`, :code:`'\t'`, etc.
     * Adds one whitespace after each sentence (relevant for the BART model).
     * Splits the text into sentences, taking into account Named Entities and
       special cases such as:
+
       - "I was born in 02.26.1980 in New York", "As we can see in Figure 1.1.
         the model will not fail.": despite the periods in the date and the
         Figure number, these texts will not be split into different sentences.
@@ -42,14 +45,14 @@ class TextPreprocessor:
         :code:`['Seriously??!', 'That can't be true.']`, respectively.
     """
 
-    @classmethod 
+    @classmethod
     def preprocess(
         cls,
         text: str,
         return_as_list: Optional[bool] = False
     ) -> Union[str, List[str]]:
-        """Pre-processes the text.
-        
+        """Pre-process the text.
+
         Args:
             text (:obj:`str`):
                 The text to be pre-processed.
@@ -57,10 +60,10 @@ class TextPreprocessor:
                 If True the text is split into sentences and the method returns
                 a list containing those sentences. If False, it returns the text
                 pre-processed as a single string.
-                
+
         Returns:
             :obj:`str` or :obj:`List[str]`: The pre-processed text.
         """
-        
+
         sentences = sentence_tokenize(text)
         return sentences if return_as_list else ' '.join(sentences)

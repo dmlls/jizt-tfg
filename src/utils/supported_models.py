@@ -21,10 +21,9 @@ __version__ = '0.1'
 
 from enum import Enum
 
+
 class ExplicitEnum(Enum):
-    """
-    Enum with more explicit error message for missing values.
-    """
+    """Enum with more explicit error message for missing values."""
 
     @classmethod
     def _missing_(cls, value):
@@ -32,6 +31,7 @@ class ExplicitEnum(Enum):
             (f"{value} is not a valid {cls.__name__}, please select one "
              f"of the following: {', '.join([pair.value for pair in cls])}")
         )
+
 
 class SupportedModel(ExplicitEnum):
     """Supported pretrained models.
@@ -54,6 +54,7 @@ class SupportedModel(ExplicitEnum):
     T5_LARGE = "t5-large"
     T5_3B = "t5-3B"
     T5_11B = "t5-11B"
+
 
 class SupportedModelFamily(ExplicitEnum):
     """Supported model `families`.

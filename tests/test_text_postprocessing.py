@@ -21,6 +21,7 @@
 import pytest
 import text_postprocessing as tp
 
+
 input_and_expected_texts = [
     (('it started in a movie in the late 1950s where you have a boy '
       'sitting in his own bedroom, trying to study.his wife gives him '
@@ -100,11 +101,12 @@ input_and_expected_texts = [
       'however, was super nice ^^ can\'t wait to repeat the experience asap'
       'here goes a happy face :-) and a sad one :-(, another happy one =) '
       'and finally a funny one :P'),
-      ('Had an awful day today :( hope it gets better soon. Yesterday,'
-       'however, was super nice ^^ can\'t wait to repeat the experience asap'
-       'here goes a happy face :-) and a sad one :-(, another happy one =) '
-       'and finally a funny one :P'))
+     ('Had an awful day today :( hope it gets better soon. Yesterday,'
+      'however, was super nice ^^ can\'t wait to repeat the experience asap'
+      'here goes a happy face :-) and a sad one :-(, another happy one =) '
+      'and finally a funny one :P'))
 ]
+
 
 @pytest.mark.parametrize("input_text, expected", input_and_expected_texts)
 def test_postprocess(input_text, expected):

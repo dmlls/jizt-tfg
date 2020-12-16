@@ -23,11 +23,9 @@ import logging
 import torch
 import copy
 from text_preprocessing import TextPreprocessor
-from transformers import BartTokenizer
-from transformers import T5Tokenizer
+from transformers import BartTokenizer, T5Tokenizer, tokenization_utils_base
 from utils.supported_models import SupportedModel, SupportedModelFamily
 from nltk import word_tokenize
-from transformers import tokenization_utils_base
 from typing import List, Optional, Union
 
 # deactivate warnings from the tokenizers
@@ -37,18 +35,19 @@ logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR
 # It shows the relation between the tokens without being encoded and the tokens
 # once encoded. The higher it is, the most likely the subdivisions will exceed the
 # model maximum sequence length.
-RATIO_TOKENS_TO_T5_ENCODED_TOKENS = 0.7 # obtained empirically
+RATIO_TOKENS_TO_T5_ENCODED_TOKENS = 0.7  # obtained empirically
 
 # Ratio calculated thus: len(word_tokenize(text)) / len(bart_tokenizer.encode(text))
 # It shows the relation between the tokens without being encoded and the tokens
 # once encoded. The higher it is, the most likely the subdivisions will exceed the
 # model maximum sequence length.
-RATIO_TOKENS_TO_BART_ENCODED_TOKENS = 0.86 # obtained empirically
+RATIO_TOKENS_TO_BART_ENCODED_TOKENS = 0.86  # obtained empirically
 
 # Factor of variation for the RATIO_TOKENS_TO_ENCODED_TOKENS. The new ratio is
 # calculated thus:
 # RATIO_TOKENS_TO_ENCODED_TOKENS -= RATIO_TOKENS_TO_ENCODED_TOKENS * VARIATION_RATE_FOR_RATIO
 VARIATION_RATE_FOR_RATIO = 0.015
+
 
 class SplitterEncoder:
     """Encoder with splitting.
@@ -69,11 +68,11 @@ class SplitterEncoder:
     """
 
     def __init__(self, tokenizer: str = None):
-        tokenizer = SupportedModel(tokenizer.lower()) # checks if the tokenizer is supported
+        tokenizer = SupportedModel(tokenizer.lower())  # checks if the tokenizer is supported
 
-        if SupportedModelFamily.BART.value in tokenizer.value: # BART tokenizer
+        if SupportedModelFamily.BART.value in tokenizer.value:  # BART tokenizer
             self._tokenizer = BartTokenizer.from_pretrained(tokenizer.value)
-        elif SupportedModelFamily.T5.value in tokenizer.value: # T5 tokenizer
+        elif SupportedModelFamily.T5.value in tokenizer.value:  # T5 tokenizer
             self._tokenizer = T5Tokenizer.from_pretrained(tokenizer.value)
         # elif future supported models
 
@@ -89,7 +88,7 @@ class SplitterEncoder:
         max_length: Optional[int] = None,
         return_tensors: Optional[str] = None
     ) -> Union[List[int], torch.LongTensor]:
-        """Converts a string to a sequence of ids (:obj:`int`), using the tokenizer and vocabulary.
+        """Convert a string to a sequence of ids (:obj:`int`), using the tokenizer and vocabulary.
         
         To avoid going over the maximum sequence length of the tokenizer, the text is first
         split (without splitting sentences) into groups containing approximately the same
@@ -149,14 +148,14 @@ class SplitterEncoder:
         """
         
         if return_tensors is not None and return_tensors not in ('pt', 'np'):
-            raise NotImplementedError(f'{return_tensors} tensors are currently not supported.')  
+            raise NotImplementedError(f'{return_tensors} tensors are currently not supported.')
         
         textPreprocessor = TextPreprocessor()
         
-        max_len_subdiv = self._get_max_length_subdivision() # max length per subdivision
+        max_len_subdiv = self._get_max_length_subdivision()  # max length per subdivision
         sentences = textPreprocessor.preprocess(text, return_as_list=True)
         
-        while True: # do while
+        while True:  # do while
             subdivisions = self._divide_eagerly(sentences, max_len_subdiv)
 
             balanced_subdiv = self._balance_subdivisions(subdivisions, max_len_subdiv)
@@ -183,7 +182,7 @@ class SplitterEncoder:
         
     @classmethod
     def _divide_eagerly(cls, sentences: List[str], max_len_subdiv: int) -> List[List[str]]:
-        """Subdivides the text eagerly.
+        """Subdivide the text eagerly.
         
         The sentences are divided into groups, ensuring that the length of any of these
         groups (subdivisions) is always less or equal than the model max. sequence length,
@@ -200,29 +199,29 @@ class SplitterEncoder:
         Returns:
             :obj:`List[List[str]]`: The generated subdivisions, e.g.::
 
-            [[sent_1, sent_2, sent_3, ...], [sent_10, sent_11, ...], ...].       
+            [[sent_1, sent_2, sent_3, ...], [sent_10, sent_11, ...], ...].
         """
         
         subdivisions = []
         current_subdiv = []
-        current_subdiv_len = 0 # in terms of tokens
+        current_subdiv_len = 0  # in terms of tokens
         
         for sent in sentences:
             sent_len = cls._len(sent)
             if current_subdiv_len + sent_len <= max_len_subdiv:
-                current_subdiv.append(sent) # append sent
+                current_subdiv.append(sent)  # append sent
                 current_subdiv_len += sent_len
             else:
                 subdivisions.append(current_subdiv)
-                current_subdiv = [sent] # new subdivision
+                current_subdiv = [sent]  # new subdivision
                 current_subdiv_len = sent_len
-        subdivisions.append(current_subdiv) # append last subdivision
+        subdivisions.append(current_subdiv)  # append last subdivision
         
         return subdivisions
 
-    @classmethod 
+    @classmethod
     def _balance_subdivisions(cls, subdivisions: List[str], max_len_subdiv: int) -> List[List[str]]:
-        """Balances the subdivisions in terms of length.
+        """Balance the subdivisions in terms of length.
         
         This method is meant to be called after :meth:`_divide_eagerly`. If needed,
         it moves sentences from one subdivision to another in such way that all the subdvisions
@@ -242,36 +241,36 @@ class SplitterEncoder:
         # length (in terms of nltk word tokens) of each subdivision, e.g., [501, 498, 480, ...]
         len_prev_subdivs = [cls._len_subdivision(subdiv) for subdiv in balanced_subdiv]
         
-        while True: # do while
+        while True:  # do while
             for i in range(len(balanced_subdiv) - 1):
                 # difference in lengths
-                diff_len = cls._len_subdivision(balanced_subdiv[i+1]) - \
-                                cls._len_subdivision(balanced_subdiv[i])
+                diff_len = (cls._len_subdivision(balanced_subdiv[i+1])
+                            - cls._len_subdivision(balanced_subdiv[i]))
                 while diff_len > 0:
                     moved_sent_len = cls._len(balanced_subdiv[i+1][-1])
                     # check that moving the sentence doesn't result in a subdivision with
                     # n_tokens > max_len_subdiv and that the length of the moved sentence
                     # is not bigger that the difference of tokens between the subdivs
-                    if cls._len_subdivision(balanced_subdiv[i]) + \
-                            moved_sent_len <= max_len_subdiv and moved_sent_len <= diff_len:
+                    if (cls._len_subdivision(balanced_subdiv[i])
+                        + moved_sent_len) <= max_len_subdiv and moved_sent_len <= diff_len:
                         # move sentece from balanced_subdiv[i+1] to balanced_subdiv[i]
-                        balanced_subdiv[i].insert(0, balanced_subdiv[i+1][-1]) # add sent
-                        balanced_subdiv[i+1] = balanced_subdiv[i+1][:-1] # remove sent
-                        diff_len = cls._len_subdivision(balanced_subdiv[i+1]) - \
-                                        cls._len_subdivision(balanced_subdiv[i])
+                        balanced_subdiv[i].insert(0, balanced_subdiv[i+1][-1])  # add sent
+                        balanced_subdiv[i+1] = balanced_subdiv[i+1][:-1]  # remove sent
+                        diff_len = (cls._len_subdivision(balanced_subdiv[i+1])
+                                    + cls._len_subdivision(balanced_subdiv[i]))
                     else:
                         break
                         
             len_current_subdivs = [cls._len_subdivision(subdiv) for subdiv in balanced_subdiv]
             
-            if len_prev_subdivs == len_current_subdivs: # if there are no changes, we stop
+            if len_prev_subdivs == len_current_subdivs:  # if there are no changes, we stop
                 return balanced_subdiv[::-1]
             
             len_prev_subdivs = len_current_subdivs
         
     @classmethod
     def _add_prefix_to_subdivs(cls, subdivisions_as_str: List[str], prefix: str) -> List[str]:
-        """Adds a prefix to each subdivision.
+        """Add a prefix to each subdivision.
         
         Args:
             subdivisions_as_str (:obj:`List[str]`):
@@ -287,7 +286,7 @@ class SplitterEncoder:
         return [prefix + subdiv for subdiv in subdivisions_as_str]
 
     def _get_max_length_subdivision(self) -> int:
-        """Calculates the maximum length of each subdivision.
+        """Calculate the maximum length of each subdivision.
 
         The length is measured in terms of NLTK word tokens (:func:`word_tokenize`).
 
@@ -317,7 +316,7 @@ class SplitterEncoder:
     
     @classmethod
     def _len_subdivision(cls, subdivision: List[str]) -> List[int]:
-        """Calculates the length of a subdivision.
+        """Calculate the length of a subdivision.
         
         The length is measured in terms of NLTK word tokens (:func:`word_tokenize`).
         
@@ -336,7 +335,7 @@ class SplitterEncoder:
                            subdivisions: List[Union[List[int], torch.LongTensor]],
                            return_tensors: Optional[str] = None
     ) -> bool:
-        """Checks the length of subdivisions.
+        """Check the length of subdivisions.
         
         Args:
             subdivisions (:obj:`List[List[int]]` or :obj:`List[torch.LongTensor]`):

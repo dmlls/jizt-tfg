@@ -20,6 +20,7 @@
 import pytest
 import text_summarization as ts
 
+
 def test_init():
     # try different initializations and check no exceptions are raised
     # correct initializations

@@ -22,9 +22,8 @@ import logging
 import socket
 import requests
 import json
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request
 from flask_restful import Api, Resource, abort
-from marshmallow import Schema, fields, ValidationError
 from schemas import PlainTextRequestSchema, PlainTextResponseSchema
 
 __version__ = '0.1.1'
@@ -33,12 +32,13 @@ __version__ = '0.1.1'
 SVC_CONFIG_FILE = "svc_config.json"
 
 # Args for Python script execution.
-parser = argparse.ArgumentParser(description='Dispatcher service. ' + \
+parser = argparse.ArgumentParser(description='Dispatcher service. '
                                              'Default log level is WARNING.')
 parser.add_argument('-i', '--info', action='store_true',
                     help='turn on Python logging to INFO level')
 parser.add_argument('-d', '--debug', action='store_true',
                     help='turn on Python logging and Flask to DEBUG level')
+
 
 class DispatcherService:
     """Dispatcher service.
@@ -54,7 +54,7 @@ class DispatcherService:
     def __init__(self, log_level, svc_config: dict):
         self.app = Flask(__name__)
         self.api = Api(self.app)
-        
+
         self.log_level = log_level
         logging.basicConfig(
             format='%(asctime)s %(levelname)-8s %(message)s',
@@ -72,7 +72,7 @@ class DispatcherService:
         )
 
     def run(self):
-        self.app.run(host="0.0.0.0", # make the server publicly available
+        self.app.run(host="0.0.0.0",  # make the server publicly available
                      port=self.svc_config["self"]["port"],
                      debug=(self.log_level == logging.DEBUG))
 
@@ -86,11 +86,26 @@ class PlainText(Resource):
         self.svc_config = kwargs['svc_config']
 
     def post(self):
+        """HTTP POST.
+
+        Forward the request to the preprocessor.
+
+        #TODO: update docstring.
+
+        Returns:
+            :obj:`tuple`: The text preprocessed and the
+            response code 200 OK.
+
+        Raises:
+            :class:`http.client.HTTPException`: If the body
+            JSON is not valid.
+        """
+
         data = request.json
         self._validate_request_json(data)
         # DNS lookup
-        text_preprocessor_svc_ip = \
-            socket.gethostbyname(self.svc_config["text-preprocessor"]["name"])
+        text_preprocessor_svc_ip = socket.gethostbyname(
+                                       self.svc_config["text-preprocessor"]["name"])
         url = (
             f"http://{text_preprocessor_svc_ip}:"
             f"{self.svc_config['text-preprocessor']['port']}"
@@ -100,11 +115,11 @@ class PlainText(Resource):
         return response, 200
 
     def _validate_request_json(self, json):
-        """Validates the JSON in the request body.
-        
+        """Validate JSON in the request body.
+
         The JSON will not be valid if it does not contain
         all the mandatodry fields defined in the
-        :class:`.schemas.PlainTextRequestSchema` class. 
+        :class:`.schemas.PlainTextRequestSchema` class.
 
         Args:
             json (:obj:`dict`):
@@ -117,7 +132,7 @@ class PlainText(Resource):
 
         errors = self.request_schema.validate(json)
         if errors:
-            abort(400, errors=errors) # 400 BAD REQUEST
+            abort(400, errors=errors)  # 400 BAD REQUEST
 
 
 if __name__ == "__main__":
@@ -134,6 +149,6 @@ if __name__ == "__main__":
     svc_config = {}
     with open(SVC_CONFIG_FILE, 'r') as config:
         svc_config = json.load(config)
-    
+
     dispatcher_service = DispatcherService(log_level, svc_config)
     dispatcher_service.run()

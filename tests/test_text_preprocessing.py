@@ -20,6 +20,7 @@
 import pytest
 from utils.tokenization import sentence_tokenize
 
+
 passing_sentences = [
     ("How's your        day going???!It's     going...\n actually it's going \t bad.",
      ["How's your day going???!", "It's going... actually it's going bad."]),
@@ -47,12 +48,13 @@ passing_sentences = [
      ["I don't like Voldemort, A.K.A. \"he-who-must-not-be-named.\""]),
     ("Whitespaces ??!Honestly   ,not my thing ; that is , I don't get them !",
      ["Whitespaces??!", "Honesty, not my thing; that is, I don't get them!"])
-] 
+]
 
 failing_sentences = [
     ("I should be considered two sentences!but I'm not.",
      ["I should be considered two sentences!", "but I'm not."])
 ]
+
 
 @pytest.mark.parametrize("input_sentences, expected", passing_sentences)
 def test_sentence_tokenize(input_sentences, expected):

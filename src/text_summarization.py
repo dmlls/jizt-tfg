@@ -26,7 +26,6 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 from typing import List, Optional, Union, Iterable
 
 
-
 class Summarizer:
     """Text summarizer.
 
@@ -40,7 +39,7 @@ class Summarizer:
     The specific model used for the generation and the decoding could be different, as long as they
     belong to the same `family` of models, e.g. if the specific model is "bart-large" the model `family`
     would be BART. Then, the model "bart-large" could be used for generation and the model "bart-base"
-    used for decoding, although it is advised to use the same model for generation `and` decoding. 
+    used for decoding, although it is advised to use the same model for generation `and` decoding.
 
     This summarizer is meant to be used along with the following
     `Hugging Face pretrained models <https://huggingface.co/transformers/pretrained_models.html>`__:
@@ -50,22 +49,22 @@ class Summarizer:
     """
 
     def __init__(self, model: str, tokenizer: str = None):
-        model = SupportedModel(model) # checks if the model is supported
+        model = SupportedModel(model)  # checks if the model is supported
 
-        if SupportedModelFamily.BART.value in model.value: # BART model
+        if SupportedModelFamily.BART.value in model.value:  # BART model
             self._model = BartForConditionalGeneration.from_pretrained(model.value)
-        elif SupportedModelFamily.T5.value in model.value: # T5 model
+        elif SupportedModelFamily.T5.value in model.value:  # T5 model
             self._model = T5ForConditionalGeneration.from_pretrained(model.value)
         # elif future supported models
 
         # if no tokenizer is provided, use the same pretrained model as for model
         if tokenizer is None:
-            self._tokenizer = model # support already checked
+            self._tokenizer = model  # support already checked
         else:
-            tokenizer = SupportedModel(tokenizer) # check model support
-            if SupportedModelFamily.BART.value in tokenizer.value: # BART tokenizer
+            tokenizer = SupportedModel(tokenizer)  # check model support
+            if SupportedModelFamily.BART.value in tokenizer.value:  # BART tokenizer
                 self._tokenizer = BartTokenizer.from_pretrained(tokenizer.value)
-            elif SupportedModelFamily.T5.value in tokenizer.value: # T5 tokenizer
+            elif SupportedModelFamily.T5.value in tokenizer.value:  # T5 tokenizer
                 self._tokenizer = T5Tokenizer.from_pretrained(tokenizer.value)
             # elif future supported models
 
@@ -96,7 +95,7 @@ class Summarizer:
                   skip_special_tokens: Optional[bool] = False,
                   clean_up_tokenization_spaces: Optional[bool] = True
     ) -> str:
-        """Generates a summary from the encoded tokens (input_ids).
+        """Generate a summary from the encoded tokens (input_ids).
 
         Decoding strategies currently supported:
 
@@ -131,7 +130,7 @@ class Summarizer:
                 to :obj:`top_p` higher are kept for generation.
             repetition_penalty (:obj:`float`, `optional`, defaults to 1.0):
                 The parameter for repetition penalty. 1.0 means no penalty. See `this paper
-                <https://arxiv.org/pdf/1909.05858.pdf>`__ for more details. 
+                <https://arxiv.org/pdf/1909.05858.pdf>`__ for more details.
             bad_words_ids(:obj:`List[List[int]]`, `optional`):
                 List of token ids that are not allowed to be generated. In order to get the tokens of
                 the words should not appear in the generated text, use :obj:`tokenizer(bad_word,
@@ -177,6 +176,6 @@ class Summarizer:
             decoded_subdiv = self._tokenizer.decode(summary_ids.squeeze().tolist(),
                                                     skip_special_tokens=skip_special_tokens,
                                                     clean_up_tokenization_spaces=clean_up_tokenization_spaces)
-            summary_subdivs.append(decoded_subdiv) 
+            summary_subdivs.append(decoded_subdiv)
 
         return " ".join(summary_subdivs)
