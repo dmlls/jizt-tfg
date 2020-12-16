@@ -1,23 +1,21 @@
 {{- include "jiztlibchart.deployment" (list . "jizt.dispatcher-deployment") -}}
 {{- define "jizt.dispatcher-deployment" -}}
-{{- with $microsrv  := "dispatcher" -}}
 metadata:
-  name: "{{ $microsrv }}-deployment"
+  name: {{ .Values.dispatcher.name }}-deployment
   labels:
-    microservice: "{{ $microsrv }}"
+    microservice: {{ .Values.dispatcher.name }}
 spec:
   selector:
     matchLabels:
-      microservice: "{{ $microsrv }}"
+      microservice: {{ .Values.dispatcher.name }}
   template:
     metadata:
       labels:
-        microservice: "{{ $microsrv }}"
+        microservice: {{ .Values.dispatcher.name }}
     spec:
       containers:
-      - name: "{{ $microsrv }}"
-        image: "jizt/dispatcher" 
+      - name: {{ .Values.dispatcher.name }}
+        image: {{ .Values.dispatcher.image }}
         ports:
-        - containerPort: 5000
-{{- end -}}
+        - containerPort: {{ .Values.dispatcher.ports.container }}
 {{- end -}}

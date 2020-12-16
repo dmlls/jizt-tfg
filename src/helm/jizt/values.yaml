@@ -3,13 +3,34 @@
 # Ingress configuration
 # ref: http://kubernetes.io/docs/user-guide/ingress/
 ingress:
-  hostname: "dev.jizt.it"
+  hostname: "api.jizt.it"
+  paths:
+    v1: "/v1/summaries"
 
+# General replica count for ALL the deployments
 replicaCount: 1
 
+# Autoscaling configuration
+# ref: https://kubernetes.io/blog/2016/07/autoscaling-in-kubernetes/
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
+
+# Configuration for the Dispatcher microservice
+dispatcher:
+  name: "dispatcher"
+  ports:
+    svc: 5000
+    container: 5000
+  image: jizt/dispatcher:0.0.4
+
+# Configuration for the Text Preprocessor microservice
+textpreprocessor:
+  name: "text-preprocessor"
+  ports:
+    svc: 5000
+    container: 5000
+  image: jizt/text-preprocessor:0.0.2

@@ -1,20 +1,29 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: "{{ include "jizt.name" . }}-ingress"
+  name: {{ include "jizt.name" . }}-ingress
   labels:
-    app: "{{ include "jizt.name" . }}"
-    chart: "{{ include "jizt.chart" . }}"
-    release: "{{ $.Release.Name }}"
+    app: {{ include "jizt.name" . }}
+    chart: {{ include "jizt.chart" . }}
+    release: {{ $.Release.Name }}
 spec:
   rules:
-  - host: {{ .Values.ingress.hostname }} 
+  - host: {{ .Values.ingress.hostname }}
     http:
       paths:
-      - path: /v1/summaries
+      - path: {{ .Values.ingress.paths.v1 }}
         pathType: Prefix
         backend:
           service:
-            name: "dispatcher-service"
+            name: {{ .Values.dispatcher.name }}-service
             port:
-              number: 5000
+              number: {{ .Values.dispatcher.ports.svc }}
+
+
+
+  # defaultBackend:
+  #   service:
+  #     name: dispatcher-service
+  #     port:
+  #       number: 5000
+

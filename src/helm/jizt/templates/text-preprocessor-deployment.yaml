@@ -1,24 +1,21 @@
-
-{{- include "jiztlibchart.deployment" (list . "jizt.text-processor-deployment") -}}
-{{- define "jizt.text-processor-deployment" -}}
-{{- with $microsrv  := "text-processor" -}}
+{{- include "jiztlibchart.deployment" (list . "jizt.textpreprocessor-deployment") -}}
+{{- define "jizt.textpreprocessor-deployment" -}}
 metadata:
-  name: "{{ $microsrv }}-deployment"
+  name: {{ .Values.textpreprocessor.name }}-deployment
   labels:
-    microservice: "{{ $microsrv }}"
+    microservice: {{ .Values.textpreprocessor.name }}
 spec:
   selector:
     matchLabels:
-      microservice: "{{ $microsrv }}"
+      microservice: {{ .Values.textpreprocessor.name }}
   template:
     metadata:
       labels:
-        microservice: "{{ $microsrv }}"
+        microservice: {{ .Values.textpreprocessor.name }}
     spec:
       containers:
-      - name: "{{ $microsrv }}"
-        image: "jizt/text-preprocessor" 
+      - name: {{ .Values.textpreprocessor.name }}
+        image: {{ .Values.textpreprocessor.image }} 
         ports:
-        - containerPort: 5001
-{{- end -}}
+        - containerPort: {{ .Values.textpreprocessor.ports.container }}
 {{- end -}}

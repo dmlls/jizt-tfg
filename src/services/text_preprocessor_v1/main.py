@@ -20,15 +20,16 @@
 import argparse
 import logging
 import requests
+import json
 from flask import Flask, request, jsonify, make_response
 from flask_restful import Api, Resource, abort
 from text_preprocessing import TextPreprocessor
 from schemas import PlainTextRequestSchema, PlainTextResponseSchema
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
-HOST = "0.0.0.0" # host for Flask server
-PORT = 5001 # port for Flask server
+# JSON containing the service configuration
+SVC_CONFIG_FILE = "svc_config.json"
 
 parser = argparse.ArgumentParser(description='Text pre-processing service. ' + \
                                              'Default log level is WARNING.')
@@ -39,7 +40,7 @@ parser.add_argument('-d', '--debug', action='store_true',
 
 class TextPreprocessorService:
     """Text pre-processing service."""
-    def __init__(self, log_level):
+    def __init__(self, log_level, svc_config: dict):
         self.app = Flask(__name__)
         self.api = Api(self.app)
         self.log_level = log_level
@@ -49,19 +50,28 @@ class TextPreprocessorService:
             datefmt='%d/%m/%Y %I:%M:%S %p'
         )
 
-        self.api.add_resource(PlainTextPreprocessing, '/v1/preprocessors/plain-text',
-                              endpoint='preprocess_plain_text')
+        self.svc_config = svc_config
+
+        # /v1/preprocessors/plain-text
+        self.api.add_resource(
+            PlainTextPreprocessing,
+            self.svc_config["self"]["endpoints"]["v1"]["plain-text"],
+            resource_class_kwargs={'svc_config': self.svc_config}
+        )
 
     def run(self):
-        self.app.run(host=HOST, port=PORT, debug=(self.log_level == logging.DEBUG))
+        self.app.run(host="0.0.0.0", # make the server publicly available
+                     port=self.svc_config["self"]["port"],
+                     debug=(self.log_level == logging.DEBUG))
 
 
 class PlainTextPreprocessing(Resource):
     """Resource for plain text preprocessing."""
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         self.request_schema = PlainTextRequestSchema()
         self.response_schema = PlainTextResponseSchema()
+        self.svc_config = kwargs['svc_config']
 
     def post(self):
         data = request.json
@@ -77,15 +87,19 @@ class PlainTextPreprocessing(Resource):
         all the mandatodry fields defined in the
         :class:`.schemas.PlainTextRequestSchema` class. 
 
-        If the JSON is not valid, an HTTPException is raised.
-
         Args:
-            TODO 
+            json (:obj:`dict`):
+                The JSON to be validated.
+
+        Raises:
+            :class:`http.client.HTTPException`: If the JSON
+            is not valid.
         """
 
         errors = self.request_schema.validate(json)
         if errors:
             abort(400, errors=errors) # 400 BAD REQUEST
+
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -97,6 +111,10 @@ if __name__ == "__main__":
         log_level = logging.INFO
     if debug_log_level:
         log_level = logging.DEBUG
+
+    svc_config = {}
+    with open(SVC_CONFIG_FILE, 'r') as config:
+        svc_config = json.load(config)
     
-    text_preprocessor_service = TextPreprocessorService(log_level)
+    text_preprocessor_service = TextPreprocessorService(log_level, svc_config)
     text_preprocessor_service.run()

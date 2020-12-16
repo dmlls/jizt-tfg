@@ -7,13 +7,13 @@ kind: Service
 metadata:
   name: {}
   labels:
-    app: "jizt" 
+    app: {{ include "jizt.name" . }}
     microservice: {}
-    chart: "{{ include "jizt.chart" . }}" 
+    chart: {{ include "jizt.chart" . }}
     release: "{{ $.Release.Name }}"
 spec:
   selector:
-      app: "jizt" 
+      app: {{ include "jizt.name" . }}
       microservice: {}
       release: {{ $.Release.Name }}
   ports:

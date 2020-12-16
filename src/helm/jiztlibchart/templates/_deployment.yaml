@@ -7,9 +7,9 @@ kind: Deployment
 metadata:
   name: {}
   labels:
-    app: "jizt" 
+    app: {{ include "jizt.name" . }}
     microservice: {}
-    chart: "{{ include "jizt.chart" . }}" 
+    chart: {{ include "jizt.chart" . }}
     release: "{{ $.Release.Name }}"
 spec:
   {{- if not .Values.autoscaling.enabled }}
@@ -17,15 +17,15 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app: "jizt" 
+      app: {{ include "jizt.name" . }}
       microservice: {}
       release: {{ $.Release.Name }}
   template:
     metadata:
       labels:
-        app: "jizt" 
+        app: {{ include "jizt.name" . }}
         microservice: {}
-        chart: "{{ include "jizt.chart" . }}" 
+        chart: {{ include "jizt.chart" . }}
         release: {{ $.Release.Name }}
     spec:
       containers:

@@ -1,0 +1,20 @@
+{
+  "self": {
+    "name": "dispatcher-service",
+    "port": 5000,
+    "endpoints": {
+      "v1": {
+        "plain-text": "/v1/summaries/plain-text"
+      }
+    }
+  },
+  "text-preprocessor": {
+    "name": "text-preprocessor-service",
+    "port": 5000,
+    "endpoints": {
+      "v1": {
+        "plain-text": "/v1/preprocessors/plain-text"
+      }
+    }
+  }
+}
