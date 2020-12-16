@@ -1,7 +1,5 @@
 version = 1
 
-test_patterns = ["tests/test_*.py"]
-
 [[analyzers]]
 name = "python"
 enabled = true
@@ -16,6 +14,3 @@ enabled = true
 [[analyzers]]
 name = "docker"
 enabled = true
-
-  [analyzers.meta]
-  dockerfile_paths = ["docker/**/Dockerfile"]
