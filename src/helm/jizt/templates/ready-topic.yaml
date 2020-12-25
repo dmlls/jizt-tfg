@@ -1,0 +1,5 @@
+{{- include "jiztlibchart.kafka-topic" (list . "jizt.ready-topic") -}}
+{{- define "jizt.ready-topic" -}}
+metadata:
+  name: ready-topic
+{{- end -}}

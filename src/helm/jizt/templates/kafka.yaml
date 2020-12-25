@@ -2,6 +2,7 @@ apiVersion: kafka.strimzi.io/v1beta1
 kind: Kafka
 metadata:
   name: {{ .Values.kafka.name }}
+  namespace: {{ .Values.strimzi.namespace }}
   labels:
     app: {{ include "jizt.name" . }}
     chart: {{ include "jizt.chart" . }}
@@ -22,11 +23,11 @@ spec:
         tls: false
     config:
       auto.create.topics.enable: {{ .Values.kafka.config.autoCreateTopics }}
+      message.max.bytes: {{ .Values.kafka.config.messageMaxBytes }}
       offsets.topic.replication.factor: {{ .Values.kafka.config.topicReplicationFactor }}
       transaction.state.log.replication.factor: {{ .Values.kafka.config.logReplicationFactor }}
       transaction.state.log.min.isr: {{ .Values.kafka.config.logMinIsr }}
       log.message.format.version: {{ .Values.kafka.config.logMessageFormatVersion }}
-      log.retention.ms: {{ .Values.kafka.config.logRetentionMs }}
     storage:
       type: ephemeral
   zookeeper:

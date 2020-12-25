@@ -1,4 +1,6 @@
-# Default values for jizt chart.
+####################################
+# Kubernetes related configuration #
+####################################
 
 # Ingress configuration
 # ref: http://kubernetes.io/docs/user-guide/ingress/
@@ -35,7 +37,17 @@ textPreprocessor:
     container: 5000
   image: jizt/text-preprocessor:0.0.2
 
+
+###############################
+# Kafka related configuration #
+###############################
+
+# Global configuration for Strimzi
+strimzi:
+  namespace: "strimzi"  # must exist beforehand in the Kubernetes cluster
+
 # Configuration for Strimzi Kafka cluster
+# ref: https://strimzi.io/docs/operators/master/using.html#proc-config-kafka-str
 kafka:
   name: "jizt-kafka-cluster"
   version: 2.7.0
@@ -45,11 +57,17 @@ kafka:
     memoryLimits: 1Gi
   config:
     autoCreateTopics: "false"
+    messageMaxBytes: 1048588  # 1 MiB
     topicReplicationFactor: 1
     logReplicationFactor: 1
     logMinIsr: 1
     logMessageFormatVersion: "2.7-IV2"
-    logRetentionMs: 600000  # 10 minutes
-  zookeper:
+  zookeeper:
     replicas: 1
 
+# Global configuration for Kafka topics
+# ref: https://strimzi.io/docs/operators/master/using.html#type-KafkaTopic-reference
+topics:
+  partitions: 1
+  replicas: 1
+  retentionMs: 600000  # 10 minutes

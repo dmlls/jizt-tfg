@@ -2,8 +2,5 @@ dependencies:
 - name: jiztlibchart
   repository: file://../jiztlibchart
   version: 0.0.1
-- name: strimzi-kafka-operator
-  repository: https://strimzi.io/charts/
-  version: 0.20.1
-digest: sha256:e30c7464d2d1bf4658538c6d058024f4efea76c05e9ef18af252b7da002c4b04
-generated: "2020-12-25T10:43:57.473055239+01:00"
+digest: sha256:c6775430a2c44aed6894e3f9bb378f067c9727bd04b1a9450e564c93d57c8b10
+generated: "2020-12-25T13:46:58.393597823+01:00"
