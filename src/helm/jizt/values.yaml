@@ -28,9 +28,28 @@ dispatcher:
   image: jizt/dispatcher:0.0.4
 
 # Configuration for the Text Preprocessor microservice
-textpreprocessor:
+textPreprocessor:
   name: "text-preprocessor"
   ports:
     svc: 5000
     container: 5000
   image: jizt/text-preprocessor:0.0.2
+
+# Configuration for Strimzi Kafka cluster
+kafka:
+  name: "jizt-kafka-cluster"
+  version: 2.7.0
+  replicas: 1
+  resources:
+    memoryRequests: 1Gi
+    memoryLimits: 1Gi
+  config:
+    autoCreateTopics: "false"
+    topicReplicationFactor: 1
+    logReplicationFactor: 1
+    logMinIsr: 1
+    logMessageFormatVersion: "2.7-IV2"
+    logRetentionMs: 600000  # 10 minutes
+  zookeper:
+    replicas: 1
+
