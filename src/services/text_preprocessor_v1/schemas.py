@@ -19,34 +19,37 @@
 
 from marshmallow import Schema, fields
 
-__version__ = '0.1'
+__version__ = '0.1.2'
 
 
-class PlainTextRequestSchema(Schema):
-    """Schema for the clients' plain-text REST requests.
-
-    :code:`/v1/summaries/plain_text - POST`
+class TextPreprocessorConsumedMsgSchema(Schema):
+    """Schema for the consumed messages from the topic
+    :attr:`KafkaTopic.TEXT_PREPROCESSING`.
 
     Fields:
         source (:obj:`str`):
-            The text in plain format to be summarized.
-        TODO: add more fields.
+            The text in plain format to be pre-processed.
     """
 
     # length could be limited with validate=Length(max=600)
     source = fields.Str(required=True)
 
-#TODO: class TwitterThreadRequestSchema(Schema)
+    class Meta:
+        ordered = True
 
-class PlainTextResponseSchema(Schema):
-    """Schema for the plain-text REST response.
-    
-    This response contains the summarized text.
+
+class TextEncodingProducedMsgSchema(Schema):
+    """Schema for the produced messages to the topic
+    :attr:`KafkaTopic.TEXT_ENCODING`.
 
     Fields:
-        summary (:obj:`str`):
-            The summarized text.
-        TODO: add more fields.
+        text_preprocessed (:obj:`str`):
+            The pre-processed text.
     """
 
-    summary = fields.Str()
+    # text_preprocessed = fields.Str(required=True)
+    # TODO: chage `source` for `text_preprocessed`
+    text_postprocessed = fields.Str(required=True)
+
+    class Meta:
+        ordered = True

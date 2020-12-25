@@ -2,6 +2,10 @@
 # Kubernetes related configuration #
 ####################################
 
+# jizt namespace. All jizt resources
+# will be deployed in this namespace
+namespace: "default"
+
 # Ingress configuration
 # ref: http://kubernetes.io/docs/user-guide/ingress/
 ingress:
@@ -27,30 +31,27 @@ dispatcher:
   ports:
     svc: 5000
     container: 5000
-  image: jizt/dispatcher:0.0.4
+  image: jizt/dispatcher:0.0.5
 
 # Configuration for the Text Preprocessor microservice
 textPreprocessor:
-  name: "text-preprocessor"
+  name: "text-preprocessing"
   ports:
     svc: 5000
     container: 5000
-  image: jizt/text-preprocessor:0.0.2
+  image: jizt/text-preprocessor:0.0.3
 
 
 ###############################
 # Kafka related configuration #
 ###############################
 
-# Global configuration for Strimzi
-strimzi:
-  namespace: "strimzi"  # must exist beforehand in the Kubernetes cluster
-
 # Configuration for Strimzi Kafka cluster
 # ref: https://strimzi.io/docs/operators/master/using.html#proc-config-kafka-str
 kafka:
-  name: "jizt-kafka-cluster"
-  version: 2.7.0
+  name: "jizt-cluster"
+  namespace: "default"  # not to be confused with strimzi-operator namespace
+  version: 2.6.0
   replicas: 1
   resources:
     memoryRequests: 1Gi
@@ -61,7 +62,7 @@ kafka:
     topicReplicationFactor: 1
     logReplicationFactor: 1
     logMinIsr: 1
-    logMessageFormatVersion: "2.7-IV2"
+    logMessageFormatVersion: "2.6-IV0"
   zookeeper:
     replicas: 1
 

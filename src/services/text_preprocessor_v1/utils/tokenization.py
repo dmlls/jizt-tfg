@@ -39,7 +39,7 @@ def sentence_tokenize(text: str,
             the model will not fail.": despite the periods in the date and the
             Figure number, these texts will not be split into different sentences.
             - "Mr. Elster looked worried.", "London, capital of U.K., is famous
-            for its red telephone boxes": the preprocessor applies Named Entity
+            for its red telephone boxes": the pre-processor applies Named Entity
             Recognition and does not split the previous sentences.
             - "Hello.Goodbye.", "Seriously??!That can't be true.": these sentences
             are split into: ['Hello.', 'Goodbye.'] and ['Seriously??!', 'That can't

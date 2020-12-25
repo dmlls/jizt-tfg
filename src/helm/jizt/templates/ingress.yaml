@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "jizt.name" . }}-ingress
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ include "jizt.name" . }}
     chart: {{ include "jizt.chart" . }}

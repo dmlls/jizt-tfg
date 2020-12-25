@@ -2,7 +2,7 @@ apiVersion: kafka.strimzi.io/v1beta1
 kind: Kafka
 metadata:
   name: {{ .Values.kafka.name }}
-  namespace: {{ .Values.strimzi.namespace }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ include "jizt.name" . }}
     chart: {{ include "jizt.chart" . }}
@@ -13,14 +13,18 @@ spec:
     replicas: {{ .Values.kafka.replicas }}
     resources:
       requests:
-        memory:
+        memory: {{ .Values.kafka.memoryRequests }}
       limits:
-        memory:
+        memory: {{ .Values.kafka.memoryLimits }}
     listeners:
       - name: plain
         port: 9092
         type: internal
         tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
     config:
       auto.create.topics.enable: {{ .Values.kafka.config.autoCreateTopics }}
       message.max.bytes: {{ .Values.kafka.config.messageMaxBytes }}

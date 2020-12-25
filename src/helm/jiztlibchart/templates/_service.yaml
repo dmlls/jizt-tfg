@@ -6,6 +6,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {}
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ include "jizt.name" . }}
     microservice: {}

@@ -15,20 +15,19 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Test Preprocessor REST API v1."""
+"""Text Preprocessor."""
 
 import argparse
 import logging
 import json
-from flask import Flask, request, jsonify, make_response
-from flask_restful import Api, Resource, abort
 from text_preprocessing import TextPreprocessor
-from schemas import PlainTextRequestSchema, PlainTextResponseSchema
+from kafka.kafka_topics import KafkaTopic
+from kafka.kafka_producer import Producer
+from kafka.kafka_consumer import Consumer
+from confluent_kafka import Message, KafkaError, KafkaException
+from schemas import TextPreprocessorConsumedMsgSchema, TextEncodingProducedMsgSchema
 
-__version__ = '0.1.1'
-
-# JSON containing the service configuration
-SVC_CONFIG_FILE = "svc_config.json"
+__version__ = '0.1.2'
 
 parser = argparse.ArgumentParser(description='Text pre-processing service. '
                                              'Default log level is WARNING.')
@@ -41,79 +40,125 @@ parser.add_argument('-d', '--debug', action='store_true',
 class TextPreprocessorService:
     """Text pre-processing service."""
 
-    def __init__(self, log_level, svc_config: dict):
-        self.app = Flask(__name__)
-        self.api = Api(self.app)
+    def __init__(self, log_level):
         self.log_level = log_level
         logging.basicConfig(
-            format='%(asctime)s %(levelname)-8s %(message)s',
+            format='%(asctime)s %(name)s %(levelname)-8s %(message)s',
             level=self.log_level,
             datefmt='%d/%m/%Y %I:%M:%S %p'
         )
+        self.logger = logging.getLogger("TextPreprocessor")
 
-        self.svc_config = svc_config
-
-        # /v1/preprocessors/plain-text
-        self.api.add_resource(
-            PlainTextPreprocessing,
-            self.svc_config["self"]["endpoints"]["v1"]["plain-text"],
-            resource_class_kwargs={'svc_config': self.svc_config}
-        )
+        self.producer = Producer()
+        self.consumer = Consumer()
+        self.consumed_msg_schema = TextPreprocessorConsumedMsgSchema()
+        self.produced_msg_schema = TextEncodingProducedMsgSchema()
 
     def run(self):
-        self.app.run(host="0.0.0.0",  # make the server publicly available
-                     port=self.svc_config["self"]["port"],
-                     debug=(self.log_level == logging.DEBUG))
+        try:
+            topics_to_susbcribe = [KafkaTopic.TEXT_PREPROCESSING.value]
+            self.consumer.subscribe(topics_to_susbcribe)
+            self.logger.debug(f'Consumer subscribed to topic(s): '
+                              f'{topics_to_susbcribe}')
 
+            while True:
+                msg = self.consumer.poll(timeout=1.0)
+                if msg is None:
+                    continue
+                if msg.error():
+                    if msg.error().code() == KafkaError._PARTITION_EOF:
+                        # End of partition event
+                        self.logger.error(f'{msg.topic()} in partition {msg.partition} '
+                                          f'{msg.partition()} reached end at offset '
+                                          f'{msg.offset()}')
+                    elif msg.error():
+                        self.logger.error(f"Error in consumer loop: {msg.error()}")
+                        raise KafkaException(msg.error())
+                else:
+                    self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
+                                      f'[value]: "{msg.value()[:20]} [...]"'
+                    )
+                    source = self.consumed_msg_schema.loads(msg.value())['source']
 
-class PlainTextPreprocessing(Resource):
-    """Resource for plain text preprocessing."""
+                    topic = KafkaTopic.READY.value  # TODO: change for TEXT_ENCODING
+                    message_key = msg.key()
+                    preprocessed_text = TextPreprocessor.preprocess(source)
+                    message_value = self.produced_msg_schema.dumps({
+                        "text_postprocessed": preprocessed_text  # TODO: change for text_preprocessed
+                    })
+                    self._produce_message(
+                        topic,
+                        message_key,
+                        message_value
+                    )
+                    self.logger.debug(
+                        f'Message produced: [topic]: "{topic}", '
+                        f'[key]: {message_key}, [value]: '
+                        f'"{message_value[:50]} [...]"'
+                    )
+        finally:
+            self.logger.debug("Consumer loop stopped. Closing consumer...")
+            self.consumer.close()  # close down consumer to commit final offsets
 
-    def __init__(self, **kwargs):
-        self.request_schema = PlainTextRequestSchema()
-        self.response_schema = PlainTextResponseSchema()
-        self.svc_config = kwargs['svc_config']
+    def _produce_message(self,
+                        topic: str,
+                        message_key: int,
+                        message_value: str):
+        """Produce Kafka message.
 
-    def post(self):
-        """HTTP POST.
-
-        Preprocess the text and forward it to the encoder.
-
-        # TODO: update docstring.
-
-        Returns:
-            :obj:`tuple`: The text preprocessed and the
-            response code 200 OK.
-
-        Raises:
-            :class:`http.client.HTTPException`: If the body
-            JSON is not valid.
-        """
-        data = request.json
-        self._validate_request_json(data)
-        preprocessed_text = TextPreprocessor.preprocess(data['source'])
-        response = {"preprocessed_text": preprocessed_text}
-        return make_response(jsonify(response), 200)
-
-    def _validate_request_json(self, json):
-        """Validate JSON in the request body.
-
-        The JSON will not be valid if it does not contain
-        all the mandatodry fields defined in the
-        :class:`.schemas.PlainTextRequestSchema` class.
+        If the local producer queue is full, the request will be
+        aborted.
 
         Args:
-            json (:obj:`dict`):
-                The JSON to be validated.
-
-        Raises:
-            :class:`http.client.HTTPException`: If the JSON
-            is not valid.
+            topic (:obj:`str`):
+                The topic to produce the message to.
+            message_key (:obj:`str`);
+                The Kafka message key.
+            message_value (:obj:`str`);
+                The Kafka message value.
         """
 
-        errors = self.request_schema.validate(json)
-        if errors:
-            abort(400, errors=errors)  # 400 BAD REQUEST
+        try:
+            self.producer.produce(
+                topic,
+                key=message_key,
+                value=message_value,
+                on_delivery=self._kafka_delivery_callback
+            )
+        except BufferError as err:
+            error_msg = (f"Local producer queue is full ({len(self.producer)} "
+                         f"messages awaiting delivery)")
+            self.logger.error(error_msg)
+            raise Exception(error_msg) from err
+
+        # Wait up to 1 second for events. Callbacks will
+        # be invoked during this method call.
+        self.producer.poll(1)
+
+    def _kafka_delivery_callback(self, err: KafkaError, msg: Message):
+        """Kafka per-message delivery callback.
+
+        When passed to :meth:`confluent_kafka.Producer.produce` through
+        the :attr:`on_delivery` attribute, this method will be triggered
+        by :meth:`confluent_kafka.Producer.poll`or
+        :meth:`confluent_kafka.Producer.flush` when wither a message has
+        been successfully delivered or the delivery failed (after
+        specified retries).
+
+        Args:
+            err (:obj:`confluent_kafka.KafkaError`):
+                The Kafka error.
+            msg (:obj:`confluent_kafka.Message`):
+                The produced message, or an event.
+        """
+
+        if err:
+            self.logger.debug(f'Message delivery failed: {err}')
+        else:
+            self.logger.debug(f'Message delivered sucessfully: [topic]: '
+                              f'"{msg.topic()}", [partition]: "{msg.partition()}"'
+                              f', [offset]: {msg.offset()}'
+            )
 
 
 if __name__ == "__main__":
@@ -127,9 +172,5 @@ if __name__ == "__main__":
     if debug_log_level:
         log_level = logging.DEBUG
 
-    svc_config = {}
-    with open(SVC_CONFIG_FILE, 'r') as config:
-        svc_config = json.load(config)
-
-    text_preprocessor_service = TextPreprocessorService(log_level, svc_config)
+    text_preprocessor_service = TextPreprocessorService(log_level)
     text_preprocessor_service.run()

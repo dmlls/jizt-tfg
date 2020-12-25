@@ -1,4 +1,4 @@
-FROM python:3.9.1-slim AS builder 
+FROM python:3.8-slim AS builder 
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -14,19 +14,22 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 
-FROM python:3.9.1-slim
+FROM python:3.8-slim
 
 RUN apt-get update
 
 COPY --from=builder /opt/venv /opt/venv 
 
-WORKDIR /home/text_preprocessing/
+WORKDIR /home/text_preprocessor/
 
 COPY . .
 
-## set environment variables
+# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV PATH="/opt/venv/bin:$PATH"
 
 ENTRYPOINT ["python", "main.py"]
+
+# Uncomment for debug mode
+# CMD ["-d"]
