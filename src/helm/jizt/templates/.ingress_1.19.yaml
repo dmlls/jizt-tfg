@@ -19,12 +19,3 @@ spec:
             name: {{ .Values.dispatcher.name }}-service
             port:
               number: {{ .Values.dispatcher.ports.svc }}
-
-
-
-  # defaultBackend:
-  #   service:
-  #     name: dispatcher-service
-  #     port:
-  #       number: 5000
-

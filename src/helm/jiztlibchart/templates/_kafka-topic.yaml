@@ -12,10 +12,6 @@ metadata:
     app: {{ include "jizt.name" . }}
     chart: {{ include "jizt.chart" . }}
     release: "{{ $.Release.Name }}"
-  annotations:
-    "helm.sh/hook": post-install,post-upgrade
-    "helm.sh/hook-weight": "0"
-    "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   partitions: {{ .Values.topics.partitions }}
   replicas: {{ .Values.topics.replicas }}

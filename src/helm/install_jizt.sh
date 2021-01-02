@@ -13,7 +13,7 @@ JIZT_VERSION="0.0.1"
 trap tidy_up SIGINT  
 tidy_up() {
     unhide_deployments
-    echo -e "\nInstallation cancelled."
+    echo -e "\nInstallation aborted."
     exit 1
 }
 
@@ -38,7 +38,7 @@ unhide_deployments() {
     cd - > /dev/null  # don't print directory
 }
 
-echo "THANK YOU for installing JIZT v$JIZT_VERSION."
+echo -e "\nTHANK YOU for installing JIZT v$JIZT_VERSION."
 echo "The installation process will take some time... But hey! Rome wasn't built"
 echo "in a day. We recommend that you go get a coffee and come visit later :)"
 
@@ -50,7 +50,7 @@ echo -e "\n>>> Configuring namespaces..."
 kubectl create namespace $STRIMZI_NAMESPACE
 kubectl create namespace $JIZT_NAMESPACE
 
-echo -e "\n>>> Installing strimzi-operator-$STRIMZI_VERSION helm chart in namespace '$STRIMZI_NAMESPACE'..."
+echo -e "\n>>> Installing strimzi-kafka-operator-$STRIMZI_VERSION Helm chart in namespace '$STRIMZI_NAMESPACE'..."
 echo "This will take some time... You can check what's going on with kubectl from another terminal"
 # Additional Helm arguments can be passed when executing the script,
 # e.g., "./install-strimzi.sh --dry-run --debug"
@@ -61,6 +61,7 @@ cat << EOF | helm install $STRIMZI_RELEASE_NAME strimzi/strimzi-kafka-operator \
 "$@" \
 -f -
     watchNamespaces: ["$JIZT_NAMESPACE"]
+    imageRepositoryOverride: "eu.gcr.io/jizt-299516"
 EOF
 
 echo -e "\n> Installing jizt..."
@@ -104,4 +105,3 @@ cat << EOF | helm upgrade $JIZT_RELEASE_NAME ./jizt \
 EOF
 
 echo -e "\n> Everything ready, done installing!"
-

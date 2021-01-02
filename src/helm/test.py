@@ -4,7 +4,8 @@ import time
 import requests
 import json
 
-HOST = "http://api.jizt.it"
+# HOST = "http://api.jizt.it"
+HOST = "http://35.186.248.210"
 
 text = ("GNU is       an extensive collection of wholly free software , which gave rise "
         "to the family of operating systems popularly known as Linux.  GNU is also "

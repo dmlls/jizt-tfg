@@ -18,4 +18,16 @@ spec:
         image: {{ .Values.dispatcher.image }}
         ports:
         - containerPort: {{ .Values.dispatcher.ports.container }}
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: {{ .Values.dispatcher.ports.container }}
+          initialDelaySeconds: 15
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: {{ .Values.dispatcher.ports.container }}
+          initialDelaySeconds: 15
+          periodSeconds: 15
 {{- end -}}

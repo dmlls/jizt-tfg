@@ -31,7 +31,7 @@ dispatcher:
   ports:
     svc: 5000
     container: 5000
-  image: jizt/dispatcher:0.0.5
+  image: eu.gcr.io/jizt-299516/dispatcher:0.0.6
 
 # Configuration for the Text Preprocessor microservice
 textPreprocessor:
@@ -39,7 +39,7 @@ textPreprocessor:
   ports:
     svc: 5000
     container: 5000
-  image: jizt/text-preprocessor:0.0.3
+  image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.3
 
 
 ###############################

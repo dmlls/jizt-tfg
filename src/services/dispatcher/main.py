@@ -89,6 +89,14 @@ class DispatcherService:
                                    'kafka_producer': self.kafka_producer}
         )
 
+        self.api.add_resource(
+            Health,
+            "/healthz",
+            endpoint="liveness-probe",
+            resource_class_kwargs={'dispatcher_service': self,
+                                   'kafka_producer': self.kafka_producer}
+        )
+
     def run(self):
         try:
             self.kafka_consumerloop.start()
@@ -263,6 +271,43 @@ class PlainText(Resource):
         # Wait up to 1 second for events. Callbacks will
         # be invoked during this method call.
         self.kafka_producer.poll(1)
+
+
+class Health(Resource):
+    """Resource for probing service liveness."""
+
+    def __init__(self, **kwargs):
+        self.dispatcher_service = kwargs['dispatcher_service']
+        self.kafka_producer = kwargs['kafka_producer']
+
+    def get(self):
+        """Check service health.
+
+        Returns:
+            :obj:`dict`: A 200 OK response if everything is working, otherwise
+            a 500 INTERNAL SERVER ERROR.
+        """
+
+        return 200 if (self._is_kafka_producer_alive()
+                       and self._is_kafka_consumer_alive()) else 500
+
+    def _is_kafka_producer_alive(self):
+        """Check if Kafka producer is up and running.
+
+        Returns:
+            :obj:`bool`: whether the producer is alive or not.
+        """
+
+        return (self.kafka_producer is not None
+                and self.kafka_producer.list_topics().topics)
+
+    def _is_kafka_consumer_alive(self):
+        """Check if Kafka consumer is up and running.
+
+        Returns:
+            :obj:`bool`: whether the consumer is alive or not.
+        """
+        return not self.dispatcher_service.kafka_consumerloop.stopped()
 
 
 def get_unique_key(source: str):
