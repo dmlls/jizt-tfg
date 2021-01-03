@@ -7,13 +7,15 @@ metadata:
     app: {{ include "jizt.name" . }}
     chart: {{ include "jizt.chart" . }}
     release: {{ $.Release.Name }}
+  annotations:
+    kubernetes.io/ingress.class: "gce"
 spec:
   rules:
   #- host: {{ .Values.ingress.hostname }}
   - http:
       paths:
         - path: {{ .Values.ingress.paths.v1 }} 
-          pathType: Prefix
+          # pathType: Prefix
           backend:
             serviceName: {{ .Values.dispatcher.name }}-service
             servicePort: {{ .Values.dispatcher.ports.svc }}

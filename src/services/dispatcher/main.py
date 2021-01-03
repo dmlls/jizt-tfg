@@ -91,8 +91,9 @@ class DispatcherService:
 
         self.api.add_resource(
             Health,
+            "/",
             "/healthz",
-            endpoint="liveness-probe",
+            endpoint="readiness-liveness-probe",
             resource_class_kwargs={'dispatcher_service': self,
                                    'kafka_producer': self.kafka_producer}
         )

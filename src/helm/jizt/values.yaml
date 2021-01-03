@@ -11,7 +11,7 @@ namespace: "default"
 ingress:
   hostname: "api.jizt.it"
   paths:
-    v1: "/v1/summaries"
+    v1: "/v1/summaries/*"
 
 # General replica count for ALL the deployments
 replicaCount: 1
@@ -31,7 +31,7 @@ dispatcher:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/dispatcher:0.0.6
+  image: eu.gcr.io/jizt-299516/dispatcher:0.0.7
 
 # Configuration for the Text Preprocessor microservice
 textPreprocessor:
