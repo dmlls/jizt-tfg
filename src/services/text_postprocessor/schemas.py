@@ -15,37 +15,35 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Marshmallow Schemas for TextPreprocessorService."""
+"""Marshmallow Schemas for TextPostprocessorService."""
 
 from marshmallow import Schema, fields
 
 __version__ = '0.1.2'
 
 
-class TextPreprocessorConsumedMsgSchema(Schema):
-    """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_PREPROCESSING`.
+class TextPostprocessorConsumedMsgSchema(Schema):
+    """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_POSTPROCESSING`.
 
     Fields:
         source (:obj:`str`):
-            The text in plain format to be pre-processed.
+            The text to be post-eprocessed.
     """
 
-    source = fields.Str(required=True)
+    summary = fields.Str(required=True)
 
     class Meta:
         ordered = True
 
 
-class TextEncodingProducedMsgSchema(Schema):
-    """Schema for the produced messages to the topic :attr:`KafkaTopic.TEXT_ENCODING`.
+class ReadyProducedMsgSchema(Schema):
+    """Schema for the produced messages to the topic :attr:`KafkaTopic.READY`.
 
     Fields:
-        text_preprocessed (:obj:`str`):
-            The pre-processed text.
+        text_postprocessed (:obj:`str`):
+            The post-processed text.
     """
 
-    # text_preprocessed = fields.Str(required=True)
-    # TODO: chage `source` for `text_preprocessed`
     text_postprocessed = fields.Str(required=True)
 
     class Meta:

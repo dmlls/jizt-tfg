@@ -25,5 +25,5 @@ from enum import Enum
 class KafkaTopic(Enum):
     """Kafka Topics."""
 
-    TEXT_PREPROCESSING = 'text-preprocessing-topic'
+    TEXT_POSTPROCESSING = "text-postprocessing-topic"
     READY = 'ready-topic'

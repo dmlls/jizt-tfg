@@ -15,20 +15,20 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Text Preprocessor."""
+"""Text Postprocessor."""
 
 import argparse
 import logging
-from text_preprocessing import TextPreprocessor
+from text_postprocessing import TextPostprocessor
 from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
-from schemas import TextPreprocessorConsumedMsgSchema, TextEncodingProducedMsgSchema
+from schemas import TextPostprocessorConsumedMsgSchema, ReadyProducedMsgSchema
 
-__version__ = '0.1.2'
+__version__ = '0.1.0'
 
-parser = argparse.ArgumentParser(description='Text pre-processing service. '
+parser = argparse.ArgumentParser(description='Text post-processing service. '
                                              'Default log level is WARNING.')
 parser.add_argument('-i', '--info', action='store_true',
                     help='turn on python logging to INFO level')
@@ -36,8 +36,8 @@ parser.add_argument('-d', '--debug', action='store_true',
                     help='turn on python logging to DEBUG level')
 
 
-class TextPreprocessorService:
-    """Text pre-processing service."""
+class TextPostprocessorService:
+    """Text post-processing service."""
 
     def __init__(self, log_level):
         self.log_level = log_level
@@ -46,16 +46,16 @@ class TextPreprocessorService:
             level=self.log_level,
             datefmt='%d/%m/%Y %I:%M:%S %p'
         )
-        self.logger = logging.getLogger("TextPreprocessor")
+        self.logger = logging.getLogger("TextPostprocessor")
 
         self.producer = Producer()
         self.consumer = Consumer()
-        self.consumed_msg_schema = TextPreprocessorConsumedMsgSchema()
-        self.produced_msg_schema = TextEncodingProducedMsgSchema()
+        self.consumed_msg_schema = TextPostprocessorConsumedMsgSchema()
+        self.produced_msg_schema = ReadyProducedMsgSchema()
 
     def run(self):
         try:
-            topics_to_susbcribe = [KafkaTopic.TEXT_PREPROCESSING.value]
+            topics_to_susbcribe = [KafkaTopic.TEXT_POSTPROCESSING.value]
             self.consumer.subscribe(topics_to_susbcribe)
             self.logger.debug(f'Consumer subscribed to topic(s): '
                               f'{topics_to_susbcribe}')
@@ -77,13 +77,13 @@ class TextPreprocessorService:
                     self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
                                       f'[value]: "{msg.value()[:20]} [...]"'
                     )
-                    source = self.consumed_msg_schema.loads(msg.value())['source']
+                    summary = self.consumed_msg_schema.loads(msg.value())['summary']
 
-                    topic = KafkaTopic.READY.value  # TODO: change for TEXT_ENCODING
+                    topic = KafkaTopic.READY.value
                     message_key = msg.key()
-                    preprocessed_text = TextPreprocessor.preprocess(source)
+                    postprocessed_text = TextPostprocessor.postprocess(summary)
                     message_value = self.produced_msg_schema.dumps({
-                        "text_postprocessed": preprocessed_text  # TODO: change for text_preprocessed
+                        "text_postprocessed": postprocessed_text
                     })
                     self._produce_message(
                         topic,
@@ -171,5 +171,5 @@ if __name__ == "__main__":
     if debug_log_level:
         log_level = logging.DEBUG
 
-    text_preprocessor_service = TextPreprocessorService(log_level)
-    text_preprocessor_service.run()
+    text_postprocessor_service = TextPostprocessorService(log_level)
+    text_postprocessor_service.run()
