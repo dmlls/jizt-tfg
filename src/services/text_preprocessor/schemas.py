@@ -1,4 +1,4 @@
-# Copyright (C) 2020 Diego Miguel Lozano <dml1001@alu.ubu.es>
+# Copyright (C) 2021 Diego Miguel Lozano <dml1001@alu.ubu.es>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

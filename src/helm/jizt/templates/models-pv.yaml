@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.modelsPV.name }}-pv
+  labels:
+    app: {{ include "jizt.name" . }}
+    chart: {{ include "jizt.chart" . }}
+    release: "{{ $.Release.Name }}" }}
+spec:
+  capacity:
+    storage: {{ .Values.modelsPV.capacity.storage }}
+  accessModes:
+    - {{ .Values.modelsPV.acessModes.rom }}  
+  persistentVolumeReclaimPolicy: {{ .Values.modelsPV.pvReclaimPolicy }}
+  csi:
+    driver: {{ .Values.modelsPV.csi.driver }}
+    volumeHandle: {{ .Values.modelsPV.csi.volumeHandle }}
+    readOnly: {{ .Values.modelsPV.csi.readOnly }}
+    fsType: {{ .Values.modelsPV.csi.fsType }}

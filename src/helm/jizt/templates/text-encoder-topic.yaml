@@ -1,0 +1,7 @@
+{{- include "jiztlibchart.kafka-topic" (list . "jizt.textEncoder-topic") -}}
+{{- define "jizt.textEncoder-topic" -}}
+metadata:
+  name: {{ .Values.textEncoder.name }}-topic
+  labels:
+    microservice: {{ .Values.textEncoder.name }}
+{{- end -}}

@@ -1,4 +1,4 @@
-{{- include "jiztlibchart.deployment" (list . "jizt.textPostiocessor-deployment") -}}
+{{- include "jiztlibchart.deployment" (list . "jizt.textPostprocessor-deployment") -}}
 {{- define "jizt.textPostprocessor-deployment" -}}
 metadata:
   name: {{ .Values.textPostprocessor.name }}-deployment
