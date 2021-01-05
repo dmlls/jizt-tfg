@@ -1,0 +1,7 @@
+{{- include "jiztlibchart.kafka-topic" (list . "jizt.textPostprocessor-topic") -}}
+{{- define "jizt.textPostprocessor-topic" -}}
+metadata:
+  name: {{ .Values.textPostprocessor.name }}-topic
+  labels:
+    microservice: {{ .Values.textPostprocessor.name }}
+{{- end -}}

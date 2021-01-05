@@ -41,6 +41,14 @@ textPreprocessor:
     container: 5000
   image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.3
 
+# Configuration for the Text Postprocessor microservice
+textPreprocessor:
+  name: "text-postprocessing"
+  ports:
+    svc: 5000
+    container: 5000
+  image: eu.gcr.io/jizt-299516/text-postprocessor:0.0.1
+
 
 ###############################
 # Kafka related configuration #
