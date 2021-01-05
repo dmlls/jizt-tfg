@@ -1,0 +1,7 @@
+{{- include "jiztlibchart.kafka-topic" (list . "jizt.t5LargeTextSummarizer-topic") -}}
+{{- define "jizt.t5LargeTextSummarizer-topic" -}}
+metadata:
+  name: {{ .Values.t5LargeTextSummarizer.name }}-topic
+  labels:
+    microservice: {{ .Values.t5LargeTextSummarizer.name }}
+{{- end -}}

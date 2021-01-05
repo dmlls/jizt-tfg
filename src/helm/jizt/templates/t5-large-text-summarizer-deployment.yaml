@@ -1,0 +1,28 @@
+{{- include "jiztlibchart.deployment" (list . "jizt.t5LargeTextSummarizer-deployment") -}}
+{{- define "jizt.t5LargeTextSummarizer-deployment" -}}
+metadata:
+  name: {{ .Values.t5LargeTextSummarizer.name }}-deployment
+  labels:
+    microservice: {{ .Values.t5LargeTextSummarizer.name }}
+spec:
+  selector:
+    matchLabels:
+      microservice: {{ .Values.t5LargeTextSummarizer.name }}
+  template:
+    metadata:
+      labels:
+        microservice: {{ .Values.t5LargeTextSummarizer.name }}
+    spec:
+      containers:
+      - name: {{ .Values.t5LargeTextSummarizer.name }}
+        image: {{ .Values.t5LargeTextSummarizer.image }} 
+        ports:
+        - containerPort: {{ .Values.t5LargeTextSummarizer.ports.container }}
+        volumeMounts:
+        - mountPath: {{ .Values.t5LargeTextSummarizer.volumeMounts.mountPath }}
+          name: {{ .Values.modelsPV.name }}-volume
+      volumes:
+      - name: {{ .Values.modelsPV.name }}-volume
+        persistentVolumeClaim:
+          claimName: {{ .Values.modelsPV.name }}-pvc
+{{- end -}}

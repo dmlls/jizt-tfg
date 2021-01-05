@@ -52,7 +52,17 @@ textEncoder:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-encoding:0.0.2
+  image: eu.gcr.io/jizt-299516/t5-large-text-encoding:0.0.2  #TODO: change for text encodER
+  volumeMounts:
+    mountPath: "/mnt"
+
+# Configuration for the Text Summarizer microservice
+t5LargeTextSummarizer:
+  name: "t5-large-text-summarization"
+  ports:
+    svc: 5000
+    container: 5000
+  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.1
   volumeMounts:
     mountPath: "/mnt"
 

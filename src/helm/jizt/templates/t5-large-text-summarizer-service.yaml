@@ -1,0 +1,13 @@
+{{- include "jiztlibchart.service" (list . "jizt.t5LargeTextSummarizer-service") -}}
+{{- define "jizt.t5LargeTextSummarizer-service" -}}
+metadata:
+  name: {{ .Values.t5LargeTextSummarizer.name }}-service
+  labels:
+    microservice: {{ .Values.t5LargeTextSummarizer.name }}
+spec:
+  selector:
+    microservice: {{ .Values.t5LargeTextSummarizer.name }}
+  ports:
+  - port: {{ .Values.t5LargeTextSummarizer.ports.svc }}
+    targetPort: {{ .Values.t5LargeTextSummarizer.ports.container }}
+{{- end -}}
