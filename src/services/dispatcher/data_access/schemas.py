@@ -165,7 +165,7 @@ class OkResponseSchema(Schema):
         ordered = True
 
 
-class TextPostprocessorConsumedMsgSchema(Schema):
+class TextPostprocessingConsumedMsgSchema(Schema):
     """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_POSTPROCESSING`."""
 
     text_postprocessed = fields.Str()

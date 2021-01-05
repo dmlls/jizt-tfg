@@ -15,20 +15,22 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Text Postprocessor."""
+"""Text Encoder."""
 
 import argparse
 import logging
-from text_postprocessing import TextPostprocessor
+from text_encoding import SplitterEncoder
 from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
-from schemas import TextPostprocessingConsumedMsgSchema, ReadyProducedMsgSchema
+from schemas import TextEncodingConsumedMsgSchema, TextSumarizationProducedMsgSchema
 
 __version__ = '0.1.0'
 
-parser = argparse.ArgumentParser(description='Text post-processing service. '
+TOKENIZER_PATH = "/mnt/models/t5-large/tokenizer"  # GC Persistent Disk
+
+parser = argparse.ArgumentParser(description='Text encoder service. '
                                              'Default log level is WARNING.')
 parser.add_argument('-i', '--info', action='store_true',
                     help='turn on python logging to INFO level')
@@ -36,8 +38,8 @@ parser.add_argument('-d', '--debug', action='store_true',
                     help='turn on python logging to DEBUG level')
 
 
-class TextPostprocessorService:
-    """Text post-processing service."""
+class TextEncoderService:
+    """Text encoder service."""
 
     def __init__(self, log_level):
         self.log_level = log_level
@@ -46,16 +48,20 @@ class TextPostprocessorService:
             level=self.log_level,
             datefmt='%d/%m/%Y %I:%M:%S %p'
         )
-        self.logger = logging.getLogger("TextPostprocessor")
+        self.logger = logging.getLogger("TextEncoder")
+
+        self.logger.debug("Loading t5-large tokenizer...")
+        self.text_encoder = SplitterEncoder(TOKENIZER_PATH, debug=True)
+        self.logger.debug("Tokenizer loaded!")
 
         self.producer = Producer()
         self.consumer = Consumer()
-        self.consumed_msg_schema = TextPostprocessingConsumedMsgSchema()
-        self.produced_msg_schema = ReadyProducedMsgSchema()
+        self.consumed_msg_schema = TextEncodingConsumedMsgSchema()
+        self.produced_msg_schema = TextSumarizationProducedMsgSchema()
 
     def run(self):
         try:
-            topics_to_susbcribe = [KafkaTopic.TEXT_POSTPROCESSING.value]
+            topics_to_susbcribe = [KafkaTopic.TEXT_ENCODING.value]
             self.consumer.subscribe(topics_to_susbcribe)
             self.logger.debug(f'Consumer subscribed to topic(s): '
                               f'{topics_to_susbcribe}')
@@ -77,13 +83,15 @@ class TextPostprocessorService:
                     self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
                                       f'[value]: "{msg.value()[:20]} [...]"'
                     )
-                    summary = self.consumed_msg_schema.loads(msg.value())['summary']
+                    text_preprocessed = \
+                        self.consumed_msg_schema.loads(msg.value())['text_preprocessed']
 
-                    topic = KafkaTopic.READY.value
+                    topic = KafkaTopic.TEXT_SUMMARIZATION.value
                     message_key = msg.key()
-                    postprocessed_text = TextPostprocessor.postprocess(summary)
+
+                    encoded_text = self.text_encoder.encode(text_preprocessed)
                     message_value = self.produced_msg_schema.dumps({
-                        "text_postprocessed": postprocessed_text
+                        "text_encoded": encoded_text
                     })
                     self._produce_message(
                         topic,
@@ -171,5 +179,5 @@ if __name__ == "__main__":
     if debug_log_level:
         log_level = logging.DEBUG
 
-    text_postprocessor_service = TextPostprocessorService(log_level)
-    text_postprocessor_service.run()
+    text_encoder_service = TextEncoderService(log_level)
+    text_encoder_service.run()

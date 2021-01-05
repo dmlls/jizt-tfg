@@ -113,7 +113,7 @@ class DispatcherService:
 
         When passed to :meth:`confluent_kafka.Producer.produce` through
         the :attr:`on_delivery` attribute, this method will be triggered
-        by :meth:`confluent_kafka.Producer.poll`or
+        by :meth:`confluent_kafka.Producer.poll` or
         :meth:`confluent_kafka.Producer.flush` when wither a message has
         been successfully delivered or the delivery failed (after
         specified retries).

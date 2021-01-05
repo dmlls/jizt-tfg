@@ -22,12 +22,12 @@ from marshmallow import Schema, fields
 __version__ = '0.1.2'
 
 
-class TextPostprocessorConsumedMsgSchema(Schema):
+class TextPostprocessingConsumedMsgSchema(Schema):
     """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_POSTPROCESSING`.
 
     Fields:
         source (:obj:`str`):
-            The text to be post-eprocessed.
+            The text to be post-processed.
     """
 
     summary = fields.Str(required=True)

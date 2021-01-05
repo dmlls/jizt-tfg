@@ -5,12 +5,12 @@ metadata:
   labels:
     app: {{ include "jizt.name" . }}
     chart: {{ include "jizt.chart" . }}
-    release: "{{ $.Release.Name }}" }}
+    release: "{{ $.Release.Name }}"
 spec:
   capacity:
     storage: {{ .Values.modelsPV.capacity.storage }}
   accessModes:
-    - {{ .Values.modelsPV.acessModes.rom }}  
+  - ReadOnlyMany
   persistentVolumeReclaimPolicy: {{ .Values.modelsPV.pvReclaimPolicy }}
   csi:
     driver: {{ .Values.modelsPV.csi.driver }}

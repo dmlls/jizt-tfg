@@ -15,15 +15,36 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Kafka Topics."""
+"""Marshmallow Schemas for TextEncoderService."""
 
-__version__ = '0.1.0'
+from marshmallow import Schema, fields
 
-from enum import Enum
+__version__ = '0.1.2'
 
 
-class KafkaTopic(Enum):
-    """Kafka Topics."""
+class TextEncodingConsumedMsgSchema(Schema):
+    """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_ENCODING`.
 
-    TEXT_PREPROCESSING = 'text-preprocessing-topic'
-    TEXT_ENCODING = "text-encoding-topic"
+    Fields:
+        text_preprocessed (:obj:`str`):
+            The text to be encoded.
+    """
+
+    text_preprocessed = fields.Str(required=True)
+
+    class Meta:
+        ordered = True
+
+
+class TextSumarizationProducedMsgSchema(Schema):
+    """Schema for the produced messages to the topic :attr:`KafkaTopic.TEXT_SUMMARIZATION`.
+
+    Fields:
+        text_encoded (:obj:`str`):
+            The encoded text.
+    """
+
+    text_encoded = fields.Str(required=True)
+
+    class Meta:
+        ordered = True

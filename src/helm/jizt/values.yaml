@@ -52,12 +52,12 @@ textEncoder:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/text-encoder:0.0.1
+  image: eu.gcr.io/jizt-299516/t5-large-text-encoding:0.0.2
   volumeMounts:
     mountPath: "/mnt"
 
 # Configuration for the Text Postprocessor microservice
-textPreprocessor:
+textPostprocessor:
   name: "text-postprocessing"
   ports:
     svc: 5000
@@ -80,8 +80,6 @@ modelsPV:
   name: models
   capacity:
     storage: 10Gi
-  accessModes:
-    rom: ReadOnlyMany
   pvReclaimPolicy: Retain
   csi:
     driver: pd.csi.storage.gke.io

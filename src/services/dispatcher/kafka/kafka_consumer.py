@@ -28,7 +28,7 @@ from confluent_kafka import DeserializingConsumer, KafkaError, KafkaException
 from confluent_kafka.serialization import StringDeserializer
 from data_access.job_states import JobState
 from data_access.job_dao_factory import JobDAOFactory
-from data_access.schemas import TextPostprocessorConsumedMsgSchema
+from data_access.schemas import TextPostprocessingConsumedMsgSchema
 
 
 class StoppableThread(Thread):
@@ -90,7 +90,7 @@ class ConsumerLoop(StoppableThread):
                   'value.deserializer': StringDeserializer('utf_8')}
         self.consumer = DeserializingConsumer(config)
         self.db = JobDAOFactory()
-        self.consumed_msg_schema = TextPostprocessorConsumedMsgSchema()
+        self.consumed_msg_schema = TextPostprocessingConsumedMsgSchema()
 
     def run(self):
         try:

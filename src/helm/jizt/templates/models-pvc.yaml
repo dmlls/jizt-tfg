@@ -5,10 +5,10 @@ metadata:
   labels:
     app: {{ include "jizt.name" . }}
     chart: {{ include "jizt.chart" . }}
-    release: "{{ $.Release.Name }}" }}
+    release: "{{ $.Release.Name }}"
 spec:
   accessModes:
-  - {{ .Values.modelsPV.acessModes.rom }}
+  - ReadOnlyMany
   resources:
     requests:
       storage: {{ .Values.modelsPV.capacity.storage }}

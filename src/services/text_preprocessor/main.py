@@ -24,7 +24,7 @@ from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
-from schemas import TextPreprocessorConsumedMsgSchema, TextEncodingProducedMsgSchema
+from schemas import TextPreprocessingConsumedMsgSchema, TextEncodingProducedMsgSchema
 
 __version__ = '0.1.2'
 
@@ -50,7 +50,7 @@ class TextPreprocessorService:
 
         self.producer = Producer()
         self.consumer = Consumer()
-        self.consumed_msg_schema = TextPreprocessorConsumedMsgSchema()
+        self.consumed_msg_schema = TextPreprocessingConsumedMsgSchema()
         self.produced_msg_schema = TextEncodingProducedMsgSchema()
 
     def run(self):
@@ -79,11 +79,11 @@ class TextPreprocessorService:
                     )
                     source = self.consumed_msg_schema.loads(msg.value())['source']
 
-                    topic = KafkaTopic.READY.value  # TODO: change for TEXT_ENCODING
+                    topic = KafkaTopic.TEXT_ENCODING.value
                     message_key = msg.key()
                     preprocessed_text = TextPreprocessor.preprocess(source)
                     message_value = self.produced_msg_schema.dumps({
-                        "text_postprocessed": preprocessed_text  # TODO: change for text_preprocessed
+                        "text_preprocessed": preprocessed_text
                     })
                     self._produce_message(
                         topic,
@@ -139,7 +139,7 @@ class TextPreprocessorService:
 
         When passed to :meth:`confluent_kafka.Producer.produce` through
         the :attr:`on_delivery` attribute, this method will be triggered
-        by :meth:`confluent_kafka.Producer.poll`or
+        by :meth:`confluent_kafka.Producer.poll` or
         :meth:`confluent_kafka.Producer.flush` when wither a message has
         been successfully delivered or the delivery failed (after
         specified retries).
