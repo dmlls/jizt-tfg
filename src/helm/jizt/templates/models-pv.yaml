@@ -7,13 +7,21 @@ metadata:
     chart: {{ include "jizt.chart" . }}
     release: "{{ $.Release.Name }}"
 spec:
+  storageClassName: {{ .Values.modelsPV.name }}
   capacity:
     storage: {{ .Values.modelsPV.capacity.storage }}
   accessModes:
   - ReadOnlyMany
+  claimRef:
+    namespace: default
+    name: {{ .Values.modelsPV.name }}-pvc
   persistentVolumeReclaimPolicy: {{ .Values.modelsPV.pvReclaimPolicy }}
-  csi:
-    driver: {{ .Values.modelsPV.csi.driver }}
-    volumeHandle: {{ .Values.modelsPV.csi.volumeHandle }}
-    readOnly: {{ .Values.modelsPV.csi.readOnly }}
-    fsType: {{ .Values.modelsPV.csi.fsType }}
+  gcePersistentDisk:
+    pdName: {{ .Values.modelsPV.gcePersistentDisk.pdName }}
+    fsType: {{ .Values.modelsPV.gcePersistentDisk.fsType }} 
+
+  # csi:
+  #   driver: {{ .Values.modelsPV.csi.driver }}
+  #   volumeHandle: {{ .Values.modelsPV.csi.volumeHandle }}
+  #   readOnly: {{ .Values.modelsPV.csi.readOnly }}
+  #   fsType: {{ .Values.modelsPV.csi.fsType }}

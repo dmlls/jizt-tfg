@@ -18,8 +18,39 @@
 """Marshmallow Schemas for TextEncoderService."""
 
 from marshmallow import Schema, fields
+from marshmallow.exceptions import ValidationError
 
 __version__ = '0.1.2'
+
+
+
+class JSONSerializableBytesField(fields.Field):
+    """A JSON serializable :obj:`bytes` field.
+
+    For more info, see the
+    `Marshmallow docs <https://marshmallow.readthedocs.io/en/stable/marshmallow.fields.html>`__.
+    """
+
+    def _serialize(self, value, attr, obj, **kwargs):
+        """Serialize :obj:`bytes` to :obj:`string`.
+        
+        For more info, see base class.
+        """
+
+        if value is None:
+            return None
+        return value.decode('latin1')
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        """Deserialize :obj:`bytes` from :obj:`str`.
+
+        For more info, see base class.
+        """
+
+        if isinstance(value, str):
+            return value.encode('latin1')
+        raise super(JSONSerializableBytesField,
+                    self).make_error('Value must be a string.')
 
 
 class TextEncodingConsumedMsgSchema(Schema):
@@ -44,7 +75,7 @@ class TextSumarizationProducedMsgSchema(Schema):
             The encoded text.
     """
 
-    text_encoded = fields.Str(required=True)
+    text_encodings = JSONSerializableBytesField(required=True)
 
     class Meta:
         ordered = True

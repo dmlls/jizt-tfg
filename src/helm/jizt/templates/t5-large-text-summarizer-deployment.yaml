@@ -20,9 +20,9 @@ spec:
         - containerPort: {{ .Values.t5LargeTextSummarizer.ports.container }}
         volumeMounts:
         - mountPath: {{ .Values.t5LargeTextSummarizer.volumeMounts.mountPath }}
-          name: {{ .Values.modelsPV.name }}-volume
+          name: {{ .Values.modelsPV.name }}-pv-storage
       volumes:
-      - name: {{ .Values.modelsPV.name }}-volume
+      - name: {{ .Values.modelsPV.name }}-pv-storage
         persistentVolumeClaim:
           claimName: {{ .Values.modelsPV.name }}-pvc
 {{- end -}}

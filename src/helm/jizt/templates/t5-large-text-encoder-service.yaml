@@ -1,0 +1,13 @@
+{{- include "jiztlibchart.service" (list . "jizt.t5LargeTextEncoder-service") -}}
+{{- define "jizt.t5LargeTextEncoder-service" -}}
+metadata:
+  name: {{ .Values.t5LargeTextEncoder.name }}-service
+  labels:
+    microservice: {{ .Values.t5LargeTextEncoder.name }}
+spec:
+  selector:
+    microservice: {{ .Values.t5LargeTextEncoder.name }}
+  ports:
+  - port: {{ .Values.t5LargeTextEncoder.ports.svc }}
+    targetPort: {{ .Values.t5LargeTextEncoder.ports.container }}
+{{- end -}}

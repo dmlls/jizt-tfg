@@ -47,14 +47,14 @@ textPreprocessor:
   image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.3
 
 # Configuration for the Text Encoder microservice
-textEncoder:
-  name: "text-encoding"
+t5LargeTextEncoder:
+  name: "t5-large-text-encoding"
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-encoding:0.0.2  #TODO: change for text encodER
+  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.3
   volumeMounts:
-    mountPath: "/mnt"
+    mountPath: "/home/text_encoder/models"
 
 # Configuration for the Text Summarizer microservice
 t5LargeTextSummarizer:
@@ -62,9 +62,10 @@ t5LargeTextSummarizer:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.1
+  # image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.1
+  image: eu.gcr.io/jizt-299516/trial:0.0.8
   volumeMounts:
-    mountPath: "/mnt"
+    mountPath: "/home/text_summarizer/models"
 
 # Configuration for the Text Postprocessor microservice
 textPostprocessor:
@@ -91,6 +92,9 @@ modelsPV:
   capacity:
     storage: 10Gi
   pvReclaimPolicy: Retain
+  gcePersistentDisk:
+    pdName: models
+    fsType: ext4
   csi:
     driver: pd.csi.storage.gke.io
     volumeHandle: models  # volume name

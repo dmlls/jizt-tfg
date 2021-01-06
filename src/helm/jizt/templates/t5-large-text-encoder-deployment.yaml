@@ -1,0 +1,28 @@
+{{- include "jiztlibchart.deployment" (list . "jizt.t5LargeTextEncoder-deployment") -}}
+{{- define "jizt.t5LargeTextEncoder-deployment" -}}
+metadata:
+  name: {{ .Values.t5LargeTextEncoder.name }}-deployment
+  labels:
+    microservice: {{ .Values.t5LargeTextEncoder.name }}
+spec:
+  selector:
+    matchLabels:
+      microservice: {{ .Values.t5LargeTextEncoder.name }}
+  template:
+    metadata:
+      labels:
+        microservice: {{ .Values.t5LargeTextEncoder.name }}
+    spec:
+      containers:
+      - name: {{ .Values.t5LargeTextEncoder.name }}
+        image: {{ .Values.t5LargeTextEncoder.image }} 
+        ports:
+        - containerPort: {{ .Values.t5LargeTextEncoder.ports.container }}
+        volumeMounts:
+        - mountPath: {{ .Values.t5LargeTextEncoder.volumeMounts.mountPath }}
+          name: {{ .Values.modelsPV.name }}-pv-storage
+      volumes:
+      - name: {{ .Values.modelsPV.name }}-pv-storage
+        persistentVolumeClaim:
+          claimName: {{ .Values.modelsPV.name }}-pvc
+{{- end -}}

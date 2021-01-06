@@ -19,6 +19,7 @@
 
 import argparse
 import logging
+import pickle
 from text_encoding import SplitterEncoder
 from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
@@ -28,7 +29,7 @@ from schemas import TextEncodingConsumedMsgSchema, TextSumarizationProducedMsgSc
 
 __version__ = '0.1.0'
 
-TOKENIZER_PATH = "/mnt/models/t5-large/tokenizer"  # GC Persistent Disk
+TOKENIZER_PATH = "./models/t5-small/tokenizer"  # GC Persistent Disk
 
 parser = argparse.ArgumentParser(description='Text encoder service. '
                                              'Default log level is WARNING.')
@@ -90,8 +91,9 @@ class TextEncoderService:
                     message_key = msg.key()
 
                     encoded_text = self.text_encoder.encode(text_preprocessed)
+                    serialized_encoded_text = pickle.dumps(encoded_text)  # bytes type
                     message_value = self.produced_msg_schema.dumps({
-                        "text_encoded": encoded_text
+                        "text_encodings": serialized_encoded_text
                     })
                     self._produce_message(
                         topic,

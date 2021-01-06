@@ -1,0 +1,7 @@
+{{- include "jiztlibchart.kafka-topic" (list . "jizt.t5LargeTextEncoder-topic") -}}
+{{- define "jizt.t5LargeTextEncoder-topic" -}}
+metadata:
+  name: {{ .Values.t5LargeTextEncoder.name }}-topic
+  labels:
+    microservice: {{ .Values.t5LargeTextEncoder.name }}
+{{- end -}}

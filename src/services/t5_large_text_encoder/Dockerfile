@@ -21,6 +21,7 @@ RUN apt-get update
 COPY --from=builder /opt/venv /opt/venv 
 
 WORKDIR /home/text_encoder/
+RUN mkdir /home/text_encoder/models
 
 COPY . .
 

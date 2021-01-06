@@ -40,7 +40,7 @@ class Consumer:
         # Consumer configuration. Must match Stimzi/Kafka configuration.
         config = {'bootstrap.servers': "jizt-cluster-kafka-bootstrap:9092",
                   'client.id': socket.gethostname(),
-                  'group.id': "text-encoder",
+                  'group.id': "text-postprocessor",
                   'auto.offset.reset': "earliest",
                   'session.timeout.ms': 10000,
                   'enable.auto.commit': True,  # default
