@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: {{ .Values.textPreprocessor.name }}
-        image: {{ .Values.textPreprocessor.image }} 
+        image: {{ .Values.textPreprocessor.image }}
+        args: ["-d"]  # uncomment for debug mode
         ports:
         - containerPort: {{ .Values.textPreprocessor.ports.container }}
 {{- end -}}

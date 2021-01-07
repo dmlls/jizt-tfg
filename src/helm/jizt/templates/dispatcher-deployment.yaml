@@ -16,6 +16,7 @@ spec:
       containers:
       - name: {{ .Values.dispatcher.name }}
         image: {{ .Values.dispatcher.image }}
+        args: ["-d"]  # uncomment for debug mode
         ports:
         - containerPort: {{ .Values.dispatcher.ports.container }}
         livenessProbe:

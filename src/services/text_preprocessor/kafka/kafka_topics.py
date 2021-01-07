@@ -26,4 +26,4 @@ class KafkaTopic(Enum):
     """Kafka Topics."""
 
     TEXT_PREPROCESSING = 'text-preprocessing-topic'
-    TEXT_ENCODING = "text-encoding-topic"
+    TEXT_ENCODING = 't5-large-text-encoding-topic'

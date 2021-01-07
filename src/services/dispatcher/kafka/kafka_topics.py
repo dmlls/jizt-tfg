@@ -26,5 +26,5 @@ class KafkaTopic(Enum):
     """Existent Kafka Topics."""
 
     TEXT_PREPROCESSING = 'text-preprocessing-topic'
-    TEXT_POSTPROCESSING = "text-postprocessing-topic"
+    TEXT_POSTPROCESSING = 'text-postprocessing-topic'
     READY = 'ready-topic'

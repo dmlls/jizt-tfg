@@ -28,7 +28,7 @@ class Job():
 
     A job is a request being processed.
 
-    Jobs has the following fields:
+    Jobs has the following attributes:
 
     * id_ (:obj:`int`): the id of the job.
     * started_at (:obj:`datetime.datetime`): the time when the job
@@ -128,11 +128,11 @@ class OkResponseSchema(Schema):
 
     Fields:
         started_at (:obj:`datetime.datetime`):
-          The time when the job was created.
+            The time when the job was created.
         ended_at (:obj:`datetime.datetime`):
-          The time when the job finished.
+            The time when the job finished.
         state (:obj:`str`):
-          The state of the job.
+            The state of the job.
         output (:obj:`str`):
             The processed text, e.g., the summary.
     """

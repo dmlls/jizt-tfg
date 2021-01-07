@@ -23,6 +23,7 @@ import argparse
 import logging
 import ctypes
 from datetime import datetime
+from werkzeug import serving
 from flask import Flask, request
 from flask_restful import Api, Resource, abort
 from confluent_kafka import Message, KafkaError
@@ -176,7 +177,8 @@ class PlainText(Resource):
             job = Job(id_=message_key,
                       started_at=datetime.now(),
                       ended_at=None,
-                      state=JobState.PREPROCESSING.value,
+                    #   state=JobState.PREPROCESSING.value,
+                      state="processing",  #TODO: implement states
                       source=source,
                       output=None
             )
@@ -329,6 +331,22 @@ def get_unique_key(source: str):
     return ctypes.c_size_t(hash(source)).value
 
 
+def disable_healthcheck_logs():
+    """Disable logs for healthcheck requests from Kubernetes/GKE."""
+
+    health_check_endpoints = ('/', '/healthz')
+
+    parent_log_request = serving.WSGIRequestHandler.log_request
+
+    def log_request(self, *args, **kwargs):
+        """See `base class <https://github.com/pallets/werkzeug/blob/71cf9902012338f8ee98338fa7bba50572606637/src/werkzeug/serving.py#L378>`__."""
+
+        if self.path not in health_check_endpoints:
+            parent_log_request(self, *args, **kwargs)
+
+    serving.WSGIRequestHandler.log_request = log_request
+
+
 if __name__ == "__main__":
     args = parser.parse_args()
     info_log_level = args.info
@@ -339,6 +357,8 @@ if __name__ == "__main__":
         log_level = logging.INFO
     if debug_log_level:
         log_level = logging.DEBUG
+    else:
+        disable_healthcheck_logs()
 
     dispatcher_service = DispatcherService(log_level)
     dispatcher_service.run()

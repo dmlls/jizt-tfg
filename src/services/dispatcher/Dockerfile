@@ -30,6 +30,3 @@ ENV PYTHONUNBUFFERED 1
 ENV PATH="/opt/venv/bin:$PATH"
 
 ENTRYPOINT ["python", "main.py"]
-
-# Uncomment for debug mode
-# CMD ["-d"]

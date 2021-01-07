@@ -1,5 +1,6 @@
 aniso8601==8.1.0
 click==7.1.2
+confluent-kafka==1.5.0
 Flask==1.1.2
 Flask-RESTful==0.3.8
 itsdangerous==1.1.0
@@ -24,4 +25,3 @@ requests==2.25.0
 six==1.15.0
 urllib3==1.26.2
 Werkzeug==1.0.1
-confluent-kafka==1.5.0

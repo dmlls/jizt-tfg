@@ -15,24 +15,26 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Text Encoder."""
+"""Text Summarizer."""
 
 import argparse
 import logging
 import pickle
-from text_encoding import SplitterEncoder
+from text_summarization import Summarizer
 from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
-from schemas import TextEncodingsConsumedMsgSchema, TextSumarizationProducedMsgSchema
+from schemas import (TextSummarizationConsumedMsgSchema,
+                     TextPostprocessingProducedMsgSchema)
 
 __version__ = '0.1.0'
 
 #TODO: change for t5-large
 TOKENIZER_PATH = "./models/t5-small/tokenizer"  # GC Persistent Disk
+MODEL_PATH = "./models/t5-small/model"  # GC Persistent Disk
 
-parser = argparse.ArgumentParser(description='Text encoder service. '
+parser = argparse.ArgumentParser(description='Text summarizer service. '
                                              'Default log level is WARNING.')
 parser.add_argument('-i', '--info', action='store_true',
                     help='turn on python logging to INFO level')
@@ -40,8 +42,8 @@ parser.add_argument('-d', '--debug', action='store_true',
                     help='turn on python logging to DEBUG level')
 
 
-class TextEncoderService:
-    """Text encoder service."""
+class TextSummarizerService:
+    """Text summarizer service."""
 
     def __init__(self, log_level):
         self.log_level = log_level
@@ -50,20 +52,20 @@ class TextEncoderService:
             level=self.log_level,
             datefmt='%d/%m/%Y %I:%M:%S %p'
         )
-        self.logger = logging.getLogger("TextEncoder")
+        self.logger = logging.getLogger("TextSummarizer")
 
-        self.logger.debug("Loading t5-large tokenizer...")
-        self.text_encoder = SplitterEncoder(TOKENIZER_PATH, debug=True)  # TODO: change debug to False
-        self.logger.debug("Tokenizer loaded!")
+        self.logger.debug("Loading t5-large models...")
+        self.summarizer = Summarizer(TOKENIZER_PATH, MODEL_PATH)
+        self.logger.debug("Models loaded!")
 
         self.producer = Producer()
         self.consumer = Consumer()
-        self.consumed_msg_schema = TextEncodingsConsumedMsgSchema()
-        self.produced_msg_schema = TextSumarizationProducedMsgSchema()
+        self.consumed_msg_schema = TextSummarizationConsumedMsgSchema()
+        self.produced_msg_schema = TextPostprocessingProducedMsgSchema()
 
     def run(self):
         try:
-            topics_to_susbcribe = [KafkaTopic.TEXT_ENCODING.value]
+            topics_to_susbcribe = [KafkaTopic.TEXT_SUMMARIZATION.value]
             self.consumer.subscribe(topics_to_susbcribe)
             self.logger.debug(f'Consumer subscribed to topic(s): '
                               f'{topics_to_susbcribe}')
@@ -85,15 +87,15 @@ class TextEncoderService:
                     self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
                                       f'[value]: "{msg.value()[:20]} [...]"'
                     )
-                    topic = KafkaTopic.TEXT_SUMMARIZATION.value
+                    topic = KafkaTopic.TEXT_POSTPROCESSING.value
                     message_key = msg.key()
 
-                    text_preprocessed = \
-                        self.consumed_msg_schema.loads(msg.value())['text_preprocessed']
-                    encoded_text = self.text_encoder.encode(text_preprocessed)
-                    serialized_encoded_text = pickle.dumps(encoded_text)  # bytes type
+                    serialized_encoded_text = \
+                        self.consumed_msg_schema.loads(msg.value())['text_encodings']
+                    encoded_text = pickle.loads(serialized_encoded_text)
+                    summarized_text = self.summarizer.summarize(encoded_text)
                     message_value = self.produced_msg_schema.dumps({
-                        "text_encodings": serialized_encoded_text
+                        "summary": summarized_text
                     })
                     self._produce_message(
                         topic,
@@ -181,5 +183,5 @@ if __name__ == "__main__":
     if debug_log_level:
         log_level = logging.DEBUG
 
-    text_encoder_service = TextEncoderService(log_level)
-    text_encoder_service.run()
+    text_summarizer_service = TextSummarizerService(log_level)
+    text_summarizer_service.run()

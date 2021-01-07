@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: {{ .Values.textPostprocessor.name }}
-        image: {{ .Values.textPostprocessor.image }} 
+        image: {{ .Values.textPostprocessor.image }}
+        args: ["-d"]  # uncomment for debug mode
         ports:
         - containerPort: {{ .Values.textPostprocessor.ports.container }}
 {{- end -}}

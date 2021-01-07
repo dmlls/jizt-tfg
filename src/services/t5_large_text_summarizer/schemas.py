@@ -15,7 +15,7 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Marshmallow Schemas for TextEncoderService."""
+"""Marshmallow Schemas for TextSummarizerService."""
 
 from marshmallow import Schema, fields
 
@@ -51,29 +51,29 @@ class JSONSerializableBytesField(fields.Field):
                     self).make_error('Value must be a string.')
 
 
-class TextEncodingsConsumedMsgSchema(Schema):
-    """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_ENCODING`.
+class TextSummarizationConsumedMsgSchema(Schema):
+    """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_SUMMARIZATION`.
 
     Fields:
-        text_preprocessed (:obj:`str`):
-            The preprocessed text to be encoded.
+        text_encodings (:obj:`JSONSerializableBytesField`):
+            The encoded text to be summarized.
     """
 
-    text_preprocessed = fields.Str(required=True)
+    text_encodings = JSONSerializableBytesField(required=True)
 
     class Meta:
         ordered = True
 
 
-class TextSumarizationProducedMsgSchema(Schema):
-    """Schema for the produced messages to the topic :attr:`KafkaTopic.TEXT_SUMMARIZATION`.
+class TextPostprocessingProducedMsgSchema(Schema):
+    """Schema for the produced messages to the topic :attr:`KafkaTopic.TEXT_POSTPROCESSING`.
 
     Fields:
-        text_encodings (:obj:`JSONSerializableBytesField`):
-            The encoded text.
+        summary (:obj:`str`):
+            The generated summary.
     """
 
-    text_encodings = JSONSerializableBytesField(required=True)
+    summary = fields.Str(required=True)
 
     class Meta:
         ordered = True

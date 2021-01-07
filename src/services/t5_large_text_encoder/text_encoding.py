@@ -31,7 +31,7 @@ from typing import List, Optional, Union
 # It shows the relation between the tokens without being encoded and the tokens
 # once encoded. The higher it is, the most likely the subdivisions will exceed the
 # model maximum sequence length.
-RATIO_TOKENS_TO_T5_ENCODED_TOKENS = 0.7 # obtained empirically
+RATIO_TOKENS_TO_T5_ENCODED_TOKENS = 0.7  # obtained empirically
 
 # Factor of variation for the RATIO_TOKENS_TO_ENCODED_TOKENS. The new ratio is
 # calculated thus:
@@ -40,13 +40,14 @@ VARIATION_RATE_FOR_RATIO = 0.015
 
 
 class SplitterEncoder:
-    """Encoder with splitting.
+    """T5-large text encoder with splitting.
 
-    This text encoder splits the input text to adapt it to the maximum input length
-    of a specific model. The split is done in a balanced way so that each set contains
-    roughly the same number of tokens, without splitting sentences.
+    This text encoder splits the input text to adapt it to the maximum input
+    length of a specific model. The split is done in a balanced way so that
+    each set contains roughly the same number of tokens, without splitting
+    sentences.
 
-    This summarizer is meant to be used along with the
+    This encoder uses the
     `Hugging Face t5-large pretrained model <https://huggingface.co/t5-large>`__.
 
     See the
@@ -72,7 +73,7 @@ class SplitterEncoder:
         max_length: Optional[int] = None,
         return_tensors: Optional[str] = 'pt'
     ) -> Union[List[int], torch.LongTensor]:
-        """Converts a string to a sequence of ids (:obj:`int`), using the tokenizer and vocabulary.
+        """Transform a string into a sequence of ids (:obj:`int`), using the tokenizer and vocabulary.
 
         To avoid going over the maximum sequence length of the tokenizer, the text is first
         split (without splitting sentences) into groups containing approximately the same
@@ -132,8 +133,8 @@ class SplitterEncoder:
         for further information.
         """
 
-        if return_tensors is not None and return_tensors not in ('pt', 'np'):
-            raise NotImplementedError(f'{return_tensors} tensors are currently not supported.')  
+        if return_tensors is not None and return_tensors not in ('pt'):
+            raise NotImplementedError(f'{return_tensors} tensors are currently not supported.')
 
         max_len_subdiv = self._get_max_length_subdivision()  # max length per subdivision
         sentences = sentence_tokenize(text)
@@ -159,13 +160,13 @@ class SplitterEncoder:
             if self._check_len_subdivs(encoded_subdivs, return_tensors):
                 # all the subdivisions length is <= model max. length
                 return encoded_subdivs
-            
+
             # adjust length of subdivisions and start over
             max_len_subdiv -= max_len_subdiv * VARIATION_RATE_FOR_RATIO
-        
+
     @classmethod
     def _divide_eagerly(cls, sentences: List[str], max_len_subdiv: int) -> List[List[str]]:
-        """Subdivides the text eagerly.
+        """Subdivide the text eagerly.
 
         The sentences are divided into groups, ensuring that the length of any of these
         groups (subdivisions) is always less or equal than the model max. sequence length,
@@ -182,7 +183,7 @@ class SplitterEncoder:
         Returns:
             :obj:`List[List[str]]`: The generated subdivisions, e.g.::
 
-            [[sent_1, sent_2, sent_3, ...], [sent_10, sent_11, ...], ...].       
+            [[sent_1, sent_2, sent_3, ...], [sent_10, sent_11, ...], ...].
         """
 
         subdivisions = []
@@ -202,9 +203,9 @@ class SplitterEncoder:
 
         return subdivisions
 
-    @classmethod 
+    @classmethod
     def _balance_subdivisions(cls, subdivisions: List[str], max_len_subdiv: int) -> List[List[str]]:
-        """Balances the subdivisions in terms of length.
+        """Balance the subdivisions in terms of length.
 
         This method is meant to be called after :meth:`_divide_eagerly`. If needed,
         it moves sentences from one subdivision to another in such way that all the subdvisions
@@ -239,8 +240,8 @@ class SplitterEncoder:
                         # move sentece from balanced_subdiv[i+1] to balanced_subdiv[i]
                         balanced_subdiv[i].insert(0, balanced_subdiv[i+1][-1])  # add sent
                         balanced_subdiv[i+1] = balanced_subdiv[i+1][:-1]  # remove sent
-                        diff_len = cls._len_subdivision(balanced_subdiv[i+1]) - \
-                                        cls._len_subdivision(balanced_subdiv[i])
+                        diff_len = (cls._len_subdivision(balanced_subdiv[i+1])
+                                    - cls._len_subdivision(balanced_subdiv[i]))
                     else:
                         break
 
@@ -253,7 +254,7 @@ class SplitterEncoder:
 
     @classmethod
     def _add_prefix_to_subdivs(cls, subdivisions_as_str: List[str], prefix: str) -> List[str]:
-        """Adds a prefix to each subdivision.
+        """Add a prefix to each subdivision.
 
         Args:
             subdivisions_as_str (:obj:`List[str]`):
@@ -269,7 +270,7 @@ class SplitterEncoder:
         return [prefix + subdiv for subdiv in subdivisions_as_str]
 
     def _get_max_length_subdivision(self) -> int:
-        """Calculates the maximum length of each subdivision.
+        """Calculate the maximum length of each subdivision.
 
         The length is measured in terms of NLTK word tokens (:func:`word_tokenize`).
 
@@ -292,10 +293,10 @@ class SplitterEncoder:
         """
 
         return len(word_tokenize(text))
-    
+
     @classmethod
     def _len_subdivision(cls, subdivision: List[str]) -> List[int]:
-        """Calculates the length of a subdivision.
+        """Calculate the length of a subdivision.
 
         The length is measured in terms of NLTK word tokens (:func:`word_tokenize`).
 
@@ -314,7 +315,7 @@ class SplitterEncoder:
                            subdivisions: List[Union[List[int], torch.LongTensor]],
                            return_tensors: Optional[str] = None
     ) -> bool:
-        """Checks the length of subdivisions.
+        """Check the length of subdivisions.
 
         Args:
             subdivisions (:obj:`List[List[int]]` or :obj:`List[torch.LongTensor]`):

@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: {{ .Values.t5LargeTextSummarizer.name }}
-        image: {{ .Values.t5LargeTextSummarizer.image }} 
+        image: {{ .Values.t5LargeTextSummarizer.image }}
+        args: ["-d"]  # uncomment for debug mode
         ports:
         - containerPort: {{ .Values.t5LargeTextSummarizer.ports.container }}
         volumeMounts:

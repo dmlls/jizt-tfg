@@ -77,10 +77,10 @@ class TextPostprocessorService:
                     self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
                                       f'[value]: "{msg.value()[:20]} [...]"'
                     )
-                    summary = self.consumed_msg_schema.loads(msg.value())['summary']
-
                     topic = KafkaTopic.READY.value
                     message_key = msg.key()
+
+                    summary = self.consumed_msg_schema.loads(msg.value())['summary']
                     postprocessed_text = TextPostprocessor.postprocess(summary)
                     message_value = self.produced_msg_schema.dumps({
                         "text_postprocessed": postprocessed_text

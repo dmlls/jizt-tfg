@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: {{ .Values.t5LargeTextEncoder.name }}
-        image: {{ .Values.t5LargeTextEncoder.image }} 
+        image: {{ .Values.t5LargeTextEncoder.image }}
+        args: ["-d"]  # uncomment for debug mode
         ports:
         - containerPort: {{ .Values.t5LargeTextEncoder.ports.container }}
         volumeMounts:
