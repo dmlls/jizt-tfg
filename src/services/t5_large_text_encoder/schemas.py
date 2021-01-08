@@ -19,7 +19,7 @@
 
 from marshmallow import Schema, fields
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 class JSONSerializableBytesField(fields.Field):
@@ -61,9 +61,6 @@ class TextEncodingsConsumedMsgSchema(Schema):
 
     text_preprocessed = fields.Str(required=True)
 
-    class Meta:
-        ordered = True
-
 
 class TextSumarizationProducedMsgSchema(Schema):
     """Schema for the produced messages to the topic :attr:`KafkaTopic.TEXT_SUMMARIZATION`.
@@ -74,6 +71,3 @@ class TextSumarizationProducedMsgSchema(Schema):
     """
 
     text_encodings = JSONSerializableBytesField(required=True)
-
-    class Meta:
-        ordered = True

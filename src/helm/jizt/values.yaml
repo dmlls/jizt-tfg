@@ -36,7 +36,7 @@ dispatcher:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/dispatcher:0.0.22
+  image: eu.gcr.io/jizt-299516/dispatcher:0.0.23
 
 # Configuration for the Text Preprocessor microservice
 textPreprocessor:
@@ -44,7 +44,7 @@ textPreprocessor:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.6
+  image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.7
 
 # Configuration for the Text Encoder microservice
 t5LargeTextEncoder:
@@ -52,7 +52,7 @@ t5LargeTextEncoder:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.8
+  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.9
   volumeMounts:
     mountPath: "/home/text_encoder/models"
 
@@ -62,7 +62,7 @@ t5LargeTextSummarizer:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.6
+  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.7
   volumeMounts:
     mountPath: "/home/text_summarizer/models"
 
@@ -72,7 +72,7 @@ textPostprocessor:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/text-postprocessor:0.0.3
+  image: eu.gcr.io/jizt-299516/text-postprocessor:0.0.4
 
 
 #################################

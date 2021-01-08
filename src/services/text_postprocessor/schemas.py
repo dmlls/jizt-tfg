@@ -19,7 +19,7 @@
 
 from marshmallow import Schema, fields
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 class TextPostprocessingConsumedMsgSchema(Schema):
@@ -32,9 +32,6 @@ class TextPostprocessingConsumedMsgSchema(Schema):
 
     summary = fields.Str(required=True)
 
-    class Meta:
-        ordered = True
-
 
 class ReadyProducedMsgSchema(Schema):
     """Schema for the produced messages to the topic :attr:`KafkaTopic.READY`.
@@ -45,6 +42,3 @@ class ReadyProducedMsgSchema(Schema):
     """
 
     text_postprocessed = fields.Str(required=True)
-
-    class Meta:
-        ordered = True

@@ -19,7 +19,7 @@
 
 from marshmallow import Schema, fields
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 class TextPreprocessingConsumedMsgSchema(Schema):
@@ -32,9 +32,6 @@ class TextPreprocessingConsumedMsgSchema(Schema):
 
     source = fields.Str(required=True)
 
-    class Meta:
-        ordered = True
-
 
 class TextEncodingProducedMsgSchema(Schema):
     """Schema for the produced messages to the topic :attr:`KafkaTopic.TEXT_ENCODING`.
@@ -45,6 +42,3 @@ class TextEncodingProducedMsgSchema(Schema):
     """
 
     text_preprocessed = fields.Str(required=True)
-
-    class Meta:
-        ordered = True

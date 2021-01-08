@@ -17,7 +17,7 @@
 
 """Marshmallow Schemas for DispatcherService."""
 
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 from marshmallow import Schema, fields, pre_dump
 from datetime import datetime
@@ -78,9 +78,6 @@ class PlainTextRequestSchema(Schema):
 
     # length could be limited with validate=Length(max=600)
     source = fields.Str(required=True)
-
-    class Meta:
-        ordered = True
 
 
 class AcceptedResponseSchema(Schema):
@@ -169,6 +166,3 @@ class TextPostprocessingConsumedMsgSchema(Schema):
     """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_POSTPROCESSING`."""
 
     text_postprocessed = fields.Str()
-
-    class Meta:
-        ordered = True

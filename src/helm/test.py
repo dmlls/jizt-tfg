@@ -30,9 +30,15 @@ def post(text, bad_request=False):
     return response.json()['job_id']
 
 
-def get(job_id, bad_request=False):
+def get(job_id, wait=False, bad_request=False):
     url = f"{INGRESS_URL}/v1/summaries/plain-text/{job_id}"
     response = requests.get(url)
+    while wait:
+        if response.json()['state'] == 'completed':
+            break
+        time.sleep(0.2)
+        response = requests.get(url)
+    
     print("\nVALID GET REQUEST to", url)
     try:
         print("CODE:", response.status_code)
@@ -51,10 +57,10 @@ def get(job_id, bad_request=False):
             print(bad_request_response)
 
 
-text = ("GNU is         an extensive collection of wholly free software , which gave rise "
+text = ("GNU is          an extensive collection of wholly free software , which gave rise "
         "to the family of operating systems popularly known as Linux.  GNU is also "
-        "the project    within which the free software concept originated   . most of GNU "
-        "is     licensed under the GNU Project's own General Public License (GPL).")
+        "the project     within which the free software concept originated   . most of GNU "
+        "is      licensed under the GNU Project's own General Public License (GPL).")
 
 print(f'ORIGINAL TEXT:\n"{text}"\n')
 job_id = post(text)
@@ -62,6 +68,5 @@ job_id = post(text)
 get(job_id)
 
 print("\nWaiting...")
-time.sleep(3)
 
-get(job_id)
+get(job_id, wait=True)
