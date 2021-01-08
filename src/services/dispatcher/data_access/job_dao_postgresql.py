@@ -34,7 +34,7 @@ class JobDAOPostgresql(JobDAOInterface):
     def __init__(self):
         self.jobs = {}
 
-    def get_job(self, id_: int):
+    def get_job(self, id_: str):
         """See base class."""
         try:
             job = self.jobs[id_]
@@ -46,7 +46,7 @@ class JobDAOPostgresql(JobDAOInterface):
         """See base class."""
         self.jobs[job.id_] = job
 
-    def update_job(self, id_: int, **kwargs):
+    def update_job(self, id_: str, **kwargs):
         """See base class."""
         job = self.get_job(id_)
         if job is not None:
@@ -55,6 +55,6 @@ class JobDAOPostgresql(JobDAOInterface):
             return job
         return None
 
-    def job_exists(self, id_: int):
+    def job_exists(self, id_: str):
         """See base class."""
         return id_ in self.jobs

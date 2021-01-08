@@ -30,7 +30,7 @@ class Job():
 
     Jobs has the following attributes:
 
-    * id_ (:obj:`int`): the id of the job.
+    * id_ (:obj:`str`): the id of the job.
     * started_at (:obj:`datetime.datetime`): the time when the job
       was created.
     * ended_at (:obj:`datetime.datetime`): the time when the job
@@ -43,7 +43,7 @@ class Job():
     """
 
     def __init__(self,
-                 id_: int,
+                 id_: str,
                  started_at: datetime,
                  ended_at: datetime,
                  state: str,
@@ -92,12 +92,12 @@ class AcceptedResponseSchema(Schema):
     will contain the output text, e.g., the summary.
 
     Fields:
-        job_id (:obj:`int`):
+        job_id (:obj:`str`):
           The job id. The following GET requests be made to the proper endpoint
           containing this job id.
     """
 
-    job_id = fields.Int(required=True)
+    job_id = fields.Str(required=True)
 
     @pre_dump
     def job_to_response(self, job: Job, **kwargs):

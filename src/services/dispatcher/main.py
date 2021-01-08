@@ -21,7 +21,7 @@ __version__ = '0.1.2'
 
 import argparse
 import logging
-import ctypes
+import hashlib
 from datetime import datetime
 from werkzeug import serving
 from flask import Flask, request
@@ -84,7 +84,7 @@ class DispatcherService:
         self.api.add_resource(
             PlainText,
             "/v1/summaries/plain-text",
-            "/v1/summaries/plain-text/<int:job_id>",
+            "/v1/summaries/plain-text/<job_id>",
             endpoint="plain-text-summarization",
             resource_class_kwargs={'dispatcher_service': self,
                                    'kafka_producer': self.kafka_producer}
@@ -154,7 +154,7 @@ class PlainText(Resource):
 
         Returns:
             :obj:`dict`: A 202 Accepted response with a JSON body containing the
-            job id, e.g., {'job_id': 16051568121498808643}.
+            job id, e.g., {'job_id': 73c3de4175449987ef6047f6e0bea91c1036a8599b}.
         Raises:
             :class:`http.client.HTTPException`: If the request body
             JSON is not valid.
@@ -313,22 +313,21 @@ class Health(Resource):
         return not self.dispatcher_service.kafka_consumerloop.stopped()
 
 
-def get_unique_key(source: str):
+def get_unique_key(source: str) -> str:
     """Get a unique key for a message.
 
-    This method hashes the content of :attr:`source`.
+    This method hashes the content of :attr:`source`. SHA-256
+    algorithm is used.
 
     Args:
         source (:obj:`str`):
             `source` field in the JSON body of the request.
 
     Returns:
-        :obj:`int`: The unique key (always positive).
+        :obj:`str`: The unique, SHA-256 ecrypted key.
     """
 
-    # The hash() function can return negative values. With
-    # ctypes we make sure that we only return positive values.
-    return ctypes.c_size_t(hash(source)).value
+    return hashlib.sha256(source.encode()).hexdigest()
 
 
 def disable_healthcheck_logs():

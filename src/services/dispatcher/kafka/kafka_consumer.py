@@ -118,7 +118,7 @@ class ConsumerLoop(StoppableThread):
                     )
                     output = \
                         self.consumed_msg_schema.loads(msg.value())['text_postprocessed']
-                    job = self.db.update_job(id_=int(msg.key()),
+                    job = self.db.update_job(id_=msg.key(),
                                              ended_at=datetime.now(),
                                              state=JobState.COMPLETED.value,
                                              output=output

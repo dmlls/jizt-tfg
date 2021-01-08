@@ -25,11 +25,11 @@ from schemas import Job
 class JobDAOInterface:
     """DAO Interface for access to :obj:`Job` objects."""
 
-    def get_job(self, id_: int):
+    def get_job(self, id_: str):
         """Retrieve a job from the database.
 
         Args:
-            id_ (obj:`int`):
+            id_ (obj:`str`):
                 The job id.
 
         Returns:
@@ -45,11 +45,11 @@ class JobDAOInterface:
                 The job to be saved.
         """
 
-    def update_job(self, id_: int, **kwargs):
+    def update_job(self, id_: str, **kwargs):
         """Update an existing job.
 
         Args:
-            id_ (obj:`int`):
+            id_ (obj:`str`):
                 The job id.
             **kwargs:
                 Fields of the job to be updated.
@@ -59,11 +59,11 @@ class JobDAOInterface:
             there is not any job with the specified id.
         """
 
-    def job_exists(self, id_: int):
+    def job_exists(self, id_: str):
         """Check whether a job already exists in the DB.
 
         Args:
-            id_ (obj:`int`):
+            id_ (obj:`str`):
                 The job id.
 
         Returns:
