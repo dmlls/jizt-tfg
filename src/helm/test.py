@@ -34,7 +34,7 @@ def get(job_id, wait=False, bad_request=False):
     url = f"{INGRESS_URL}/v1/summaries/plain-text/{job_id}"
     response = requests.get(url)
     while wait:
-        if response.json()['state'] == 'completed':
+        if response.json()['status'] == 'completed':
             break
         time.sleep(0.2)
         response = requests.get(url)

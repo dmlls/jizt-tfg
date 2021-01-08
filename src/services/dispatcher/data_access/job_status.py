@@ -15,15 +15,15 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Job states."""
+"""Job status."""
 
 __version__ = '0.1.0'
 
 from enum import Enum
 
 
-class JobState(Enum):
-    """States a job can be in."""
+class JobStatus(Enum):
+    """Statuses a job can be in."""
 
     # The request is being preprocessed
     PREPROCESSING = "preprocessing"

@@ -30,7 +30,7 @@ from confluent_kafka import Message, KafkaError
 from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import ConsumerLoop
-from data_access.job_states import JobState
+from job_status import JobStatus  # TODO: implement
 from data_access.job_dao_factory import JobDAOFactory
 from data_access.schemas import (Job, PlainTextRequestSchema,
                                  AcceptedResponseSchema, OkResponseSchema)
@@ -177,8 +177,8 @@ class PlainText(Resource):
             job = Job(id_=message_key,
                       started_at=datetime.now(),
                       ended_at=None,
-                    #   state=JobState.PREPROCESSING.value,
-                      state="processing",  #TODO: implement states
+                    #   status=JobStatus.PREPROCESSING.value,
+                      status="processing",  # TODO: implement status
                       source=source,
                       output=None
             )

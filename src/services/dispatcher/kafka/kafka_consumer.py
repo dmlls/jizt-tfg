@@ -26,7 +26,7 @@ from threading import Thread, Event
 from kafka_topics import KafkaTopic
 from confluent_kafka import DeserializingConsumer, KafkaError, KafkaException
 from confluent_kafka.serialization import StringDeserializer
-from data_access.job_states import JobState
+from data_access.job_status import JobStatus
 from data_access.job_dao_factory import JobDAOFactory
 from data_access.schemas import TextPostprocessingConsumedMsgSchema
 
@@ -120,7 +120,7 @@ class ConsumerLoop(StoppableThread):
                         self.consumed_msg_schema.loads(msg.value())['text_postprocessed']
                     job = self.db.update_job(id_=msg.key(),
                                              ended_at=datetime.now(),
-                                             state=JobState.COMPLETED.value,
+                                             status=JobStatus.COMPLETED.value,
                                              output=output
                     )
                     self.logger.debug(f"Consumer message processed. Job updated: {job}")

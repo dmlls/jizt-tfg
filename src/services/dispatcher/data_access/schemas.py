@@ -35,7 +35,7 @@ class Job():
       was created.
     * ended_at (:obj:`datetime.datetime`): the time when the job
       finished.
-    * state (:obj:`str`): the state of the job.
+    * status (:obj:`str`): the status of the job.
     * source (:obj:`str`): the source to process, e.g., a plain text
       to be summarized.
     * output (:obj:`str`): the output once the source has been
@@ -46,14 +46,14 @@ class Job():
                  id_: str,
                  started_at: datetime,
                  ended_at: datetime,
-                 state: str,
+                 status: str,
                  source: str,
                  output: str
     ):  # 2020 be like
         self.id_ = id_
         self.started_at = started_at
         self.ended_at = ended_at
-        self.state = state
+        self.status = status
         self.source = source
         self.output = output
 
@@ -61,7 +61,7 @@ class Job():
         source = None if self.source is None else self.source[:30]
         output = None if self.output is None else self.output[:30]
         return (f'JOB [id]: {self.id_}, [started_at]: {self.started_at}, '
-                f'[ended_at]: {self.ended_at}, [state]: "{self.state}", '
+                f'[ended_at]: {self.ended_at}, [status]: "{self.status}", '
                 f'[source]: "{source} [...]", '
                 f'[output]: "{output} [...]"')
 
@@ -128,15 +128,15 @@ class OkResponseSchema(Schema):
             The time when the job was created.
         ended_at (:obj:`datetime.datetime`):
             The time when the job finished.
-        state (:obj:`str`):
-            The state of the job.
+        status (:obj:`str`):
+            The status of the job.
         output (:obj:`str`):
             The processed text, e.g., the summary.
     """
 
     started_at = fields.DateTime(required=True)
     ended_at = fields.DateTime(required=True)
-    state = fields.Str(required=True)
+    status = fields.Str(required=True)
     output = fields.Str(required=True)
 
     @pre_dump
@@ -155,7 +155,7 @@ class OkResponseSchema(Schema):
 
         return {"started_at": job.started_at,
                 "ended_at": job.ended_at,
-                "state": job.state,
+                "status": job.status,
                 "output": job.output}
 
     class Meta:
