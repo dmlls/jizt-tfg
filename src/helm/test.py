@@ -5,7 +5,7 @@ import requests
 import json
 from pprint import pprint
 
-INGRESS_URL = "http://35.186.248.210"
+INGRESS_URL = "https://api.jizt.it"
 
 
 def post(text, bad_request=False):
@@ -38,7 +38,7 @@ def get(job_id, wait=False, bad_request=False):
             break
         time.sleep(0.2)
         response = requests.get(url)
-    
+
     print("\nVALID GET REQUEST to", url)
     try:
         print("CODE:", response.status_code)

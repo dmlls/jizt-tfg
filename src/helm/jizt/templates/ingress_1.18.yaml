@@ -9,13 +9,14 @@ metadata:
     release: {{ $.Release.Name }}
   annotations:
     kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: api-jizt-it
+    networking.gke.io/managed-certificates: jizt-tls
 spec:
   rules:
-  #- host: {{ .Values.ingress.hostname }}
-  - http:
+  - host: {{ .Values.ingress.hostname }}
+    http:
       paths:
-        - path: {{ .Values.ingress.paths.v1 }} 
-          # pathType: Prefix
+        - path: {{ .Values.ingress.paths.v1 }}
           backend:
             serviceName: {{ .Values.dispatcher.name }}-service
             servicePort: {{ .Values.dispatcher.ports.svc }}
