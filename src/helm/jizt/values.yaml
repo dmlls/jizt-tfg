@@ -52,7 +52,7 @@ t5LargeTextEncoder:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.9
+  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.14
   volumeMounts:
     mountPath: "/home/text_encoder/models"
 
@@ -62,7 +62,7 @@ t5LargeTextSummarizer:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.7
+  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.13
   volumeMounts:
     mountPath: "/home/text_summarizer/models"
 

@@ -65,10 +65,10 @@ class TextSummarizerService:
 
     def run(self):
         try:
-            topics_to_susbcribe = [KafkaTopic.TEXT_SUMMARIZATION.value]
-            self.consumer.subscribe(topics_to_susbcribe)
+            topics_to_subscribe = [KafkaTopic.TEXT_SUMMARIZATION.value]
+            self.consumer.subscribe(topics_to_subscribe)
             self.logger.debug(f'Consumer subscribed to topic(s): '
-                              f'{topics_to_susbcribe}')
+                              f'{topics_to_subscribe}')
 
             while True:
                 msg = self.consumer.poll(timeout=1.0)

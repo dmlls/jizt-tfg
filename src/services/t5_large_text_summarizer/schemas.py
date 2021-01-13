@@ -17,6 +17,7 @@
 
 """Marshmallow Schemas for TextSummarizerService."""
 
+import base64
 from marshmallow import Schema, fields
 
 __version__ = '0.1.3'
@@ -37,7 +38,8 @@ class JSONSerializableBytesField(fields.Field):
 
         if value is None:
             return None
-        return value.decode('latin1')
+        b64_encoded = base64.b64encode(value)
+        return b64_encoded.decode('utf-8')
 
     def _deserialize(self, value, attr, data, **kwargs):
         """Deserialize :obj:`bytes` from :obj:`str`.
@@ -46,10 +48,10 @@ class JSONSerializableBytesField(fields.Field):
         """
 
         if isinstance(value, str):
-            return value.encode('latin1')
+            b64_encoded_str = value.encode('utf-8')
+            return base64.decodebytes(b64_encoded_str)
         raise super(JSONSerializableBytesField,
                     self).make_error('Value must be a string.')
-
 
 class TextSummarizationConsumedMsgSchema(Schema):
     """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_SUMMARIZATION`.
