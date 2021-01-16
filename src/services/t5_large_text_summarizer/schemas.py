@@ -53,6 +53,7 @@ class JSONSerializableBytesField(fields.Field):
         raise super(JSONSerializableBytesField,
                     self).make_error('Value must be a string.')
 
+
 class TextSummarizationConsumedMsgSchema(Schema):
     """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_SUMMARIZATION`.
 

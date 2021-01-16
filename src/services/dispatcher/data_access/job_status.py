@@ -25,8 +25,8 @@ from enum import Enum
 class JobStatus(Enum):
     """Statuses a job can be in."""
 
-    # The request is being preprocessed
     PREPROCESSING = "preprocessing"
-
-    # The request has been completed.
+    ENCODING = "encoding"
+    SUMMARIZING = "summarizing"
+    POSTPROCESSING = "postprocessing"
     COMPLETED = "completed"

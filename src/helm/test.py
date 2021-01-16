@@ -81,7 +81,7 @@ All of this leads to questions like: When we become more well-behaved, do we als
 
 (Example – I have an advanced degree. This simple piece of data predicts that: I despise and fear Donald Trump and the Republicans; I am a good critical thinker who understands the difference between the high journalistic standards of the New York Times or the Washington Post and the non-existent ones of Fox “News,” Breitbart, etc.; I don’t believe in alien abductions or faked moon landings; I know that evolution and climate change are true beyond any reasonable doubt; I’m not a theist, much less a Christian, Mormon, or Islamic fundamentalist; etc. All that from just one bit of data. Imagine what else others know about you and me?)
 
-6) Conclusion 
+6) Conclusion
 
 a) Data is not the new gold, it is the new oil, and it damages the social environment.
 
