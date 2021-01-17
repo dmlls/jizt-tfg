@@ -38,6 +38,12 @@ dispatcher:
     container: 5000
   image: eu.gcr.io/jizt-299516/dispatcher:0.0.24
 
+# Configuration for Secret containing PostgreSQL user credentials
+postgresSecret:
+  name: postgres-user
+  secretName: pg-dispatcher
+  mountPath: "/etc/postgres"
+
 # Configuration for the Text Preprocessor microservice
 textPreprocessor:
   name: "text-preprocessing"

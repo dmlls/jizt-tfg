@@ -17,6 +17,10 @@ spec:
       - name: {{ .Values.dispatcher.name }}
         image: {{ .Values.dispatcher.image }}
         args: ["-d"]  # uncomment for debug mode
+        volumeMounts:
+        - name: {{ .Values.postgresSecret.name }}
+          mountPath: {{ .Values.postgresSecret.mountPath }}
+          readOnly: true
         ports:
         - containerPort: {{ .Values.dispatcher.ports.container }}
         livenessProbe:
@@ -31,4 +35,8 @@ spec:
             port: {{ .Values.dispatcher.ports.container }}
           initialDelaySeconds: 15
           periodSeconds: 15
+      volumes:
+      - name: {{ .Values.postgresSecret.name }}
+        secret:
+          secretName: {{ .Values.postgresSecret.secretName }}
 {{- end -}}
