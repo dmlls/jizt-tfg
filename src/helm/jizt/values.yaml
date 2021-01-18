@@ -36,13 +36,19 @@ dispatcher:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/dispatcher:0.0.24
+  image: eu.gcr.io/jizt-299516/dispatcher:0.0.35
 
-# Configuration for Secret containing PostgreSQL user credentials
-postgresSecret:
-  name: postgres-user
-  secretName: pg-dispatcher
-  mountPath: "/etc/postgres"
+# Configuration for ConfigMap/Secret containing
+# PostgreSQL connection details
+postgres:
+  host: "db-cluster.jizt-db"  # clusterName.namespace
+  dbName: "jizt"
+  secret:
+    secretName: pg-dispatcher
+    volumeName: postgres-user
+    mountPath: "/etc/postgres"
+    usernameFile: "username"
+    passwordFile: "password"
 
 # Configuration for the Text Preprocessor microservice
 textPreprocessor:
@@ -60,7 +66,8 @@ t5LargeTextEncoder:
     container: 5000
   image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.14
   volumeMounts:
-    mountPath: "/home/text_encoder/models"
+    modelsMountPath: "/home/text_encoder/models"
+    tokenizerPath: "t5-small/tokenizer"  # TODO: change to t5-large
 
 # Configuration for the Text Summarizer microservice
 t5LargeTextSummarizer:
@@ -70,7 +77,9 @@ t5LargeTextSummarizer:
     container: 5000
   image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.13
   volumeMounts:
-    mountPath: "/home/text_summarizer/models"
+    modelsMountPath: "/home/text_summarizer/models"
+    tokenizerPath: "t5-small/tokenizer"  # TODO: change to t5-large
+    modelPath: "t5-small/model"  # TODO: change to t5-large
 
 # Configuration for the Text Postprocessor microservice
 textPostprocessor:

@@ -17,9 +17,22 @@ spec:
       - name: {{ .Values.dispatcher.name }}
         image: {{ .Values.dispatcher.image }}
         args: ["-d"]  # uncomment for debug mode
+        env:
+        - name: FLASK_SERVER_PORT
+          value: "{{ .Values.dispatcher.ports.container }}"
+        - name: PG_HOST
+          value: {{ .Values.postgres.host }}
+        - name: PG_DBNAME
+          value: {{ .Values.postgres.dbName }}
+        - name: PG_SECRET_PATH
+          value: {{ .Values.postgres.secret.mountPath }}
+        - name: PG_USERNAME_FILE
+          value: {{ .Values.postgres.secret.usernameFile }}
+        - name: PG_PASSWORD_FILE
+          value: {{ .Values.postgres.secret.passwordFile }}
         volumeMounts:
-        - name: {{ .Values.postgresSecret.name }}
-          mountPath: {{ .Values.postgresSecret.mountPath }}
+        - name: {{ .Values.postgres.secret.volumeName }}
+          mountPath: {{ .Values.postgres.secret.mountPath }}
           readOnly: true
         ports:
         - containerPort: {{ .Values.dispatcher.ports.container }}
@@ -36,7 +49,7 @@ spec:
           initialDelaySeconds: 15
           periodSeconds: 15
       volumes:
-      - name: {{ .Values.postgresSecret.name }}
+      - name: {{ .Values.postgres.secret.volumeName }}
         secret:
-          secretName: {{ .Values.postgresSecret.secretName }}
+          secretName: {{ .Values.postgres.secret.secretName }}
 {{- end -}}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.postgres.configMap.configMapName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "jizt.name" . }}
+    chart: {{ include "jizt.chart" . }}
+    release: {{ $.Release.Name }}
+data:
+  pg_host: {{ .Values.postgres.configMap.hostValue }}
+  pg_dbname: {{ .Values.postgres.configMap.dbNameValue }}

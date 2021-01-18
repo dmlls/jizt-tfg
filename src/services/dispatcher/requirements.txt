@@ -20,7 +20,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 marshmallow==3.9.1
-psycopg2==2.8.6
+psycopg2-binary==2.8.6
 pytz==2020.4
 requests==2.25.0
 six==1.15.0

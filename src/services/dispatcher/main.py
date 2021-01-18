@@ -19,6 +19,7 @@
 
 __version__ = '0.1.4'
 
+import os
 import argparse
 import logging
 import hashlib
@@ -30,17 +31,17 @@ from confluent_kafka import Message, KafkaError
 from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import ConsumerLoop
-from summary_status import SummaryStatus  # TODO: implement
+from summary_status import SummaryStatus
 from data_access.summary_dao_factory import SummaryDAOFactory
 from data_access.schemas import (Summary, PlainTextRequestSchema,
                                  AcceptedResponseSchema, OkResponseSchema)
-
-# Path to PostgreSQL user credentials
-PG_SECRET_PATH = "/etc/postgres"
+from data_access.supported_models import SupportedModel
+from data_access.supported_languages import SupportedLanguage
+from pathlib import Path
 
 # Flask config
-HOST = "0.0.0.0"  # host for Flask server
-PORT = 5000  # port for Flask server
+FLASK_HOST = "0.0.0.0"
+FLASK_PORT = os.environ['FLASK_SERVER_PORT']
 
 # Args for Python script execution
 parser = argparse.ArgumentParser(description='Dispatcher service. '
@@ -75,16 +76,29 @@ class DispatcherService:
         )
         self.logger = logging.getLogger("Dispatcher")
 
+        # PostgreSQL connection data
+        pg_username = None
+        pg_password = None
+        with open((Path(os.environ['PG_SECRET_PATH'])
+                   / Path(os.environ['PG_USERNAME_FILE'])), 'r') as username:
+            pg_username = username.readline().rstrip('\n')
+        with open((Path(os.environ['PG_SECRET_PATH'])
+                   / Path(os.environ['PG_PASSWORD_FILE'])), 'r') as password:
+            pg_password = password.readline().rstrip('\n')
+
+        self.db = SummaryDAOFactory(
+            os.environ['PG_HOST'],
+            os.environ['PG_DBNAME'],
+            pg_username,
+            pg_password,
+            log_level
+        )
+        del pg_username
+        del pg_password
+
         # Create Kafka Producer and ConsumerLoop
         self.kafka_producer = Producer()
-        self.kafka_consumerloop = ConsumerLoop()
-
-        # PostgreSQL connection data
-        with open(f'{PG_SECRET_PATH}/username', 'r') as username:
-            self.pg_username = username.readline().rstrip('\n')
-        with open(f'{PG_SECRET_PATH}/password', 'r') as password:
-            self.pg_password = password.readline().rstrip('\n')
-        self.db = SummaryDAOFactory()
+        self.kafka_consumerloop = ConsumerLoop(self.db)
 
         # Endpoints
         self.api.add_resource(
@@ -108,8 +122,8 @@ class DispatcherService:
     def run(self):
         try:
             self.kafka_consumerloop.start()
-            self.app.run(host=HOST,
-                         port=PORT,
+            self.app.run(host=FLASK_HOST,
+                         port=FLASK_PORT,
                          debug=(self.logger.level == "DEBUG")
             )
         finally:
@@ -180,14 +194,17 @@ class PlainTextSummary(Resource):
                 f'Summary already exists: {summary}'
             )
         else:
-            summary = Summary(id_=message_key,
-                      started_at=datetime.now(),
-                      ended_at=None,
-                    #   status=SummaryStatus.PREPROCESSING.value,
-                      status="processing",  # TODO: implement status
-                      source=source,
-                      output=None
-            )
+            summary = Summary(
+                          id_=message_key,
+                          source=source,
+                          output=None,
+                          model=SupportedModel.T5_LARGE,
+                          params={},
+                          status=SummaryStatus.SUMMARIZING,
+                          started_at=datetime.now(),
+                          ended_at=None,
+                          language=SupportedLanguage.ENGLISH
+                      )
             self.dispatcher_service.db.insert_summary(summary)
 
             topic = KafkaTopic.TEXT_PREPROCESSING.value

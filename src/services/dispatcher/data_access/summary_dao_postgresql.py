@@ -15,14 +15,11 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-# TODO: implement real database
-
 """Summary Data Access Object (DAO) Implementation."""
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 import logging
-import itertools
 import psycopg2
 from io import StringIO
 from collections import OrderedDict
@@ -41,7 +38,7 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
     For more information, see base class.
     """
 
-    def __init__(self, log_level, host, dbname, user, password):
+    def __init__(self, host, dbname, user, password, log_level):
         logging.basicConfig(
             format='%(asctime)s %(name)s %(levelname)-8s %(message)s',
             level=log_level,
@@ -81,8 +78,7 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
                         ended_at=summary_row[7],
                         language=SupportedLanguage(summary_row[8])
                     )
-                else:
-                    return None  # summary doesn't exist
+                return None  # summary doesn't exist
         except (Exception, psycopg2.DatabaseError) as error:
             self.logger.error(error)
         finally:
@@ -94,7 +90,7 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
 
         SQL_INSERT_SOURCE = """INSERT INTO jizt.source
                             VALUES (DEFAULT, %s, %s) RETURNING source_id;"""
-        
+
         SQL_GET_SOURCE = """SELECT source_id
                             FROM jizt.source
                             WHERE content = %s;"""
@@ -115,8 +111,10 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
                         (summary.source, len(summary.source))
                     )
                     source_id = cur.fetchone()
+                output_length = (len(summary.output) if summary.output is not None
+                                 else None)
                 cur.execute(SQL_SUMMARY, (summary.id_, source_id[0],
-                                          summary.output, len(summary.output),
+                                          summary.output, output_length,
                                           summary.model, Json(summary.params),
                                           summary.status, summary.started_at,
                                           summary.ended_at, summary.language))
@@ -129,7 +127,7 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
 
     def update_summary(self, id_: str, **kwargs):
         """See base class."""
-        
+
         ordered_kwargs = OrderedDict(kwargs)
         keys = list(ordered_kwargs.keys())
         values = list(ordered_kwargs.values()) + [id_]
@@ -138,16 +136,16 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
         for field in keys[:-1]:
             concat.write(f"{field} = %s, ")
         concat.write(f"{keys[-1]} = %s WHERE summary_id = %s;")
-        
+
         SQL = concat.getvalue()
-        
+
         if self.summary_exists(id_):
             conn = None
             try:
                 conn = self._connect()
                 with conn.cursor() as cur:
                     cur.execute(SQL, values)
-                    if cur.rowcount == 0:
+                    if cur.rowcount == 0:  # nothing updated
                         return None
                     conn.commit()
                     return self.get_summary(id_)

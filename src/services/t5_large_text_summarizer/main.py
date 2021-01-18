@@ -17,6 +17,7 @@
 
 """Text Summarizer."""
 
+import os
 import argparse
 import logging
 import pickle
@@ -27,12 +28,17 @@ from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
 from schemas import (TextSummarizationConsumedMsgSchema,
                      TextPostprocessingProducedMsgSchema)
+from pathlib import Path
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
-#TODO: change for t5-large
-TOKENIZER_PATH = "./models/t5-small/tokenizer"  # GC Persistent Disk
-MODEL_PATH = "./models/t5-small/model"  # GC Persistent Disk
+TOKENIZER_PATH = (
+    Path(os.environ['MODELS_MOUNT_PATH']) / Path(os.environ['TOKENIZER_PATH'])
+)
+
+MODEL_PATH = (
+    Path(os.environ['MODELS_MOUNT_PATH']) / Path(os.environ['MODEL_PATH'])
+)
 
 parser = argparse.ArgumentParser(description='Text summarizer service. '
                                              'Default log level is WARNING.')

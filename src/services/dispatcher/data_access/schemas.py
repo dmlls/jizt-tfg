@@ -52,7 +52,7 @@ class Summary():
                  status: SummaryStatus,
                  started_at: datetime,
                  ended_at: datetime,
-                 language: SupportedLanguage 
+                 language: SupportedLanguage
     ):  # 2020 be like
         self.id_ = id_
         self.source = source
@@ -92,7 +92,6 @@ class PlainTextRequestSchema(Schema):
 
     class Meta:
         unknown = EXCLUDE
-
 
 
 class AcceptedResponseSchema(Schema):

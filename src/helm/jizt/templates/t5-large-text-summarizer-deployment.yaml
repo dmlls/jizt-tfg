@@ -17,10 +17,17 @@ spec:
       - name: {{ .Values.t5LargeTextSummarizer.name }}
         image: {{ .Values.t5LargeTextSummarizer.image }}
         args: ["-d"]  # uncomment for debug mode
+        env:
+        - name: MODELS_MOUNT_PATH
+          value: {{ .Values.t5LargeTextSummarizer.volumeMounts.modelsMountPath }}
+        - name: TOKENIZER_PATH
+          value: {{ .Values.t5LargeTextSummarizer.volumeMounts.tokenizerPath }}
+        - name: MODEL_PATH
+          value: {{ .Values.t5LargeTextSummarizer.volumeMounts.modelPath }}
         ports:
         - containerPort: {{ .Values.t5LargeTextSummarizer.ports.container }}
         volumeMounts:
-        - mountPath: {{ .Values.t5LargeTextSummarizer.volumeMounts.mountPath }}
+        - mountPath: {{ .Values.t5LargeTextSummarizer.volumeMounts.modelsMountPath }}
           name: {{ .Values.modelsPV.name }}-pv-storage
       volumes:
       - name: {{ .Values.modelsPV.name }}-pv-storage

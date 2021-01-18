@@ -17,6 +17,7 @@
 
 """Text Encoder."""
 
+import os
 import argparse
 import logging
 import pickle
@@ -26,11 +27,13 @@ from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
 from schemas import TextEncodingsConsumedMsgSchema, TextSumarizationProducedMsgSchema
+from pathlib import Path
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
-#TODO: change for t5-large
-TOKENIZER_PATH = "./models/t5-small/tokenizer"  # GC Persistent Disk
+TOKENIZER_PATH = (
+    Path(os.environ['MODELS_MOUNT_PATH']) / Path(os.environ['TOKENIZER_PATH'])
+)
 
 parser = argparse.ArgumentParser(description='Text encoder service. '
                                              'Default log level is WARNING.')

@@ -68,7 +68,7 @@ class ConsumerLoop(StoppableThread):
     <https://docs.confluent.io/platform/current/clients/confluent-kafka-python/#pythonclient-consumer>`__.
     """
 
-    def __init__(self):
+    def __init__(self, db: SummaryDAOFactory):
         super(ConsumerLoop, self).__init__()
 
         logging.basicConfig(
@@ -89,7 +89,7 @@ class ConsumerLoop(StoppableThread):
                   'key.deserializer': StringDeserializer('utf_8'),
                   'value.deserializer': StringDeserializer('utf_8')}
         self.consumer = DeserializingConsumer(config)
-        self.db = SummaryDAOFactory()
+        self.db = db
         self.consumed_msg_schema = TextPostprocessingConsumedMsgSchema()
 
     def run(self):
@@ -118,11 +118,12 @@ class ConsumerLoop(StoppableThread):
                     )
                     output = \
                         self.consumed_msg_schema.loads(msg.value())['text_postprocessed']
-                    summary = self.db.update_summary(id_=msg.key(),
-                                             ended_at=datetime.now(),
-                                             status=SummaryStatus.COMPLETED,
-                                             output=output
-                    )
+                    summary = self.db.update_summary(
+                        id_=msg.key(),
+                        ended_at=datetime.now(),
+                        status=SummaryStatus.COMPLETED.value,
+                        summary=output
+                    )  # important: keys have to match DB columns
                     self.logger.debug(f"Consumer message processed. "
                                       f"Summary updated: {summary}")
         finally:

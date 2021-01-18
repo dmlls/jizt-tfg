@@ -17,10 +17,15 @@ spec:
       - name: {{ .Values.t5LargeTextEncoder.name }}
         image: {{ .Values.t5LargeTextEncoder.image }}
         args: ["-d"]  # uncomment for debug mode
+        env:
+        - name: MODELS_MOUNT_PATH
+          value: {{ .Values.t5LargeTextEncoder.volumeMounts.modelsMountPath }}
+        - name: TOKENIZER_PATH
+          value: {{ .Values.t5LargeTextEncoder.volumeMounts.tokenizerPath }}
         ports:
         - containerPort: {{ .Values.t5LargeTextEncoder.ports.container }}
         volumeMounts:
-        - mountPath: {{ .Values.t5LargeTextEncoder.volumeMounts.mountPath }}
+        - mountPath: {{ .Values.t5LargeTextEncoder.volumeMounts.modelsMountPath }}
           name: {{ .Values.modelsPV.name }}-pv-storage
       volumes:
       - name: {{ .Values.modelsPV.name }}-pv-storage

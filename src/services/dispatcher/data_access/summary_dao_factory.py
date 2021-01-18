@@ -19,7 +19,7 @@
 
 __version__ = '0.1.3'
 
-import psycopg2
+import logging
 from summary_dao_postgresql import SummaryDAOPostgresql
 
 
@@ -28,11 +28,26 @@ class SummaryDAOFactory:
 
     _instance = None
 
-    def __new__(cls, host, database, user, password):
+    def __new__(cls,
+                host: str,
+                dbname: str,
+                user: str,
+                password: str,
+                log_level: int = logging.ERROR
+    ) -> SummaryDAOPostgresql:
         """Singleton.
 
         Args:
-            See :meth:`_create_connection`.
+            host (:obj:`str`):
+                The database host.
+            dbname (:obj:`str`):
+                The database name.
+            user (:obj:`str`):
+                The database user.
+            password (:obj:`str`):
+                The user's password.
+            log_level (:obj:`int`, `optional`, defaults to logging.ERROR):
+                The log level.
 
         Returns:
             :obj:`SummaryDAOFactory`: The single instance
@@ -42,8 +57,9 @@ class SummaryDAOFactory:
         if cls._instance is None:
             cls._instance = SummaryDAOPostgresql(
                 host,
-                database,
+                dbname,
                 user,
-                password
+                password,
+                log_level
             )
         return cls._instance

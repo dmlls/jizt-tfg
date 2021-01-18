@@ -86,8 +86,8 @@ CREATE TABLE summary (
     source_id           INTEGER NOT NULL
         CONSTRAINT FK_source_id
         REFERENCES source ON DELETE CASCADE ON UPDATE CASCADE,
-    summary             TEXT NOT NULL,
-    summary_length      INTEGER NOT NULL CHECK (summary_length > 0),
+    summary             TEXT,
+    summary_length      INTEGER,
     model_name          TEXT NOT NULL
         CONSTRAINT FK_model_name
         REFERENCES model(name) ON UPDATE CASCADE,
