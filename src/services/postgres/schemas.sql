@@ -82,7 +82,7 @@ CREATE TABLE model (
 CREATE TYPE STATUS AS ENUM ('preprocessing', 'encoding', 'summarizing',
                             'postprocessing', 'completed');
 CREATE TABLE summary (
-    summary_id          SERIAL PRIMARY KEY,
+    summary_id          TEXT PRIMARY KEY,
     source_id           INTEGER NOT NULL
         CONSTRAINT FK_source_id
         REFERENCES source ON DELETE CASCADE ON UPDATE CASCADE,
@@ -93,8 +93,8 @@ CREATE TABLE summary (
         REFERENCES model(name) ON UPDATE CASCADE,
     params              JSON NOT NULL,
     status              STATUS NOT NULL,
-    start_time          TIMESTAMPTZ NOT NULL,
-    end_time            TIMESTAMPTZ,
+    started_at          TIMESTAMPTZ NOT NULL,
+    ended_at            TIMESTAMPTZ,
     language_tag        TEXT NOT NULL
         CONSTRAINT FK_language_tag
         REFERENCES language(language_tag) ON UPDATE CASCADE

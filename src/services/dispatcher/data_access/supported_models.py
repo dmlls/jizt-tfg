@@ -15,18 +15,14 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Job status."""
+"""Current supported models."""
 
 __version__ = '0.1.0'
 
 from enum import Enum
 
 
-class JobStatus(Enum):
-    """Statuses a job can be in."""
+class SupportedModel(Enum):
+    """Supported models."""
 
-    PREPROCESSING = "preprocessing"
-    ENCODING = "encoding"
-    SUMMARIZING = "summarizing"
-    POSTPROCESSING = "postprocessing"
-    COMPLETED = "completed"
+    T5_LARGE = "t5-large"

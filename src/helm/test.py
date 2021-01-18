@@ -27,11 +27,11 @@ def post(text, bad_request=False):
         except json.decoder.JSONDecodeError:
             print(bad_request_response)
 
-    return response.json()['job_id']
+    return response.json()['summary_id']
 
 
-def get(job_id, wait=False, bad_request=False):
-    url = f"{INGRESS_URL}/v1/summaries/plain-text/{job_id}"
+def get(summary_id, wait=False, bad_request=False):
+    url = f"{INGRESS_URL}/v1/summaries/plain-text/{summary_id}"
     response = requests.get(url)
     while wait:
         if response.json()['status'] == 'completed':
@@ -49,7 +49,7 @@ def get(job_id, wait=False, bad_request=False):
     if bad_request:
         bad_url = f"{INGRESS_URL}/v1/summaries/plain-text/{99999999999}"
         bad_request_response = requests.get(bad_url)
-        print("\nBAD GET REQUEST (non-existent job) to", bad_url)
+        print("\nBAD GET REQUEST (non-existent summary) to", bad_url)
         try:
             print("CODE:", bad_request_response.status_code)
             pprint(bad_request_response.json())
@@ -91,10 +91,10 @@ c) Privacy is the right to be human.
 """
 
 print(f'ORIGINAL TEXT:\n"{text}"\n')
-job_id = post(text)
+summary_id = post(text)
 
-get(job_id)
+get(summary_id)
 
 print("\nWaiting...")
 
-get(job_id, wait=True)
+get(summary_id, wait=True)

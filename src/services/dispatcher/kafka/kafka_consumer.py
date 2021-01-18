@@ -26,8 +26,8 @@ from threading import Thread, Event
 from kafka_topics import KafkaTopic
 from confluent_kafka import DeserializingConsumer, KafkaError, KafkaException
 from confluent_kafka.serialization import StringDeserializer
-from data_access.job_status import JobStatus
-from data_access.job_dao_factory import JobDAOFactory
+from data_access.summary_status import SummaryStatus
+from data_access.summary_dao_factory import SummaryDAOFactory
 from data_access.schemas import TextPostprocessingConsumedMsgSchema
 
 
@@ -89,7 +89,7 @@ class ConsumerLoop(StoppableThread):
                   'key.deserializer': StringDeserializer('utf_8'),
                   'value.deserializer': StringDeserializer('utf_8')}
         self.consumer = DeserializingConsumer(config)
-        self.db = JobDAOFactory()
+        self.db = SummaryDAOFactory()
         self.consumed_msg_schema = TextPostprocessingConsumedMsgSchema()
 
     def run(self):
@@ -118,12 +118,13 @@ class ConsumerLoop(StoppableThread):
                     )
                     output = \
                         self.consumed_msg_schema.loads(msg.value())['text_postprocessed']
-                    job = self.db.update_job(id_=msg.key(),
+                    summary = self.db.update_summary(id_=msg.key(),
                                              ended_at=datetime.now(),
-                                             status=JobStatus.COMPLETED.value,
+                                             status=SummaryStatus.COMPLETED,
                                              output=output
                     )
-                    self.logger.debug(f"Consumer message processed. Job updated: {job}")
+                    self.logger.debug(f"Consumer message processed. "
+                                      f"Summary updated: {summary}")
         finally:
             self.logger.debug("Consumer loop stopped. Closing consumer...")
             self.consumer.close()  # close down consumer to commit final offsets

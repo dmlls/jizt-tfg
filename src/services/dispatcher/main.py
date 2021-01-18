@@ -17,7 +17,7 @@
 
 """Dispatcher REST API v1."""
 
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 import argparse
 import logging
@@ -30,16 +30,17 @@ from confluent_kafka import Message, KafkaError
 from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import ConsumerLoop
-from job_status import JobStatus  # TODO: implement
-from data_access.job_dao_factory import JobDAOFactory
-from data_access.schemas import (Job, PlainTextRequestSchema,
+from summary_status import SummaryStatus  # TODO: implement
+from data_access.summary_dao_factory import SummaryDAOFactory
+from data_access.schemas import (Summary, PlainTextRequestSchema,
                                  AcceptedResponseSchema, OkResponseSchema)
 
-# Host for Flask server
-HOST = "0.0.0.0"  # make the server publicly available
+# Path to PostgreSQL user credentials
+PG_SECRET_PATH = "/etc/postgres"
 
-# Port for Flask server
-PORT = 5000
+# Flask config
+HOST = "0.0.0.0"  # host for Flask server
+PORT = 5000  # port for Flask server
 
 # Args for Python script execution
 parser = argparse.ArgumentParser(description='Dispatcher service. '
@@ -59,8 +60,8 @@ class DispatcherService:
           the necessary fields.
         * Publish messages to the proper microservice Kafka topic, in order
           to begin the text processing.
-        * Manage the completed jobs, i.e., the texts that have been already
-          processed, storing them in a DB for later retrieval.
+        * Manage the completed summaries, storing them in a DB for later
+          retrieval.
     """
 
     def __init__(self, log_level):
@@ -77,14 +78,19 @@ class DispatcherService:
         # Create Kafka Producer and ConsumerLoop
         self.kafka_producer = Producer()
         self.kafka_consumerloop = ConsumerLoop()
-        # Get DB
-        self.db = JobDAOFactory()
+
+        # PostgreSQL connection data
+        with open(f'{PG_SECRET_PATH}/username', 'r') as username:
+            self.pg_username = username.readline().rstrip('\n')
+        with open(f'{PG_SECRET_PATH}/password', 'r') as password:
+            self.pg_password = password.readline().rstrip('\n')
+        self.db = SummaryDAOFactory()
 
         # Endpoints
         self.api.add_resource(
-            PlainText,
+            PlainTextSummary,
             "/v1/summaries/plain-text",
-            "/v1/summaries/plain-text/<job_id>",
+            "/v1/summaries/plain-text/<summary_id>",
             endpoint="plain-text-summarization",
             resource_class_kwargs={'dispatcher_service': self,
                                    'kafka_producer': self.kafka_producer}
@@ -134,7 +140,7 @@ class DispatcherService:
                               f', [offset]: {msg.offset()}')
 
 
-class PlainText(Resource):
+class PlainTextSummary(Resource):
     """Resource for plain-text requests."""
 
     def __init__(self, **kwargs):
@@ -148,13 +154,13 @@ class PlainText(Resource):
         """HTTP POST.
 
         Submit a request. When a client first makes a POST request, a response
-        is given with the job id. The client must then make periodic GET requests
-        with the specific job id to check the job status. Once the job is completed,
-        the GET request will contain the output text, e.g., the summary.
+        is given with the summary id. The client must then make periodic GET requests
+        with the specific summary id to check the summary status. Once the summary
+        is completed, the GET request will contain the output text, e.g., the summary.
 
         Returns:
             :obj:`dict`: A 202 Accepted response with a JSON body containing the
-            job id, e.g., {'job_id': 73c3de4175449987ef6047f6e0bea91c1036a8599b}.
+            summary id, e.g., {'summary_id': 73c3de4175449987ef6047f6e0bea91c1036a8599b}.
         Raises:
             :class:`http.client.HTTPException`: If the request body
             JSON is not valid.
@@ -164,25 +170,25 @@ class PlainText(Resource):
         self._validate_post_request_json(data)
 
         source = self.request_schema.load(data)['source']
-        message_key = get_unique_key(source)  # job id
+        message_key = get_unique_key(source)  # summary id
 
-        job = None
+        summary = None
 
-        if self.dispatcher_service.db.job_exists(message_key):
-            job = self.dispatcher_service.db.get_job(message_key)
+        if self.dispatcher_service.db.summary_exists(message_key):
+            summary = self.dispatcher_service.db.get_summary(message_key)
             self.dispatcher_service.logger.debug(
-                f'Job already exists: {job}'
+                f'Summary already exists: {summary}'
             )
         else:
-            job = Job(id_=message_key,
+            summary = Summary(id_=message_key,
                       started_at=datetime.now(),
                       ended_at=None,
-                    #   status=JobStatus.PREPROCESSING.value,
+                    #   status=SummaryStatus.PREPROCESSING.value,
                       status="processing",  # TODO: implement status
                       source=source,
                       output=None
             )
-            self.dispatcher_service.db.insert_job(job)
+            self.dispatcher_service.db.insert_summary(summary)
 
             topic = KafkaTopic.TEXT_PREPROCESSING.value
             message_value = self.request_schema.dumps(data)
@@ -197,27 +203,28 @@ class PlainText(Resource):
                         f'"{message_value[:50]} [...]"'
             )
 
-        response = self.accepted_response_schema.dump(job)
+        response = self.accepted_response_schema.dump(summary)
         return response, 202  # ACCEPTED
 
-    def get(self, job_id):
+    def get(self, summary_id):
         """HTTP GET.
 
-        Gives a response with the job status and, in case the job
+        Gives a response with the summary status and, in case the summary
         is completed, the output text, e.g. the summary.
 
         Returns:
             :obj:`dict`: A 200 OK response with a JSON body containing the
-            job. For info on the job fields, see :class:`data_access.schemas.Job`.
+            summary. For info on the summary fields, see
+            :class:`data_access.schemas.Summary`.
         Raises:
-            :class:`http.client.HTTPException`: If there exists no job
+            :class:`http.client.HTTPException`: If there exists no summary
             with the specified id.
         """
 
-        job = self.dispatcher_service.db.get_job(job_id)
-        if job is None:
-            abort(404, errors=f'Job {job_id} not found.')  # NOT FOUND
-        response = self.ok_response_schema.dump(job)
+        summary = self.dispatcher_service.db.get_summary(summary_id)
+        if summary is None:
+            abort(404, errors=f'Summary {summary_id} not found.')  # NOT FOUND
+        response = self.ok_response_schema.dump(summary)
         return response, 200  # OK
 
     def _validate_post_request_json(self, json):

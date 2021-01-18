@@ -19,23 +19,24 @@
 
 __version__ = '0.1.6'
 
-from marshmallow import Schema, fields, pre_dump
 from datetime import datetime
+from marshmallow import Schema, fields, pre_dump, EXCLUDE
+from summary_status import SummaryStatus
+from supported_models import SupportedModel
+from supported_languages import SupportedLanguage
 
 
-class Job():
-    """Job class.
+class Summary():
+    """Summary class.
 
-    A job is a request being processed.
+    A summary has the following attributes:
 
-    Jobs has the following attributes:
-
-    * id_ (:obj:`str`): the id of the job.
-    * started_at (:obj:`datetime.datetime`): the time when the job
-      was created.
-    * ended_at (:obj:`datetime.datetime`): the time when the job
-      finished.
-    * status (:obj:`str`): the status of the job.
+    * id_ (:obj:`str`): the id of the summary.
+    * started_at (:obj:`datetime.datetime`): the time when the summary
+      was first requested.
+    * ended_at (:obj:`datetime.datetime`): the time when the summary
+      first finished.
+    * status (:obj:`str`): the status of the summary.
     * source (:obj:`str`): the source to process, e.g., a plain text
       to be summarized.
     * output (:obj:`str`): the output once the source has been
@@ -44,26 +45,36 @@ class Job():
 
     def __init__(self,
                  id_: str,
+                 source: str,
+                 output: str,
+                 model: SupportedModel,
+                 params: dict,
+                 status: SummaryStatus,
                  started_at: datetime,
                  ended_at: datetime,
-                 status: str,
-                 source: str,
-                 output: str
+                 language: SupportedLanguage 
     ):  # 2020 be like
         self.id_ = id_
-        self.started_at = started_at
-        self.ended_at = ended_at
-        self.status = status
         self.source = source
         self.output = output
+        self.model = model.value
+        self.params = params
+        self.status = status.value
+        self.started_at = started_at
+        self.ended_at = ended_at
+        self.language = language.value
 
     def __str__(self):
-        source = None if self.source is None else self.source[:30]
-        output = None if self.output is None else self.output[:30]
-        return (f'JOB [id]: {self.id_}, [started_at]: {self.started_at}, '
-                f'[ended_at]: {self.ended_at}, [status]: "{self.status}", '
-                f'[source]: "{source} [...]", '
-                f'[output]: "{output} [...]"')
+        return (f'SUMMARY [id]: {self.id_}, [source]: "{self.source}", '
+                f'[output]: "{self.output}", [model]: {self.model}, '
+                f'[params]: {self.params}, [status]: {self.status}, '
+                f'[started_at]: {self.started_at}, [ended_at]: {self.ended_at}, '
+                f'[language]: {self.language}')
+
+    def __repr__(self):
+        return (f'Summary({self.id_}, {self.source}, {self.output}, '
+                f'{self.model}, {self.params}, {self.status}, {self.started_at}, '
+                f'{self.ended_at}, {self.language}')
 
 
 class PlainTextRequestSchema(Schema):
@@ -79,29 +90,33 @@ class PlainTextRequestSchema(Schema):
     # length could be limited with validate=Length(max=600)
     source = fields.Str(required=True)
 
+    class Meta:
+        unknown = EXCLUDE
+
+
 
 class AcceptedResponseSchema(Schema):
     """Schema for the 202 ACCEPTED response.
 
     When a client first makes a POST request, a response is given with the
-    job id. The client must then make periodic GET requests with the specific
-    job id to check the job status. Once the job is completed, the GET request
-    will contain the output text, e.g., the summary.
+    summary id. The client must then make periodic GET requests with the specific
+    summary id to check the summary status. Once the summary is completed, the GET
+    request will contain the output text, e.g., the summary.
 
     Fields:
-        job_id (:obj:`str`):
-          The job id. The following GET requests be made to the proper endpoint
-          containing this job id.
+        summary_id (:obj:`str`):
+          The summary id. The following GET requests be made to the proper endpoint
+          containing this summary id.
     """
 
-    job_id = fields.Str(required=True)
+    summary_id = fields.Str(required=True)
 
     @pre_dump
-    def job_to_response(self, job: Job, **kwargs):
-        """Transform a :obj:`Job` object into a response.
+    def summary_to_response(self, summary: Summary, **kwargs):
+        """Transform a :obj:`Summary` object into a response.
 
         This method is executed when calling :meth:`Schema.dump`. Since a
-        job includes more information than it will be included in the response,
+        summary includes more information than it will be included in the response,
         with this function we get only the necessary fields to form a response.
 
         For more information, see the
@@ -110,7 +125,7 @@ class AcceptedResponseSchema(Schema):
 
         """
 
-        return {"job_id": job.id_}
+        return {"summary_id": summary.id_}
 
     class Meta:
         ordered = True
@@ -119,17 +134,17 @@ class AcceptedResponseSchema(Schema):
 class OkResponseSchema(Schema):
     """Schema for the 200 OK response.
 
-    This response contains the job status. Once the text processing
+    This response contains the summary status. Once the text processing
     is completed, the response will also contain the output text, e.g.,
     the summary.
 
     Fields:
         started_at (:obj:`datetime.datetime`):
-            The time when the job was created.
+            The time when the summary was first created.
         ended_at (:obj:`datetime.datetime`):
-            The time when the job finished.
+            The time when the summary first finished.
         status (:obj:`str`):
-            The status of the job.
+            The status of the summary.
         output (:obj:`str`):
             The processed text, e.g., the summary.
     """
@@ -140,23 +155,23 @@ class OkResponseSchema(Schema):
     output = fields.Str(required=True)
 
     @pre_dump
-    def job_to_response(self, job: Job, **kwargs):
-        """Transform a :obj:`Job` object into a response.
+    def summary_to_response(self, summary: Summary, **kwargs):
+        """Transform a :obj:`Summary` object into a response.
 
         This method is executed when calling :meth:`Schema.dump`. Since a
-        job includes more information than it will be included in the response,
-        e.g., its id, with this function we get only the necessary fields to
-        form a response.
+        summary includes more information than it will be included in the
+        response, e.g., its id, with this function we get only the necessary
+        fields to form a response.
 
         For more information, see the
         `Marshmallow documentationn
         <https://marshmallow.readthedocs.io/en/stable/api_reference.html#marshmallow.pre_dump>`__.
         """
 
-        return {"started_at": job.started_at,
-                "ended_at": job.ended_at,
-                "status": job.status,
-                "output": job.output}
+        return {"started_at": summary.started_at,
+                "ended_at": summary.ended_at,
+                "status": summary.status,
+                "output": summary.output}
 
     class Meta:
         ordered = True

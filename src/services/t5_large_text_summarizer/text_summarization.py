@@ -129,7 +129,7 @@ class Summarizer:
                 Whether or not to clean up the tokenization spaces.
 
         Returns:
-            :obj:`str`: The summary generated.
+            :obj:`str`: The generated summary.
         """
 
         summary_subdivs = []

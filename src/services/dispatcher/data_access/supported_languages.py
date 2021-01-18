@@ -15,20 +15,14 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Data Access Object (DAO) Factory."""
+"""Current supported languages."""
 
 __version__ = '0.1.0'
 
-from job_dao_postgresql import JobDAOPostgresql
+from enum import Enum
 
 
-class JobDAOFactory:
-    """Job DAO Factory."""
+class SupportedLanguage(Enum):
+    """Supported languages."""
 
-    _instance = None
-
-    def __new__(cls):
-        """Pythonic singleton."""
-        if cls._instance is None:
-            cls._instance = JobDAOPostgresql()
-        return cls._instance
+    ENGLISH = "en"
