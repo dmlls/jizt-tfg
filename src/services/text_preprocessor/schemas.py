@@ -30,7 +30,7 @@ class TextPreprocessingConsumedMsgSchema(Schema):
             The text in plain format to be summarized.
         model (:obj:`str`):
             The model used to generate the summary.
-        params (:obj:`str`):
+        params (:obj:`dict`):
             The params used in the summary generation.
     """
 
@@ -48,7 +48,7 @@ class TextEncodingProducedMsgSchema(Schema):
             The pre-processed text.
         model (:obj:`str`):
             The model used to generate the summary.
-        params (:obj:`str`):
+        params (:obj:`dict`):
             The params used in the summary generation.
     """
 

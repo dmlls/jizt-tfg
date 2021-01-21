@@ -88,7 +88,7 @@ class PlainTextRequestSchema(Schema):
             The text in plain format to be summarized.
         model (:obj:`str`, `optional`, defaults to :obj:`SupportedModel.T5_LARGE`):
             The model used to generate the summary.
-        params (:obj:`str`, `optional`, defaults to :obj:`'{}'`):
+        params (:obj:`dict`, `optional`, defaults to :obj:`{}`):
             The params used in the summary generation.
     """
 

@@ -60,9 +60,15 @@ class TextEncodingsConsumedMsgSchema(Schema):
     Fields:
         text_preprocessed (:obj:`str`):
             The preprocessed text to be encoded.
+        model (:obj:`str`):
+            The model used to generate the summary.
+        params (:obj:`dict`):
+            The params used in the summary generation.
     """
 
     text_preprocessed = fields.Str(required=True)
+    model = fields.Str(required=True)
+    params = fields.Dict(required=True)
 
 
 class TextSumarizationProducedMsgSchema(Schema):
@@ -71,6 +77,12 @@ class TextSumarizationProducedMsgSchema(Schema):
     Fields:
         text_encodings (:obj:`JSONSerializableBytesField`):
             The encoded text.
+        model (:obj:`str`):
+            The model used to generate the summary.
+        params (:obj:`dict`):
+            The params used in the summary generation.
     """
 
     text_encodings = JSONSerializableBytesField(required=True)
+    model = fields.Str(required=True)
+    params = fields.Dict(required=True)

@@ -91,13 +91,12 @@ class TextEncoderService:
                     topic = KafkaTopic.TEXT_SUMMARIZATION.value
                     message_key = msg.key()
 
-                    text_preprocessed = \
-                        self.consumed_msg_schema.loads(msg.value())['text_preprocessed']
+                    data = self.consumed_msg_schema.loads(msg.value())
+                    text_preprocessed = data.pop('text_preprocessed')
                     encoded_text = self.text_encoder.encode(text_preprocessed)
                     serialized_encoded_text = pickle.dumps(encoded_text)  # bytes type
-                    message_value = self.produced_msg_schema.dumps({
-                        "text_encodings": serialized_encoded_text
-                    })
+                    data['text_encodings'] = serialized_encoded_text
+                    message_value = self.produced_msg_schema.dumps(data)
                     self._produce_message(
                         topic,
                         message_key,
