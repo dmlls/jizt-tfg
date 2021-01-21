@@ -183,7 +183,8 @@ class PlainTextSummary(Resource):
         data = request.json
         self._validate_post_request_json(data)
 
-        source = self.request_schema.load(data)['source']
+        loaded_data = self.request_schema.load(data)
+        source = loaded_data['source']
         message_key = get_unique_key(source)  # summary id
 
         summary = None
@@ -198,8 +199,8 @@ class PlainTextSummary(Resource):
                           id_=message_key,
                           source=source,
                           output=None,
-                          model=SupportedModel.T5_LARGE,
-                          params={},
+                          model=loaded_data['model'],
+                          params=loaded_data['params'],
                           status=SummaryStatus.SUMMARIZING,
                           started_at=datetime.now(),
                           ended_at=None,

@@ -46,7 +46,7 @@ class SummaryDAOFactory:
                 The database user.
             password (:obj:`str`):
                 The user's password.
-            log_level (:obj:`int`, `optional`, defaults to logging.ERROR):
+            log_level (:obj:`int`, `optional`, defaults to `logging.ERROR`):
                 The log level.
 
         Returns:

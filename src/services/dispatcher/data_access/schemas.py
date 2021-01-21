@@ -17,10 +17,11 @@
 
 """Marshmallow Schemas for DispatcherService."""
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 
+import json
 from datetime import datetime
-from marshmallow import Schema, fields, pre_dump, EXCLUDE
+from marshmallow import Schema, fields, pre_dump, pre_load, EXCLUDE
 from summary_status import SummaryStatus
 from supported_models import SupportedModel
 from supported_languages import SupportedLanguage
@@ -85,10 +86,16 @@ class PlainTextRequestSchema(Schema):
     Fields:
         source (:obj:`str`):
             The text in plain format to be summarized.
+        model (:obj:`str`, `optional`, defaults to :obj:`SupportedModel.T5_LARGE`):
+            The model used to generate the summary.
+        params (:obj:`str`, `optional`, defaults to :obj:`'{}'`):
+            The params used in the summary generation.
     """
 
     # length could be limited with validate=Length(max=600)
     source = fields.Str(required=True)
+    model = fields.Str(missing=SupportedModel.T5_LARGE.value)
+    params = fields.Dict(missing={})
 
     class Meta:
         unknown = EXCLUDE

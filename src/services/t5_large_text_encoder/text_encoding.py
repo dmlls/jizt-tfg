@@ -79,7 +79,7 @@ class SplitterEncoder:
         split (without splitting sentences) into groups containing approximately the same
         number of tokens.
 
-        The division is carried out naively and ``a piori`` (i.e., without actually encoding the
+        The division is carried out naively and `a piori` (i.e., without actually encoding the
         text), so it could happen that one or more of the divisions generated exceeds the model
         maximum sequence length. In that case, the division is done again with a smaller subdivision
         length. The process is repeated until none of the divisions exceeds the model max. length.
