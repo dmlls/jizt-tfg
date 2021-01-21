@@ -28,17 +28,15 @@ class TextPreprocessingConsumedMsgSchema(Schema):
     Fields:
         source (:obj:`str`):
             The text in plain format to be summarized.
-
         model (:obj:`str`):
             The model used to generate the summary.
-
         params (:obj:`str`):
             The params used in the summary generation.
     """
 
     source = fields.Str(required=True)
     model = fields.Str(required=True)
-    params = fields.Str(required=True)
+    params = fields.Dict(required=True)
 
 
 
@@ -56,4 +54,4 @@ class TextEncodingProducedMsgSchema(Schema):
 
     text_preprocessed = fields.Str(required=True)
     model = fields.Str(required=True)
-    params = fields.Str(required=True)
+    params = fields.Dict(required=True)

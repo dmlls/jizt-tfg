@@ -80,11 +80,11 @@ class TextPreprocessorService:
                     topic = KafkaTopic.TEXT_ENCODING.value
                     message_key = msg.key()
 
-                    source = self.consumed_msg_schema.loads(msg.value())['source']
-                    preprocessed_text = TextPreprocessor.preprocess(source)
-                    message_value = self.produced_msg_schema.dumps({
-                        "text_preprocessed": preprocessed_text
-                    })
+                    data = self.consumed_msg_schema.loads(msg.value())
+                    source = data['source']
+                    preprocessed_text = TextPreprocessor.preprocess(data.pop('source'))
+                    data['text_preprocessed'] = preprocessed_text
+                    message_value = self.produced_msg_schema.dumps(data)
                     self._produce_message(
                         topic,
                         message_key,
