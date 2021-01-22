@@ -114,16 +114,17 @@ class ConsumerLoop(StoppableThread):
                         raise KafkaException(msg.error())
                 else:
                     self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
-                                      f'[value]: "{msg.value()[:50]} [...]"'
+                                      f'[value]: "{msg.value()[:500]} [...]"'
                     )
-                    output = \
-                        self.consumed_msg_schema.loads(msg.value())['text_postprocessed']
+
+                    data = self.consumed_msg_schema.loads(msg.value())
                     summary = self.db.update_summary(
                         id_=msg.key(),
                         ended_at=datetime.now(),
                         status=SummaryStatus.COMPLETED.value,
-                        summary=output
-                    )  # important: keys have to match DB columns
+                        summary=data['text_postprocessed'],
+                        params=data['params']  # validated params
+                    )  # important: keys must match DB columns
                     self.logger.debug(f"Consumer message processed. "
                                       f"Summary updated: {summary}")
         finally:

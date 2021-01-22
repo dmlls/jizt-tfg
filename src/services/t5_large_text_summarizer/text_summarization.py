@@ -56,8 +56,8 @@ class Summarizer:
 
     def summarize(self,
                   input_ids: List[Union[List[int], torch.LongTensor]],
-                  max_length: Optional[int] = 300,
-                  min_length: Optional[int] = 30,
+                  relative_max_length: Optional[float] = 0.4,
+                  relative_min_length: Optional[float] = 0.1,
                   do_sample: Optional[bool] = None,
                   early_stopping: Optional[bool] = None,
                   num_beams: Optional[int] = 4,
@@ -88,10 +88,12 @@ class Summarizer:
         Args:
             input_ids (:obj:`List[List[int]]` or :obj:`List[torch.LongTensor]`):
                 The sequence subdivisions used as a prompt for the summary generation.
-            max_length (:obj:`int`, `optional`, defaults to 300):
-                The maximum length of the sequence to be generated.
-            min_length (:obj:`int`, `optional`, defaults to 30):
-                The minimum length of the sequence to be generated.
+            relative_max_length (:obj:`float`, `optional`, defaults to 0.7):
+                The maximum length of the sequence to be generated, relative to
+                the total length of the input ids.
+            relative_min_length (:obj:`float`, `optional`, defaults to 0.3):
+                The minimum length of the sequence to be generated, relative to
+                the total length of the input ids.
             do_sample (:obj:`bool`, `optional`, defaults to :obj:`False`):
                 Whether or not to use sampling; use greedy decoding otherwise.
             early_stopping (:obj:`bool`, `optional`, defaults to :obj:`False`):
@@ -134,6 +136,9 @@ class Summarizer:
         """
 
         summary_subdivs = []
+        input_ids_total_len = sum([len(ids.squeeze()) for ids in input_ids])
+        max_length = input_ids_total_len * relative_max_length
+        min_length = input_ids_total_len * relative_min_length
         subdiv_max_length = math.floor(max_length / len(input_ids))
         subdiv_min_length = math.ceil(min_length / len(input_ids))
 

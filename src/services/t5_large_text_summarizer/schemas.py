@@ -74,6 +74,9 @@ class TextPostprocessingProducedMsgSchema(Schema):
     Fields:
         summary (:obj:`str`):
             The generated summary.
+        params (:obj:`dict`):
+            The valid params, onced checked by the summarizer.
     """
 
     summary = fields.Str(required=True)
+    params = fields.Dict(required=True)

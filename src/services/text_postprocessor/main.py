@@ -26,7 +26,7 @@ from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
 from schemas import TextPostprocessingConsumedMsgSchema, ReadyProducedMsgSchema
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 parser = argparse.ArgumentParser(description='Text post-processing service. '
                                              'Default log level is WARNING.')
@@ -75,16 +75,16 @@ class TextPostprocessorService:
                         raise KafkaException(msg.error())
                 else:
                     self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
-                                      f'[value]: "{msg.value()[:20]} [...]"'
+                                      f'[value]: "{msg.value()[:500]} [...]"'
                     )
                     topic = KafkaTopic.READY.value
                     message_key = msg.key()
 
-                    summary = self.consumed_msg_schema.loads(msg.value())['summary']
+                    data = self.consumed_msg_schema.loads(msg.value())
+                    summary = data.pop('summary')
                     postprocessed_text = TextPostprocessor.postprocess(summary)
-                    message_value = self.produced_msg_schema.dumps({
-                        "text_postprocessed": postprocessed_text
-                    })
+                    data['text_postprocessed'] = postprocessed_text
+                    message_value = self.produced_msg_schema.dumps(data)
                     self._produce_message(
                         topic,
                         message_key,
@@ -93,7 +93,7 @@ class TextPostprocessorService:
                     self.logger.debug(
                         f'Message produced: [topic]: "{topic}", '
                         f'[key]: {message_key}, [value]: '
-                        f'"{message_value[:50]} [...]"'
+                        f'"{message_value[:500]} [...]"'
                     )
         finally:
             self.logger.debug("Consumer loop stopped. Closing consumer...")

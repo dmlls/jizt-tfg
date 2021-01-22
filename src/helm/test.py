@@ -8,9 +8,10 @@ from pprint import pprint
 INGRESS_URL = "https://api.jizt.it"
 
 
-def post(text, bad_request=False):
+def post(text, model = 't5-large', params = {}, bad_request=False):
     url = f"{INGRESS_URL}/v1/summaries/plain-text"
-    response = requests.post(url, json={'source': text})
+    response = requests.post(url,
+                            json={'source': text, 'model': model, 'params': params})
     print("VALID POST REQUEST to", url)
     try:
         print("CODE:", response.status_code)
@@ -83,15 +84,23 @@ All of this leads to questions like: When we become more well-behaved, do we als
 
 6) Conclusion
 
-a) Data is not the new gold, it is the new oil, and it damages the social environment.
+a) Data is not the new gold, it is the new oil, and it damages the social environment  .
 
 b) Privacy is the right to be imperfect, even when judged by algorithms.
 
 c) Privacy is the right to be human.
 """
 
+model = 't5-large'
+
+params = {
+    "relative_max_length": 0.4,
+    "relative_min_length": 0.2,
+    "non_existent_param": 11  # this param will be ignored
+}
+
 print(f'ORIGINAL TEXT:\n"{text}"\n')
-summary_id = post(text)
+summary_id = post(text, model, params)
 
 get(summary_id)
 

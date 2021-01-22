@@ -19,7 +19,7 @@
 
 from marshmallow import Schema, fields
 
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 
 class TextPostprocessingConsumedMsgSchema(Schema):
@@ -28,9 +28,12 @@ class TextPostprocessingConsumedMsgSchema(Schema):
     Fields:
         source (:obj:`str`):
             The text to be post-processed.
+        params (:obj:`dict`):
+            The valid params, onced checked by the summarizer.
     """
 
     summary = fields.Str(required=True)
+    params = fields.Dict(required=True)
 
 
 class ReadyProducedMsgSchema(Schema):
@@ -39,6 +42,9 @@ class ReadyProducedMsgSchema(Schema):
     Fields:
         text_postprocessed (:obj:`str`):
             The post-processed text.
+        params (:obj:`dict`):
+            The valid params, onced checked by the summarizer.
     """
 
     text_postprocessed = fields.Str(required=True)
+    params = fields.Dict(required=True)

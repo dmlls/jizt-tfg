@@ -17,7 +17,7 @@
 
 """Dispatcher REST API v1."""
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 import os
 import re
@@ -186,7 +186,10 @@ class PlainTextSummary(Resource):
 
         loaded_data = self.request_schema.load(data)
         source = loaded_data['source']
-        message_key = get_unique_key(source)  # summary id
+        model = SupportedModel(loaded_data['model'])
+        params = loaded_data['params']
+
+        message_key = get_unique_key(source, model.value, params)  # summary id
 
         summary = None
 
@@ -200,8 +203,8 @@ class PlainTextSummary(Resource):
                           id_=message_key,
                           source=source,
                           output=None,
-                          model=SupportedModel(loaded_data['model']),
-                          params=loaded_data['params'],
+                          model=model,
+                          params=params,
                           status=SummaryStatus.SUMMARIZING,
                           started_at=datetime.now(),
                           ended_at=None,
@@ -219,7 +222,7 @@ class PlainTextSummary(Resource):
             self.dispatcher_service.logger.debug(
                         f'Message produced: [topic]: "{topic}", '
                         f'[key]: {message_key}, [value]: '
-                        f'"{message_value[:50]} [...]"'
+                        f'"{message_value[:500]} [...]"'
             )
 
         response = self.accepted_response_schema.dump(summary)
@@ -339,21 +342,28 @@ class Health(Resource):
         return not self.dispatcher_service.kafka_consumerloop.stopped()
 
 
-def get_unique_key(source: str) -> str:
+def get_unique_key(source: str, model: str, params: dict) -> str:
     """Get a unique key for a message.
 
-    This method hashes the content of :attr:`source`. SHA-256
-    algorithm is used.
+    This method hashes the string formed by concatenating the
+    :attr:`source`, :attr:`model` and :attr:`param` attributes.
+    SHA-256 algorithm is used.
 
     Args:
         source (:obj:`str`):
-            `source` field in the JSON body of the request.
+            ``source`` attribute in the JSON body of the request.
+        model (:obj:`str`):
+            ``model`` attribute in the JSON body of the request.
+        params (:obj:`params`):
+            ``params`` attribute in the JSON body of the request.
 
     Returns:
         :obj:`str`: The unique, SHA-256 ecrypted key.
     """
 
-    return hashlib.sha256(source.encode()).hexdigest()
+    return hashlib.sha256(
+        ("".join([source, model, str(params)])).encode()
+    ).hexdigest()
 
 
 def disable_endpoint_logs():

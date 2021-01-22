@@ -92,7 +92,7 @@ class TextSummarizerService:
                         raise KafkaException(msg.error())
                 else:
                     self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
-                                      f'[value]: "{msg.value()[:20]} [...]"'
+                                      f'[value]: "{msg.value()[:500]} [...]"'
                     )
                     topic = KafkaTopic.TEXT_POSTPROCESSING.value
                     message_key = msg.key()
@@ -101,7 +101,8 @@ class TextSummarizerService:
                     serialized_encoded_text = data.pop('text_encodings')
                     encoded_text = pickle.loads(serialized_encoded_text)
 
-                    params = self._clean_up_params(data['params'])
+                    params = self._clean_up_params_and_add_defaults(data['params'])
+                    data['params'] = params  # update params to keep only the valid ones
                     summarized_text = self.summarizer.summarize(encoded_text, **params)
                     data['summary'] = summarized_text
                     message_value = self.produced_msg_schema.dumps(data)
@@ -113,32 +114,40 @@ class TextSummarizerService:
                     self.logger.debug(
                         f'Message produced: [topic]: "{topic}", '
                         f'[key]: {message_key}, [value]: '
-                        f'"{message_value[:50]} [...]"'
+                        f'"{message_value[:500]} [...]"'
                     )
         finally:
             self.logger.debug("Consumer loop stopped. Closing consumer...")
             self.consumer.close()  # close down consumer to commit final offsets
 
-    def _clean_up_params(self, params: dict) -> dict:
-        """Parse params and discard the invalid key/values.
+    def _clean_up_params_and_add_defaults(self, params: dict) -> dict:
+        """Ignore invalid params and add default values.
 
-        Until here, the paramters are not checked in any step. So, in practice,
+        Until here, the paramters are not checked in any step. Therefore,
         the attribute ``params`` could contain invalid parameters. If that were
         the case, we only take the correct ones; the invalid ones are ignored.
+
+        This method also adds default values to the parameters not present
+        in :obj:`params`.
 
         Args:
             params ():obj:`dict`):
                 The unchecked parameters.
 
         Returns:
-            :obj:`dict`: The valid parameters.
+            :obj:`dict`: The valid parameters, with defaults set if needed.
         """
 
         supported_params = [param.name.lower() for param in DefaultParams]
         invalid_params = {}
         for key in params:
-            if key.lower() not in supported_params:
-                invalid_params[key] = params.pop(key)
+            if key not in supported_params:
+                invalid_params[key] = params[key]
+        [params.pop(invalid) for invalid in invalid_params]  # remove invalid params
+        for default_param in supported_params:
+            if default_param not in params:  # add not included param
+                params[default_param] = \
+                    DefaultParams[default_param.upper()].value
         self.logger.debug(f"Valid params: {params}")
         if invalid_params:
             self.logger.debug(f"Invalid params: {invalid_params}")

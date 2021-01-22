@@ -36,7 +36,7 @@ dispatcher:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/dispatcher:0.0.40
+  image: eu.gcr.io/jizt-299516/dispatcher:0.0.49
 
 # Configuration for ConfigMap/Secret containing
 # PostgreSQL connection details
@@ -75,7 +75,7 @@ t5LargeTextSummarizer:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.14
+  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.24
   volumeMounts:
     modelsMountPath: "/home/text_summarizer/models"
     tokenizerPath: "t5-small/tokenizer"  # TODO: change to t5-large
@@ -84,9 +84,9 @@ t5LargeTextSummarizer:
     configMapName: t5-large-params
     # The max length of the summary will be at most
     # this percentage of the source length
-    relative_max_length: 0.6  # float
+    relative_max_length: 0.4  # float
     # Same for the min length
-    relative_min_length: 0.3  # float
+    relative_min_length: 0.1  # float
     do_sample: None  # bool
     early_stopping: None  # bool
     num_beams: 4  # int
@@ -103,7 +103,7 @@ textPostprocessor:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/text-postprocessor:0.0.4
+  image: eu.gcr.io/jizt-299516/text-postprocessor:0.0.5
 
 
 #################################

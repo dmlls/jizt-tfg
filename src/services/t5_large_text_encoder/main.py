@@ -86,7 +86,7 @@ class TextEncoderService:
                         raise KafkaException(msg.error())
                 else:
                     self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
-                                      f'[value]: "{msg.value()[:20]} [...]"'
+                                      f'[value]: "{msg.value()[:500]} [...]"'
                     )
 
                     data = self.consumed_msg_schema.loads(msg.value())
@@ -109,7 +109,7 @@ class TextEncoderService:
                     self.logger.debug(
                         f'Message produced: [topic]: "{topic}", '
                         f'[key]: {message_key}, [value]: '
-                        f'"{message_value[:50]} [...]"'
+                        f'"{message_value[:500]} [...]"'
                     )
         finally:
             self.logger.debug("Consumer loop stopped. Closing consumer...")

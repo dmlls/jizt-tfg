@@ -17,9 +17,10 @@
 
 """Default params."""
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 import os
+from distutils import util
 from aenum import Enum, NoAlias
 
 def safe_str_to_type(value: str, to_type):

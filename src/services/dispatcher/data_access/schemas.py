@@ -94,8 +94,9 @@ class PlainTextRequestSchema(Schema):
 
     # length could be limited with validate=Length(max=600)
     source = fields.Str(required=True)
-    model = fields.Str(missing=SupportedModel.T5_LARGE.value)
-    params = fields.Dict(missing={})
+    model = fields.Str(missing=SupportedModel.T5_LARGE.value,
+                       default=SupportedModel.T5_LARGE.value)
+    params = fields.Dict(missing={}, default={})
 
     class Meta:
         unknown = EXCLUDE
@@ -159,6 +160,7 @@ class OkResponseSchema(Schema):
     ended_at = fields.DateTime(required=True)
     status = fields.Str(required=True)
     output = fields.Str(required=True)
+    params = fields.Dict(required=True)
 
     @pre_dump
     def summary_to_response(self, summary: Summary, **kwargs):
@@ -177,13 +179,22 @@ class OkResponseSchema(Schema):
         return {"started_at": summary.started_at,
                 "ended_at": summary.ended_at,
                 "status": summary.status,
-                "output": summary.output}
+                "output": summary.output,
+                "params": summary.params}
 
     class Meta:
         ordered = True
 
 
 class TextPostprocessingConsumedMsgSchema(Schema):
-    """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_POSTPROCESSING`."""
+    """Schema for the consumed messages from the topic :attr:`KafkaTopic.TEXT_POSTPROCESSING`.
+
+    Fields:
+        text_postprocessed (:obj:`str`):
+            The post-processed text.
+        params (:obj:`dict`):
+            The valid params, onced checked by the summarizer.
+    """
 
     text_postprocessed = fields.Str()
+    params = fields.Dict(required=True)

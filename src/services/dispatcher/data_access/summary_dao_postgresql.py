@@ -129,6 +129,13 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
         """See base class."""
 
         ordered_kwargs = OrderedDict(kwargs)
+
+        # Convert dicts to Json
+        dicts = [key for key in ordered_kwargs
+                 if isinstance(ordered_kwargs[key], dict)]
+        for key in dicts:
+            ordered_kwargs[key] = Json(ordered_kwargs[key])
+
         keys = list(ordered_kwargs.keys())
         values = list(ordered_kwargs.values()) + [id_]
         concat = StringIO()
