@@ -20,6 +20,7 @@
 __version__ = '0.1.4'
 
 import os
+import re
 import argparse
 import logging
 import hashlib
@@ -199,7 +200,7 @@ class PlainTextSummary(Resource):
                           id_=message_key,
                           source=source,
                           output=None,
-                          model=loaded_data['model'],
+                          model=SupportedModel(loaded_data['model']),
                           params=loaded_data['params'],
                           status=SummaryStatus.SUMMARIZING,
                           started_at=datetime.now(),
@@ -355,17 +356,17 @@ def get_unique_key(source: str) -> str:
     return hashlib.sha256(source.encode()).hexdigest()
 
 
-def disable_healthcheck_logs():
-    """Disable logs for healthcheck requests from Kubernetes/GKE."""
+def disable_endpoint_logs():
+    """Disable logs for requests to specific endpoints."""
 
-    health_check_endpoints = ('/', '/healthz')
+    disabled_endpoints = ('/', '/healthz', '/v1/summaries/plain-text/.+')
 
     parent_log_request = serving.WSGIRequestHandler.log_request
 
     def log_request(self, *args, **kwargs):
         """See `base class <https://github.com/pallets/werkzeug/blob/71cf9902012338f8ee98338fa7bba50572606637/src/werkzeug/serving.py#L378>`__."""
 
-        if self.path not in health_check_endpoints:
+        if not any([re.match(f"{de}$", self.path) for de in disabled_endpoints]):
             parent_log_request(self, *args, **kwargs)
 
     serving.WSGIRequestHandler.log_request = log_request
@@ -381,8 +382,8 @@ if __name__ == "__main__":
         log_level = logging.INFO
     if debug_log_level:
         log_level = logging.DEBUG
-    else:
-        disable_healthcheck_logs()
+
+    disable_endpoint_logs()
 
     dispatcher_service = DispatcherService(log_level)
     dispatcher_service.run()

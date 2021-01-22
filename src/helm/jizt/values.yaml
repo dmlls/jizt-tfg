@@ -36,7 +36,7 @@ dispatcher:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/dispatcher:0.0.35
+  image: eu.gcr.io/jizt-299516/dispatcher:0.0.40
 
 # Configuration for ConfigMap/Secret containing
 # PostgreSQL connection details
@@ -56,7 +56,7 @@ textPreprocessor:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.7
+  image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.8
 
 # Configuration for the Text Encoder microservice
 t5LargeTextEncoder:
@@ -64,7 +64,7 @@ t5LargeTextEncoder:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.14
+  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.15
   volumeMounts:
     modelsMountPath: "/home/text_encoder/models"
     tokenizerPath: "t5-small/tokenizer"  # TODO: change to t5-large
@@ -75,7 +75,7 @@ t5LargeTextSummarizer:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.13
+  image: eu.gcr.io/jizt-299516/t5-large-text-summarizer:0.0.14
   volumeMounts:
     modelsMountPath: "/home/text_summarizer/models"
     tokenizerPath: "t5-small/tokenizer"  # TODO: change to t5-large
