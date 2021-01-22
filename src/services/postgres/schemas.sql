@@ -36,8 +36,8 @@ DROP TABLE IF EXISTS source CASCADE;
 * CREATE TABLES
 */
 CREATE TABLE source (
-    source_id           SERIAL PRIMARY KEY,
-    content             TEXT UNIQUE NOT NULL,
+    source_id           CHAR(64) PRIMARY KEY,
+    content             TEXT NOT NULL,
     content_length      INTEGER NOT NULL CHECK (content_length > 0)
 );
 
@@ -82,8 +82,8 @@ CREATE TABLE model (
 CREATE TYPE STATUS AS ENUM ('preprocessing', 'encoding', 'summarizing',
                             'postprocessing', 'completed');
 CREATE TABLE summary (
-    summary_id          TEXT PRIMARY KEY,
-    source_id           INTEGER NOT NULL
+    summary_id          CHAR(64) PRIMARY KEY,
+    source_id           CHAR(64) NOT NULL
         CONSTRAINT FK_source_id
         REFERENCES source ON DELETE CASCADE ON UPDATE CASCADE,
     summary             TEXT,

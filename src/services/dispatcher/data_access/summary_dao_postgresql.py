@@ -21,6 +21,7 @@ __version__ = '0.1.3'
 
 import logging
 import psycopg2
+import hashlib
 from io import StringIO
 from collections import OrderedDict
 from psycopg2.extras import Json
@@ -88,12 +89,13 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
     def insert_summary(self, summary: Summary):
         """See base class."""
 
-        SQL_INSERT_SOURCE = """INSERT INTO jizt.source
-                            VALUES (DEFAULT, %s, %s) RETURNING source_id;"""
-
         SQL_GET_SOURCE = """SELECT source_id
                             FROM jizt.source
-                            WHERE content = %s;"""
+                            WHERE source_id = %s;"""
+
+        SQL_INSERT_SOURCE = """INSERT INTO jizt.source
+                               VALUES (%s, %s, %s);"""
+
 
         SQL_SUMMARY = """INSERT INTO jizt.summary
                          VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
@@ -103,17 +105,17 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
         try:
             conn = self._connect()
             with conn.cursor() as cur:
-                cur.execute(SQL_GET_SOURCE, (summary.source,))
-                source_id = cur.fetchone()
-                if source_id is None:
+                source_id = self._get_unique_key(summary.source)
+                cur.execute(SQL_GET_SOURCE, (source_id,))
+                retrieved_source_id = cur.fetchone()
+                if retrieved_source_id is None:
                     cur.execute(
                         SQL_INSERT_SOURCE,
-                        (summary.source, len(summary.source))
+                        (source_id, summary.source, len(summary.source))
                     )
-                    source_id = cur.fetchone()
                 output_length = (len(summary.output) if summary.output is not None
                                  else None)
-                cur.execute(SQL_SUMMARY, (summary.id_, source_id[0],
+                cur.execute(SQL_SUMMARY, (summary.id_, source_id,
                                           summary.output, output_length,
                                           summary.model, Json(summary.params),
                                           summary.status, summary.started_at,
@@ -124,6 +126,21 @@ class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excep
         finally:
             if conn is not None:
                 conn.close()
+
+    def _get_unique_key(self, text: str) -> str:
+        """Get a unique key for a text.
+
+        SHA-256 algorithm is used.
+
+        Args:
+            text (:obj:`str`):
+                The text to get the unique id from.
+
+        Returns:
+            :obj:`str`: The unique, SHA-256 ecrypted key.
+        """
+
+        return hashlib.sha256(text.encode()).hexdigest()
 
     def update_summary(self, id_: str, **kwargs):
         """See base class."""
