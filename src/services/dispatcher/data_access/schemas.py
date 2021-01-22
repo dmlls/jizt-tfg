@@ -19,9 +19,8 @@
 
 __version__ = '0.1.7'
 
-import json
 from datetime import datetime
-from marshmallow import Schema, fields, pre_dump, pre_load, EXCLUDE
+from marshmallow import Schema, fields, pre_dump, EXCLUDE
 from summary_status import SummaryStatus
 from supported_models import SupportedModel
 from supported_languages import SupportedLanguage

@@ -56,7 +56,7 @@ textPreprocessor:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.8
+  image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.9
 
 # Configuration for the Text Encoder microservice
 t5LargeTextEncoder:
@@ -64,7 +64,7 @@ t5LargeTextEncoder:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.15
+  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.19
   volumeMounts:
     modelsMountPath: "/home/text_encoder/models"
     tokenizerPath: "t5-small/tokenizer"  # TODO: change to t5-large
@@ -103,7 +103,7 @@ textPostprocessor:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/text-postprocessor:0.0.5
+  image: eu.gcr.io/jizt-299516/text-postprocessor:0.0.6
 
 
 #################################

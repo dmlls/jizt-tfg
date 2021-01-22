@@ -8,7 +8,7 @@ from pprint import pprint
 INGRESS_URL = "https://api.jizt.it"
 
 
-def post(text, model = 't5-large', params = {}, bad_request=False):
+def post(text, model='t5-large', params={}, bad_request=False):
     url = f"{INGRESS_URL}/v1/summaries/plain-text"
     response = requests.post(url,
                             json={'source': text, 'model': model, 'params': params})

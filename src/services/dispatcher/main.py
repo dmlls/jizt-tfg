@@ -94,8 +94,6 @@ class DispatcherService:
             pg_password,
             log_level
         )
-        del pg_username
-        del pg_password
 
         # Create Kafka Producer and ConsumerLoop
         self.kafka_producer = Producer()
@@ -376,7 +374,7 @@ def disable_endpoint_logs():
     def log_request(self, *args, **kwargs):
         """See `base class <https://github.com/pallets/werkzeug/blob/71cf9902012338f8ee98338fa7bba50572606637/src/werkzeug/serving.py#L378>`__."""
 
-        if not any([re.match(f"{de}$", self.path) for de in disabled_endpoints]):
+        if not any(re.match(f"{de}$", self.path) for de in disabled_endpoints):
             parent_log_request(self, *args, **kwargs)
 
     serving.WSGIRequestHandler.log_request = log_request

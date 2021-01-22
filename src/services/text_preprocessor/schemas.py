@@ -39,7 +39,6 @@ class TextPreprocessingConsumedMsgSchema(Schema):
     params = fields.Dict(required=True)
 
 
-
 class TextEncodingProducedMsgSchema(Schema):
     """Schema for the produced messages to the topic :attr:`KafkaTopic.TEXT_ENCODING`.
 

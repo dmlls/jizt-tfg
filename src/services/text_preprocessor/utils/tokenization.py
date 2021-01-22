@@ -57,6 +57,11 @@ def sentence_tokenize(text: str,
     # punctuation that shouldn't be preceeded by a whitespace
     PUNCT_NO_PREV_WHITESPACE = ".,;:!?"
 
+    # Check if text is empty or contains onlynon-printable
+    # characters, e.g., whitespaces.
+    if len(text.strip()) == 0:
+        return []
+
     if tokenizer is None:
         # if next letter after period is lowercase, consider it part of the same sentence
         # ex: "As we can see in Figure 1.1. the sentence will not be split."

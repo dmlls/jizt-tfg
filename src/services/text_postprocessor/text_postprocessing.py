@@ -47,4 +47,4 @@ class TextPostprocessor:
         """
 
         txt = ' '.join(sentence_tokenize(text))
-        return get_true_case(txt)
+        return get_true_case(txt) if txt else txt  # if txt is empty just return it

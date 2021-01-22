@@ -228,15 +228,15 @@ class SplitterEncoder:
         while True:  # do while
             for i in range(len(balanced_subdiv) - 1):
                 # difference in lengths
-                diff_len = cls._len_subdivision(balanced_subdiv[i+1]) - \
-                                cls._len_subdivision(balanced_subdiv[i])
+                diff_len = (cls._len_subdivision(balanced_subdiv[i+1])
+                            - cls._len_subdivision(balanced_subdiv[i]))
                 while diff_len > 0:
                     moved_sent_len = cls._len(balanced_subdiv[i+1][-1])
                     # check that moving the sentence doesn't result in a subdivision with
                     # n_tokens > max_len_subdiv and that the length of the moved sentence
                     # is not bigger that the difference of tokens between the subdivs
-                    if cls._len_subdivision(balanced_subdiv[i]) + \
-                            moved_sent_len <= max_len_subdiv and moved_sent_len <= diff_len:
+                    if (cls._len_subdivision(balanced_subdiv[i])
+                            + moved_sent_len) <= max_len_subdiv and moved_sent_len <= diff_len:
                         # move sentece from balanced_subdiv[i+1] to balanced_subdiv[i]
                         balanced_subdiv[i].insert(0, balanced_subdiv[i+1][-1])  # add sent
                         balanced_subdiv[i+1] = balanced_subdiv[i+1][:-1]  # remove sent
