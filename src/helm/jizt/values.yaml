@@ -80,6 +80,22 @@ t5LargeTextSummarizer:
     modelsMountPath: "/home/text_summarizer/models"
     tokenizerPath: "t5-small/tokenizer"  # TODO: change to t5-large
     modelPath: "t5-small/model"  # TODO: change to t5-large
+  params:
+    configMapName: t5-large-params
+    # The max length of the summary will be at most
+    # this percentage of the source length
+    relative_max_length: 0.6  # float
+    # Same for the min length
+    relative_min_length: 0.3  # float
+    do_sample: None  # bool
+    early_stopping: None  # bool
+    num_beams: 4  # int
+    temperature: None  # float
+    top_k: None  # int
+    top_p: None  # float
+    repetition_penalty: None  # float
+    length_penalty: None  # float
+    no_repeat_ngram_size: 3  # int
 
 # Configuration for the Text Postprocessor microservice
 textPostprocessor:

@@ -28,9 +28,10 @@ from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
 from schemas import (TextSummarizationConsumedMsgSchema,
                      TextPostprocessingProducedMsgSchema)
+from default_params import DefaultParams
 from pathlib import Path
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 TOKENIZER_PATH = (
     Path(os.environ['MODELS_MOUNT_PATH']) / Path(os.environ['TOKENIZER_PATH'])
@@ -96,13 +97,14 @@ class TextSummarizerService:
                     topic = KafkaTopic.TEXT_POSTPROCESSING.value
                     message_key = msg.key()
 
-                    serialized_encoded_text = \
-                        self.consumed_msg_schema.loads(msg.value())['text_encodings']
+                    data = self.consumed_msg_schema.loads(msg.value())
+                    serialized_encoded_text = data.pop('text_encodings')
                     encoded_text = pickle.loads(serialized_encoded_text)
-                    summarized_text = self.summarizer.summarize(encoded_text)
-                    message_value = self.produced_msg_schema.dumps({
-                        "summary": summarized_text
-                    })
+
+                    params = self._clean_up_params(data['params'])
+                    summarized_text = self.summarizer.summarize(encoded_text, **params)
+                    data['summary'] = summarized_text
+                    message_value = self.produced_msg_schema.dumps(data)
                     self._produce_message(
                         topic,
                         message_key,
@@ -116,6 +118,31 @@ class TextSummarizerService:
         finally:
             self.logger.debug("Consumer loop stopped. Closing consumer...")
             self.consumer.close()  # close down consumer to commit final offsets
+
+    def _clean_up_params(self, params: dict) -> dict:
+        """Parse params and discard the invalid key/values.
+
+        Until here, the paramters are not checked in any step. So, in practice,
+        the attribute ``params`` could contain invalid parameters. If that were
+        the case, we only take the correct ones; the invalid ones are ignored.
+
+        Args:
+            params ():obj:`dict`):
+                The unchecked parameters.
+
+        Returns:
+            :obj:`dict`: The valid parameters.
+        """
+
+        supported_params = [param.name.lower() for param in DefaultParams]
+        invalid_params = {}
+        for key in params:
+            if key.lower() not in supported_params:
+                invalid_params[key] = params.pop(key)
+        self.logger.debug(f"Valid params: {params}")
+        if invalid_params:
+            self.logger.debug(f"Invalid params: {invalid_params}")
+        return params
 
     def _produce_message(self,
                          topic: str,

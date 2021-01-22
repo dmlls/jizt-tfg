@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.t5LargeTextSummarizer.params.configMapName | quote }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "jizt.name" . }}
+    chart: {{ include "jizt.chart" . }}
+    release: {{ $.Release.Name }}
+data:
+  relative_max_length: {{ .Values.t5LargeTextSummarizer.params.relative_max_length | quote }}
+  relative_min_length: {{ .Values.t5LargeTextSummarizer.params.relative_min_length | quote }}
+  do_sample: {{ .Values.t5LargeTextSummarizer.params.do_sample | quote }}
+  early_stopping: {{ .Values.t5LargeTextSummarizer.params.early_stopping | quote }}
+  num_beams: {{ .Values.t5LargeTextSummarizer.params.num_beams | quote }}
+  temperature: {{ .Values.t5LargeTextSummarizer.params.temperature | quote }}
+  top_k: {{ .Values.t5LargeTextSummarizer.params.top_k | quote }}
+  top_p: {{ .Values.t5LargeTextSummarizer.params.top_p | quote }}
+  repetition_penalty: {{ .Values.t5LargeTextSummarizer.params.repetition_penalty | quote }}
+  length_penalty: {{ .Values.t5LargeTextSummarizer.params.length_penalty | quote }}
+  no_repeat_ngram_size: {{ .Values.t5LargeTextSummarizer.params.no_repeat_ngram_size | quote }}

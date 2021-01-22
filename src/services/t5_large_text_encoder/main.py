@@ -29,7 +29,7 @@ from confluent_kafka import Message, KafkaError, KafkaException
 from schemas import TextEncodingsConsumedMsgSchema, TextSumarizationProducedMsgSchema
 from pathlib import Path
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 TOKENIZER_PATH = (
     Path(os.environ['MODELS_MOUNT_PATH']) / Path(os.environ['TOKENIZER_PATH'])
@@ -88,10 +88,14 @@ class TextEncoderService:
                     self.logger.debug(f'Message consumed: [key]: {msg.key()}, '
                                       f'[value]: "{msg.value()[:20]} [...]"'
                     )
-                    topic = KafkaTopic.TEXT_SUMMARIZATION.value
-                    message_key = msg.key()
 
                     data = self.consumed_msg_schema.loads(msg.value())
+                    # In the future, when more models are supported, we have
+                    # to produce to the proper model Topic
+                    data.pop('model')  # figure out what topic to produce to
+                    topic = KafkaTopic.TEXT_SUMMARIZATION.value
+
+                    message_key = msg.key()
                     text_preprocessed = data.pop('text_preprocessed')
                     encoded_text = self.text_encoder.encode(text_preprocessed)
                     serialized_encoded_text = pickle.dumps(encoded_text)  # bytes type

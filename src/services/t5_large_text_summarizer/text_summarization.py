@@ -19,6 +19,7 @@
 
 __version__ = '0.1.0'
 
+import math
 import torch
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 from typing import List, Optional, Union, Iterable
@@ -133,11 +134,13 @@ class Summarizer:
         """
 
         summary_subdivs = []
+        subdiv_max_length = math.floor(max_length / len(input_ids))
+        subdiv_min_length = math.ceil(min_length / len(input_ids))
 
         for ids_subdiv in input_ids:
             summary_ids = self._model.generate(input_ids=ids_subdiv,
-                                               max_length=max_length,
-                                               min_length=min_length,
+                                               max_length=subdiv_max_length,
+                                               min_length=subdiv_min_length,
                                                do_sample=do_sample,
                                                early_stopping=early_stopping,
                                                num_beams=num_beams,

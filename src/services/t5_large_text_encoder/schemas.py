@@ -20,7 +20,7 @@
 import base64
 from marshmallow import Schema, fields
 
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 
 class JSONSerializableBytesField(fields.Field):
@@ -77,12 +77,9 @@ class TextSumarizationProducedMsgSchema(Schema):
     Fields:
         text_encodings (:obj:`JSONSerializableBytesField`):
             The encoded text.
-        model (:obj:`str`):
-            The model used to generate the summary.
         params (:obj:`dict`):
             The params used in the summary generation.
     """
 
     text_encodings = JSONSerializableBytesField(required=True)
-    model = fields.Str(required=True)
     params = fields.Dict(required=True)

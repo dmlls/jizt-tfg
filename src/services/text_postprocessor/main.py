@@ -26,7 +26,7 @@ from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
 from schemas import TextPostprocessingConsumedMsgSchema, ReadyProducedMsgSchema
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 parser = argparse.ArgumentParser(description='Text post-processing service. '
                                              'Default log level is WARNING.')
