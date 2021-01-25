@@ -1,9 +1,0 @@
-AcceptedSummaryRequest:
-  description: An accepted request for a summary
-  type: object
-  properties:
-    summary_id:
-      description: The id of the summary
-      type: string
-  required:
-    - summary_id

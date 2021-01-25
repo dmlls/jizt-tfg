@@ -1,0 +1,38 @@
+type: object
+properties:
+  summary_id:
+    description: The id of the summary.
+    type: string
+    example: b40d19c2af9c5096da9070c81b22e270660a1c6313b22427f7fc14dbcb0c2d38
+  started_at:
+    description: >
+      The timestamp when a summary with the same specified
+      source, model and parameters was first requested.
+    type: string
+    format: date-time
+    example: 2021-01-11T18:48:40.786775
+  ended_at:
+    description: >
+      The timestamp when a summary with the same specified
+      source, model and parameters was first completed.
+    type: string
+    format: date-time
+    example: 2021-01-11T18:54:57.425985
+  status:
+    description: The status of the summary.
+    type: string
+    enum:
+      - preprocessing
+      - encoding
+      - summarizing
+      - postprocessing
+      - completed
+    example: completed
+  output:
+    description: The generated summary.
+    type: string
+    example: |-
+      Natural language processing (NLP) is a subfield of Linguistics,
+      Computer Science, and Artificial Intelligence.
+  params:
+    $ref: ./Params.yaml

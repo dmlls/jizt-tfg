@@ -95,7 +95,7 @@ t5LargeTextSummarizer:
     top_p: None  # float
     repetition_penalty: None  # float
     length_penalty: None  # float
-    no_repeat_ngram_size: 3  # int
+    no_repeat_ngram_size: 4  # int
 
 # Configuration for the Text Postprocessor microservice
 textPostprocessor:

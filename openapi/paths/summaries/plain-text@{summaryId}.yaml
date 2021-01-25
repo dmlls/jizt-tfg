@@ -1,0 +1,38 @@
+get:
+  operationId: getSummary
+  summary: Get summary
+  description: Return a summary by id.
+  tags:
+    - Summaries
+  parameters:
+    - name: summaryId
+      in: path
+      required: true
+      description: The id of the summary.
+      schema:
+        type: string
+  responses:
+    '200':
+      description: The summary to be returned.
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Summary.yaml'
+    '404':
+      description: The summary requested does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/SummaryNotFound.yaml'
+    '502':
+      description: Server error.
+      content:
+        text/html; charset=utf-8: 
+          schema:
+            $ref: '../../components/schemas/ServerError.yaml'
+    default:
+      description: Unexpected error.
+      content:
+        text/plain; charset=utf-8: 
+          schema:
+            type: string

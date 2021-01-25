@@ -1,7 +1,0 @@
-SummaryNotFound:
-  type: object
-  properties:
-    errors:
-      type: string
-  required:
-    - errors
