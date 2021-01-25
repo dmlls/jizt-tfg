@@ -1,0 +1,35 @@
+Summary:
+  type: object
+  properties:
+    started_at:
+      description: >
+        The timestamp when a summary with the same specified
+        source, model and parameters was first requested
+      type: string
+      format: date-time
+    ended_at:
+      description: >
+        The timestamp when a summary with the same specified
+        source, model and parameters was first completed
+      type: string
+      format: date-time
+    status:
+      description: The status of the summary
+      type: string
+      enum:
+        - preprocessing
+        - encoding
+        - summarizing
+        - postprocessing
+        - completed
+    output:
+      description: The generated summary
+      type: string
+    params:
+      $ref: ./Params.yaml
+  required:
+    - started_at
+    - ended_at
+    - status
+    - output
+    - params

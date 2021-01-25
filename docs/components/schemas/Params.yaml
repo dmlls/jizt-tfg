@@ -1,0 +1,46 @@
+Params:
+  description: The summary generation parameters
+  type: object
+  properties:
+    relative_max_length:
+      type: number
+      format: float
+      minimum: 0.0
+      maximum: 100.0
+    relative_min_length:
+      type: number
+      format: float
+      minimum: 0.0
+      maximum: 100.0
+    do_sample:
+      type: boolean
+    early_stopping:
+      type: boolean
+    num_beams:
+      type: int
+      format: int32
+    temperature:
+      type: number
+      format: float
+    top_k:
+      type: int
+      format: int32
+    top_p:
+      type: number
+      format: float
+    repetition_penalty:
+      type: number
+      format: float
+    length_penalty:
+      type: number
+      format: float
+    no_repeat_ngram_size:
+      type: int
+      format: int32
+  required:
+    - relative_max_length
+    - relative_min_length
+  externalDocs:
+    description: More info on the parameters here
+    url: "https://huggingface.co/transformers/main_classes/model.html#\
+      transformers.generation_utils.GenerationMixin.generate"
