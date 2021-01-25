@@ -1,0 +1,7 @@
+description: An accepted request for a summary
+type: object
+properties:
+  summary_id:
+    description: The id of the summary.
+    type: string
+    example: b40d19c2af9c5096da9070c81b22e270660a1c6313b22427f7fc14dbcb0c2d38

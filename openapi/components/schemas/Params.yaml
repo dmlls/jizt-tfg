@@ -1,0 +1,93 @@
+description: The summary generation parameters.
+type: object
+properties:
+  relative_max_length:
+    description: >
+      The maximum length of the summary to be generated,
+      relative to the length of the original text.
+    type: number
+    format: float
+    minimum: 0.0
+    maximum: 100.0
+    example: 0.4
+  relative_min_length:
+    description: >
+      The minimum length of the summary to be generated,
+      relative to the length of the original text.
+    type: number
+    format: float
+    minimum: 0.0
+    maximum: 100.0
+    example: 0.1
+  do_sample:
+    description: >
+      Whether or not to use sampling. If set to `false` greedy
+      decoding is used.
+    type: boolean
+    example: false
+  early_stopping:
+    description: >
+      Whether or not to stop the beam search when at least `num_beams`
+      sentences are finished per batch or not.
+    type: boolean
+    example: false
+  num_beams:
+    description: >
+      Number of beams for beam search. If set to `1` no beam search
+      is performed. The higher the number, the longer the summary
+      will take to be generated, but its quality will likely be better.
+    type: integer
+    format: int32
+    example: 4
+  temperature:
+    description: >
+      The value used to module the next token probabilities.
+    type: number
+    format: float
+    example: 1.0
+  top_k:
+    description: >
+      The number of highest probability vocabulary tokens to
+      keep for top-k-filtering.
+    type: integer
+    format: int32
+    example: 50
+  top_p:
+    description: >
+      If set to less than `1`, only the most probable tokens with
+      probabilities that add up to `top_p` or higher are kept
+      for generation.
+    type: number
+    format: float
+    example: 1.0
+  repetition_penalty:
+    description: >
+      The parameter for repetition penalty. If set to `1.0` there
+      is no penalty. See [this paper](https://arxiv.org/pdf/1909.05858.pdf)
+      for more details.
+    type: number
+    format: float
+    example: 1.0
+  length_penalty:
+    description: >
+      Exponential penalty to the length. If set to `1.0` there
+      is no penalty.
+
+      - Values < `1.0` encourage the model to generate shorter
+      summaries.
+
+      - Values > `1.0` encourage the model to produce longer
+      summaries.
+    type: number
+    format: float
+    example: 1.0
+  no_repeat_ngram_size:
+    description: >
+      If set to greater than `0`, all n-grams of that size
+      can only occur once.
+    type: integer
+    format: int32
+    example: 4
+externalDocs:
+  description: More info on the generation process here.
+  url: 'https://huggingface.co/blog/how-to-generate'
