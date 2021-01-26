@@ -14,6 +14,9 @@
 \RequirePackage{xtab}
 \RequirePackage{multirow}
 
+\usepackage[defernumbers=true, sorting=none]{biblatex}
+\addbibresource{bibliografia.bib}
+
 % Links
 \PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks]{hyperref}
 \hypersetup{
@@ -471,7 +474,6 @@
 	\include{./tex/7_Conclusiones_Lineas_de_trabajo_futuras}
 	
 	
-	\bibliographystyle{plain}
-	\bibliography{bibliografia}
+	\printbibliography[title={Bibliografía}]
 	
 \end{document}
