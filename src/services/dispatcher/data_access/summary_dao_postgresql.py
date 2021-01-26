@@ -30,7 +30,6 @@ from schemas import Summary
 from summary_status import SummaryStatus
 from supported_models import SupportedModel
 from supported_languages import SupportedLanguage
-from typing import List
 
 
 class SummaryDAOPostgresql(SummaryDAOInterface):  # TODO: manage errors in excepts

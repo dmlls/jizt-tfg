@@ -1,3 +1,83 @@
 \capitulo{6}{Trabajos relacionados}
 
-Este apartado sería parecido a un estado del arte de una tesis o tesina. En un trabajo final grado no parece obligada su presencia, aunque se puede dejar a juicio del tutor el incluir un pequeño resumen comentado de los trabajos y proyectos ya realizados en el campo del proyecto en curso. 
+\section{Proyectos similares}
+
+A continuación, enumeraremos algunos proyectos relacionados con nuestro trabajo.
+
+\subsubsection{Bert Extractive Summarizer}
+
+Este proyecto \emph{open-source} implementa un generador de resúmenes extractivos haciendo uso del modelo BERT \cite{devlin19} de Google para la codificación de palabras, y aplicando \emph{clústering} por \emph{k-means} para determinar las frases que se incluirán en el resumen. Este proceso se detalla en \cite{miller19}.
+
+El generador de resúmenes puede ser \emph{dockerizado}, pudiéndose ejecutar como servicio, proporcionando una REST API para solicitar los resúmenes. El autor ofrece \emph{endpoints} gratuitos con limitaciones a la hora de realizar peticiones, y \emph{endpoints} privados de pago para aquellos particulares o empresas que requieran de mayores prestaciones.
+
+Se puede acceder al proyecto a través del siguiente enlace: \\
+\href{https://github.com/dmmiller612/bert-extractive-summarizer}{\texttt{{\small https://github.com/dmmiller612/bert-extractive-summarizer}}}.
+
+
+\bigskip
+\subsubsection{ExplainToMe}
+
+ExplainToMe es un proyecto también \emph{open-source} centrado en la generación de resúmenes extractivos de páginas \emph{web}, permitiendo cómodamente pegar y copiar el \emph{link} de la \emph{web} que se quiere resumir.
+
+Emplea el algoritmo de TextRank \cite{mihalce04}, el cual a su vez está inspirado en el conocido PageRank \cite{page99}, el algoritmo basado en grafos que empleaba originalmente Google en su motor de búsqueda. En su caso, TextRank aplica los principios del algoritmo de Google a la extracción de las frases más importantes de un texto.
+
+Como en el caso anterior, también implementa una API REST.
+
+El proyecto no ha sido actualizado desde finales de 2018. Se puede visitar a través de:
+\href{https://github.com/jjangsangy/ExplainToMe/tree/master}{\texttt{{\small https://github.com/jjangsangy/ExplainToMe/tree/master}}}.
+
+
+\bigskip
+\subsubsection{SMMRY}
+
+Se trata de uno de las primeras opciones que aparecen en los motores de búsqueda a la hora de buscar <<\emph{summarizers}>>. También genera resúmenes extractivos, aunque a diferencia de los anteriores, no es un proyecto \emph{open-source}.
+
+Destacan su velocidad (\emph{cachea} los textos resumidos recientemente), y sus múltiples opciones de resumen, como por ejemplo: ignorar preguntas, exclamaciones o frases entrecomilladas en el texto original, o la generación de mapas de calor en función de la importancia de las frases incluidas en el resumen.
+
+Sin embargo, los resúmenes están compuestos de frases literales ordenadas cronológicamente en función de su importancia, por lo que la cohesión entre las mismas puede ser frágil e incluso, con frecuencia, se habla de personas o entidades que no han sido introducidas previamente en el resumen, pudiendo dificultar la comprensión del mismo.
+
+En su página \emph{web} no se explicita el algoritmo concreto que se emplea, pero prestando atención a la descripción del proceso proporcionada \cite{smmry}, parecen emplear igualmente PageRank.
+
+Se puede acceder a SMMRY en:
+\href{https://smmry.com/}{\texttt{{\small https://smmry.com/}}}.
+
+\bigskip
+\subsubsection{Tabla comparativa}
+
+\begin{table}[h]\label{tabla:comparativa}
+	\centering
+	\begin{tabular}{lcccc}
+		\toprule
+		\multirow{2}{*}{Caraterísticas} & \multirow{2}{*}{\textbf{\href{https://www.jizt.it/}{\small{JIZT}}}} & \scriptsize{\href{https://github.com/dmmiller612/bert-extractive-summarizer}{Bert Extracive}} & \multirow{2}{*}{\scriptsize{\href{https://github.com/jjangsangy/ExplainToMe}{ExplainToMe}}} & \multirow{2}{*}{\href{https://smmry.com/}{\small{SMMRY}}} \\
+		& & \scriptsize{\href{https://github.com/dmmiller612/bert-extractive-summarizer}{Summarizer}} & & \\
+		\midrule
+		\small{Tipo de resumen$^1$} & {\small Abstractivo} & {\small Extractivo} & {\small Extractivo} & {\small Extractivo} \\
+		\scriptsize{Tiempo resumen corto$^2$} & \small{\textasciitilde 20 seg.} & \small{\textasciitilde 6 seg.} & {\small \textasciitilde 9 seg.} & {\small \textasciitilde 3 seg.} \\
+		\scriptsize{Tiempo resumen largo$^3$} & {\small \textasciitilde 4 min.} & \scriptsize{No disponible$^4$} & {\small Error} & {\small \textasciitilde 5 seg.} \\
+		{\small Ajustes básicos} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} \\
+		\small{Ajustes avanzados} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{red!25} $\times$ & \cellcolor{red!25} $\times$ & \cellcolor{green!25} {$\checkmark$} \\
+		\scriptsize{Entrada: texto plano} & \cellcolor{green!25} {$\checkmark$} &  \cellcolor{green!25} {$\checkmark$} &  \cellcolor{red!25} $\times$ & \cellcolor{green!25} {$\checkmark$} \\
+		\small{Entrada: URL} & \cellcolor{yellow!25} {\small \hspace{-0.3cm} Próximamente} &  \cellcolor{red!25} $\times$ &  \cellcolor{green!25} {$\checkmark$} &  \cellcolor{green!25} {$\checkmark$} \\
+		\scriptsize{Soporte multi-modelo$^5$} & \cellcolor{yellow!25} {\small \hspace{-0.3cm} Próximamente} & \cellcolor{red!25} $\times$ & \cellcolor{red!25} $\times$ & \cellcolor{red!25} $\times$ \\
+		\scriptsize{Soporte multi-tarea$^6$} & \cellcolor{yellow!25} {\small \hspace{-0.3cm} Próximamente} & \cellcolor{red!25} $\times$ & \cellcolor{red!25} $\times$ & \cellcolor{red!25} $\times$ \\
+		\small{API REST} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} \\
+		\small{Arquitectura} & {\small Microservicios} & {\small Monolítica} & {\small Monolítica} & ? \\
+		\small{Plataforma} & \scriptsize{Multiplataforma$^7$} & {\small Web} & {\small Web} & {\small Web} \\
+		\emph{Open-source} & \cellcolor{green!25} {$\checkmark$}& \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{red!25} $\times$ \\
+		\emph{Gratuito} & \cellcolor{green!25} {$\checkmark$}& \cellcolor{yellow!25} \small{Limitado} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{yellow!25} \small{Limitado} \\
+		\small{Proyecto activo} & \cellcolor{green!25} {$\checkmark$}& \cellcolor{green!25} {$\checkmark$} & \cellcolor{red!25} $\times$ & \cellcolor{green!25} {$\checkmark$} \\
+		\bottomrule
+		\multicolumn{5}{l}{\scriptsize{1. En los resúmenes \emph{abstractivos}, se toman las frases literales del texto original. En los \emph{ex-}}} \\
+		\multicolumn{5}{l}{\hspace{0.26cm} \scriptsize{\emph{tractivos}, se añaden palabras o expresiones nuevas.}} \\
+		\multicolumn{5}{l}{\scriptsize{2. Texto de entrada con \textasciitilde 6.500 caracteres.}} \\
+		\multicolumn{5}{l}{\scriptsize{3. Texto de entrada con \textasciitilde 90.000 caracteres.}} \\
+		\multicolumn{5}{l}{\scriptsize{4. La versión gratuita está limitada. No hemos tenido acceso a la versión completa.}} \\
+		\multicolumn{5}{l}{\scriptsize{5. Capacidad de generar resúmenes utilizando diferentes modelos.}} \\
+		\multicolumn{5}{l}{\scriptsize{6. Capacidad de realizar otras tareas de NLP diferentes a la generación de resúmenes.}} \\
+		\multicolumn{5}{l}{\scriptsize{7. Soporte nativo para Android, iOS y \emph{web}. Pronto, soporte para Linux, macOS y Windows.}} \\
+		\bottomrule
+	\end{tabular}	
+	\caption{Comparativa de las características ofrecidas por las diferentes alternativas para la generación de resúmenes.}
+\end{table}
+
+

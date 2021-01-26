@@ -2,7 +2,7 @@
 
 # Absolute path to the setup script
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd $DIR
+cd "$DIR"
 
 # If user interrupts installation, make sure we leave
 # everything consistent.
