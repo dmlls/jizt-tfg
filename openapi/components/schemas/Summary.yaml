@@ -34,5 +34,11 @@ properties:
     example: |-
       Natural language processing (NLP) is a subfield of Linguistics,
       Computer Science, and Artificial Intelligence.
+  model:
+    description: The model used to generate the summary.
+    type: string
+    enum:
+      - t5-large
+    example: t5-large
   params:
     $ref: ./Params.yaml

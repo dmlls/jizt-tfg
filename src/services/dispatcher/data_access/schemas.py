@@ -17,7 +17,7 @@
 
 """Marshmallow Schemas for DispatcherService."""
 
-__version__ = '0.1.7'
+__version__ = '0.1.8'
 
 from datetime import datetime
 from marshmallow import Schema, fields, pre_dump, EXCLUDE
@@ -155,10 +155,12 @@ class OkResponseSchema(Schema):
             The processed text, e.g., the summary.
     """
 
+    summary_id = fields.Str(required=True)
     started_at = fields.DateTime(required=True)
     ended_at = fields.DateTime(required=True)
     status = fields.Str(required=True)
     output = fields.Str(required=True)
+    model = fields.Str(required=True)
     params = fields.Dict(required=True)
 
     @pre_dump
@@ -175,10 +177,12 @@ class OkResponseSchema(Schema):
         <https://marshmallow.readthedocs.io/en/stable/api_reference.html#marshmallow.pre_dump>`__.
         """
 
-        return {"started_at": summary.started_at,
+        return {"summary_id": summary.id_,
+                "started_at": summary.started_at,
                 "ended_at": summary.ended_at,
                 "status": summary.status,
                 "output": summary.output,
+                "model": summary.model,
                 "params": summary.params}
 
     class Meta:
