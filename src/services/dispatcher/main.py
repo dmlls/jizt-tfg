@@ -32,7 +32,7 @@ from confluent_kafka import Message, KafkaError
 from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import ConsumerLoop
-from summary_status import SummaryStatus
+from data_access.summary_status import SummaryStatus
 from data_access.summary_dao_factory import SummaryDAOFactory
 from data_access.schemas import (Summary, PlainTextRequestSchema,
                                  AcceptedResponseSchema, OkResponseSchema)
@@ -233,7 +233,7 @@ class PlainTextSummary(Resource):
         is completed, the output text, e.g. the summary.
 
         Returns:
-            :obj:`dict`: A 200 OK response with a JSON body containing the
+            :obj:`dict`: A ``200 OK`` response with a JSON body containing the
             summary. For info on the summary fields, see
             :class:`data_access.schemas.Summary`.
         Raises:
@@ -314,8 +314,8 @@ class Health(Resource):
         """Check service health.
 
         Returns:
-            :obj:`dict`: A 200 OK response if everything is working, otherwise
-            a 500 INTERNAL SERVER ERROR.
+            :obj:`dict`: A ``200 OK`` response if everything is working, otherwise
+            a ``500 INTERNAL SERVER ERROR``.
         """
 
         return 200 if (self._is_kafka_producer_alive()
