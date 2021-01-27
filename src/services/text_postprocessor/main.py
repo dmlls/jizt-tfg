@@ -53,6 +53,8 @@ class TextPostprocessorService:
         self.consumed_msg_schema = TextPostprocessingConsumedMsgSchema()
         self.produced_msg_schema = ReadyProducedMsgSchema()
 
+        self.text_postprocessor = TextPostprocessor()
+
     def run(self):
         try:
             topics_to_subscribe = [KafkaTopic.TEXT_POSTPROCESSING.value]
@@ -82,7 +84,7 @@ class TextPostprocessorService:
 
                     data = self.consumed_msg_schema.loads(msg.value())
                     summary = data.pop('summary')
-                    postprocessed_text = TextPostprocessor.postprocess(summary)
+                    postprocessed_text = self.text_postprocessor.postprocess(summary)
                     data['text_postprocessed'] = postprocessed_text
                     message_value = self.produced_msg_schema.dumps(data)
                     self._produce_message(

@@ -29,4 +29,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV PATH="/opt/venv/bin:$PATH"
 
+RUN python -c 'import nltk; nltk.download("punkt")'
+
 ENTRYPOINT ["python", "main.py"]

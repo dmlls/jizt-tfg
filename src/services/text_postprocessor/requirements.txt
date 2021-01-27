@@ -7,4 +7,3 @@ nltk==3.5
 numpy==1.19.4
 regex==2020.11.13
 tqdm==4.55.1
-truecase==0.0.12

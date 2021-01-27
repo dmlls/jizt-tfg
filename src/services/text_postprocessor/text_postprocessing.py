@@ -17,10 +17,11 @@
 
 """Text post-processor class."""
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
-from truecase import get_true_case
-from utils.tokenization import sentence_tokenize
+import logging
+from truecase.TrueCaser import TrueCaser
+from nltk import sent_tokenize
 
 
 class TextPostprocessor:
@@ -31,11 +32,20 @@ class TextPostprocessor:
 
     * Formats the text correctly (e.g., removes incorrect whitespaces).
     * Performs truecasing over the text. See `this paper
-      <https://www.cs.cmu.edu/~llita/papers/lita.truecasing-acl2003.pdf>`__ for more details.
+      <https://www.cs.cmu.edu/~llita/papers/lita.truecasing-acl2003.pdf>`__
+      for more details.
     """
 
-    @classmethod
-    def postprocess(cls, text: str) -> str:
+    def __init__(self):
+        self.truecaser = TrueCaser()
+        logging.basicConfig(
+            format='%(asctime)s %(name)s %(levelname)-8s %(message)s',
+            level=logging.DEBUG,
+            datefmt='%d/%m/%Y %I:%M:%S %p'
+        )
+        self.logger = logging.getLogger("TextPostprocessor")
+
+    def postprocess(self, text: str) -> str:
         """Post-processes the text.
 
         Args:
@@ -46,5 +56,22 @@ class TextPostprocessor:
             :obj:`str`: The post-processed text.
         """
 
-        txt = ' '.join(sentence_tokenize(text))
-        return get_true_case(txt) if txt else txt  # if txt is empty just return it
+        if not text:
+            return text   # if text is empty just return it
+
+        sentences = sent_tokenize(text)
+        truecased_sents = list(map(self.truecaser.get_true_case, sentences))
+        return ' '.join(map(self._capitalize_first_letter, truecased_sents))
+
+    def _capitalize_first_letter(self, sent: str) -> str:
+        """Capitalize the first letter of a sentence.
+
+        Args:
+            sent (:obj:`str`):
+                The sentence whose first letter will be capitalized.
+
+        Returns:
+            :obj:`str`: The sentence with its first letter capitalized.
+        """
+
+        return f"{sent[0].upper()}{sent[1:]}"

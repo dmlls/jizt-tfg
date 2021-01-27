@@ -103,7 +103,7 @@ textPostprocessor:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/text-postprocessor:0.0.6
+  image: eu.gcr.io/jizt-299516/text-postprocessor:0.0.17
 
 
 #################################
