@@ -1,83 +1,50 @@
 \capitulo{3}{Conceptos teóricos} \label{chapter:conceptos}
 
-En aquellos proyectos que necesiten para su comprensión y desarrollo de unos conceptos teóricos de una determinada materia o de un determinado dominio de conocimiento, debe existir un apartado que sintetice dichos conceptos.
+En este capítulo, detallaremos de forma teórica el proceso de generación de resúmenes, desde el momento que recibimos el texto a resumir, hasta que se le entrega al usuario el resumen generado. En el \hyperref[chapter:tecnicas]{siguiente capítulo}, explicaremos las herramientas que hacen posible que todo este proceso se pueda llevar a cabo de forma distribuida <<en la nube>>.
 
-Algunos conceptos teóricos de \LaTeX \footnote{Créditos a los proyectos de Álvaro López Cantero: Configurador de Presupuestos y Roberto Izquierdo Amo: PLQuiz}.
+La generación de resúmenes se divide en cuatro etapas fundamentales:
 
-\section{Secciones}
-
-Las secciones se incluyen con el comando section.
-
-\subsection{Subsecciones}
-
-Además de secciones tenemos subsecciones.
-
-\subsubsection{Subsubsecciones}
-
-Y subsecciones. 
-
-
-\section{Referencias}
-
-Las referencias se incluyen en el texto usando cite \cite{wiki:latex}. Para citar webs, artículos o libros \cite{koza92}.
-
-
-\section{Imágenes}
-
-Se pueden incluir imágenes con los comandos standard de \LaTeX, pero esta plantilla dispone de comandos propios como por ejemplo el siguiente:
-
-\imagen{escudoInfor}{Autómata para una expresión vacía}
-
-
-
-\section{Listas de items}
-
-Existen tres posibilidades:
-
+\vspace*{-\baselineskip}
 \begin{itemize}
-	\item primer item.
-	\item segundo item.
+	\item [\textbullet] Pre-procesado.
+	\item [\textbullet] Codificación.
+	\item [\textbullet] Generación del resumen.
+	\item [\textbullet] Post-procesado.
 \end{itemize}
 
-\begin{enumerate}
-	\item primer item.
-	\item segundo item.
-\end{enumerate}
+Veamos en detalle en qué consiste cada una de ellas.
 
-\begin{description}
-	\item[Primer item] más información sobre el primer item.
-	\item[Segundo item] más información sobre el segundo item.
-\end{description}
+\bigskip
+\section{Pre-procesado del texto}
+
+El principal objetivo de esta etapa es adecuar el texto de entrada para que se aproxime lo máximo posible a lo que el modelo espera. Adicionalmente, se separa en texto de entrada en frases. Esta separación parecer \emph{a priori} una tarea trivial, pero involucra una serie de dificultades que se detallarán a continuación.
+
+Cabe destacar que, como mencionábamos en la \hyperref[chapter:intro]{Introducción}, los modelos pre-entrenados de los que hacemos uso solo admiten textos en inglés, por lo que algunas de las consideraciones que tomamos en el pre-procesado del texto solo son aplicables a este idioma.
+
+A grandes rasgos, en la etapa de pre-procesado se divide a su vez en los siguientes pasos:
+
+\vspace{-0.4cm}
+
+\begin{itemize}
+	\item [\textbullet] Eliminar retornos de carro, tabuladores (\texttt{\textbackslash n}, \texttt{\textbackslash t}) y espacios sobrantes entre palabras (p. ej. \texttt{``I \quad am''} $\rightarrow$ \texttt{``I am''}).
 	
-\begin{itemize}
-\item 
+	\item [\textbullet] Añadir un espacio al inicio de las frases intermedias (p. ej.: \texttt{``How's it going?Great!''} $\rightarrow$ \texttt{``How's it going? Great!''}. Esto es especialmente relevante en el caso de algunos modelos, como por ejemplo BART \cite{lewis19}, los cuales tienen en cuenta ese espacio inicial para distinguir entre frases iniciales y frases intermedias en la generación de resúmenes\footnote{\, Por el momento, no hacemos uso de este modelo, aunque podría incluirse en el futuro.}.
+	
+	\item [\textbullet] Establecer un mecanismo que permita llevar a cabo la ya mencionada separación del texto en frases. Esto es importante dado que los modelos tienen un tamaño de entrada máximo. Dos estrategias comunes para eludir esta limitación consisten en (a) truncar el texto de entrada, lo cual puede llevar asociado pérdidas notables de información, o (b) dividir el texto en fragmentos de menor tamaño. En nuestro caso, la primera opción quedó rápidamente descartada ya que los textos que vamos a recibir, por lo general, superarán el tamaño máximo (en caso contrario tendría poco sentido querer generar un resumen). Refiriéndonos, por tanto, a la segunda opción, es frecuente llevar a cabo dicha separación de manera ingenua, únicamente atendiendo al tamaño de entrada máximo. Sin embargo, en nuestro caso decidimos refinar este proceso e implementamos un algoritmo original\footnote{\, Utilizamos el término <<original>> porque no encontramos ningún recurso en el que se tratara este problema, por lo que tuvimos que resolverlo sin apoyos bibliográficos. Esto no quiere decir, sin embargo, que no se hayan implementado estrategias similares en otros problemas diferentes al aquí expuesto.} en el que dicha separación se realiza de tal modo que ninguna frase queda dividida. Para garantizar el éxito de este algoritmo, es fundamental que las frases estén correctamente divididas; el porqué se clarificará en la \hyperref[sec:codificacion]{siguiente sección}, referente a la codificación del texto.
 \end{itemize}
 
-\section{Tablas}
+A continuación, nos centraremos en el proceso de división del texto en frases. A la hora de llevar a cabo este proceso, debemos tener en cuenta que el texto de entrada podría contener errores ortográficos o gramaticales, por lo que debemos tratar de realizar el mínimo número de suposiciones posibles.
 
-Igualmente se pueden usar los comandos específicos de \LaTeX o bien usar alguno de los comandos de la plantilla.
+No obstante, la siguiente consideración se nos hace necesaria: el punto (.) indica el final de una frase solo si la siguiente palabra empieza con una letra \emph{y} además mayúscula.
 
-\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
-{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
-HTML5 & X & & &\\
-CSS3 & X & & &\\
-BOOTSTRAP & X & & &\\
-JavaScript & X & & &\\
-AngularJS & X & & &\\
-Bower & X & & &\\
-PHP & & X & &\\
-Karma + Jasmine & X & & &\\
-Slim framework & & X & &\\
-Idiorm & & X & &\\
-Composer & & X & &\\
-JSON & X & X & &\\
-PhpStorm & X & X & &\\
-MySQL & & & X &\\
-PhpMyAdmin & & & X &\\
-Git + BitBucket & X & X & X & X\\
-Mik\TeX{} & & & & X\\
-\TeX{}Maker & & & & X\\
-Astah & & & & X\\
-Balsamiq Mockups & X & & &\\
-VersionOne & X & X & X & X\\
-} 
+Por ejemplo: \texttt{``Your idea is interesting. However, I would [...].''} se separaría en dos frases, dado que la palabra posterior al punto empieza con una letra mayúscula. Sin embargo: \texttt{``We already mentioned in Section 1.1 that this example shows [...].''} conformaría una única frase, ya que tras el punto no aparece una letra. Procedemos de igual modo en el caso de los signos de interrogación (?) y de exclamación (!). Por ejemplo: \texttt{``She asked \lq How's it going?\rq, and I said \lq Great!\rq.''} se tomará correctamente como una sola frase; tras la interrogación, la siguiente palabra comienza con una letra \emph{minúscula}.
+	
+Con la suposición anterior, también se agruparían correctamente los puntos suspensivos.
+
+Sin embargo, fallaría en situaciones como: \texttt{``NLP (i.e. Natural Langua}-\texttt{ge Processing) is a subfield of Linguistics, Computer Science, \\ and Artificial Intelligence.''}, en la que la división sería: \texttt{``NLP (i.e.''} por un lado, y \texttt{``Natural Language Processing) is a subfield [...].''}, por otro, ya que \texttt{``Natural''} empieza con mayúscula y aparece tras un punto.
+
+Asimismo, la razón principal por la que no podemos apoyarnos únicamente en reglas predefinidas, reside en las llamadas Entidades Nombradas (\emph{Named Entities}, en inglés), esto es, palabras que hacen referencia a personas, lugares, instituciones, empresas, etc. Existe toda una disciplina dedicada la identificación de este tipo de palabras, conocida como Reconocimiento de Entidades Nombradas (NER, por sus siglas en inglés), y pese a los buenos resultados conseguidos por algunos de los modelos propuestos, se considera un problema lejos de estar resuelto \cite{ner20}.
+
+En nuestro caso emplearemos un modelo pre-entrenado para solucionar, al menos en parte, el problema de las Entidades Nombradas. Este modelo también solventa situaciones como la descrita anteriormente, en las que las reglas escritas a mano se quedan cortas. En el capítulo de \hyperref[chapter:tecnicas]{Técnicas y Herramientas}, hablaremos de dicho modelo y de la implementación concreta en código de los procedimientos expuestos anteriormente.
+
+\section{Codificación del texto} \label{sec:codificacion}
