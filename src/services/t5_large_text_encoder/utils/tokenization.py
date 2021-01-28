@@ -17,7 +17,7 @@
 
 """Tokenization utilities."""
 
-__version__ = '0.2'
+__version__ = '0.0.2'
 
 from nltk.tokenize import RegexpTokenizer
 from blingfire import text_to_sentences
@@ -56,6 +56,11 @@ def sentence_tokenize(text: str,
 
     # punctuation that shouldn't be preceeded by a whitespace
     PUNCT_NO_PREV_WHITESPACE = ".,;:!?"
+
+    # Check if text is empty or contains onlynon-printable
+    # characters, e.g., whitespaces.
+    if len(text.strip()) == 0:
+        return []
 
     if tokenizer is None:
         # if next letter after period is lowercase, consider it part of the same sentence

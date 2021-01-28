@@ -15,28 +15,17 @@
 #
 # For license information on the libraries used, see LICENSE.
 
-"""Text encoding class with support for t5-large Hugging Face pretrained model."""
+"""Text encoding class with support for ``t5-large`` Hugging Face pretrained model."""
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 import logging
 import torch
 import copy
+from itertools import chain
 from utils.tokenization import sentence_tokenize
 from transformers import T5Tokenizer, tokenization_utils_base
-from nltk import word_tokenize
-from typing import List, Optional, Union
-
-# Ratio calculated thus: len(word_tokenize(text)) / len(t5_tokenizer.encode(text))
-# It shows the relation between the tokens without being encoded and the tokens
-# once encoded. The higher it is, the most likely the subdivisions will exceed the
-# model maximum sequence length.
-RATIO_TOKENS_TO_T5_ENCODED_TOKENS = 0.7  # obtained empirically
-
-# Factor of variation for the RATIO_TOKENS_TO_ENCODED_TOKENS. The new ratio is
-# calculated thus:
-# RATIO_TOKENS_TO_ENCODED_TOKENS -= RATIO_TOKENS_TO_ENCODED_TOKENS * VARIATION_RATE_FOR_RATIO
-VARIATION_RATE_FOR_RATIO = 0.015
+from typing import List, Tuple, Optional, Union
 
 
 class SplitterEncoder:
@@ -78,11 +67,6 @@ class SplitterEncoder:
         To avoid going over the maximum sequence length of the tokenizer, the text is first
         split (without splitting sentences) into groups containing approximately the same
         number of tokens.
-
-        The division is carried out naively and `a piori` (i.e., without actually encoding the
-        text), so it could happen that one or more of the divisions generated exceeds the model
-        maximum sequence length. In that case, the division is done again with a smaller subdivision
-        length. The process is repeated until none of the divisions exceeds the model max. length.
 
         Args:
             text (:obj:`str`):
@@ -134,211 +118,144 @@ class SplitterEncoder:
         """
 
         if return_tensors is not None and return_tensors not in ('pt'):
-            raise NotImplementedError(f'{return_tensors} tensors are currently not supported.')
+            raise NotImplementedError(f'{return_tensors} '
+                                      f'tensors are currently not supported.')
 
-        max_len_subdiv = self._get_max_length_subdivision()  # max length per subdivision
+        # If prefix is None, take the empty string
+        prefix = "" if prefix is None else prefix
+
         sentences = sentence_tokenize(text)
+        # Tokens of each sentence. We remove the last token (EOS token).
+        sent_tks = [self.tokenizer.encode(sent,
+                                          return_tensors=return_tensors)[0][:-1]
+                    for sent in sentences]
+        # Number of tokens of each sentence
+        sent2ntks = [len(sent) for sent in sent_tks]
+        # Tokens of the prefix
+        prefix_tks = self.tokenizer.encode(prefix,
+                                           return_tensors=return_tensors)[0][:-1]
+        # Number of tokens of the prefix
+        ntks_prefix = len(prefix_tks)
 
-        while True:  # do while
-            subdivisions = self._divide_eagerly(sentences, max_len_subdiv)
+        split_points, subdiv2ntks = self._divide_eagerly(sentences,
+                                                         sent2ntks,
+                                                         ntks_prefix)
 
-            balanced_subdiv = self._balance_subdivisions(subdivisions, max_len_subdiv)
 
-            # transform subdivs. from, e.g., [["sent_1", "sent_2", ...], [sent_1, sent_2, ...], ...]
-            # to ["sent_1 sent_2 ...", "sent_1 sent_2 ...", ...]
-            subdivs_as_str = [' '.join(subdiv) for subdiv in balanced_subdiv]
+        split_points, subdiv2ntks = self._balance_subdivisions(split_points,
+                                                               subdiv2ntks,
+                                                               sent2ntks)
 
-            if prefix is not None:
-                subdivs_as_str = self._add_prefix_to_subdivs(subdivs_as_str, prefix)
+        encoded_subdivs = [torch.cat(
+                               [prefix_tks]
+                               + sent_tks[split_points[i]:split_points[i+1]]
+                               + [torch.tensor([self.tokenizer.eos_token_id])]
+                           ).unsqueeze(0) for i in range(len(split_points) - 1)]
 
-            encoded_subdivs = [self._tokenizer.encode(subdiv,
-                                                      truncation=truncation,
-                                                      max_length=max_length,
-                                                      return_tensors=return_tensors
-                                                     ) for subdiv in subdivs_as_str]
+        return encoded_subdivs
 
-            if self._check_len_subdivs(encoded_subdivs, return_tensors):
-                # all the subdivisions length is <= model max. length
-                return encoded_subdivs
-
-            # adjust length of subdivisions and start over
-            max_len_subdiv -= max_len_subdiv * VARIATION_RATE_FOR_RATIO
-
-    @classmethod
-    def _divide_eagerly(cls, sentences: List[str], max_len_subdiv: int) -> List[List[str]]:
+    def _divide_eagerly(self,
+                        sentences: List[str],
+                        sent2ntks: List[int],
+                        ntks_prefix: int
+    ) -> Tuple[List[int], List[int]]:
         """Subdivide the text eagerly.
 
-        The sentences are divided into groups, ensuring that the length of any of these
-        groups (subdivisions) is always less or equal than the model max. sequence length,
-        without splitting sentences.
+        The sentences are divided into groups, ensuring that the
+        length of any of these groups (subdivisions) is always less
+        or equal than the model max. sequence length, without splitting
+        sentences.
 
         Args:
             sentences (:obj:`List[str]`):
                 The sentences to be split into subdivisions, e.g.,
                 :code:`["sent_1", "sent_2", "sent_3", ...]`.
-            max_len_subdiv (:obj: `int`):
-                Maximum length each subdivision must have, measured in terms of NLTK word
-                tokens (:func:`word_tokenize`).
+            sent2ntks (:obj:`List[int]`):
+                The number of encoded tokens corresponding to each of
+                the sentences. The indexes match those from :obj:`sentences`,
+                so that the tokens corresponding to the first sentence would
+                be :ob:`sent2ntks[0]` and so on.
+            ntks_prefix (:obj:`int`):
+                The number of encoded tokens corresponding to the prefix.
 
         Returns:
-            :obj:`List[List[str]]`: The generated subdivisions, e.g.::
-
-            [[sent_1, sent_2, sent_3, ...], [sent_10, sent_11, ...], ...].
+            :obj:`Tuple[List[int], List[int]]`: A tuple containing:
+            
+                * The points where to split in order to form the subdivisions,
+                  e.g. ``[0. 15, 32, 51]`` means that the first subdivision
+                  contains ``sentences[0:15]``, the second ``sentences[15:32]``,
+                  and the third and last ``[sentences[32:51]``.
+                * The number of tokens in each subdivision.
         """
 
-        subdivisions = []
-        current_subdiv = []
-        current_subdiv_len = 0  # in terms of tokens
+        subdiv2ntks = []
+        split_points = [0] 
+        subdiv_len = ntks_prefix + sent2ntks[0] + 1
+        for i in range(1, len(sentences)):
+            subdiv_len += sent2ntks[i]
+            if subdiv_len > self.tokenizer.model_max_length:
+                split_points.append(i)
+                subdiv2ntks.append(subdiv_len - sent2ntks[i])
+                subdiv_len = ntks_prefix + sent2ntks[i] + 1
+        split_points.append(len(sentences))
+        subdiv2ntks.append(subdiv_len)
+        return split_points, subdiv2ntks
 
-        for sent in sentences:
-            sent_len = cls._len(sent)
-            if current_subdiv_len + sent_len <= max_len_subdiv:
-                current_subdiv.append(sent)  # append sent
-                current_subdiv_len += sent_len
-            else:
-                subdivisions.append(current_subdiv)
-                current_subdiv = [sent]  # new subdivision
-                current_subdiv_len = sent_len
-        subdivisions.append(current_subdiv)  # append last subdivision
-
-        return subdivisions
-
-    @classmethod
-    def _balance_subdivisions(cls, subdivisions: List[str], max_len_subdiv: int) -> List[List[str]]:
+    def _balance_subdivisions(self,
+                              split_points: List[int],
+                              subdiv2ntks: List[int],
+                              sent2ntks: List[int]
+    ) -> Tuple[List[int], List[int]]:
         """Balance the subdivisions in terms of length.
 
-        This method is meant to be called after :meth:`_divide_eagerly`. If needed,
-        it moves sentences from one subdivision to another in such way that all the subdvisions
-        have the same length, approximately, and keeping the model max. length restriction.
+        This method is meant to be called after :meth:`_divide_eagerly`.
+        If needed, it moves sentences from one subdivision to another in
+        such way that all the subdvisions have the same length, approximately,
+        and keeping the model max. length restriction.
 
         Args:
-            subdivisions (:obj:`List[List[str]]`):
-                The subdivisions to be balanced, e.g.::
-
-                [[sent_1, sent_2, sent_3, ...], [sent_10, sent_11, ...], ...].
+            split_points (:obj:`List[int]`):
+                The points where to split in order to form the subdivisions,
+                e.g. ``[0. 15, 32, 51]`` means that the first subdivision
+                contains ``sentences[0:15]``, the second ``sentences[15:32]``,
+                and the third and last ``[sentences[32:51]``.
+            subdiv2ntks (:obj:`List[int]`):
+                The number of tokens in each subdivision.
+            sent2ntks (:obj:`List[int]`):
+                The number of encoded tokens corresponding to each of
+                the sentences. The indexes match those from :obj:`sentences`,
+                so that the tokens corresponding to the first sentence would
+                be :ob:`sent2ntks[0]` and so on.
 
         Returns:
-            :obj:`List[List[str]]`: The balanced subdivisions.
+            :obj:`Tuple[List[int], List[int]]`: A tuple containing:
+            
+                * The balanced points where to split in order to form the
+                  subdivisions, being these of approximately the same length
+                  in number of encoded tokens.
+                * The number of tokens in each subdivision.
         """
 
-        balanced_subdiv = copy.deepcopy(subdivisions)[::-1]
-        # length (in terms of nltk word tokens) of each subdivision, e.g., [501, 498, 480, ...]
-        len_prev_subdivs = [cls._len_subdivision(subdiv) for subdiv in balanced_subdiv]
+        balanced_split_points = split_points[:]
+        balanced_subdiv2ntks = subdiv2ntks[:]
 
-        while True:  # do while
-            for i in range(len(balanced_subdiv) - 1):
-                # difference in lengths
-                diff_len = (cls._len_subdivision(balanced_subdiv[i+1])
-                            - cls._len_subdivision(balanced_subdiv[i]))
-                while diff_len > 0:
-                    moved_sent_len = cls._len(balanced_subdiv[i+1][-1])
-                    # check that moving the sentence doesn't result in a subdivision with
-                    # n_tokens > max_len_subdiv and that the length of the moved sentence
-                    # is not bigger that the difference of tokens between the subdivs
-                    if (cls._len_subdivision(balanced_subdiv[i])
-                            + moved_sent_len) <= max_len_subdiv and moved_sent_len <= diff_len:
-                        # move sentece from balanced_subdiv[i+1] to balanced_subdiv[i]
-                        balanced_subdiv[i].insert(0, balanced_subdiv[i+1][-1])  # add sent
-                        balanced_subdiv[i+1] = balanced_subdiv[i+1][:-1]  # remove sent
-                        diff_len = (cls._len_subdivision(balanced_subdiv[i+1])
-                                    - cls._len_subdivision(balanced_subdiv[i]))
+        prev_balanced_split_points = balanced_split_points[:]
+
+        while True:
+            for i in range(len(balanced_split_points)-1, 1, -1):
+                diff_ntks = balanced_subdiv2ntks[i-2] - balanced_subdiv2ntks[i-1]
+                while diff_ntks > 0:
+                    moved_sent_ntks = sent2ntks[balanced_split_points[i-1] - 1]
+                    if ((balanced_subdiv2ntks[i-1]
+                            + moved_sent_ntks <= self.tokenizer.model_max_length) 
+                            and moved_sent_ntks <= diff_ntks):
+                        balanced_split_points[i-1] -= 1
+                        balanced_subdiv2ntks[i-1] += moved_sent_ntks
+                        balanced_subdiv2ntks[i-2] -= moved_sent_ntks
+                        diff_ntks = balanced_subdiv2ntks[i-2] - balanced_subdiv2ntks[i-1]
                     else:
                         break
+            if balanced_split_points == prev_balanced_split_points:
+                return balanced_split_points, balanced_subdiv2ntks
 
-            len_current_subdivs = [cls._len_subdivision(subdiv) for subdiv in balanced_subdiv]
-
-            if len_prev_subdivs == len_current_subdivs:  # if there are no changes, we stop
-                return balanced_subdiv[::-1]
-
-            len_prev_subdivs = len_current_subdivs
-
-    @classmethod
-    def _add_prefix_to_subdivs(cls, subdivisions_as_str: List[str], prefix: str) -> List[str]:
-        """Add a prefix to each subdivision.
-
-        Args:
-            subdivisions_as_str (:obj:`List[str]`):
-                The strings to which the prefix will be added. Each string is considered a
-                subdivision.
-            prefix (:obj:`str`):
-                The prefix to insert at the beginning of each subdivision.
-
-        Returns:
-            :obj:`List[str]`: The subdivisions with the added prefix.
-        """
-
-        return [prefix + subdiv for subdiv in subdivisions_as_str]
-
-    def _get_max_length_subdivision(self) -> int:
-        """Calculate the maximum length of each subdivision.
-
-        The length is measured in terms of NLTK word tokens (:func:`word_tokenize`).
-
-        Returns:
-            :obj:`int`: The calculated maximum length each subdivision should have.
-        """
-
-        return self._tokenizer.model_max_length * RATIO_TOKENS_TO_T5_ENCODED_TOKENS
-
-    @classmethod
-    def _len(cls, text: str) -> int:
-        """Length of a text in terms of NLTK word tokens (:func:`word_tokenize`).
-
-        Args:
-            text (:obj:`str`):
-                The text whose length will be calculated.
-
-        Returns:
-            :obj:`int`: The length of the text in terms of NLTK word tokens.
-        """
-
-        return len(word_tokenize(text))
-
-    @classmethod
-    def _len_subdivision(cls, subdivision: List[str]) -> List[int]:
-        """Calculate the length of a subdivision.
-
-        The length is measured in terms of NLTK word tokens (:func:`word_tokenize`).
-
-        Args:
-            subdivision (:obj:`List[str]`):
-                The subdivision (i.e., :code:`["sent_1", "sent_2", "sent_3", ...]`)
-                whose length will be calculated.
-
-        Returns:
-            :obj:`int`: The length of the subdivision.
-        """
-
-        return cls._len(' '.join(subdivision))
-
-    def _check_len_subdivs(self,
-                           subdivisions: List[Union[List[int], torch.LongTensor]],
-                           return_tensors: Optional[str] = None
-    ) -> bool:
-        """Check the length of subdivisions.
-
-        Args:
-            subdivisions (:obj:`List[List[int]]` or :obj:`List[torch.LongTensor]`):
-                The encoded tokens grouped in subdivisions, either as a :obj:`List`
-                (e.g., :code:`[[43, 54, 23, ...], [32, 46, 76, ...], ...]`),
-                or as :obj:`totch.LongTensor`
-                (e.g., :code:`[tensor([[43, 54, 23, ...]]), tensor([[32, 46, 76]]), ...]`).
-            return_tensors (:obj:`str` or :class:`~transformers.tokenization_utils_base.TensorType`, `optional`):
-                If set, will return tensors instead of a list of python integers.
-                Acceptable values are:
-
-                * 'pt': Return PyTorch `torch.Tensor` objects.
-
-                .. note:
-                    TensorFlow :obj:`tf.constant` and Numpy :obj:`np.ndarray` objects are not yet supported.
-
-        Returns:
-            (:obj:`bool`): False if any of the subdivisions has a length greater than the tokenzier
-            maximum sequence length. True otherwise.
-        """
-
-        if return_tensors is None:
-            return all(len(subdiv) <= self._tokenizer.model_max_length for subdiv in subdivisions)
-        elif return_tensors == 'pt':
-            return all(len(subdiv[0]) <= self._tokenizer.model_max_length for subdiv in subdivisions)
-        # elif <future supported tensors>
+            prev_balanced_split_points = balanced_split_points[:]

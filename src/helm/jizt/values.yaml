@@ -64,7 +64,7 @@ t5LargeTextEncoder:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.19
+  image: eu.gcr.io/jizt-299516/t5-large-text-encoder:0.0.20
   volumeMounts:
     modelsMountPath: "/home/text_encoder/models"
     tokenizerPath: "t5-small/tokenizer"  # TODO: change to t5-large

@@ -17,7 +17,7 @@
 
 """Tokenization utilities."""
 
-__version__ = '0.2'
+__version__ = '0.0.2'
 
 from nltk.tokenize import RegexpTokenizer
 from blingfire import text_to_sentences
