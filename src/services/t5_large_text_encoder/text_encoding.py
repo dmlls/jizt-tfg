@@ -21,8 +21,6 @@ __version__ = '0.0.4'
 
 import logging
 import torch
-import copy
-from itertools import chain
 from utils.tokenization import sentence_tokenize
 from transformers import T5Tokenizer, tokenization_utils_base
 from typing import List, Tuple, Optional, Union
@@ -141,7 +139,6 @@ class SplitterEncoder:
                                                          sent2ntks,
                                                          ntks_prefix)
 
-
         split_points, subdiv2ntks = self._balance_subdivisions(split_points,
                                                                subdiv2ntks,
                                                                sent2ntks)
@@ -180,7 +177,7 @@ class SplitterEncoder:
 
         Returns:
             :obj:`Tuple[List[int], List[int]]`: A tuple containing:
-            
+
                 * The points where to split in order to form the subdivisions,
                   e.g. ``[0. 15, 32, 51]`` means that the first subdivision
                   contains ``sentences[0:15]``, the second ``sentences[15:32]``,
@@ -189,7 +186,7 @@ class SplitterEncoder:
         """
 
         subdiv2ntks = []
-        split_points = [0] 
+        split_points = [0]
         subdiv_len = ntks_prefix + sent2ntks[0] + 1
         for i in range(1, len(sentences)):
             subdiv_len += sent2ntks[i]
@@ -229,7 +226,7 @@ class SplitterEncoder:
 
         Returns:
             :obj:`Tuple[List[int], List[int]]`: A tuple containing:
-            
+
                 * The balanced points where to split in order to form the
                   subdivisions, being these of approximately the same length
                   in number of encoded tokens.
@@ -247,7 +244,7 @@ class SplitterEncoder:
                 while diff_ntks > 0:
                     moved_sent_ntks = sent2ntks[balanced_split_points[i-1] - 1]
                     if ((balanced_subdiv2ntks[i-1]
-                            + moved_sent_ntks <= self.tokenizer.model_max_length) 
+                            + moved_sent_ntks <= self.tokenizer.model_max_length)
                             and moved_sent_ntks <= diff_ntks):
                         balanced_split_points[i-1] -= 1
                         balanced_subdiv2ntks[i-1] += moved_sent_ntks
