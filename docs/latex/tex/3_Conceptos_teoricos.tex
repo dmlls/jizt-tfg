@@ -15,7 +15,7 @@ La generación de resúmenes se divide en cuatro etapas fundamentales:
 Veamos en detalle en qué consiste cada una de ellas.
 
 \bigskip
-\section{Pre-procesado del texto}
+\section{Pre-procesado del texto} \label{sec:preprocesado}
 
 El principal objetivo de esta etapa es adecuar el texto de entrada para que se aproxime lo máximo posible a lo que el modelo espera. Adicionalmente, se separa en texto de entrada en frases. Esta separación parecer \emph{a priori} una tarea trivial, pero involucra una serie de dificultades que se detallarán a continuación.
 
@@ -37,7 +37,7 @@ A continuación, nos centraremos en el proceso de división del texto en frases.
 
 No obstante, la siguiente consideración se nos hace necesaria: el punto (.) indica el final de una frase solo si la siguiente palabra empieza con una letra \emph{y} además mayúscula.
 
-Por ejemplo: \texttt{``Your idea is interesting. However, I would [...].''} se separaría en dos frases, dado que la palabra posterior al punto empieza con una letra mayúscula. Sin embargo: \texttt{``We already mentioned in Section 1.1 that this example shows [...].''} conformaría una única frase, ya que tras el punto no aparece una letra. Procedemos de igual modo en el caso de los signos de interrogación (?) y de exclamación (!). Por ejemplo: \texttt{``She asked \lq How's it going?\rq, and I said \lq Great!\rq.''} se tomará correctamente como una sola frase; tras la interrogación, la siguiente palabra comienza con una letra \emph{minúscula}.
+Por ejemplo, en el caso de: \texttt{``Your idea is interesting. However, I would [...].''} se separaría en dos frases, dado que la palabra posterior al punto empieza con una letra mayúscula. Sin embargo: \texttt{``We already mentioned in Section 1.1 that this example shows [...].''} conformaría una única frase, ya que tras el punto no aparece una letra. Procedemos de igual modo en el caso de los signos de interrogación (?) y de exclamación (!). Por ejemplo: \texttt{``She asked \lq How's it going?\rq, and I said \lq Great!\rq.''} se tomará correctamente como una sola frase; tras la interrogación, la siguiente palabra comienza con una letra \emph{minúscula}.
 	
 Con la suposición anterior, también se agruparían correctamente los puntos suspensivos.
 
@@ -87,16 +87,16 @@ La idea detrás de esta fragmentación se basa en la composición, uno de los me
 
 Una vez explicado el concepto de \emph{token}, volvamos al problema ya mencionado con anterioridad: los modelos de generación de texto admiten un tamaño de entrada máximo, determinado en función del número de \emph{tókens}. Debido a que la unidad de medida es el número de \emph{tókenes}, y no el número de palabras, o de caracteres, debemos tener en cuenta algunos detalles, entre ellos el hecho de que los modelos generan \emph{tókenes} especiales para marcar el inicio y/o el final de la secuencia de entrada.
 
-El modelo T5 (el cual como mencionábamos anteriormente, es el único modelo que utilizamos por ahora), genera un único \emph{token} de finalización de secuencia (EOS, \emph{end-of-sequence}), que se coloca siempre al final del texto de entrada, una vez codificado, y en el caso de de este modelo siempre tiene el \emph{id} 1. En la \hyperref[fig:t5-eos-example]{siguiente figura} podemos ver un ejemplo con un texto de entrada:
+El modelo T5 (el cual como mencionábamos anteriormente, es el único modelo que utilizamos por ahora), genera un único \emph{token} de finalización de secuencia (EOS, \emph{end-of-sequence}), que se coloca siempre al final del texto de entrada, una vez codificado, y en el caso de de este modelo siempre tiene el \emph{id} 1. En la \hyperref[fig:t5-eos-ejemplo]{siguiente figura} podemos ver un ejemplo con un texto de entrada:
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{t5-eos-example}
+	\includegraphics[width=\textwidth]{t5-eos-ejemplo}
 	\caption{Pasaje del libro \emph{A Wrinkle in Time}. El \emph{tóken} EOS se ha marcado en rojo.}
-	\label{fig:t5-eos-example}
+	\label{fig:t5-eos-ejemplo}
 \end{figure}
 
-Como podemos ver, el \emph{tóken} EOS aparece una única vez por cada texto de entrada, y es independiente de las frases que este contiene.
+Como podemos ver, el \emph{tóken} EOS aparece una única vez por cada texto de entrada, y es independiente de las palabras o frases que este contiene.
 
 Otro aspecto a tener en cuenta, reside en que este modelo no solo es capaz de generar resúmenes, si no que puede ser empleado para otras tareas como la traducción, respuesta de preguntas \cite{raffel19}, etc. Para indicarle cuál de estas es la tarea que queremos que desempeñe, curiosamente se lo tenemos que indicar tal y cómo lo haríamos en la vida real; en nuestro caso, simplemente precedemos el texto a resumir con la orden <<resume>> (<<\emph{summarize}>>). Por poner otro ejemplo, si quisiéramos resumir de alemán a español, le señalaríamos: <<traduce de alemán a español>> seguido de nuestro texto (<<\emph{summarize German to Spanish}>>).
 
@@ -105,3 +105,41 @@ Por consiguiente, este prefijo deberá aparecer al principio de cada una de las 
 Con las anteriores consideraciones en mente, el objetivo principal será llevar a cabo la división del texto de entrada de forma que el número de \emph{tókenes} varíe lo mínimo posible entre las diferentes subdivisiones, y todo ello sin partir ninguna frase.
 
 Esta es una tarea más compleja de lo que puede parecer. En el capítulo de \hyperref[chapter:tecnicas]{Técnicas y Herramientas} se propone un algoritmo que emplea una estrategia voraz para llevar a cabo una primera división del texto; posteriormente procede al \emph{balanceo} de las subdivisiones generadas en el paso anterior, de forma que el número de \emph{tókenes} en cada subdivisión sea lo más parecido posible. Y esto, evidentemente, sin superar el máximo tamaño de entrada del modelo en ninguna de las subdivisiones.
+
+
+
+\section{Generación del resumen} \label{sec:resumen}
+
+Una vez codificado y dividido el texto apropiadamente, generamos los resúmenes parciales, y posteriormente los unimos, dando lugar a un único resumen del texto completo.
+
+Gráficamente, los pasos dados tanto en la anterior etapa, la codificación y división del texto, como en esta, la generación del resumen, son:
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{t5-proceso-resumen}
+	\caption{Proceso de generación de resúmenes, ilustrado con un fragmento del libro \emph{The Catcher in the Rye}.}
+	\label{fig:proceso-resumen}	
+\end{figure}
+
+Como podemos apreciar en la anterior figura, el modelo generador de resúmenes toma el texto codificado, y devuelve una versión reducida del mismo, también codificado. Por ello, antes de poder unir y devolver el resumen generado, debemos realizar un paso de \emph{decodificación}, que lleva a cabo el proceso contrario a la \emph{codificación}, como veíamos en la \hyperref[sec:codificacion]{anterior sección}. Algo con lo que tendremos que lidiar en la siguiente etapa, el post-procesado, será corregir el resumen generado para que se ajuste a las reglas ortográficas vigentes, en especial en lo relativo al uso de mayúsculas.
+
+La ventaja de utilizar modelos pre-entrenados es clara: estos modelos son para nosotros cajas negras, a las que solo tenemos que encargarnos de proporcionarles la entrada en el formato concreto que esperan.
+
+Cabe destacar que, el hecho de realizar la división del texto de esta manera, sin atender a aspectos semánticos, podría partir en dos subdivisiones frases estrechamente relacionadas. Por ejemplo, en la \autoref{fig:proceso-resumen}, la frase final de uno de los fragmentos es: \emph{<<It was a very descriptive subject>>} (<<Era un tema muy descriptivo>>), a la cual le sigue, ya en el siguiente fragmento: \emph{<<It really was>>} (<<De veras que lo era>>).
+
+Estos casos son difíciles de resolver. Una posible idea sería tratar de determinar si una frase está relacionada con la anterior, quizás mediante el uso de otro modelo, y de ser así tratar de mantenerlas en una misma subdivisión, a fin de que el resumen final mantenga la máxima cohesión y coherencia posibles. Esto incrementaría, no obstante, los tiempos de generación de resúmenes. Por ahora, creemos que los resultados obtenidos son lo suficientemente buenos.
+
+
+\section{Post-procesado del texto} \label{sec:postprocesado}
+
+Como veíamos en la \autoref{fig:proceso-resumen}, el resumen producido por el modelo T5, una vez decodificado, se encuentra todo en minúsculas. Por lo demás, el modelo parece hacer un buen trabajo a la hora de generar el texto en lo que a colocación de puntuación y espacios se refiere, luego la principal labor de esta etapa será poner mayúsculas allí donde sean necesarias, lo que en inglés se denomina \emph{truecasing} \cite{lita03}.
+
+Las mayúsculas, tanto en inglés como español, se emplean principalmente en dos ocasiones:
+
+\vspace*{-\baselineskip}
+\begin{itemize}
+	\item Al inicio de cada frase. Como veíamos en la sección referente al \hyperref[sec:preprocesado]{pre-procesado} del texto, la separación de un texto en frases no es, por lo general, una tarea trivial. En este caso, podemos reutilizar lo aplicado en dicha etapa. Teniendo el resumen generado dividido en frases, podemos fácilmente poner la primera letra de cada una de ellas en mayúsculas.
+	\item En los nombres propios. En este aspecto, de nuevo vuelve a aparecer el problema del Reconocimiento de Entidades Nombradas (NER). De modo similar a como procedíamos en el pre-procesado, emplearemos un modelo estadístico que realiza la labor de \emph{truecasing}.
+\end{itemize}
+
+Tras esta etapa, el resumen está listo para ser entregado al usuario.

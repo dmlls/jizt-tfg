@@ -25,7 +25,7 @@
 
 	\item [\textbullet] Gestionar el pre-procesado de los textos a resumir para ajustarlos a la entrada que los modelos pre-entrenados esperan.
 
-	\item [\textbullet] Algunos modelos pre-entrenados generan textos enteramente en minúsculas. Se deberá, por tanto, incluir mecanismos en la etapa de post-procesado que permitan recomponer la correcta capitalización de los resúmenes generados.
+	\item [\textbullet] Algunos modelos pre-entrenados generan textos enteramente en minúsculas. Se deberá, por tanto, incluir mecanismos en la etapa de post-procesado que permitan recomponer el correcto uso de las mayúsculas en los resúmenes generados.
 
 	\item [\textbullet] Con el fin de cumplir con el objetivo general referente a la arquitectura, desarrollar una arquitectura de microservicios, basada en la filosofía \emph{Cloud Native} \cite{cloud20, arundel19}. Este objetivo se divide a su vez en dos puntos:
 	\begin{itemize}
@@ -40,4 +40,6 @@
 	\item [\textbullet] Desplegar PostgreSQL como servicio en Kubernetes mediante el Operador PostgreSQL de Crunchy \cite{crunchy21}. Esta base de datos cumplirá la doble función de (a) servir como caché para no volver a producir resúmenes ya generados con anterioridad, incrementando la velocidad de respuesta, y (b) almacenar los resúmenes generados con fines de evaluación de la calidad de los mismos y extracción de métricas.
 	
 	\item [\textbullet] Desarrollar, con ayuda de Flutter, una aplicación multiplataforma con soporte nativo para Android, iOS, y \emph{web}. Esta aplicación consumirá la API y proporcionará una interfaz gráfica sencilla e intuitiva para que usuarios regulares puedan hacer uso del servicio de generación de resúmenes.
+	
+	\item [\textbullet] Seguir el patrón de diseño Clean Architecture \cite{martin15} y de \emph{offline-first} \cite{sauble15} para la implementación de la aplicación.
 \end{itemize}
