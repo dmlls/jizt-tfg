@@ -30,7 +30,7 @@ unhide_components() {
     shopt -s dotglob  # enable globbing for hidden files
     for file in ${POST_INSTALL[@]}; do
         if [[ -f $file && ${file::1} == '.'  ]]; then
-            mv $file "${file:1}"  # unhide files
+            mv "$file" "${file:1}"  # unhide files
         fi;
     done
     shopt -u dotglob  # disable globbing for hidden files

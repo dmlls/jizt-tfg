@@ -1,6 +1,20 @@
 \capitulo{4}{Técnicas y herramientas} \label{chapter:tecnicas}
 
-Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
-No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
+\section{Flask y Flask-RESTful}
+
+Flask es uno de los \emph{frameworks} más populares para la creación de aplicaciones \emph{web} en Python\cite{flask}. Está concebido para ser lo más simple posible. En nuestro caso, la hemos empleado para implementar la lógica de la API REST. Además, hemos utilizado una conocida extensión de Flask, Flask-RESTful \cite{flaskRestful}, que facilita aún más dicha implementación.
+
+
+\section{Docker}
+
+Se trata de una serie de servicios como plataforma (PaaS), que proporcionan virtualización a nivel de sistema operativo, permitiendo ejecutar \emph{software} en paquetes llamados \emph{contenedores} \cite{docker}.
+
+A diferencia de las máquinas virtuales, en las cuales el sistema operativo subyacente se comparte a través del hipervisor, cada contenedor Docker ejecuta su propio sistema operativo.
+
+Docker nos va a permitir encapsular cada servicio en un contenedor, posibilitando la implementación de la arquitectura de microservicios.
+
+
+
+\section{Kubernetes}
 
 
