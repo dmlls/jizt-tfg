@@ -129,6 +129,59 @@ Cabe destacar que, el hecho de realizar la división del texto de esta manera, s
 
 Estos casos son difíciles de resolver. Una posible idea sería tratar de determinar si una frase está relacionada con la anterior, quizás mediante el uso de otro modelo, y de ser así tratar de mantenerlas en una misma subdivisión, a fin de que el resumen final mantenga la máxima cohesión y coherencia posibles. Esto incrementaría, no obstante, los tiempos de generación de resúmenes. Por ahora, creemos que los resultados obtenidos son lo suficientemente buenos.
 
+\bigskip
+\subsubsection{Modelo empleado para la generación de resúmenes: T5}
+
+Come hemos mencionado previamente, JIZT hace uso del modelo T5 \cite{raffel19} de Google. Este modelo fue introducido en el artículo \emph{Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer}, presentado en 2019. En él, Colin Raffel \emph{et al.} estudian las ventajas de la técnica del aprendizaje por transferencia (\emph{transfer learning}) al campo del Procesamiento del Lenguaje Natural (NLP).
+
+Tradicionalmente, cada nuevo modelo se entrenaba desde cero. Esto ha cambiado con la inclusión del aprendizaje por transferencia; actualmente, la tendencia es emplear modelos pre-entrenados como punto de partida para la construcción de nuevos modelos.
+
+Las tres principales ventajas del empleo del aprendizaje por transferencia son \cite{sarkar18}:
+
+\vspace*{-\baselineskip}
+\begin{itemize}
+	\item [\textbullet] Mejora del rendimiento de partida. El hecho de comenzar con un modelo pre-entrenado en vez de un modelo ignorante (\emph{ignorant learner}), proporciona un rendimiento base desde el primer momento.
+	
+	\item [\textbullet] Disminución del tiempo de desarrollo del modelo, consecuencia del punto anterior.
+	
+	\item [\textbullet] Mejora del rendimiento final. Esta mejora ha sido estudiada tanto en el caso del NLP \cite{kumar21}, como de otros ámbitos, como la visión artificial \cite{ali21}, o el campo de la medicina \cite{liu21}.
+\end{itemize}
+
+La principal novedad de este artículo se encuentra en su propuesta de tratar todos los problemas de procesamiento de texto como problemas texto a texto (\emph{text-to-text}), es decir, tomar un texto como entrada, y producir un nuevo texto como salida. Esto permite crear un modelo general, al que han bautizado como T5, capaz de llevar a cabo diversas tareas de NLP, como muestra el siguiente diagrama:
+
+\bigskip
+
+\imagen{t5-paper}{El \emph{framework} texto a texto permite emplear el mismo modelo, con los mismos hiperparámetros, función de pérdida, etc., para aplicarlo a diversas tareas de NLP \cite{raffel19}.}
+
+En cualquier caso, se puede realizar un ajuste fino del modelo para una de las tareas, a fin de mejorar su rendimiento en dicha tarea específica.
+
+Las posibilidades que este modelo nos ofrece son muy interesantes, dado que en un futuro, nuestro proyecto podría incluir otras tareas de Procesamiento de Lenguaje Natural, haciendo uso de un solo modelo.
+
+
+\bigskip
+\subsubsection{Principales estrategias de generación de resúmenes}
+
+Una de las técnicas más extendidas de generación de lenguaje es la auto-regresión, la cual se basa en el supuesto de que la distribución de probabilidad de una secuencia de palabras puede descomponerse en el producto de las distribuciones condicionales de las siguientes palabras \cite{platen20}. Expresado matemáticamente:
+
+\[ P(w_{1:t} | W_0) = \prod_{t=1}^{T} P(w_t | w_{1:T-1}, W_0), \; siendo \enspace w_{1:0} = \emptyset \]
+
+donde $W_0$ es la secuencia inicial de \emph{contexto}. En nuestro caso, esa secuencia inicial va a ser el propio texto de entrada. La longitud de $T$ no se puede conocer de antemano, dado que se corresponde con el momento $t = T$ en el que el modelo genera el \emph{token} de finalización de secuencia ()EOS), mencionado anteriormente.
+
+Una vez introducido el concepto de auto-regresión, podemos explicar brevemente las cuatro principales estrategias de generación de lenguaje, las cuales se pueden aplicar todas ellas a la generación de resúmenes: búsqueda voraz, \emph{beam search}, muestreo \emph{top-k}, y muestreo \emph{top-p}.
+
+\bigskip
+\textbf{Búsqueda voraz}
+
+La búsqueda voraz, en cada paso, simplemente selecciona la palabra con mayor probabilidad de ser la siguiente, es decir, $ w_t = argmax_w P(w|w_{t-1}) $ para cada paso \emph{t}.
+
+Por ejemplo, dada la palabra \texttt{``El''}, la siguiente palabra elegida sería \texttt{``cielo''}, por ser la palabra con mayor probabilidad, y a continuación \texttt{``está''}, y así sucesivamente.
+
+Este tipo de generación tiene dos problemas principales:
+
+\begin{itemize}
+	\item [\textbullet] Los modelos, llegados a cierto punto, comienzan a repetir las mismas palabras una y otra vez. En realidad, esto es un problema que afecta a todos los modelos de generación, pero especialmente a los que emplean búsqueda voraz y \emph{beam search} \cite{vijayakumar16, shao17}.
+	\item [\textbullet] Palabras con probabilidades altas pueden quedar enmascaradas tras otras con probabilidades bajas. Por ejemplo, en el anterior anterior ejemplo, la secuencia \texttt{``El cielo es azul''} nunca se dará, porque a pesar de que \texttt{``azul''} presenta una probabilidad alta, está precedida por \texttt{``es''}, la cual no será escogida por tener una probabilidad baja.
+\end{itemize}
 
 \section{Post-procesado del texto} \label{sec:postprocesado}
 
