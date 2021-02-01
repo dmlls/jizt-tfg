@@ -161,27 +161,139 @@ Las posibilidades que este modelo nos ofrece son muy interesantes, dado que en u
 \bigskip
 \subsubsection{Principales estrategias de generación de resúmenes}
 
-Una de las técnicas más extendidas de generación de lenguaje es la auto-regresión, la cual se basa en el supuesto de que la distribución de probabilidad de una secuencia de palabras puede descomponerse en el producto de las distribuciones condicionales de las siguientes palabras \cite{platen20}. Expresado matemáticamente:
+JIZT permite al usuario avanzado configurar de manera precisa los parámetros con los que se genera el resumen. En este apartado, exploraremos las diferentes técnicas con las que JIZT permite generar resúmenes.
+
+La generación de lenguaje se basa en la auto-regresión, la cual se basa en el supuesto de que la distribución de probabilidad de una secuencia de palabras puede descomponerse en el producto de las distribuciones de probabilidades  condicionales de las palabras sucesivas \cite{platen20}. Expresado matemáticamente:
 
 \[ P(w_{1:t} | W_0) = \prod_{t=1}^{T} P(w_t | w_{1:T-1}, W_0), \; siendo \enspace w_{1:0} = \emptyset \]
 
 donde $W_0$ es la secuencia inicial de \emph{contexto}. En nuestro caso, esa secuencia inicial va a ser el propio texto de entrada. La longitud de $T$ no se puede conocer de antemano, dado que se corresponde con el momento $t = T$ en el que el modelo genera el \emph{token} de finalización de secuencia ()EOS), mencionado anteriormente.
 
-Una vez introducido el concepto de auto-regresión, podemos explicar brevemente las cuatro principales estrategias de generación de lenguaje, las cuales se pueden aplicar todas ellas a la generación de resúmenes: búsqueda voraz, \emph{beam search}, muestreo \emph{top-k}, y muestreo \emph{top-p}.
+Una vez introducido el concepto de auto-regresión, podemos explicar brevemente las cinco	 principales estrategias de generación de lenguaje, las cuales se pueden aplicar todas ellas a la generación de resúmenes: búsqueda voraz, \emph{beam search}, muestreo, muestreo \emph{top-k}, y muestreo \emph{top-p}.
 
 \bigskip
+\noindent
 \textbf{Búsqueda voraz}
 
 La búsqueda voraz, en cada paso, simplemente selecciona la palabra con mayor probabilidad de ser la siguiente, es decir, $ w_t = argmax_w P(w|w_{t-1}) $ para cada paso \emph{t}.
 
-Por ejemplo, dada la palabra \texttt{``El''}, la siguiente palabra elegida sería \texttt{``cielo''}, por ser la palabra con mayor probabilidad, y a continuación \texttt{``está''}, y así sucesivamente.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{greedy-search}
+	\caption{Ejemplo de búsqueda voraz: en cada paso, se toma la palabra con mayor probabilidad.}
+\end{figure}
+
+
+Por ejemplo, dada la palabra \texttt{``El''}, la siguiente palabra elegida sería \texttt{``cielo''}, por ser la palabra con mayor probabilidad (0.5), y a continuación \texttt{``está''} (0.5), y así sucesivamente.
 
 Este tipo de generación tiene dos problemas principales:
 
 \begin{itemize}
 	\item [\textbullet] Los modelos, llegados a cierto punto, comienzan a repetir las mismas palabras una y otra vez. En realidad, esto es un problema que afecta a todos los modelos de generación, pero especialmente a los que emplean búsqueda voraz y \emph{beam search} \cite{vijayakumar16, shao17}.
-	\item [\textbullet] Palabras con probabilidades altas pueden quedar enmascaradas tras otras con probabilidades bajas. Por ejemplo, en el anterior anterior ejemplo, la secuencia \texttt{``El cielo es azul''} nunca se dará, porque a pesar de que \texttt{``azul''} presenta una probabilidad alta, está precedida por \texttt{``es''}, la cual no será escogida por tener una probabilidad baja.
+	\item [\textbullet] Palabras con probabilidades altas pueden quedar enmascaradas tras otras con probabilidades bajas. Por ejemplo, en el anterior anterior ejemplo, la secuencia \texttt{``El niño juega''} nunca se dará, porque a pesar de que \texttt{``juega''} presenta una probabilidad muy alta (0.9), está precedida por \texttt{`niño''}, la cual no será escogida por tener una probabilidad baja (0.3).
 \end{itemize}
+
+
+\bigskip
+\noindent
+\textbf{\emph{Beam search}}
+
+En este caso, durante el proceso de generación se consideran varios caminos simultáneamente, y finalmente se escoge aquel camino que presenta una mayor probabilidad conjunta. En la \hyperref[fig:beam-search]{siguiente figura} se ilustra un ejemplo con dos caminos (\texttt{num\_beams = 2}).
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{beam-search}
+	\caption{Ejemplo de \emph{beam search} con \texttt{n\_beams = 2}. Durante la búsqueda, se consideran los dos caminos con mayor probabilidad conjunta.}
+	\label{fig:beam-search}
+\end{figure}
+
+En este ejemplo vemos que, aunque \texttt{``cielo''} presenta mayor probabilidad que \texttt{``niño''}, la secuencia \texttt{``El niño juega''} tiene una mayor probabilidad conjunta ($0.3 \cdot 0.9 = 0.27$) que \texttt{``El cielo está''} ($0.5 \cdot 0.5  = 0.25$), y por tanto será la secuencia elegida.
+
+Este tipo de búsqueda funciona muy bien en tareas en las que la longitud deseada de la secuencia generada se conoce de antemano, como es el caso de la generación de resúmenes, o la traducción automática \cite{murray18, yang18}.
+
+Sin embargo, presenta dos problemas fundamentales:
+
+\vspace*{-\baselineskip}
+\begin{itemize}
+	\item [\textbullet] De nuevo, aparece el problema de la repetición. Tanto en este caso, como en el de la búsqueda voraz, una estrategia común para evitar dicha repetición, consiste en establecer penalizaciones de \emph{n-gramas} repetidos. Por ejemplo, en el caso de que empleáramos una penalización de 6-gramas, la secuencia \texttt{``El niño juega en el parque''} solo podría aparecer una vez en el texto generado.
+
+	\item [\textbullet] Como se razona en \cite{holtzman20}, el lenguaje humano no sigue una distribución de palabras con mayor probabilidad. Como vemos en la siguiente gráfica, extraída de dicho artículo, la estrategia de \emph{beam search} puede resultar poco espontánea, dando lugar a textos menos <<naturales>>:
+	
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.7\textwidth]{beam-search-problem}
+		\caption{Distribución de probabilidades del lenguaje natural frente a la estrategia de \emph{beam search} \cite{holtzman20}.}
+	\end{figure}
+\end{itemize}
+
+
+\bigskip
+\noindent
+\textbf{Muestreo}
+
+Es su forma más básica, el muestreo simplemente consiste en escoger la siguiente palabra $w_i$ de manera aleatoria en función de la distribución de su probabilidad condicional, es decir:
+
+\[ w_t \sim P(w_t | w_{1:t-1}) \]
+
+De manera gráfica, siguiendo con el ejemplo anterior:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{sampling}
+	\caption{Ejemplo de muestreo. En cada paso, se elige una palabra aleatoriamente en función de su probabilidad.}
+	\label{fig:muestreo}
+\end{figure}
+
+Haciendo uso del muestreo, la generación deja de ser determinista, dando lugar a textos más espontáneos y naturales. Sin embargo, como se estudia en \cite{holtzman20}, esta espontaneidad es a menudo excesiva, dando lugar a textos poco coherentes.
+
+Una solución a este problema consiste en hacer que la distribución $P(w_t|w_{1:t-1})$ sea más acusada, aumentando la verosimilitud (\emph{likelihood}) de palabras con alta probabilidad, y disminuyendo la verosimilitud de palabras con baja probabilidad. Esto se consigue disminuyendo un parámetro denominado \emph{temperatura}\footnote{\hspace{0.06cm}Por motivos de brevedad, no incluiremos una explicación detallada de este parámetro.}. De esta forma, el \hyperref[fig:muestreo]{ejemplo anterior} queda de la siguiente forma:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{sampling-temperature}
+	\caption{Al decrementar la temperatura, las diferencias en las  probabilidades se hacen más acusadas.}
+\end{figure}
+
+Con este ajuste de la temperatura, logramos reducir la aleatoriedad, pero seguimos manteniendo una orientación no determinista.
+
+\newpage
+
+\bigskip
+\noindent
+\textbf{Muestreo \emph{top-k}}
+
+En ste tipo de muestreo, introducido en \cite{fan18}, en cada paso solo se consideran las \emph{k} palabras con mayor probabilidad (la probabilidad del resto de las palabras será 0).
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth]{top-k}
+	\caption{Al decrementar la temperatura, las diferencias en las  probabilidades se hacen más acusadas.}
+	\label{top-k}
+\end{figure}
+
+Tanto la búsqueda voraz como el muestreo visto anteriormente, se pueden como casos particulares del muestreo \emph{top-k}. Si establececemo $k = 1$, estaremos realizando una búsqueda voraz, y si establecemos $k = N$, donde $N$ es la longitud total del vocabulario, estaremos llevando a cabo un muestreo <<puro>>.
+
+Este tipo de muestreo suele producir textos de mayor calidad en situaciones en las que el tamaño de secuencia no está prefijado. Sin embargo, presenta el problema de que el tamaño de \emph{k} se mantiene fijo a lo largo de la generación. Como consecuencia, en pasos en los que la diferencia de probabilidades sea menos acusada, como en el primer paso de la \autoref{top-k}, la espontaneidad del modelo será menor, y en pasos en los que ocurra lo contrario, el modelo será más propenso de escoger palabras que suenen menos naturales, como podría haber ocurrido en el segundo paso de la figura ya mencionada.
+
+
+\bigskip
+\noindent
+\textbf{Muestreo \emph{top-p}}
+
+Este tipo de muestreo, en vez de escoger entre un número prefijado de palabras, en cada paso considera el mínimo conjunto de palabras cuyas probabilidades acumuladas superan un cierto valor $p$ \cite{holtzman20}.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth]{top-p}
+	\caption{Con el muestreo \emph{top-p}, el número de palabras entre las cuales elegir en cada paso varía en función de las probabilidades de las palabras candidatas.}
+	\label{top-p}
+\end{figure}
+
+La \hyperref[top-p]{figura anterior} muestra como, con $p=0.9$, en el primer paso se consideran 9 palabras, mientras que en el segundo solo 3. De este modo, cuando la siguiente palabra a elegir es menos \emph{predecible}, el modelo puede considerar más candidatas, como en el primer paso del ejemplo mostrado y, en el caso contrario, el número de palabras candidatas se reduce.
+
+Los resultados del muestreo \emph{top-k} u \emph{top-p} son, en la práctica, similares. De hecho, se pueden utilizar de manera conjunta, a fin de evitar la selección de palabras con probabilidades muy bajas, pero manteniendo cierta variación en el número de palabras consideradas.
+
+
 
 \section{Post-procesado del texto} \label{sec:postprocesado}
 
