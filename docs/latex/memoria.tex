@@ -18,6 +18,14 @@
 \usepackage[defernumbers=true, sorting=none]{biblatex}
 \addbibresource{bibliografia.bib}
 
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+\renewcommand{\ALG@beginalgorithmic}{\scriptsize}
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
 % Links
 \PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks]{hyperref}
 \hypersetup{
