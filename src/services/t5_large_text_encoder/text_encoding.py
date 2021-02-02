@@ -135,8 +135,7 @@ class SplitterEncoder:
         # Number of tokens of the prefix
         ntks_prefix = len(prefix_tks)
 
-        split_points, subdiv2ntks = self._divide_eagerly(sentences,
-                                                         sent2ntks,
+        split_points, subdiv2ntks = self._divide_eagerly(sent2ntks,
                                                          ntks_prefix)
 
         split_points, subdiv2ntks = self._balance_subdivisions(split_points,
@@ -152,7 +151,6 @@ class SplitterEncoder:
         return encoded_subdivs
 
     def _divide_eagerly(self,
-                        sentences: List[str],
                         sent2ntks: List[int],
                         ntks_prefix: int
     ) -> Tuple[List[int], List[int]]:
@@ -164,9 +162,6 @@ class SplitterEncoder:
         sentences.
 
         Args:
-            sentences (:obj:`List[str]`):
-                The sentences to be split into subdivisions, e.g.,
-                :code:`["sent_1", "sent_2", "sent_3", ...]`.
             sent2ntks (:obj:`List[int]`):
                 The number of encoded tokens corresponding to each of
                 the sentences. The indexes match those from :obj:`sentences`,
@@ -188,13 +183,13 @@ class SplitterEncoder:
         subdiv2ntks = []
         split_points = [0]
         subdiv_len = ntks_prefix + sent2ntks[0] + 1
-        for i in range(1, len(sentences)):
+        for i in range(1, len(sent2ntks)):
             subdiv_len += sent2ntks[i]
             if subdiv_len > self.tokenizer.model_max_length:
                 split_points.append(i)
                 subdiv2ntks.append(subdiv_len - sent2ntks[i])
                 subdiv_len = ntks_prefix + sent2ntks[i] + 1
-        split_points.append(len(sentences))
+        split_points.append(len(sent2ntks))
         subdiv2ntks.append(subdiv_len)
         return split_points, subdiv2ntks
 
