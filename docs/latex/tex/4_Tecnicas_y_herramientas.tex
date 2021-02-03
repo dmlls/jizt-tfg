@@ -1,6 +1,24 @@
 \capitulo{4}{Técnicas y herramientas} \label{chapter:tecnicas}
 
-\Huge{\#TODO}\normalsize
+En este capítulo, se recogen las tecnologías principales empleadas en el desarrollo del proyecto, así como los detalles más relevantes de su implementación.
+
+Para facilitar la organización y comprensión de las mismas, se han separado en tres subsecciones: \hyperref[sec:model]{Modelo}, \hyperref[sec:backend]{\emph{Backend}} y \hyperref[sec:frontend]{\emph{Frontend}}.
+
+
+\section{Modelo} \label{sec:model}
+
+Como se ha venido mencionando a lo largo de los anteriores capítulos, nuestro proyecto, a la hora de generar resúmenes, solo hace uso del modelo T5 de Google \cite{raffel19} por el momento. Más concretamente, utilizamos la implementación \texttt{t5-large} Hugging Face \cite{t5-hf}, el cual ha sido entrenado con texto en inglés, procedente del Colossal Clean Crawled Corpus (C4), y contiene aproximadamente 770 millones de parámetros \cite{hf-pretrained}.
+
+Esta implementación está escrita en Python, lo que nos facilita la integración con el resto de componentes de JIZT, también desarrollados en Python.
+
+El modelo \texttt{t5-large} consta, por un lado, del \emph{tokenizer}, encargado de la codificación del texto, y por otro, el modelo en sí, el cual recibe el texto codificado por el \emph{tokenizer}, y genera el resumen a partir de él. Dicho resumen, sigue estando en forma de \emph{tókenes} codificados, por lo que tenemos que hacer uso una vez más del \emph{tokenizer} para proceder a su decodificación. Una vez decodificado, el texto vuelve a contener caracteres legibles.
+
+Tanto el proceso de codificación, como el de generación de resúmenes, se pueden llevar a cabo empleando unidades de procesamiento gráfico (GPU). No obstante, en nuestro caso, ambos procesos se ejecutan en unidades centrales de procesamiento (CPU), debido a limitaciones económicas\footnote{Cabe recordar que los modelos se ejecutan en <<la nube>>. Contratar equipos que dispongan de GPU aumentaría notablemente los costes.}. Esto explica en parte los \hyperref[table:comparativa]{tiempos de resumen obtenidos}.
+
+Un último aspecto a destacar es que a la hora de generar los resúmenes, se pueden especificar los parámetros concretos con los que realizar dicha generación, permitiéndonos hacer uso de las diferentes estrategias vistas en la \autoref{subsec:estrategias-gen}.
+
+\section{\emph{Backend}} \label{sec:backend}
+\section{\texttt{Frontend}} \label{sec:frontend}
 
 \section{Flask y Flask-RESTful}
 
