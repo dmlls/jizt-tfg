@@ -17,10 +17,10 @@
 
 """Marshmallow Schemas for DispatcherService."""
 
-__version__ = '0.1.9'
+__version__ = '0.1.10'
 
 from datetime import datetime
-from marshmallow import Schema, fields, pre_dump, EXCLUDE
+from marshmallow import Schema, fields, pre_dump, pre_load, EXCLUDE
 from summary_status import SummaryStatus
 from supported_models import SupportedModel
 from supported_languages import SupportedLanguage
@@ -102,11 +102,21 @@ class PlainTextRequestSchema(Schema):
 
     # length could be limited with validate=Length(max=600)
     source = fields.Str(required=True)
-    model = fields.Str(missing=SupportedModel.T5_LARGE.value,
-                       default=SupportedModel.T5_LARGE.value)
-    params = fields.Dict(missing={}, default={})
-    language = fields.Str(missing=SupportedLanguage.ENGLISH.value,
-                          default=SupportedLanguage.ENGLISH.value)
+    model = fields.Str(required=True)
+    params = fields.Dict(required=True)
+    language = fields.Str(required=True)
+
+    @pre_load
+    def set_defaults(self, data, many, **kwargs):
+        """Substitute :obj:`None` or missing fields by default values."""
+
+        if "model" not in data or "model" in data and data["model"] is None:
+            data["model"] = SupportedModel.T5_LARGE.value
+        if "params" not in data or "params" in data and data["params"] is None:
+            data["params"] = {}
+        if "language" not in data or "language" in data and data["language"] is None:
+            data["language"] = SupportedLanguage.ENGLISH.value
+        return data
 
     class Meta:
         unknown = EXCLUDE

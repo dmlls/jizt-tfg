@@ -36,7 +36,7 @@ dispatcher:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/dispatcher:0.0.55
+  image: eu.gcr.io/jizt-299516/dispatcher:0.0.59
 
 # Configuration for ConfigMap/Secret containing
 # PostgreSQL connection details
