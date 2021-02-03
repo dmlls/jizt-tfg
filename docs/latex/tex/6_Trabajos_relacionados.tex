@@ -28,15 +28,17 @@ El proyecto no ha sido actualizado desde finales de 2018. Se puede visitar a tra
 
 
 \bigskip
-\subsubsection{Smmry}
+\subsubsection{SMMRY}
 
 Se trata de uno de las primeras opciones que aparecen en los motores de búsqueda a la hora de buscar <<\emph{summarizers}>>. También genera resúmenes extractivos, aunque a diferencia de los anteriores, no es un proyecto \emph{open-source}.
 
 Destacan su velocidad (\emph{cachea} los textos resumidos recientemente), y sus múltiples opciones de resumen, como por ejemplo: ignorar preguntas, exclamaciones o frases entrecomilladas en el texto original, o la generación de mapas de calor en función de la importancia de las frases incluidas en el resumen.
 
+Sin embargo, los resúmenes están compuestos de frases literales ordenadas cronológicamente en función de su importancia, por lo que la cohesión entre las mismas puede ser frágil e incluso, con frecuencia, se habla de personas o entidades que no han sido introducidas previamente en el resumen, pudiendo dificultar la comprensión del mismo.
+
 En su página \emph{web} no se explicita el algoritmo concreto que se emplea, pero prestando atención a la descripción del proceso proporcionada \cite{smmry}, parecen emplear igualmente PageRank.
 
-Se puede acceder a Smmry en:
+Se puede acceder a SMMRY en:
 \href{https://smmry.com/}{\texttt{{\small https://smmry.com/}}}.
 
 \bigskip
@@ -50,8 +52,8 @@ Se puede acceder a Smmry en:
 		& & \scriptsize{\href{https://github.com/dmmiller612/bert-extractive-summarizer}{Summarizer}} & & \\
 		\midrule
 		\small{Tipo de resumen$^1$} & {\small Abstractivo} & {\small Extractivo} & {\small Extractivo} & {\small Extractivo} \\
-		\scriptsize{Tiempo resumen corto$^2$} & TODO & \small{6 seg.} & {\small 9 seg.} & TODO \\
-		\scriptsize{Tiempo resumen largo$^3$} & 4 min. & \scriptsize{No disponible$^4$} & {\small Error} & $\infty$ \\
+		\scriptsize{Tiempo resumen corto$^2$} & \small{\textasciitilde 20 seg.} & \small{\textasciitilde 6 seg.} & {\small \textasciitilde 9 seg.} & {\small \textasciitilde 3 seg.} \\
+		\scriptsize{Tiempo resumen largo$^3$} & {\small \textasciitilde 4 min.} & \scriptsize{No disponible$^4$} & {\small Error} & {\small \textasciitilde 5 seg.} \\
 		{\small Ajustes básicos} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{green!25} {$\checkmark$} \\
 		\small{Ajustes avanzados} & \cellcolor{green!25} {$\checkmark$} & \cellcolor{red!25} $\times$ & \cellcolor{red!25} $\times$ & \cellcolor{green!25} {$\checkmark$} \\
 		\scriptsize{Entrada: texto plano} & \cellcolor{green!25} {$\checkmark$} &  \cellcolor{green!25} {$\checkmark$} &  \cellcolor{red!25} $\times$ & \cellcolor{green!25} {$\checkmark$} \\
