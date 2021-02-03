@@ -36,7 +36,7 @@ dispatcher:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/dispatcher:0.0.52
+  image: eu.gcr.io/jizt-299516/dispatcher:0.0.55
 
 # Configuration for ConfigMap/Secret containing
 # PostgreSQL connection details
@@ -56,7 +56,7 @@ textPreprocessor:
   ports:
     svc: 5000
     container: 5000
-  image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.9
+  image: eu.gcr.io/jizt-299516/text-preprocessor:0.0.11
 
 # Configuration for the Text Encoder microservice
 t5LargeTextEncoder:
@@ -87,7 +87,7 @@ t5LargeTextSummarizer:
     relative_max_length: 0.4  # float
     # Same for the min length
     relative_min_length: 0.1  # float
-    do_sample: None  # bool
+    do_sample: True  # bool
     early_stopping: None  # bool
     num_beams: 4  # int
     temperature: None  # float

@@ -17,7 +17,7 @@
 
 """Dispatcher REST API v1."""
 
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 import os
 import re
@@ -34,8 +34,7 @@ from kafka.kafka_producer import Producer
 from kafka.kafka_consumer import ConsumerLoop
 from data_access.summary_status import SummaryStatus
 from data_access.summary_dao_factory import SummaryDAOFactory
-from data_access.schemas import (Summary, PlainTextRequestSchema,
-                                 AcceptedResponseSchema, OkResponseSchema)
+from data_access.schemas import Summary, PlainTextRequestSchema, ResponseSchema
 from data_access.supported_models import SupportedModel
 from data_access.supported_languages import SupportedLanguage
 from pathlib import Path
@@ -158,8 +157,7 @@ class PlainTextSummary(Resource):
 
     def __init__(self, **kwargs):
         self.request_schema = PlainTextRequestSchema()
-        self.accepted_response_schema = AcceptedResponseSchema()
-        self.ok_response_schema = OkResponseSchema()
+        self.ok_response_schema = ResponseSchema()
         self.dispatcher_service = kwargs['dispatcher_service']
         self.kafka_producer = kwargs['kafka_producer']
 
@@ -223,7 +221,7 @@ class PlainTextSummary(Resource):
                         f'"{message_value[:500]} [...]"'
             )
 
-        response = self.accepted_response_schema.dump(summary)
+        response = self.ok_response_schema.dump(summary)
         return response, 202  # ACCEPTED
 
     def get(self, summary_id):

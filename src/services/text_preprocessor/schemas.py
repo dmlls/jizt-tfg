@@ -32,11 +32,14 @@ class TextPreprocessingConsumedMsgSchema(Schema):
             The model used to generate the summary.
         params (:obj:`dict`):
             The params used in the summary generation.
+        language (:obj:`str`):
+            The language of the text.
     """
 
     source = fields.Str(required=True)
     model = fields.Str(required=True)
     params = fields.Dict(required=True)
+    language = fields.Str(required=True)
 
 
 class TextEncodingProducedMsgSchema(Schema):

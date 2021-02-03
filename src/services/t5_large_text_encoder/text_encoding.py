@@ -231,7 +231,6 @@ class SplitterEncoder:
         balanced_split_points = split_points[:]
         balanced_subdiv2ntks = subdiv2ntks[:]
 
-
         while True:  # do while
             prev_balanced_split_points = balanced_split_points[:]
             for i in range(len(balanced_split_points)-1, 1, -1):

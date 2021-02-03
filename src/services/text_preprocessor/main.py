@@ -26,7 +26,7 @@ from kafka.kafka_consumer import Consumer
 from confluent_kafka import Message, KafkaError, KafkaException
 from schemas import TextPreprocessingConsumedMsgSchema, TextEncodingProducedMsgSchema
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 parser = argparse.ArgumentParser(description='Text pre-processing service. '
                                              'Default log level is WARNING.')
@@ -83,6 +83,7 @@ class TextPreprocessorService:
                     data = self.consumed_msg_schema.loads(msg.value())
                     preprocessed_text = TextPreprocessor.preprocess(data.pop('source'))
                     data['text_preprocessed'] = preprocessed_text
+                    del data['language']  # just for now ;)
                     message_value = self.produced_msg_schema.dumps(data)
                     self._produce_message(
                         topic,

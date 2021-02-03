@@ -17,7 +17,7 @@
 
 """Marshmallow Schemas for DispatcherService."""
 
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 
 from datetime import datetime
 from marshmallow import Schema, fields, pre_dump, EXCLUDE
@@ -32,15 +32,22 @@ class Summary():
     A summary has the following attributes:
 
     * id_ (:obj:`str`): the id of the summary.
-    * started_at (:obj:`datetime.datetime`): the time when the summary
-      was first requested.
-    * ended_at (:obj:`datetime.datetime`): the time when the summary
-      first finished.
-    * status (:obj:`str`): the status of the summary.
     * source (:obj:`str`): the source to process, e.g., a plain text
       to be summarized.
     * output (:obj:`str`): the output once the source has been
       processed, e.g., a summary.
+    * model (:obj:`data_access.supported_models.SupportedModel`): the
+      model with wich the summary was generated.
+    * params (:obj:`dict`): the parameters with which the summary was
+      generated.
+    * status (:obj:`data_access.summary_status.SummaryStatus.COMPLETED`):
+      the current status of the summary.
+    * started_at (:obj:`datetime.datetime`): the time when the summary
+      was first requested.
+    * ended_at (:obj:`datetime.datetime`): the time when the summary
+      first finished.
+    * language (:obj:data_access.supported_languages.SupportedLanguage):
+      the language of the summary.
     """
 
     def __init__(self,
@@ -89,6 +96,8 @@ class PlainTextRequestSchema(Schema):
             The model used to generate the summary.
         params (:obj:`dict`, `optional`, defaults to :obj:`{}`):
             The params used in the summary generation.
+        language (:obj:`str`):
+            The language of the text.
     """
 
     # length could be limited with validate=Length(max=600)
@@ -96,53 +105,20 @@ class PlainTextRequestSchema(Schema):
     model = fields.Str(missing=SupportedModel.T5_LARGE.value,
                        default=SupportedModel.T5_LARGE.value)
     params = fields.Dict(missing={}, default={})
+    language = fields.Str(missing=SupportedLanguage.ENGLISH.value,
+                          default=SupportedLanguage.ENGLISH.value)
 
     class Meta:
         unknown = EXCLUDE
 
 
-class AcceptedResponseSchema(Schema):
-    """Schema for the 202 ACCEPTED response.
+class ResponseSchema(Schema):
+    """Schema for the response to the clients' requests.
 
-    When a client first makes a POST request, a response is given with the
-    summary id. The client must then make periodic GET requests with the specific
-    summary id to check the summary status. Once the summary is completed, the GET
-    request will contain the output text, e.g., the summary.
-
-    Fields:
-        summary_id (:obj:`str`):
-          The summary id. The following GET requests be made to the proper endpoint
-          containing this summary id.
-    """
-
-    summary_id = fields.Str(required=True)
-
-    @pre_dump
-    def summary_to_response(self, summary: Summary, **kwargs):
-        """Transform a :obj:`Summary` object into a response.
-
-        This method is executed when calling :meth:`Schema.dump`. Since a
-        summary includes more information than it will be included in the response,
-        with this function we get only the necessary fields to form a response.
-
-        For more information, see the
-        `Marshmallow documentationn
-        <https://marshmallow.readthedocs.io/en/stable/api_reference.html#marshmallow.pre_dump>`__.
-
-        """
-
-        return {"summary_id": summary.id_}
-
-    class Meta:
-        ordered = True
-
-
-class OkResponseSchema(Schema):
-    """Schema for the 200 OK response.
-
-    This response contains the summary status. Once the text processing
-    is completed, the response will also contain the output text, e.g.,
-    the summary.
+    Some of the fields might not be available during the generation of
+    the summary, e.g. ``output`` or ``ended_at``. Once the summary is
+    ready, the ``status`` will change to ``completed``
+    and the missing fields will be available then.
 
     Fields:
         started_at (:obj:`datetime.datetime`):
@@ -150,9 +126,15 @@ class OkResponseSchema(Schema):
         ended_at (:obj:`datetime.datetime`):
             The time when the summary first finished.
         status (:obj:`str`):
-            The status of the summary.
+            The current status of the summary.
         output (:obj:`str`):
             The processed text, e.g., the summary.
+        model (:obj:`str`):
+            The model with wich the summary was generated.
+        params (:obj:`dict`):
+            The parameters with which the summary was generated.
+        language (:obj:`str`):
+            The language of the summary.
     """
 
     summary_id = fields.Str(required=True)
@@ -162,6 +144,7 @@ class OkResponseSchema(Schema):
     output = fields.Str(required=True)
     model = fields.Str(required=True)
     params = fields.Dict(required=True)
+    language = fields.Str(required=True)
 
     @pre_dump
     def summary_to_response(self, summary: Summary, **kwargs):
@@ -183,7 +166,8 @@ class OkResponseSchema(Schema):
                 "status": summary.status,
                 "output": summary.output,
                 "model": summary.model,
-                "params": summary.params}
+                "params": summary.params,
+                "language": summary.language}
 
     class Meta:
         ordered = True
