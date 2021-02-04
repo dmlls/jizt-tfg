@@ -99,7 +99,7 @@ El modelo T5 (el cual como mencionábamos anteriormente, es el único modelo que
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{t5-eos-ejemplo}
-	\caption{Pasaje del libro \emph{A Wrinkle in Time}. El \emph{tóken} EOS se ha marcado en rojo.}
+	\caption[Ejempo de codificación del texto.]{Pasaje del libro \emph{A Wrinkle in Time}. El \emph{tóken} EOS se ha marcado en rojo.}
 	\label{fig:t5-eos-ejemplo}
 \end{figure}
 
@@ -237,7 +237,7 @@ Podemos visualizarlo gráficamente con un ejemplo muy simple:
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{algoritmo-balanceo}
-	\caption{Ejemplo gráfico del algoritmo de balanceo. Las desviación estándar del número de \emph{tókenes} de cada frase en $t_1$ es $\sigma_1 = 39.63$ y en $t_5$, acaba siendo $\sigma_5 = 1.53$.}
+	\caption[Ejemplo gráfico del algoritmo de balanceo.]{Ejemplo gráfico del algoritmo de balanceo. Las desviación estándar del número de \emph{tókenes} de cada frase en $t_1$ es $\sigma_1 = 39.63$ y en $t_5$, acaba siendo $\sigma_5 = 1.53$.}
 	\label{fig:algoritmo-balanceo}
 \end{figure}
 
@@ -252,7 +252,7 @@ En la \autoref{fig:proceso-resumen}, podemos ver los pasos llevados a cabo tanto
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{t5-proceso-resumen}
-	\caption{Proceso de generación de resúmenes, ilustrado con un fragmento del libro \emph{The Catcher in the Rye}.}
+	\caption[Proceso de generación de resúmenes.]{Proceso de generación de resúmenes, ilustrado con un fragmento del libro \emph{The Catcher in the Rye}.}
 	\label{fig:proceso-resumen}	
 \end{figure}
 
@@ -286,7 +286,13 @@ La principal novedad de este artículo se encuentra en su propuesta de tratar to
 
 \bigskip
 
-\imagen{t5-paper}{El \emph{framework} texto a texto permite emplear el mismo modelo, con los mismos hiperparámetros, función de pérdida, etc., para aplicarlo a diversas tareas de NLP \cite{raffel19}.}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{t5-paper}
+	\caption[Ejemplo del modelo T5 de Google.]{El \emph{framework} texto a texto permite emplear el mismo modelo, con los mismos hiperparámetros, función de pérdida, etc., para aplicarlo a diversas tareas de NLP \cite{raffel19}.}
+\end{figure}
+
 
 En cualquier caso, se puede realizar un ajuste fino del modelo para una de las tareas, a fin de mejorar su rendimiento en dicha tarea específica.
 
@@ -315,7 +321,7 @@ La búsqueda voraz, en cada paso, simplemente selecciona la palabra con mayor pr
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{greedy-search}
-	\caption{Ejemplo de búsqueda voraz: en cada paso, se toma la palabra con mayor probabilidad.}
+	\caption[Ejemplo de generación con búsqueda voraz.]{Ejemplo de búsqueda voraz: en cada paso, se toma la palabra con mayor probabilidad.}
 \end{figure}
 
 
@@ -338,7 +344,7 @@ En este caso, durante el proceso de generación se consideran varios caminos sim
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{beam-search}
-	\caption{Ejemplo de \emph{beam search} con \texttt{n\_beams = 2}. Durante la búsqueda, se consideran los dos caminos con mayor probabilidad conjunta.}
+	\caption[Ejemplo de generación con búsqueda \emph{beam-search}.]{Ejemplo de \emph{beam search} con \texttt{n\_beams = 2}. Durante la búsqueda, se consideran los dos caminos con mayor probabilidad conjunta.}
 	\label{fig:beam-search}
 \end{figure}
 
@@ -357,7 +363,7 @@ Sin embargo, presenta dos problemas fundamentales:
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=0.7\textwidth]{beam-search-problem}
-		\caption{Distribución de probabilidades del lenguaje natural frente a la estrategia de \emph{beam search} \cite{holtzman20}.}
+		\caption[Distribución de probabilidades en la generación.]{Distribución de probabilidades del lenguaje natural frente a la estrategia de \emph{beam search} \cite{holtzman20}.}
 	\end{figure}
 \end{itemize}
 
@@ -375,7 +381,7 @@ De manera gráfica, siguiendo con el ejemplo anterior:
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{sampling}
-	\caption{Ejemplo de muestreo. En cada paso, se elige una palabra aleatoriamente en función de su probabilidad.}
+	\caption[Ejemplo de muestreo.]{Ejemplo de muestreo. En cada paso, se elige una palabra aleatoriamente en función de su probabilidad.}
 	\label{fig:muestreo}
 \end{figure}
 
@@ -386,7 +392,7 @@ Una solución a este problema consiste en hacer que la distribución $P(w_t|w_{1
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{sampling-temperature}
-	\caption{Al decrementar la temperatura, las diferencias en las  probabilidades se hacen más acusadas.}
+	\caption[Ejemplo de muestreo con temperatura.]{Al decrementar la temperatura, las diferencias en las  probabilidades se hacen más acusadas.}
 \end{figure}
 
 Con este ajuste de la temperatura, logramos reducir la aleatoriedad, pero seguimos manteniendo una orientación no determinista.
@@ -402,8 +408,8 @@ En ste tipo de muestreo, introducido en \cite{fan18}, en cada paso solo se consi
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\textwidth]{top-k}
-	\caption{Al decrementar la temperatura, las diferencias en las  probabilidades se hacen más acusadas.}
-	\label{top-k}
+	\caption[Ejemplo de muestreo \emph{top-k}.]{Ejemplo de muestreo \emph{top-k}. En cada paso, solo se consideran las 6 palabras con mayor probabilidad.}
+	\label{fig:top-k}
 \end{figure}
 
 Tanto la búsqueda voraz como el muestreo visto anteriormente, se pueden como casos particulares del muestreo \emph{top-k}. Si establececemo $k = 1$, estaremos realizando una búsqueda voraz, y si establecemos $k = N$, donde $N$ es la longitud total del vocabulario, estaremos llevando a cabo un muestreo <<puro>>.
@@ -420,8 +426,8 @@ Este tipo de muestreo, en vez de escoger entre un número prefijado de palabras,
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\textwidth]{top-p}
-	\caption{Con el muestreo \emph{top-p}, el número de palabras entre las cuales elegir en cada paso varía en función de las probabilidades de las palabras candidatas.}
-	\label{top-p}
+	\caption[Ejemplo de muestreo \emph{top-p}.]{Con el muestreo \emph{top-p}, el número de palabras entre las cuales elegir en cada paso varía en función de las probabilidades de las palabras candidatas.}
+	\label{fig:top-p}
 \end{figure}
 
 La \hyperref[top-p]{figura anterior} muestra como, con $p=0.9$, en el primer paso se consideran 9 palabras, mientras que en el segundo solo 3. De este modo, cuando la siguiente palabra a elegir es menos \emph{predecible}, el modelo puede considerar más candidatas, como en el primer paso del ejemplo mostrado y, en el caso contrario, el número de palabras candidatas se reduce.
