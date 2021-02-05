@@ -680,7 +680,8 @@ Public License instead of this License.  But first, please read
 
 
 
---------------- LICENSE FOR NLTK, transformers AND truecase ---------------
+--- LICENSE FOR NLTK, transformers, truecase, strimzi-kafka-operator
+                confluent-kafka-python, postgres-operator ---------------
 
 
                                  Apache License
@@ -892,7 +893,7 @@ Public License instead of this License.  But first, please read
 
 
 
------------------------------ LICENSE FOR blingfire -----------------------------
+--------------------- LICENSE FOR blingfire AND marshmallow ---------------------
 
 
     MIT License
