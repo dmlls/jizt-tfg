@@ -680,8 +680,8 @@ Public License instead of this License.  But first, please read
 
 
 
---- LICENSE FOR NLTK, transformers, truecase, strimzi-kafka-operator
-                confluent-kafka-python, postgres-operator ---------------
+--------- LICENSE FOR NLTK, transformers, truecase, strimzi-kafka-operator
+                      confluent-kafka-python AND postgres-operator ---------
 
 
                                  Apache License
