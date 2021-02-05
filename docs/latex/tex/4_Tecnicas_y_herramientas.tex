@@ -169,15 +169,43 @@ Flask es uno de los \emph{frameworks} más populares para la creación de aplica
 Dado que es el \emph{Dispatcher} quien implementa la REST API, es únicamente este microservicio el que hace uso de este \emph{framework}.
 
 
-\newpage
-
 \section{\emph{Frontend}} \label{sec:frontend}
 
+\subsection{Flutter}
+
+Flutter un \emph{kit} de herramientas de UI (interfaz de usuario) que, a partir del mismo código fuente base, permite compilar de forma nativa aplicaciones para móvil, \emph{web} y escritorio \cite{flutter-es}, lo cual permite \cite{miola20}:
+
+\vspace{-0.5cm}
+\begin{itemize}
+	\item [\textbullet] Un desarrollo más rápido, dado que solo se trabaja en una única base de código.
+	\item [\textbullet] Costes más bajos, ya que solo mantenemos un proyecto en vez de varios.
+	\item [\textbullet] Una mayor consistencia, proporcionando al usuario la misma interfaz gráfica y herramientas en las distintas plataformas.
+\end{itemize}
+
+Pese a ser desarrollado por Google desde su nacimiento en 2017, Flutter cuenta en la actualidad con un gran apoyo de la comunidad \emph{open-source}. Esto ha facilitado la resolución de dudas y errores a la hora de desarrollar nuestra aplicación.
+
+Flutter emplea el lenguaje Dart, el cual guarda similitudes con otros lenguajes como Java o C\#. Existen numerosos aspectos de Flutter y Dart que cabría explicar; no obstante, en pos de la brevedad introduciremos uno de los que más interesantes y relevantes nos parecen para este proyecto: ¿Cómo se consigue que Dart pueda ser ejecutado nativamente en plataformas que pueden resultar tan dispares como Android, iOS, \emph{web}, Windows o Linux?
+
+Para responder a esta pregunta, veamos una a una las opciones que ofrece Dart a la hora de ser compilado ejecutado.
+
+\subsubsection{Ejecución independiente (\emph{stand-alone})}
+
+Esta opción es similar a cómo otros lenguajes, como Java, trabajan. Así como Java requiere de la JVM (\emph{Java Virtual Machine}) para ejecutarse, Dart también dispone de su DVM (\emph{Dart Virtual Machine}).
+
+No obstante, utilizando Dart de este modo, solo podremos ejecutarlo si existe una DVM. Para poderlo ejecutar en cualquier plataforma, necesitamos usarlo en conjunción con Flutter \cite{miola20}.
 
 
+\subsubsection{Compilación anticipada (AOT, \emph{Ahead-of-time} Compilation)}
+
+La compilación AOT consiste en traducir un lenguaje de alto nivel, como en este caso Dart, en código máquina nativo \cite{aot-wiki}. Este código máquina sí que será dependiente del sistema.
+
+Gracias a la compilación anticipada, podemos obtener, a partir de nuestro código escrito en Dart, un fichero ejecutable para las distintas plataformas, esto es \texttt{.apk} o \texttt{.aab} para Android, \texttt{.exe} para Windows, etc..
 
 
+\subsubsection{\emph{Web}}
 
+El código Dart también puede ser traducido a HTML, CSS y JavaScript. Esto significa que podemos ejecutar nuestra aplicación en Chrome o Firefox\footnote{Por ahora, solo Chrome, Safari, Edge y Firefox están soportados, este último solo en su versión de escritorio con WebGL habilitado.}, y la interfaz gráfica será la misma que en el resto de plataformas.
 
+Es importante mencionar, que el soporte para \emph{web} de Flutter se encuentra aún en fase \emph{beta}, por lo que no se recomienda para producción \cite{flutter-web}.
 
-
+No obstante, nosotros no hemos experimentado problemas con nuestra aplicación en ninguno de los navegadores soportados.
