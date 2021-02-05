@@ -17,7 +17,7 @@
 
 """Tokenization utilities."""
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 from nltk.tokenize import RegexpTokenizer
 from blingfire import text_to_sentences
@@ -70,7 +70,7 @@ def sentence_tokenize(text: str,
 
     # if there's no final period, add it (this makes the assumption that the last
     # sentence is not interrogative or exclamative, i.e., ends with '?' or '!')
-    if text[-1] != '.' and text[-1] != '?' and text[-1] != '!':
+    if text[-1] not in ('.', '?', '!'):
         text += '.'
 
     text = ' '.join(text.split())  # remove '\n', '\t', etc.
@@ -89,9 +89,7 @@ def sentence_tokenize(text: str,
     for sent in sentences[1:]:
         # if the previous sentence doesn't end with a '.', '!' or '?'
         # we concatenate the current sentence to it
-        if (final_sentences[-1][-1] != '.' and
-                final_sentences[-1][-1] != '!' and
-                final_sentences[-1][-1] != '?'):
+        if final_sentences[-1][-1] not in ('.', '!', '?'):
             final_sentences[-1] += (' ' + sent)
         # if the next sentence doesn't start with a letter or a number,
         # we concatenate it to the previous
