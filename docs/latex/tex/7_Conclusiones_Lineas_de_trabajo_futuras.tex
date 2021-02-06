@@ -1,4 +1,62 @@
 \capitulo{7}{Conclusiones y Líneas de trabajo futuras}
 
-Todo proyecto debe incluir las conclusiones que se derivan de su desarrollo. Éstas pueden ser de diferente índole, dependiendo de la tipología del proyecto, pero normalmente van a estar presentes un conjunto de conclusiones relacionadas con los resultados del proyecto y un conjunto de conclusiones técnicas. 
-Además, resulta muy útil realizar un informe crítico indicando cómo se puede mejorar el proyecto, o cómo se puede continuar trabajando en la línea del proyecto realizado. 
+\vspace{-1cm}
+Por último, y no por ello menos importante, se recogen a continuación las principales conclusiones extraídas de la realización de este proyecto. Además, se indican los posibles pasos a tomar en el futuro próximo.
+
+\section{Principales conclusiones}
+
+Como mencionábamos en la \hyperref[chapter:intro]{Introducción}, desde un principio supimos que JIZT era un proyecto ambicioso que requeriría gran inversión de tiempo y esfuerzo.
+
+Cinco meses después, podemos decir, no sin cierto alivio, que hemos sido capaces de cumplir los objetivos que nos marcamos para la compleción de el presente Trabajo de Fin de Grado; JIZT es, ha día de hoy, una realidad.
+
+Personalmente, nunca imaginamos que en torno a un 70 \% del tiempo y esfuerzo se acabaría destinando al \emph{backend}. Esta era, a su vez, el área que menos había trabajado con anterioridad, por lo que fue un reto aún mayor. Cabe preguntarnos, ¿ha valido la pena todo el esfuerzo? Y la respuesta es un rotundo sí. Contar con una buena infraestructura en el \emph{backend} será la clave para el futuro de JIZT por los siguientes motivos:
+
+\vspace{-0.2cm}
+\begin{itemize}
+	\item [\textbullet] Facilita el escalado y asegura una alta disponibilidad de los componentes implementados actualmente.
+	\vspace{-0.2cm}
+	\item [\textbullet] Permite la ampliación de las tareas de NLP proporcionadas por JIZT.
+	\vspace{-0.2cm}
+	\item [\textbullet] Incentiva y facilita la colaboración de otros desarrolladores, dado que se siguen estándares de la industria.
+	\vspace{-0.2cm}
+	\item [\textbullet] Todo ello se revierte en una mayor satisfacción de los usuarios.
+\end{itemize}
+
+\vspace{-0.3cm}
+La lección extraída de todo lo mencionado anteriormente es que la Ingeniería del \emph{Software}, así como el Diseño de Arquitectura de \emph{Software} son labores que pueden resultar muy complejas, pero a su vez gratificantes, especialmente en el momento en que finalmente todos los \emph{test} se ejecutan con éxito tras horas de trabajo, e interminables <<quebraderos de cabeza>>, si se nos permite la expresión.
+
+No obstante, hablando de dificultades, el Procesamiento de Lenguaje Natural es también un muy buen candidato; con la realización de este proyecto nos hemos percatado de la enorme flexibilidad y ambigüedad del lenguaje natural, lo cual imposibilita establecer reglas prefijadas que sean válidas para todos los casos, como se intentó desde el inicio del NLP hasta ya entrado el siglo XXI. Cuando crees que has dado con una regla que se ajusta a todos los supuestos considerados, aparece un nuevo caso que lo desmonta todo. Por suerte, en los últimos cinco años se han producido grandes avances en el campo; no podemos esperar a poder analizar y probar los nuevos descubrimientos que el futuro nos traiga.
+
+Podríamos mencionar muchas otras conclusiones, pero todas ellas se pueden resumir del siguiente modo: hemos aprendido \emph{mucho}. Nuestro proyecto ha tratado con diseño de microservicios e infraestructura en la nube (Kubernetes, Docker, Kafka, API REST), bases de datos (PostgreSQL como servicio), Inteligencia Artificial (Procesamiento del Lenguaje Natural), desarrollo de aplicaciones multiplataforma (Flutter), validación y pruebas, despliegue e integración continua...
+
+Este proyecto ha sido una oportunidad de aprendizaje y formación que creemos será muy positiva de cara a nuestra futura vida estudiantil y laboral.
+
+
+\section{Líneas futuras de trabajo}
+
+JIZT, dada su extensión, cuenta con innumerables aspectos a desarrollar en numerosos aspectos. A continuación listamos algunos de los más importantes y/o inmediatos:
+
+\vspace{-0.3cm}
+\begin{itemize}[\textbullet]
+	\item Incluir modelos en otros idiomas idiomas, como español, francés, alemán, chino, etc.
+	\item Ampliar el rango de tareas de NLP que JIZT es capaz de llevar a cabo.
+	\item Entrenar/reemplazar el modelo de \emph{truecasing} (recomposición de mayúsculas), ya que el usado actualmente está entrenado con un corpus pequeño, el cual generalmente consigue buenos resultados, pero en algunos casos es mejorable.
+	\item Seguir mejorando la API REST y el \emph{backend}. En este aspecto, las mejoras más destacables son:
+	\begin{itemize}[◦]
+		\item Incluir la capacidad de extraer textos de ficheros, imágenes o URLs.
+		
+		\item Incluir un <<modo privado>>, dando al usuario la opción de que su texto no sea almacenado en la base de datos.
+		
+		\item Actualmente, para detectar si un resumen ya ha sido generado previamente, se extrae un \emph{hash} (SHA-256) a partir del texto original, el modelo, y los parámetros del resumen solicitados. Una mejora pasa por atender al texto pre-procesado, en vez del original, dado que ahora mismo si cambia un solo carácter del texto original, por ejemplo, un espacio, el texto se considera como diferente, y se genera un nuevo resumen. Esta mejora conlleva cierta dificultad dado que alteraría en cierto modo el orden secuencial del proceso de resumen, esto es: el \emph{Dispatcher} enviaría el texto original al pre-procesador, el cual, una vez pre-procesado el texto, se lo devolvería al \emph{Dispatcher}. En el caso de que el texto pre-procesado no existiera, el \emph{Dispatcher} reenviaría el texto directamente al Codificador, dado que ya estaría pre-procesado.
+		
+		\item Incluir la monitorización y la recogida de métricas del sistema. Actualmente, se implementa un \emph{logging} básico, suficiente para la detección de errores, pero poco apropiado para llevar a cabo estudios de uso de recursos, carga de trabajo, etc.
+		
+		\item Ofrecer al usuario mensajes de error más granulares. Por ejemplo, si el usuario ha definido parámetros de resumen inexistentes, la API le indicaría exactamente qué parámetros han sido, y por qué valores por defecto se han reemplazado.
+	\end{itemize}
+	\item En cuanto a la aplicación desarrollada:
+	\begin{itemize}[◦]
+		\item Iterar junto a la API REST para incluir las mejoras de esta en cuestiones como el <<modo privado>>, la generación de resúmenes a partir de ficheros, imágenes o URLs, mensajes de error más descriptivos, etc.
+		
+		\item Mejorar la internacionalización de la aplicación, traduciéndola a otros idiomas.
+	\end{itemize}
+\end{itemize}
