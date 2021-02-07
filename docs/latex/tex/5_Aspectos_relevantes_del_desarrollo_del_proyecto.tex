@@ -55,7 +55,7 @@ Se puede acceder al tablero público a través de \href{https://kanban.jizt.it}{
 
 
 
-\section{Motivación tras la arquitectura desarrollada}
+\section{Motivación tras las arquitecturas desarrolladas}
 
 \subsection{Arquitectura de microservicios}
 
@@ -122,3 +122,67 @@ En el caso de que previamente se hubiera solicitado un resumen del mismo texto, 
 
 
 \subsection{Desarrollo de la aplicación}
+
+A la hora de desarrollar la aplicación, se ha dado gran importancia al diseño de la arquitectura. Con tal fin, nos hemos basado en varios patrones de diseño, dando lugar a una arquitectura que toma elementos de los patrones BLoC \cite{miola20}, \emph{Domain-Driven Design} \cite{vernon13} o \emph{Clean Architecture} \cite{martin15}.
+
+Antes de explicar qué significan estos conceptos, veamos cómo se conforma la arquitectura de la aplicación:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth]{jizt-app-arch}
+	\caption{Arquitectura de la aplicación.}
+\end{figure}
+
+Como podemos ver, la arquitectura se divide en cuatro capas: presentación, aplicación, dominio y datos, siendo las primeras las más cercanas al usuario.
+
+Expliquemos de forma más detallada cada una de ellas, comenzando por la capa de \emph{datos}, a la derecha de la imagen.
+
+\subsubsection{Capa de datos}
+
+En esta capa se hace uso del patrón repositorio, el cual sitúa un componente intermedio entre la capa de dominio y el mapeo de los datos a fin de aislar los objetos del dominio de los detalles de implementación concretos a la hora de acceder a la fuente de datos \cite{vernon13}.
+
+Nuestra aplicación implementa un caché local, de forma que, cuando el usuario solicita un resumen, se comprueba primero si dicho resumen ya ha sido generado previamente, acudiendo a la base de datos local, y en caso afirmativo, se recupera directamente el resumen; si no, se aguarda a la respuesta de la API REST.
+
+Esta capa es el punto de conexión entre tres ámbitos  diferentes: la capa de dominio, la cual explicaremos a continuación, la caché local, y la API REST.
+
+La forma en que cada uno de estos ámbitos represente los datos (en nuestro caso, los resúmenes) es independiente del resto. Por ello, vamos a contar con tres representaciones diferentes, cada una correspondiéndose con uno de los ámbitos descritos:
+
+\begin{itemize}[\textbullet]
+	\item \emph{Domain Model}: es la representación de los resúmenes propia de la capa de dominio.
+	\item DTO (\emph{Data Transfer Object}): se corresponde con la representación del \emph{backend}, esto es, la API REST.
+	\item \emph{Entity}: es la representación del caché local.
+\end{itemize}
+
+Para que estas tres representaciones diferentes se acoplen correctamente, se hace uso de los \emph{mappers}, los cuales se encargan de transformar la representación de la capa de dominio a DTOs o \emph{Entities}, y viceversa.
+
+\subsubsection{Capa de dominio}
+
+Esta capa define la lógica de negocio de la aplicación, y es independiente de la plataforma de desarrollo, es decir, en nuestro caso estará escrita puramente en Dart, sin contener ningún elemento de Flutter \cite{flutter-clean-arch}. El motivo reside en que el dominio, como decíamos, solo debe ocuparse de la lógica de negocio, y no de los detalles de implementación. Esto también permite una fácil migración entre plataformas, en caso de ser necesario en algún momento.
+
+\subsubsection{Capas de aplicación y presentación}
+
+En estas capas entra en juego el patrón BLoC (\emph{Business Logic Component}). Para entender este patrón, debemos primero explicar los conceptos de \emph{evento} y \emph{estado}.
+
+Dicho de manera sencilla, un estado es aquello que se muestra en la pantalla en un momento específico. Y un evento no es más que una acción detectada por la aplicación, por ejemplo, un \emph{click} del usuario.
+
+Los actores centrales de este patrón son los casos de uso (llamados también BLoCs, como el propio patrón), los cuales contienen las reglas de negocio específicas de la aplicación.
+
+Una vez introducidos los conceptos, podemos identificar cuatro pasos fundamentales:
+
+\vspace{-0.3cm}
+\begin{enumerate}
+	\item Un componente (\emph{widget}) envía un \emph{evento} al componente BLoC.
+	\item El BLoC acepta el evento y lleva a cabo la tarea que tiene asociada, probablemente interaccionando con la capa de dominio.
+	\item El BLoC actualiza su \emph{estado}.
+	\item Los componentes detectan el cambio de estado y reaccionan de algún modo.
+\end{enumerate}
+
+Anteriormente, hemos mencionado el término \emph{widget}. En Flutter, los \emph{widgets} son los elementos que conforman la interfaz de usuario \cite{flutter-widget}, como un botón o un \emph{layout}. Los \emph{widgets} se organizan de forma jerárquica, de modo que toda aplicación tendrá un \emph{widget} raíz, del cual <<colgarán>> el resto de \emph{widgets}, como podemos ver en la \hyperref[flutter-widgets]{siguiente figura}.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1\textwidth]{widget-hierarchy}
+	\caption[Ejemplo de jerarquía de \emph{widgets}.]{Ejemplo de jerarquía de \emph{widgets} de una aplicación sencilla. Imagen del dispositivo móvil extraída de \cite{miola20}.}
+	\label{flutter-widgets}
+\end{figure}
+
