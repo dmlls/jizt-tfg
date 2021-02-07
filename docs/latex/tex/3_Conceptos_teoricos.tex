@@ -37,7 +37,7 @@ A grandes rasgos, en la etapa de pre-procesado se divide a su vez en los siguien
 	
 	\item [\textbullet] Añadir un espacio al inicio de las frases intermedias (p. ej.: \texttt{``How's it going?Great!''} $\rightarrow$ \texttt{``How's it going? Great!''}. Esto es especialmente relevante en el caso de algunos modelos, como por ejemplo BART \cite{lewis19}, los cuales tienen en cuenta ese espacio inicial para distinguir entre frases iniciales y frases intermedias en la generación de resúmenes\footnote{\, Por el momento, no hacemos uso de este modelo, aunque podría incluirse en el futuro.}.
 	
-	\item [\textbullet] Establecer un mecanismo que permita llevar a cabo la ya mencionada separación del texto en frases. Esto es importante dado que los modelos tienen un tamaño de entrada máximo. Dos estrategias comunes para eludir esta limitación consisten en (a) truncar el texto de entrada, lo cual puede llevar asociado pérdidas notables de información, o (b) dividir el texto en fragmentos de menor tamaño. En nuestro caso, la primera opción quedó rápidamente descartada ya que los textos que vamos a recibir, por lo general, superarán el tamaño máximo (en caso contrario tendría poco sentido querer generar un resumen). Refiriéndonos, por tanto, a la segunda opción, es frecuente llevar a cabo dicha separación de manera ingenua, únicamente atendiendo al tamaño de entrada máximo. Sin embargo, en nuestro caso decidimos refinar este proceso e implementamos un algoritmo original\footnote{\, Utilizamos el término <<original>> porque no encontramos ningún recurso en el que se tratara este problema, por lo que tuvimos que resolverlo sin apoyos bibliográficos. Esto no quiere decir, sin embargo, que no se hayan implementado estrategias similares en otros problemas diferentes al aquí expuesto.} en el que dicha separación se realiza de tal modo que ninguna frase queda dividida. Para garantizar el éxito de este algoritmo, es fundamental que las frases estén correctamente divididas; el porqué se clarificará en la \hyperref[sec:codificacion]{siguiente sección}, referente a la codificación del texto.
+	\item [\textbullet] Establecer un mecanismo que permita llevar a cabo la ya mencionada separación del texto en frases. Esto es importante dado que los modelos tienen un tamaño de entrada máximo. Dos estrategias comunes para eludir esta limitación consisten en (a) truncar el texto de entrada, lo cual puede llevar asociado pérdidas notables de información, o (b) dividir el texto en fragmentos de menor tamaño. En nuestro caso, la primera opción quedó rápidamente descartada ya que los textos que vamos a recibir, por lo general, superarán el tamaño máximo (en caso contrario tendría poco sentido querer generar un resumen). Refiriéndonos, por tanto, a la segunda opción, es frecuente llevar a cabo dicha separación de manera ingenua, únicamente atendiendo al tamaño de entrada máximo. Sin embargo, en nuestro caso decidimos refinar este proceso e implementamos un algoritmo original\footnote{\, Utilizamos el término <<original>> porque no encontramos ningún recurso en el que se tratara este problema, por lo que tuvimos que resolverlo sin apoyos bibliográficos. Esto no quiere decir, sin embargo, que no se hayan implementado estrategias similares en otros problemas diferentes al aquí expuesto.} en el que dicha separación se realiza de tal modo que ninguna frase queda dividida. Para garantizar el éxito de este algoritmo, es fundamental que las frases estén correctamente divididas; el porqué se clarificará en la \hyperref[sec:codificacion]{siguiente sección}, referente a la codificación del texto, en la que también se incluye la implememtación concreta del algoritmo.
 \end{itemize}
 
 A continuación, nos centraremos en el proceso de división del texto en frases. A la hora de llevar a cabo este proceso, debemos tener en cuenta que el texto de entrada podría contener errores ortográficos o gramaticales, por lo que debemos tratar de realizar el mínimo número de suposiciones posibles.
@@ -50,7 +50,9 @@ Con la suposición anterior, también se agruparían correctamente los puntos su
 
 Sin embargo, fallaría en situaciones como: \texttt{``NLP (i.e. Natural Langua}-\texttt{ge Processing) is a subfield of Linguistics, Computer Science, \\ and Artificial Intelligence.''}, en la que la división sería: \texttt{``NLP (i.e.''} por un lado, y \texttt{``Natural Language Processing) is a subfield [...].''}, por otro, ya que \texttt{``Natural''} empieza con mayúscula y aparece tras un punto.
 
-Asimismo, la razón principal por la que no podemos apoyarnos únicamente en reglas predefinidas, reside en las llamadas Entidades Nombradas (\emph{Named Entities}, en inglés), esto es, palabras que hacen referencia a personas, lugares, instituciones, empresas, etc. Existe toda una disciplina dedicada la identificación de este tipo de palabras, conocida como Reconocimiento de Entidades Nombradas (NER, por sus siglas en inglés), y pese a los buenos resultados conseguidos por algunos de los modelos propuestos, se considera un problema lejos de estar resuelto \cite{ner20}.
+Asimismo, la razón principal por la que no podemos apoyarnos únicamente en reglas predefinidas, reside en las llamadas Entidades Nombradas (\emph{Named Entities}, en inglés), esto es, palabras que hacen referencia a personas, lugares, instituciones, empresas, etc. Si empleáramos reglas predefinidas, podríamos incluir en un diccionario todas las entidades nombradas existentes conocidas que contengan puntos, de forma que si aparecieran en el texto las palabras \texttt{``U.K.''} o \texttt{``A.W.O.L.''} las agruparíamos como tal, sin partir la frase. Sin embargo, existen potencialmente miles (o incluso decenas de miles) de entidades nombradas que contienen puntos, por lo que crear y mantener manualmente dicho diccionario sería muy costoso.
+
+Actualmente, para resolver este tipo de problemas, se emplean modelos estadísticos o de \emph{deep learning}. Esta disciplina se conoce como Reconocimiento de Entidades Nombradas (NER, por sus siglas en inglés), y pese a los buenos resultados conseguidos por algunos de los modelos propuestos, se considera un problema lejos de estar resuelto \cite{ner20}.
 
 En nuestro caso emplearemos un modelo pre-entrenado para solucionar, al menos en parte, el problema de las Entidades Nombradas. Este modelo también solventa situaciones como la descrita anteriormente, en las que las reglas escritas a mano se quedan cortas. En el capítulo de \hyperref[chapter:tecnicas]{Técnicas y Herramientas}, hablaremos de dicho modelo y de la implementación concreta en código de los procedimientos expuestos anteriormente.
 
@@ -88,7 +90,8 @@ Por lo general, las palabras que aparecen en el vocabulario con el que ha sido e
 	\label{fig:t5-tokenizer}
 \end{figure}
 
-En el anterior ejemplo, si decodificamos los \emph{tókenes} correspondientes a la palabra \texttt{``backcone''}, esto es, \texttt{[223, 12269]}, obtenemos los fragmentos \texttt{``back''}, y \texttt{``bone''}, respectivamente.
+\vspace{-0.5cm}
+En el anterior ejemplo, si decodificamos los \emph{tókenes} correspondientes a la palabra \texttt{``brutality''}, esto es, \texttt{[14506, 485]}, obtenemos los fragmentos \texttt{``brutal''} e \texttt{``ity''}, respectivamente. Análogamente, la palabra \texttt{``backbone''}, se descompone en \texttt{``back''} y \texttt{``bone''}.
 
 La idea detrás de esta fragmentación se basa en la composición, uno de los mecanismos morfológicos de formación de palabras más frecuentes \cite{cetnarowska05} en muchos idiomas, como el inglés, español o alemán. Por tanto, presupone que dividiendo las palabras desconocidas en fragmentos menores, podemos facilitar la comprensión de las mismas. Naturalmente, habrá casos en los que esta idea falle; por ejemplo, en la figura anterior, la palabra \texttt{``JIZT''} se descompone en \texttt{``J''}, \texttt{``IZ''}, \texttt{``T''}, lo cual no parece hacerla mucho más comprensible.
 
@@ -105,7 +108,7 @@ El modelo T5 (el cual como mencionábamos anteriormente, es el único modelo que
 
 Como podemos ver, el \emph{tóken} EOS aparece una única vez por cada texto de entrada, y es independiente de las palabras o frases que este contiene.
 
-Otro aspecto a tener en cuenta, reside en que este modelo no solo es capaz de generar resúmenes, si no que puede ser empleado para otras tareas como la traducción, respuesta de preguntas \cite{raffel19}, etc. Para indicarle cuál de estas es la tarea que queremos que desempeñe, curiosamente se lo tenemos que indicar tal y cómo lo haríamos en la vida real; en nuestro caso, simplemente precedemos el texto a resumir con la orden <<resume>> (<<\emph{summarize}>>). Por poner otro ejemplo, si quisiéramos traducir del alemán al español, le señalaríamos: <<traduce de alemán a español>> seguido de nuestro texto (<<\emph{summarize German to Spanish}>>).
+Otro aspecto a tener en cuenta, reside en que este modelo no solo es capaz de generar resúmenes, si no que puede ser empleado para otras tareas como la traducción, respuesta de preguntas \cite{raffel19}, etc. Para indicarle cuál de estas es la tarea que queremos que desempeñe, curiosamente se lo tenemos que indicar tal y cómo lo haríamos en la vida real; en nuestro caso, simplemente precedemos el texto a resumir con la orden <<resume>> (<<\emph{summarize}>>). Por poner otro ejemplo, si quisiéramos traducir del alemán al español, le señalaríamos: <<traduce de alemán a español>> (<<\emph{translate German to Spanish}>>) seguido de nuestro texto.
 
 Por consiguiente, este prefijo deberá aparecer al principio de cada una de las subdivisiones generadas y, del mismo modo, deberemos tenerlo en cuenta a la hora de calcular el número de \emph{tókenes} de las mismas.
 
@@ -161,7 +164,7 @@ Esta es una tarea más compleja de lo que puede parecer. En nuestro caso, hemos 
 	\end{algorithmic}
 \end{algorithm}
 
-Este algoritmo devuelve las subdivisiones en las que se ha separado el texto, ya codificadas. Por tanto, $subdivsCofif$ tendrá la siguiente forma:
+Este algoritmo devuelve las subdivisiones en las que se ha separado el texto, ya codificadas. Por tanto, $subdivsCodif$ tendrá la siguiente forma:
 
 \vspace{-0.5cm}
 
@@ -234,10 +237,10 @@ En esencia, lo que este último algoritmo hace es comparar la diferencia en núm
 
 Podemos visualizarlo gráficamente con un ejemplo muy simple:
 
-\begin{figure}[h]
+\begin{figure}[!h]
 	\centering
 	\includegraphics[width=\textwidth]{algoritmo-balanceo}
-	\caption[Ejemplo gráfico del algoritmo de balanceo.]{Ejemplo gráfico del algoritmo de balanceo. Las desviación estándar del número de \emph{tókenes} de cada frase en $t_1$ es $\sigma_1 = 39.63$ y en $t_5$, acaba siendo $\sigma_5 = 1.53$.}
+	\caption[Ejemplo gráfico del algoritmo de balanceo.]{Ejemplo gráfico del algoritmo de balanceo. En este caso, la longitud máxima de cada subdivisión es de 100 \emph{tókenes}. Las desviación estándar del número de \emph{tókenes} de cada frase en $t_1$ es $\sigma_1 = 39.63$ y en $t_5$, acaba siendo $\sigma_5 = 1.53$.}
 	\label{fig:algoritmo-balanceo}
 \end{figure}
 
@@ -290,7 +293,7 @@ La principal novedad de este artículo se encuentra en su propuesta de tratar to
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{t5-paper}
-	\caption[Ejemplo del modelo T5 de Google.]{El \emph{framework} texto a texto permite emplear el mismo modelo, con los mismos hiperparámetros, función de pérdida, etc., para aplicarlo a diversas tareas de NLP \cite{raffel19}.}
+	\caption[Ejemplo del modelo T5 de Google.]{El \emph{framework} texto a texto permite emplear el mismo modelo, con los mismos hiperparámetros, función de pérdida, etc., para aplicarlo a diversas tareas de NLP \cite{raffel19}. En esta figura, además de la traducción y el resumen, se recogen tareas basadas en el \emph{Semantic Textual Similarity Benchmark} (STS-B) y el \emph{Corpus of Linguistic Acceptability} (CoLA).}
 \end{figure}
 
 
@@ -308,7 +311,7 @@ La generación de lenguaje, en general, se basa en la auto-regresión, la cual p
 
 \[ P(w_{1:t} | W_0) = \prod_{t=1}^{T} P(w_t | w_{1:t-1}, W_0), \; siendo \enspace w_{1:0} = \emptyset \]
 
-donde $W_0$ es la secuencia inicial de \emph{contexto}. En nuestro caso, esa secuencia inicial va a ser el propio texto de entrada. La longitud de $T$ no se puede conocer de antemano, dado que se corresponde con el momento $t = T$ en el que el modelo genera el \emph{token} de finalización de secuencia ()EOS), mencionado anteriormente.
+donde $W_0$ es la secuencia inicial de \emph{contexto}. En nuestro caso, esa secuencia inicial va a ser el propio texto de entrada. La longitud de $T$ no se puede conocer de antemano, dado que se corresponde con el momento $t = T$ en el que el modelo genera el \emph{token} de finalización de secuencia (EOS), mencionado anteriormente.
 
 Una vez introducido el concepto de auto-regresión, podemos explicar brevemente las cinco	 principales estrategias de generación de lenguaje, las cuales se pueden aplicar todas ellas a la generación de resúmenes: búsqueda voraz, \emph{beam search}, muestreo, muestreo \emph{top-k}, y muestreo \emph{top-p}.
 
@@ -396,8 +399,6 @@ Una solución a este problema consiste en hacer que la distribución $P(w_t|w_{1
 \end{figure}
 
 Con este ajuste de la temperatura, logramos reducir la aleatoriedad, pero seguimos manteniendo una orientación no determinista.
-
-\newpage
 
 \bigskip
 \noindent
