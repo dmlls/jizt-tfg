@@ -14,6 +14,9 @@
 \RequirePackage{xtab}
 \RequirePackage{multirow}
 
+\usepackage[defernumbers=true, sorting=none]{biblatex}
+\addbibresource{bibliografiaAnexos.bib}
+
 % Links
 \PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks]{hyperref}
 \hypersetup{
@@ -338,10 +341,10 @@
   % Datos de alumno, curso y tutores ------------------
   \begin{center}%
   {%
-    \noindent\LARGE
+    \noindent\fontsize{18}{18}\selectfont
     Presentado por \@author{}\\ 
     en Universidad de Burgos --- \@date{}\\
-    Tutor: \@tutor{}\\
+    Tutores: \@tutor{}\\
   }%
   \end{center}%
   \null
@@ -351,9 +354,9 @@
 
 
 % Datos de portada
-\title{título del TFG \\Documentación Técnica}
-\author{nombre alumno}
-\tutor{nombre tutor}
+\title{\fontsize{25}{25}\selectfont JIZT \\[0.5cm] \fontsize{15}{15}\selectfont Generación de resúmenes abstractivos en la nube mediante Inteligencia Artificial}
+\author{Diego Miguel Lozano}
+\tutor{Dr. Carlos López Nozal y \\ Dr. José Francisco Díez Pastor}
 \date{\today}
 
 \begin{document}
@@ -399,7 +402,6 @@
 \include{./tex/E_Manual_usuario}
 
 
-\bibliographystyle{plain}
-\bibliography{bibliografiaAnexos}
+\printbibliography[title={Bibliografía}]
 
 \end{document}
