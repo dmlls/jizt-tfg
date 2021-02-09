@@ -1,0 +1,24 @@
+gantt
+    dateFormat  DD-MM-YYYY
+    title       Planificación temporal JIZT
+    axisFormat  %d/%m/%Y
+    todayMarker off
+    excludes    weekends
+
+    section Inicio
+    Puesta en marcha          :active,       des1, 01-10-2020, 09-11-2020
+    
+    section Motor de resumen
+    Motor de resumen          :active,       des2, 04-11-2020, 22-11-2020
+    
+    section Arquitectura Microservicios
+    Arquitectura Microservicios v0.1   :active, des3, 10-11-2020, 17-12-2020
+    Arquitectura Microservicios v0.2   :active, des4, 17-12-2020, 31-12-2020
+    Arquitectura Microservicios v0.3   :active, des5, 31-12-2020, 20-01-2021
+    Arquitectura Microservicios v0.4   :active, des6, 20-01-2021, 31-01-2021
+    
+    section Aplicación
+    Cliente              :active,       des7, 24-01-2021, 13-02-2021
+    
+    section Documentación
+    Documentación v0.1   :active,       des8, 26-01-2021, 15-02-2021
