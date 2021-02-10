@@ -123,6 +123,7 @@ Con esta figura en mente, el proceso completo que se sigue es el siguiente:
 
 En dicha \hyperref[fig:overview-arch-2]{figura}, vemos también que el \emph{Dispatcher} consume de todos los \emph{topics}. Esto permite actualizar el \emph{estado} del resumen (pre-procesando, resumiendo, post-procesando, o listo), según va pasando por las diferentes etapas, a fin de proporcionar una retroalimentación más detallada al usuario\footnote{\, Por ahora, el \emph{Dispatcher} solo muestra el estado <<resumiendo>>. El resto de estados se implementarán en futuras iteraciones.}.
 
+Finalmente, cabe destacar una vez más la facilidad de escalado que nos proporciona Kafka: si, por ejemplo, ampliásemos nuestra arquitectura de modo que tuviéramos tres réplicas de cada microservicio, Kafka se encargaría automáticamente de coordinar la producción y consumición de mensajes de cada \emph{topic}, sin que nosotros tuviéramos que llevar a cabo ninguna acción adicional.
 
 \subsection{Helm}
 
@@ -139,7 +140,7 @@ Una última ventaja es que podemos distribuir el \emph{backend} de JIZT como un 
 
 \subsection{Crunchy PostgreSQL Operator}
 
-De igual modo que Strimzi facilita el despliegue de Kafka en Kubernetes, el operador para PostgreSQL de Crunchy automatiza y simplifica el despliegue de \emph{clústers} PostgreSQL en Kubernetes. Podemos hablar, por tanto, de <<PostgreSQL como servicio>> \cite{crunchy21}.
+De igual modo que Strimzi facilita el despliegue de Kafka en Kubernetes, el operador para PostgreSQL de Crunchy automatiza y simplifica el despliegue de \emph{clústers} PostgreSQL en Kubernetes \cite{crunchy21}.
 
 De este modo, podemos implementar una base de datos que almacene los resúmenes generados\footnote{\, Una de las futuras historias de usuario implementará un <<modo privado>>, de forma que los usuarios tengan la posibilidad de generar sus resúmenes sin que se almacenen de manera permanente.}, con dos propósitos principales: (a) servir como capa de caché, evitando tener que producir el mismo resumen en repetidas ocasiones, y (b) construir un \emph{dataset} que se podría utilizar en un futuro para tareas de evaluación, o incluso para el entrenamiento de otros modelos.
 
@@ -179,33 +180,46 @@ Flutter un \emph{kit} de herramientas de UI (interfaz de usuario) que, a partir 
 \begin{itemize}
 	\item [\textbullet] Un desarrollo más rápido, dado que solo se trabaja en una única base de código.
 	\item [\textbullet] Costes más bajos, ya que solo mantenemos un proyecto en vez de varios.
-	\item [\textbullet] Una mayor consistencia, proporcionando al usuario la misma interfaz gráfica y herramientas en las distintas plataformas.
+	\item [\textbullet] Una mayor consistencia, proporcionando al usuario la misma interfaz gráfica y herramientas en las distintas plataformas, conservando los patrones de interacción de cada una de ellas.
 \end{itemize}
 
 Pese a ser desarrollado por Google desde su nacimiento en 2017, Flutter cuenta en la actualidad con un gran apoyo de la comunidad \emph{open-source}. Esto ha facilitado la resolución de dudas y errores a la hora de desarrollar nuestra aplicación.
 
 Flutter emplea el lenguaje Dart, el cual guarda similitudes con otros lenguajes como Java o C\#. Existen numerosos aspectos de Flutter y Dart que cabría explicar; no obstante, en pos de la brevedad introduciremos uno de los que más interesantes y relevantes nos parecen para este proyecto: ¿Cómo se consigue que Dart pueda ser ejecutado nativamente en plataformas que pueden resultar tan dispares como Android, iOS, \emph{web}, Windows o Linux?
 
-Para responder a esta pregunta, veamos una a una las opciones que ofrece Dart a la hora de ser compilado ejecutado.
+Para responder a esta pregunta, es importante comenzar indicando que en Flutter, en el entorno de desarrollo se opera de manera diferente al entorno de producción.
 
-\subsubsection{Ejecución independiente (\emph{stand-alone})}
+Veamos cuáles son las diferencias principales.
 
-Esta opción es similar a cómo otros lenguajes, como Java, trabajan. Así como Java requiere de la JVM (\emph{Java Virtual Machine}) para ejecutarse, Dart también dispone de su DVM (\emph{Dart Virtual Machine}).
+\subsubsection{Desarrollo nativo (plataformas x64/ARM)}
 
-No obstante, utilizando Dart de este modo, solo podremos ejecutarlo si existe una DVM. Para poderlo ejecutar en cualquier plataforma, necesitamos usarlo en conjunción con Flutter \cite{miola20}.
+Así como Java requiere de la JVM (\emph{Java Virtual Machine}) para ejecutarse, Dart también dispone de su propia DVM (\emph{Dart Virtual Machine}).
 
+Durante el desarrollo, la máquina DVM se utiliza en combinación con un compilador JIT (\emph{Just In Time}), es decir, se lleva a cabo una compilación en tiempo de ejecución, en lugar de antes de la ejecución. Esto permite tratar con el código de forma dinámica independientemente de la arquitectura de la máquina del usuario.
 
-\subsubsection{Compilación anticipada (AOT, \emph{Ahead-of-time} Compilation)}
-
-La compilación AOT consiste en traducir un lenguaje de alto nivel, como en este caso Dart, en código máquina nativo \cite{aot-wiki}. Este código máquina sí que será dependiente del sistema.
-
-Gracias a la compilación anticipada, podemos obtener, a partir de nuestro código escrito en Dart, un fichero ejecutable para las distintas plataformas, esto es \texttt{.apk} o \texttt{.aab} para Android, \texttt{.exe} para Windows, etc..
+Además, esta forma de operar, hace posible lo que se conoce como \emph{hot reload}, que permite ver los cambios realizados en la aplicación de manera prácticamente instantánea, dado que los cambios en el código se transfieren a la DVM, pero se conserva el estado de la \emph{app} \cite{flutter-hot-reload}. Esto decrementa notablemente los tiempos empleados en el \emph{debug} de las aplicaciones.
 
 
-\subsubsection{\emph{Web}}
+\subsubsection{Desarrollo \emph{web}}
 
-El código Dart también puede ser traducido a HTML, CSS y JavaScript. Esto significa que podemos ejecutar nuestra aplicación en Chrome o Firefox\footnote{Por ahora, solo Chrome, Safari, Edge y Firefox están soportados, este último solo en su versión de escritorio con WebGL habilitado.}, y la interfaz gráfica será la misma que en el resto de plataformas.
+Durante el desarrollo, el compilador de desarrollo Dart, conocido como \texttt{dartdevc}, permite ejecutar y depurar aplicaciones \emph{web} Dart en Google Chrome. Usado en combinación con otras herramientas como \texttt{webdev}, el cual proporciona un servidor \emph{web} de desarrollo, podemos visualizar en nuestro navegador los cambios realizados en el código fuente de manera casi inmediata.
 
-Es importante mencionar, que el soporte para \emph{web} de Flutter se encuentra aún en fase \emph{beta}, por lo que no se recomienda para producción \cite{flutter-web}.
 
-No obstante, nosotros no hemos experimentado problemas con nuestra aplicación en ninguno de los navegadores soportados.
+\subsubsection{Producción nativa (plataformas x64/ARM}
+
+En este caso se emplea lo que se conoce como compilación anticipada (AOT, \emph{Ahead-of-time} Compilation). Gracias a este tipo de compilación, Flutter es capaz de traducir un lenguaje de alto nivel, como en este caso Dart, a código máquina x64/ARM nativo \cite{aot-wiki}. Este código máquina sí que va a ser dependiente del sistema.
+
+Como consecuencia de lo anterior:
+
+\begin{itemize} [\textbullet]
+	\item En este caso ya no es necesario emplear una DVM, ya que con la compilación AOT obtenemos, para cada plataforma, un único binario ejecutable (\texttt{.apk} o \texttt{.aab} para Android, \texttt{.exe} para Windows, etc.).
+	\item La compilación AOT es lo que realmente convierte a Flutter en una herramienta rápida y portable.
+\end{itemize}
+
+\subsubsection{Producción \emph{web}}
+
+El código Dart también puede ser traducido a HTML, CSS y JavaScript (en el caso de este último gracias a una herramienta llamada \texttt{dart2js}).
+
+Esto significa que podemos ejecutar nuestra aplicación en Chrome o Firefox\footnote{\, Por ahora, solo Chrome, Safari, Edge y Firefox están soportados, este último solo en su versión de escritorio con WebGL habilitado.}, y la interfaz gráfica será la misma que en el resto de plataformas.
+
+Es importante mencionar, que el soporte para \emph{web} de Flutter se encuentra aún en fase \emph{beta}, por lo que no se recomienda para producción \cite{flutter-web}. No obstante, nosotros no hemos experimentado problemas con nuestra aplicación en ninguno de los navegadores soportados.
