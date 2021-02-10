@@ -139,25 +139,25 @@ Expliquemos de forma más detallada cada una de ellas, comenzando por la capa de
 
 \subsubsection{Capa de datos}
 
-En esta capa se hace uso del patrón repositorio, el cual sitúa un componente intermedio entre la capa de dominio y el mapeo de los datos a fin de aislar los objetos del dominio de los detalles de implementación concretos a la hora de acceder a la fuente de datos \cite{vernon13}.
+En esta capa se hace uso del patrón repositorio, el cual sitúa un componente intermedio entre la capa de dominio y la fuente de los datos a fin de aislar los objetos del dominio de los detalles de implementación concretos a la hora de acceder a la fuente de datos \cite{vernon13}. Es importante mencionar que el repositorio, se \emph{implementa} en la capa de datos, pero se \emph{define} en la capa de dominio. De esta forma, conseguimos que la capa de dominio sea a su vez independiente de la implementación concreta de la capa de datos.
 
-Nuestra aplicación implementa un caché local, de forma que, cuando el usuario solicita un resumen, se comprueba primero si dicho resumen ya ha sido generado previamente, acudiendo a la base de datos local, y en caso afirmativo, se recupera directamente el resumen; si no, se aguarda a la respuesta de la API REST.
+Nuestra aplicación implementa un caché local, a fin de que los usuarios puedan acceder a su historial de resúmenes. Adicionalmente, cuando el usuario solicita un resumen, se comprueba primero si dicho resumen ya existe en la base de datos local, y en caso afirmativo, se recupera directamente de allí, lo que mejora los tiempos de respuesta; en caso contrario, se aguarda a la respuesta de la API REST.
 
-Esta capa es el punto de conexión entre tres ámbitos  diferentes: la capa de dominio, la cual explicaremos a continuación, la caché local, y la API REST.
+Esta capa es el punto de conexión entre tres ámbitos  diferentes: la capa de dominio, la cual explicaremos a continuación, la caché local, y la API REST. La forma en que cada uno de estos ámbitos represente los datos (en nuestro caso, los resúmenes) es independiente del resto. Por ejemplo, los datos procedentes de la API REST podrían contener más campos de los que realmente necesitamos o queremos almacenar localmente. Asimismo, por poner otro ejemplo, podría ser que la base de datos local no soportara algunos de los tipos de datos empleados en la capa de dominio, como por ejemplo las enumeraciones.
 
-La forma en que cada uno de estos ámbitos represente los datos (en nuestro caso, los resúmenes) es independiente del resto. Por ello, vamos a contar con tres representaciones diferentes, cada una correspondiéndose con uno de los ámbitos descritos:
+Por ello, vamos a contar con tres representaciones diferentes, cada una correspondiéndose con uno de los ámbitos descritos:
 
 \begin{itemize}[\textbullet]
 	\item \emph{Domain Model}: es la representación de los resúmenes propia de la capa de dominio.
 	\item DTO (\emph{Data Transfer Object}): se corresponde con la representación del \emph{backend}, esto es, la API REST.
-	\item \emph{Entity}: es la representación del caché local.
+	\item \emph{Entity}: es la representación de la base de datos local.
 \end{itemize}
 
 Para que estas tres representaciones diferentes se acoplen correctamente, se hace uso de los \emph{mappers}, los cuales se encargan de transformar la representación de la capa de dominio a DTOs o \emph{Entities}, y viceversa.
 
 \subsubsection{Capa de dominio}
 
-Esta capa define la lógica de negocio de la aplicación, y es independiente de la plataforma de desarrollo, es decir, en nuestro caso estará escrita puramente en Dart, sin contener ningún elemento de Flutter \cite{flutter-clean-arch}. El motivo reside en que el dominio, como decíamos, solo debe ocuparse de la lógica de negocio, y no de los detalles de implementación. Esto también permite una fácil migración entre plataformas, en caso de ser necesario en algún momento.
+Esta capa define la lógica de dominio de la aplicación, y es independiente de la plataforma de desarrollo, es decir, en nuestro caso estará escrita puramente en Dart, sin contener ningún elemento de Flutter \cite{flutter-clean-arch}. El motivo reside en que el dominio, como decíamos, solo debe ocuparse de la lógica de negocio, y no de los detalles de implementación. Esto también permite una fácil migración entre plataformas, en caso de ser necesario en algún momento.
 
 \subsubsection{Capas de aplicación y presentación}
 
@@ -179,10 +179,19 @@ Una vez introducidos los conceptos, podemos identificar cuatro pasos fundamental
 
 Anteriormente, hemos mencionado el término \emph{widget}. En Flutter, los \emph{widgets} son los elementos que conforman la interfaz de usuario \cite{flutter-widget}, como un botón o un \emph{layout}. Los \emph{widgets} se organizan de forma jerárquica, de modo que toda aplicación tendrá un \emph{widget} raíz, del cual <<colgarán>> el resto de \emph{widgets}, como podemos ver en la \hyperref[flutter-widgets]{siguiente figura}.
 
-\begin{figure}[!h]
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=1\textwidth]{widget-hierarchy}
+	\includegraphics[width=\textwidth]{widget-hierarchy}
 	\caption[Ejemplo de jerarquía de \emph{widgets}.]{Ejemplo de jerarquía de \emph{widgets} de una aplicación sencilla. Imagen del dispositivo móvil extraída de \cite{miola20}.}
 	\label{flutter-widgets}
 \end{figure}
 
+
+
+\subsection{Distribución de la aplicación}
+
+\subsubsection{GitHub pages}
+TODO
+
+\subsubsection{Play Store}
+TODO
