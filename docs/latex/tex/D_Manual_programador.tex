@@ -2,10 +2,557 @@
 
 \section{Introducción}
 
-\section{Estructura de directorios}
+En este apéndice se detalla toda la información que pueda ser de ayuda para cualquier desarrollador interesado en desplegar y/o contribuir al proyecto.
 
-\section{Manual del programador}
+De igual modo a como hemos venido haciendo en los anteriores apéndices, separaremos los detalles referentes al \emph{backend} y al \emph{frontend}, ya que se trata de entornos completamente independientes, cada uno con sus características y peculiaridades concretas.
 
-\section{Compilación, instalación y ejecución del proyecto}
+\section{Documentación técnica del \emph{backend}}
 
-\section{Pruebas del sistema}
+
+\subsection{Estructura de directorios}
+
+La estructura de directorios del \emph{backend} de JIZT, a la cual se puede acceder a través de \href{https://github.com/dmlls/jizt}{github.com/dmlls/jizt}, es la siguiente:
+
+\vspace{-0.2cm}
+\begin{itemize} [\textbullet]
+	\tightlist
+	\item \texttt{/src}: este directorio contiene el código fuente completo del \emph{backend}.
+	\item \texttt{/src/helm}: ficheros relativos a Helm \cite{helm}.
+	\item \texttt{/src/helm/jizt}: ficheros para el despliegue de los componentes relativos a JIZT en Kubernetes.
+	\item \texttt{/src/helm/jizt/charts}: dependencias de paquetes Helm externos.
+	\item \texttt{/src/helm/jizt/jiztlibchart}: librería de plantillas Helm para los componentes de JIZT.
+	\item \texttt{/src/helm/jizt/setup}: \emph{scripts} para el despliegue de JIZT en Kubernetes.
+	\item \texttt{/src/services}: microservicios de JIZT.
+	\item \texttt{/src/services/dispatcher}: microservicio \emph{Dispatcher}.
+	\item \texttt{/src/services/postgres}: esquemas iniciales de la base de datos.
+	\item \texttt{/src/services/t5\_large\_text\_encoder}: microservicio Codificador.
+	\item \texttt{/src/services/t5\_large\_text\_summarizer}: microservicio Generador de resúmenes.
+	\item \texttt{/src/services/text\_postprocessor}: microservicio Postprocesador de texto.
+	\item \texttt{/src/services/text\_preprocessor}: microservicio Preprocesador de texto.
+	\item \texttt{/test}: pruebas unitarias y de sistema.
+\end{itemize}
+
+\subsection{Manual del programador}
+
+En esta sección, se recogen todos los detalles necesarios para la instalación y despliegue de la arquitectura de microservicios en Kubernetes.
+
+\subsubsection{Instalación y despliegue del \emph{backend}}
+
+El primer paso será descargarnos el código fuente correspondiente al \emph{backend}, clonando el repositorio del proyecto alojado en GitHub:
+
+\texttt{git clone https://github.com/dmlls/jizt.git}
+
+Una vez disponemos del código fuente, debemos proceder primero a la instalación y provisión de los prerrequisitos necesarios para la instalación de JIZT.
+
+\textbf{Nota importante}: el despliegue del \emph{backend} requiere de \textbf{conocimientos intermedios de Kubernetes}. En el presente manual, trataremos de explicar el proceso de instalación de la manera más detallada posible. No obstante, \textbf{no podemos condensar todo el conocimiento necesario de Kubernetes en este manual}, dado que para ello ya existe la propia documentación oficial de Kubernetes, la cual se recomienda encarecidamente revisar antes de comenzar la instalación de JIZT. Dicha documentación es accesible a través de \href{https://kubernetes.io/es/docs/home}{https://kubernetes.io/es/docs/home}.
+
+En cualquier caso, para cualquier tipo de ayuda o duda acerca de la instalación o utilización de JIZT, se puede contactar con el equipo de soporte técnico de JIZT a través de la siguiente dirección de correo electrónico: \href{mailto:jizt@diegomiguel.me}{jizt@diegomiguel.me}. Estaremos encantados de atenderle.
+
+\noindent
+\textbf{Prerrequisitos}
+
+La infraestructura en la nube de JIZT se apoya en la utilización de diferentes plataformas y \emph{frameworks} que se deben instalar con antelación.
+
+Se recomienda ejecutar la instalación de JIZT a través de una máquina \textbf{GNU/Linux}. La instalación a través de otros sistemas operativos no ha sido probada y, por tanto, no se asegura una instalación exitosa.
+
+\vspace{0.5cm}
+\noindent
+\textbf{Programas requeridos}
+
+Antes de comenzar con la instalación de JIZT, se deben instalar localmente los siguientes programas:
+
+\vspace{-0.2cm}
+\begin{itemize} [\textbullet]
+	\item \texttt{kubectl}: herramienta de línea de comandos de Kubernetes, empleada para el despliegue y la gestión de aplicaciones en Kubernetes. Se pueden encontrar las instrucciones de instalación en \href{https://kubernetes.io/es/docs/tasks/tools/install-kubectl}{https://kubernetes.io/es/\newline docs/tasks/tools/install-kubectl}.
+	
+	\item \texttt{helm}: CLI para Helm, un popular gestor de paquetes para Kubernetes. Para su instalación, se deben seguir los pasos recogidos en \href{https://helm.sh/docs/intro/install}{https://helm.sh/docs/intro/install}.
+	
+	\item \texttt{pgo}: CLI para el operador de PostgreSQL de Crunchy. A través de esta herramienta, podemos conectarnos con nuestra base de datos PostgreSQL desplegada en Kubernetes. Se puede consultar \href{https://access.crunchydata.com/documentation/postgres-operator/4.5.1/installation/pgo-client}{https://access.\newline crunchydata.com/documentation/postgres-operator/4.5.1/installation/\newline pgo-client} para su instalación.
+	
+	\item SDK de Google Cloud: este SDK nos permite conectarnos y gestionar \emph{clústers} de Kubernetes alojados en Google Cloud. En \href{https://cloud.google.com/sdk/docs/install}{https://cloud.\newline google.com/sdk/docs/install} se detalla el proceso de instalación.
+
+\end{itemize}
+
+Se considera, asimismo, que el programador cuenta con \texttt{git} de antemano. En caso contrario, puede acceder a las instrucciones para su instalación en \href{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}.
+
+\vspace{0.3cm}
+\noindent
+\textbf{Requisitos de \emph{hardware}}
+
+La arquitectura ha de desplegarse, como es lógico, en un servidor físico. Existen dos alternativas para ello:
+
+\vspace{-0.2cm}
+\begin{itemize} [\textbullet]
+	\item \textbf{\emph{Bare metal}}: con esta opción, se dispone de un servidor dedicado en el que es necesario instalar todas las dependencias (listadas a continuación) manualmente.
+
+	\item \textbf{\emph{Cloud provider}}: \textbf{esta es la opción de despliegue recomendada}. En este caso, contratamos un servicio \emph{cloud} con un \emph{cloud provider} concreto, como puede ser Google Cloud, Amazon Web Services (AWS), o Microsoft Azure. Estos \emph{cloud providers} disponen de servicios concretos para el despliegue de aplicaciones en Kubernetes (como Google Kubernetes Engine, GKE, en el caso de Google Cloud). Esto facilita en gran medida la labor de despliegue.
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent
+\textbf{Despliegue en Google Kubernetes Engine (GKE)}
+
+Google Kubernetes Engine, GKE, ha sido la plataforma con la que se ha trabajado en el desarrollo del proyecto. Es, por tanto, la \textbf{opción que más garantías de correcto funcionamiento ofrece}.
+
+Google Cloud ofrece actualmente 300\$ de crédito gratuitos durante 90 días la primera vez que nos registramos en el servicio.
+
+Para la creación de una cuenta de Google Cloud, y la creación de un clúster de Kubernetes en GKE, se deben seguir los pasos recogidos en la siguiente página: \href{https://cloud.google.com/kubernetes-engine/docs/quickstart}{https://cloud.google.com/kubernetes-engine/docs/quickstart}.
+
+La configuración recomendada a la hora de crear un nuevo clúster es la siguiente:
+
+\vspace{-0.2cm}
+\begin{itemize} [\textbullet]
+	\tightlist
+	\item \textbf{Tipo de ubicación}: zonal.
+	\item \textbf{Zona principal}: europe-west2-a.
+	\item \textbf{Canal de versiones}: Canal rápido.
+	\item \textbf{Versión}: 1.18.12-gke.1206.
+	\item \textbf{Nodos}:
+	\begin{itemize} [◦]
+		\tightlist
+		\item \textbf{Número de nodos}: 1.
+		\item \textbf{Tipo de máquina}: e2-standard-4 (4 vCPUS, 16GB de RAM).
+		\item \textbf{Tipo de imagen}; Container-Optimized OS con Docker (cos).
+	\end{itemize}
+\end{itemize}
+
+Además, se debe crear un Disco Persistente de GCE, siguiendo los pasos listados en \href{https://cloud.google.com/compute/docs/disks/add-persistent-disk?hl=es-419}{https://cloud.google.com/compute/docs/disks/add-persistent-disk?hl=es-419}. En este disco, se almacenarán los modelos de generación de lenguaje que empleará JIZT.
+
+Actualmente, se hace uso del modelo \textbf{t5-large} implementado por Hugging Face, el cual se puede descargar a través del siguiente \emph{link}: \href{https://huggingface.co/t5-large}{https://huggingface.\newline co/t5-large}. Este modelo se divide a su vez en el \emph{tokenizer}, encargado de la codificación, y el modelo propiamente dicho, el cual se encarga de la generación de los resúmenes.
+
+Una vez tenemos el modelo descargado localmente, los cargaremos en el Disco Persistente creado anteriormente. Para ello, nos conectamos a través de \texttt{ssh} o desde la Consola de Google Cloud (\href{https://cloud.google.com/compute/docs/instances/connecting-to-instance?hl=es-419#console}{más información}), y copiamos el modelo a las siguientes rutas:
+
+\vspace{-0.2cm}
+\begin{itemize} [\textbullet]
+	\tightlist
+	\item El \emph{tokenizer} debe estar alojado en el directorio \\ \texttt{/home/text\_encoder/models}.
+	\item El modelo debe situarse en \texttt{/home/text\_summarizer/models}.
+\end{itemize}
+
+Finalizados estos pasos, estamos en disposición de instalar las dependencias de JIZT.
+
+\vspace{0.5cm}
+\noindent
+\textbf{Instalación del Operador de PostgreSQL}
+
+Este operador nos permite desplegar PostgreSQL en Kubernetes. Para su instalación y despliegue, se deben seguir los pasos recogidos en \href{https://access.crunchydata.com/documentation/postgres-operator/4.5.1/installation/other/google-cloud-marketplace}{https://access.crunchydata.com/documentation/postgres-operator/4.5.1/\newline installation/other/google-cloud-marketplace}.
+
+Una vez instalado el operador, nos conectaremos al clúster de PostgreSQL creado del siguiente modo: \href{https://access.crunchydata.com/documentation/postgres-operator/4.5.1/tutorial/connect-cluster}{https://access.crunchydata.com/documentation/\newline postgres-operator/4.5.1/tutorial/connect-cluster}.
+
+Una vez conectados al cluster, debemos ejecutar el \emph{script} SQL situado en el directorio del proyecto de JIZT: \texttt{src/services/postgres/schemas.sql}. Este \emph{script} proveerá la base de datos con la estructura de tablas inciales.
+
+Finalmente debemos crear un \emph{secret} de Kubernetes conteniendo los detalles de conexión a la base de datos, esto es, el nombre de usuario y la contraseña especificados a la hora de instalar el \emph{clúster} de PostgreSQL. Para ello, se deben seguir los pasos indicados en \href{https://kubernetes.io/docs/concepts/configuration/secret/#creating-a-secret}{https://kubernetes.io/docs/\newline concepts/configuration/secret/\#creating-a-secret}.  El nombre del secreto debe ser ``\texttt{pg-dispatcher}''.
+
+\vspace{0.5cm}
+\noindent
+\textbf{Instalación de JIZT}
+
+La instalación de los prerrequisitos es, probablemente, la parte más complicada de todo el proceso de instalación.
+
+Por suerte, para la instalación de JIZT, hemos creado un \emph{script} bash que automatiza el despliegue de Strimzi (Kafka en Kubernetes) y de los componentes propios de JIZT\footnote{\, Este \emph{script} solo se ha probado en GNU/Linux. No se asegura su correcto funcionamiento en otros sistemas operativos.}.
+
+Dicho \emph{script} se encuentra en el directorio \texttt{src/helm/setup/setup.sh}. Si se ejecuta sin especificar ninguna opción, se instalan los componentes tanto de Strimzi como de JIZT. El \emph{script} también admite la opción \texttt{-p} o \texttt{-{}-partial} para realizar una instalación parcial únicamente de los componentes de JIZT. Esto es útil para el caso de que ya hayamos instalado previamente los componentes relativos a Strimzi.
+
+Podemos comprobar la correcta instalación de los componentes ejecutando: \texttt{kubectl get deployment}. Deberían aparecer los siguientes \emph{deployments}:
+
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\tightlist
+	\item \texttt{dispatcher-deployment}
+	\item \texttt{jizt-cluster-entity-operator}
+	\item \texttt{t5-large-text-encoding-deployment}
+	\item \texttt{t5-large-text-summarization-deployment}
+	\item \texttt{text-postprocessing-deployment}
+	\item \texttt{text-preprocessing-deployment}
+\end{itemize}
+
+\subsubsection{Fichero de configuración de Kubernetes}
+
+A través del fichero \texttt{src/helm/jizt/values.yaml}, se pueden configurar los parámetros de instalación y despliegue de JIZT en Kubernetes.
+
+A continuación, se detallan los parámetros que este fichero permite modificar:
+
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item \texttt{namespace}: \emph{namespace} (espacio de nombres) en el que se instalarán los componentes de JIZT. Para más información sobre los \emph{namespaces} de Kubernetes, se puede consultar \href{https://kubernetes.io/es/docs/concepts/overview/working-with-objects/namespaces}{https://kubernetes.io/es/docs/concepts/\newline overview/working-with-objects/namespaces}.
+	
+	\item \texttt{ingress}: configuración de Ingress. Para más información sobre el componente Ingress de Kubernetes, se puede visitar \href{https://kubernetes.io/docs/concepts/services-networking/ingress}{https://kubernetes.io/\newline docs/concepts/services-networking/ingress}.
+	
+	\item \texttt{replicaCount}: número de réplicas global para todos los \emph{deployments}. Es decir, si por ejemplo se configura con 2 réplicas, todos los \emph{deployments} relativos a JIZT tendrán 2 \emph{pods}.
+	
+	\item \texttt{autoscaling}: permite activar o desactivar el auto-escalado, de modo que en momentos de mayor carga, el número de réplicas aumente automáticamente. Desactivado por defecto.
+	
+	\item \texttt{dispatcher}: configuración relativa al \emph{deployment} del \emph{Dispatcher}.
+	\begin{itemize} [◦]
+		\item \texttt{name}: nombre del microservicio.
+		\item \texttt{ports}: puertos relativos al microservicio.
+		\begin{itemize} [-]
+			\item \texttt{svc}: puerto del \emph{service} asociado al \emph{deployment}.
+			\item \texttt{container}: puerto de la aplicación que se ejecuta en la imagen Docker que emplean los \emph{pods} del \emph{deployment}.
+		\end{itemize}
+		\item \texttt{image}: imagen Docker que ejecutan los \emph{pods} del \emph{deployment}.
+	\end{itemize}
+
+	\item Los campos del \texttt{dispatcher} son comunes al resto de microservicios, esto es \texttt{textPreprocessor}, \texttt{t5LargeTextEncoder}, \texttt{t5LargeTextSumma}-\texttt{rizer}, y \texttt{textPostprocessor}.
+	
+	\item \texttt{t5LargeTextEncoder} y \texttt{t5LargeTextSummarizer}: además de los campos comunes a \texttt{dispatcher}, estos microservicios disponen de la siguiente configuración:
+	\begin{itemize} [◦]
+		\item \texttt{volumeMounts}: configuración relativa al Volumen Persistente en el que se almacenan los modelos de \emph{tokenización} y generación de resúmenes.
+		\begin{itemize} [-]
+			\item \texttt{modelsMountPath}: ruta (directorio) en la que se encuentran almacenados los modelos.
+			
+			\item \texttt{tokenizerPath}: ruta del \emph{tokenizer}. Esto es, la ruta absoluta del \emph{tokenizer} será \texttt{modelMountPath/tokenizerPath}.
+			
+			\item \texttt{modelPath}: ruta del modelo generador de resúmenes. Esto es, la ruta absoluta del modelo generador será \texttt{modelMountPath/\newline modelPath}.
+		\end{itemize}
+	\end{itemize}	
+		
+	\item \texttt{t5LargeTextSummarizer}: además de los campos mencionados anteriormente, este microservicio permite establecer los parámetros por defecto para la generación de resúmenes a través del campo \texttt{params}. El significado de cada uno de los parámetros se recoge en la sección correspondiente a la \hyperref[subsection:api-docs]{Documentación de la API REST}.
+
+	\item \texttt{postgres}: configuración referente a la base de datos PostgreSQL.
+	
+	\begin{itemize} [◦]
+		\item \texttt{host}: \emph{host} de PostgreSQL.
+		\item \texttt{dbName}: nombre de la base de datos.
+		\item \texttt{secret}: información relativa al \emph{secret} de Kubernetes que contiene el nombre de usuario y la contraseña de PostgreSQL.
+	\end{itemize}
+
+	\item \texttt{modelsPV}: configuración relativa al Volumen Persistente en el que se alojan los modelos.
+	
+	\item \texttt{kafka}: configuración de Kafka. Para más información, se puede consultar la documentación de Strimzi en \href{https://strimzi.io/docs/0.5.0}{https://strimzi.io/docs/0.5.0}.
+	\begin{itemize} [◦]
+		\item \texttt{name}: nombre del \emph{clúster} de Kafka.
+		\item \texttt{namespace}: espacio de nombres en el que se desplegarán los componentes de Kafka.
+		\item \texttt{version}: versión de Kafka.
+		\item \texttt{replicas}: número de réplicas de los componentes de Kafka.
+		\item \texttt{resources}: límites de recursos para los componentes de Kafka.
+		\begin{itemize} [-]
+			\item \texttt{memoryRequests}: memoria solicitada por los componentes de Kafka.
+			\item \texttt{memoryLimits}: límites de memoria que los componentes de Kafka pueden solicitar.
+		\end{itemize}
+		\item \texttt{config}: otras configuraciones.
+		\begin{itemize} [-]
+			\item \texttt{autoCreateTopics}: permitir a Kafka crear \emph{topics} de manera automática. Desactivado por defecto.
+			\item \texttt{messageMaxBytes}: máximo tamaño que un mensaje puede tener. Por defecto 1MB.
+			\item \texttt{topicReplicationFactor}: factor de replicación de los \emph{topics}.
+		\end{itemize}
+		\item \texttt{zookeeper}: configuración relativa al \emph{zookeeper} de Kafka. Se puede encontrar más información relativa a este componente en \href{https://kafka.apache.org/documentation/#zk}{https://kafka.apache.org/documentation/\#zk}.
+	\end{itemize}
+	\item \texttt{topics}: configuración relativa a los \emph{topics} de Kafka. Para más información acerca de los \emph{topics} de Kafka, visitar \href{https://kafka.apache.org/documentation/#intro_topics}{https://kafka.apache.org/\newline documentation/\#intro\_topics}.
+	\begin{itemize} [◦]
+		\item \texttt{partitions}: número de particiones (común a todos los \emph{topics}).
+		\item \texttt{replicas}: número de réplicas (común a todos los \emph{topics}).
+		\item \texttt{retentionMs}: máximo tiempo de retención de los mensajes en los \emph{topics}. Si tras este tiempo, el mensaje no ha sido consumido, se descarta. Por defecto fijado a 10 minutos.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Especificación de la API REST} \label{subsection:api-docs}
+
+En esta sección se incluye documentación detallada sobre la API REST de JIZT. Más concretamente, se especifican los \emph{enpoints} existentes, así como las operaciones HTTP permitidas, y la estructura tanto de las peticiones HTTP, como de las respuestas del \emph{backend}.
+
+\textbf{Nota}: en \href{https://docs.api.jizt.it}{https://docs.api.jizt.it} se puede encontrar la documentación en línea referente a la API REST. Dado que dicha documentación está en inglés, recogemos su traducción al español. El usuario puede referirse a cualquiera de las dos documentaciones, ya que son idénticas.
+
+
+\subsubsection{Operación POST - Solicitar resumen}
+
+\textbf{\emph{Endpoint}}: \texttt{https://api.jizt.it/v1/summaries/plain-text}
+
+\textbf{Petición HTTP}:
+
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item Content-Type: \texttt{application/json}
+	\item Atributos del JSON del cuerpo de la petición\footnote{\, Todos los atributos no marcados como <<obligatorio>> se pueden omitir. En ese caso, tomarán valores por defecto.}:
+	\begin{itemize} [◦]
+		\item \texttt{source} (\emph{string}) \textbf{obligatorio}: el texto a resumir.
+		\item \texttt{model} (\emph{string}): el modelo a emplear para la generación del resumen. Valores permitidos: \texttt{``t5-large''}.
+		\item \texttt{params} (\emph{object}): parámetros del resumen.
+		\begin{itemize} [-]
+			\item \texttt{relative\_max\_length} (\emph{number <float>}): longitud máxima del resumen a generar, relativa a la longitud del texto original. Por ejemplo, un valor de \texttt{0.4} significa que la longitud del resumen será, como máximo, un 40\% de la longitud del texto original.
+			
+			\item \texttt{relative\_min\_length} (\emph{number <float>}): longitud mínima del resumen a generar, relativa a la longitud del texto original.
+			
+			\item \texttt{do\_sample} (\emph{boolean}): usar muestreo o no. Si se establece como falso, se emplea búsqueda voraz\footnote{\, Para más información sobre los distintos tipos de generación de lenguaje, referirse al capítulo de <<Conceptos Teóricos>> de la Memoria}.
+			
+			\item \texttt{early\_stopping} (\emph{boolean}): detener la búsqueda si se terminan \texttt{num\_beams} frases o no.
+			
+			\item \texttt{num\_beams} (\emph{integer <int32>}): número de \emph{beams} en la \emph{beam\_search}. Si se fija como \texttt{1}, no se lleva a cabo \emph{beam search}. Cuanto mayor sea el número, más tiempo tardará en generarse el resumen, pero su calidad será probablemente mejor.
+			
+			\item \texttt{temperature} (\emph{number <float>}): valor utilizado para modular las probabilidades del siguiente \emph{token}.
+			
+			\item \texttt{top\_k} (\emph{integer <int32>}): número de \emph{tókenes} con mayor probabilidad a considerar al realizar muestreo \emph{top-k}.
+			
+			\item \texttt{top\_p} (\emph{number <float>}): si se fija a valores menores de \texttt{1}, solo se consideran los \emph{tókenes} más probables cuya suma de probabilidades es igual o mayor a \emph{top\_k}.
+			
+			\item \texttt{repetition\_penalty} (\emph{number <float>}): penalización aplicada a la repetición de \emph{tókenes}. Si se establece a \emph{1.0} no se aplica penalización.
+			
+			\item \texttt{length\_penalty} (\emph{number <float>}): penalización aplicada de manera exponencial a la longitud de las secuencias generadas. Si se establece a \texttt{1.0} no hay penalización. Valores por debajo de \texttt{1.0} resultarán en resúmenes más cortos.
+			
+			\item \texttt{no\_repeat\_ngram\_size} (\emph{integer <int32>}):longitud de los \emph{n-gramas} que se pueden repetir una única vez. Por ejemplo, si se fija a \emph{2}, las palabras ``Ingeniería Informática'' solo podrán aparecer una vez en el resumen.
+		\end{itemize}
+		\item \texttt{language}  (\emph{string}): el idioma del texto. Valores permitidos: \texttt{``en''}.
+	\end{itemize}
+\end{itemize}
+
+\textbf{Respuestas}
+
+\textbf{\emph{Status code}: 200 OK}
+
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item \emph{Response schema}: \texttt{application/json}
+	\item Atributos del JSON del cuerpo de la respuesta:
+	\begin{itemize} [◦]
+		\item \texttt{summary\_id} (\emph{string}): el \emph{id} del resumen.
+		
+		\item \texttt{started\_at} (\emph{string <date-time>}): el instante de tiempo en el que se solicitó por primera vez un resumen con un texto de entrada, parámetros, y modelo específicos.
+		
+		\item \texttt{ended\_at} (\emph{string <date-time>}): el instante de tiempo en el que se finalizó por primera vez un resumen con un texto de entrada, parámetros, y modelo específicos. Restando este valor al anterior, se puede conocer el tiempo que tomó la generación del resumen.
+		
+		\item \texttt{status} (\emph{string}): el estado del resumen. Posibles valores: \texttt{``preprocessing''}, \texttt{``encoding''}, \texttt{``summarizing''}, \texttt{``postprocessing''}.
+		
+		\item \texttt{output} (\emph{string}): el resumen generado.
+		
+		\item \texttt{model} (\emph{string}): modelo empleado para la generación del resumen. Valores posibles: \texttt{``t5-large''}.
+		
+		\item \texttt{params} (\emph{object}): los parámetros con los que se ha generado el resumen (mismo esquema que en la petición).
+		
+		\item \texttt{language}  (\emph{string}): el idioma del resumen. Valores posibles: \texttt{``en''}.
+	\end{itemize}
+\end{itemize}
+
+\textbf{\emph{Status code}: 502 Server Error}
+
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item \emph{Response schema}: \texttt{text/html; charset=utf-8}
+\end{itemize}
+
+\vspace{0.5cm}
+\subsubsection{Operación GET - Consultar resumen}
+
+\textbf{\emph{Endpoint}}: \texttt{https://api.jizt.it/v1/summaries/plain-text/\{summaryId\}}
+
+\textbf{Parámetros del \emph{path}}: 
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item \texttt{summaryId} (\emph{string}) \textbf{obligatorio}: el \emph{id} del resumen a consultar.
+\end{itemize}	
+	
+	
+\textbf{Respuestas}
+
+\textbf{\emph{Status code}: 200 OK}
+
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item \emph{Response schema}: \texttt{application/json}
+	\item Atributos del JSON del cuerpo de la respuesta: mismos que en la respuesta HTTP 200 de la operación POST.
+\end{itemize}
+
+\textbf{\emph{Status code}: 404 Not found}
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item \emph{Response schema}: \texttt{application/json}
+	
+	\item Atributos del JSON del cuerpo de la respuesta:
+	\begin{itemize} [◦]
+		\item \texttt{errors} (\emph{string}): mensaje de error.
+	\end{itemize}
+\end{itemize}
+
+\textbf{\emph{Status code}: 502 Server Error}
+
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item \emph{Response schema}: \texttt{text/html; charset=utf-8}
+\end{itemize}
+
+\vspace{0.5cm}
+\subsubsection{Operación GET - Salud del servidor}
+
+\textbf{\emph{Endpoint}}: \texttt{https://api.jizt.it/v1/healthz}
+
+\vspace{0.3cm}
+\textbf{Respuestas}
+
+\textbf{\emph{Status code}: 200 OK}
+
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item \emph{Response schema}: \texttt{text/html; charset=utf-8}
+\end{itemize}
+
+\textbf{\emph{Status code}: 502 Server Error}
+
+\vspace{-0.3cm}
+\begin{itemize} [\textbullet]
+	\item \emph{Response schema}: \texttt{text/html; charset=utf-8}
+\end{itemize}
+
+
+\subsection{Pruebas del sistema}
+
+TODO
+
+
+
+\section{Documentación técnica de la aplicación}
+
+En esta sección, se recoge toda la información necesaria para poder trabajar sobre el código fuente de la aplicación, así como compilarlo.
+
+
+\subsection{Estructura de directorios}
+
+La estructura de directorios de la aplicación de JIZT, a la cual se puede acceder a través de \href{https://github.com/dmlls/jizt-app}{github.com/dmlls/jizt-app}, es la siguiente:
+
+\vspace{-0.2cm}
+\begin{itemize} [\textbullet]
+	\tightlist
+	\item TODO
+\end{itemize}
+
+
+\subsection{Manual del programador}
+
+Una vez introducida la estructura de directorios, explicaremos cómo podemos compilar la aplicación para las diferentes plataformas, y qué programas necesitamos para ello.
+
+\subsubsection{Prerrequisitos}
+
+Lo primero que debemos hacer, es instalar Flutter en nuestro ordenador. Flutter está disponible para GNU/Linux, macOS, Windows, y Chrome OS. A diferencia del caso del \emph{backend}, el cual recomendamos instalar y desplegar empleando un dispositivo GNU/Linux, la compilación de la \emph{app} se puede llevar a cabo en el sistema operativo que el programador considere oportuno.
+
+Las instrucciones para instalar Flutter en los distintos sistemas operativos se pueden encontrar en \href{https://flutter.dev/docs/get-started/install}{https://flutter.dev/docs/get-started/install}.
+
+Se considera, asimismo, que el programador cuenta con \texttt{git} de antemano. En caso contrario, puede acceder a las instrucciones para su instalación en \href{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}.
+
+\subsubsection{Entorno de desarrollo}
+
+Para conseguir la mejor experiencia de desarrollo en Flutter, se recomienda emplear uno de los siguientes tres IDEs:
+
+\vspace{-0.2cm}
+\begin{itemize} [\textbullet]
+	\item \textbf{Android Studio}: se trata del IDE que proporciona oficialmente Google para el desarrollo de aplicaciones Android \cite{android-studio}.
+	
+	\item \textbf{IntelliJ IDEA}: es otro de los IDEs recomendados para el desarrollo en Flutter, en este caso desarrollado por JetBrains. Como curiosidad, Android Studio se construyó sobre este IDE \cite{intellij}.
+	
+	\item \textbf{Visual Studio Code}: este es el tercer IDE recomendado, desarrollado por Microsoft \cite{visual-code}.
+\end{itemize}
+
+Estos tres IDEs cuentan con sendos \emph{plugins} para la programación en Dart en el contexto de Flutter. Se puede encontrar más información de como configurar cada uno de los IDEs a través de la documentación oficial de Flutter: \href{https://flutter.dev/docs/development/tools/android-studio}{https://flutter.dev/docs/development/tools/android-studio}.
+
+
+\subsubsection{Compilación de la aplicación}
+
+La compilación de la \emph{app} requiere únicamente de tres comandos:
+
+\vspace{-0.2cm}
+\begin{itemize} [\textbullet]
+	\item Clonar el repositorio desde GitHub: \\
+	\texttt{git clone https://github.com/dmlls/jizt-app.git}
+	
+	\item Descargar los paquetes requeridos por la aplicación: \\
+	\texttt{flutter pub get}
+	
+	\item Compilar la aplicación para la plataforma deseada:
+	
+	\texttt{flutter build [appbundle|apk|ios|web|linux|windows|macos]}
+	
+	\begin{itemize} [◦]
+		\item \texttt{appbundle}: compila a un App Bundle de Android.
+		\item \texttt{apk}: compilar a una APK de Android.
+		\item \texttt{ios}: compilar una aplicación para iOS. Solo se puede ejecutar desde MacOS.
+		\item \texttt{web}: compilar para \emph{web}\footnote{\, El soporte de Flutter para \emph{web} se encuentra aún en fase \emph{beta} \cite{flutter-web}. No se recomienda su uso en producción.}.
+		\item \texttt{linux}: compilar para GNU/Linux\footnote{\, El soporte de Flutter para escritorio (GNU/Linux, MacOS y Windows) se encuentra en fase \emph{alfa} \cite{flutter-desktop}. No se recomienda su uso fuera del entorno de desarrollo.}. Solo se puede ejecutar desde Linux.
+		\item \texttt{windows}: compilar para Windows. Solo se puede ejecutar desde Windows.
+		\item \texttt{macos}: compilar para MacOS. Solo se puede ejecutar desde MacOS.
+	\end{itemize}
+\end{itemize}
+
+Con estos tres sencillos pasos, obtendremos un binario de la aplicación para la plataforma deseada.
+
+
+
+\section{Contribuir al proyecto}
+
+A fin de organizar las posibles contribuciones de la comunidad al proyecto JIZT, se ha creado un documento que contiene algunas pautas y recomendaciones a la hora de contribuir.
+
+Dicho documento es válido tanto para el caso del \emph{backend}, como de la aplicación. Se ha escrito en un registro informal, a fin de animar todo tipo de contribuciones, por muy pequeñas que parezcan, ya que no es necesario tener conocimientos de programación para contribuir al proyecto.
+
+El documento se puede consultar en línea a través de \href{https://github.com/dmlls/jizt/blob/main/CONTRIBUTING.md}{https://github.com/\newline dmlls/jizt/blob/main/CONTRIBUTING.md},
+
+En cualquier caso, lo incluimos en este documento también, por considerarlo de interés:
+
+\begin{quote}
+	\textbf{Contribuir a JIZT}
+	
+	En primer lugar, queremos darte las gracias por tu interés en
+	contribuir a JIZT. Las contribuciones de la comunidad son esenciales
+	para hacer de JIZT un proyecto aún mejor. Queremos que dichas
+	contribuciones sean lo más fáciles de llevar a cabo como sea posible.
+	Existen una serie de pautas que pedimos que sigan aquellos que quieran
+	contribuir al proyecto, a fin de mantener una buena organización.
+	
+	\medskip
+	\textbf{¿Cómo contribuir al proyecto?}
+	
+	
+	Existen numerosas formas en las que puedes contribuir al proyecto. Por ejemplo:
+	
+	\vspace{-0.2cm}
+	\begin{itemize} [\textbullet]
+		\item Ayudando a mantener, corregir errores o traducir la documentación para que más personas puedan conocer acerca de JIZT.
+	
+		\item Enviando reportes de errores o cualquier otro tipo de problemas.
+	
+		\item Escribiendo \emph{patches} para corregir \emph{bugs} conocidos.
+	
+ 		\item Aportando ideas para nuevas funcionalidades.
+	
+		\item Desarrollando código que implemente nuevas funcionalidades solicitadas.
+	
+		\item Contándole a tus amigos lo increíble que es JIZT.
+	
+		\item Escribiendo \emph{posts} o \emph{blogs} acerca de JIZT, o tutoriales para que otros aprendan a usarlo.
+	\end{itemize}
+	
+	\medskip
+	\textbf{¿Cómo solicitar incluir código al proyecto?}
+	
+	Para contribuir con tu código al proyecto, crea primero una \emph{Pull request} y
+	realiza las modificaciones o adicciones pertinentes.
+	
+	Altenativamente, puedes hacer un \emph{Fork} manual, realizar las modificaciones,
+	y más tarde abrir una \emph{Pull request}.
+	
+	Por favor, no olvides explicar de manera detallada y clara los cambios
+	implementados en la \emph{Pull request}. De lo contrario, no podremos considerar
+	tu contribución.
+	
+	\medskip
+	\textbf{¿Cómo reportar errores?}
+	
+	Los reportes de errores nos ayudan a mejorar. Si has encontrado un error,
+	puedes abrir una \emph{Issue} utilizando la
+	\href{https://github.com/dmlls/jizt/issues/new?assignees=&labels=bug&template=reportar-error.md\&title=}{plantilla}	habilitada para ello.
+	
+	Por favor, revisa primero que el error que has encontrado no ha sido
+	reportado previamente.
+	
+	\smallskip
+	\textbf{Nota importante}: si encuentras una vulnerabilidad de seguridad, NO
+	abras una \emph{Issue}. Envíanos un mensaje a \\ \href{mailto:jizt@diegomiguel.me}{jizt@diegomiguel.me}.
+	
+	\medskip
+	\textbf{¿Cómo solicitar nuevas funcionalidades?}
+	
+	Si tienes una idea genial de una funcionalidad que crees que JIZT debería tener, ¡no dudes en contárnosla! Para ello, crea una \href{https://github.com/dmlls/jizt/discussions/new}{nueva discusión} con el título ``[Feature Request]'' seguido de tu idea.
+	
+	Por favor, revisa primero que la funcionalidad deseada no ha sido sugerida
+	previamente.
+	
+	Trataremos de atender todas las peticiones, pero trata de ser paciente,
+	aún somos un equipo pequeñito :)
+	
+	¿Te ha quedado alguna duda? ¡Escríbenos a
+	\href{mailto:jizt@diegomiguel.me}{jizt@diegomiguel.me}! Estaremos encantados de	ayudarte.
+\end{quote}
