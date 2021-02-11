@@ -107,14 +107,24 @@ def pull(response):
         assert response.status_code == 200  # OK
 
 
-def validate_response(response, status_code):
+def validate_response(response):
     """Validate HTTP response."""
 
-    assert response.status_code == status_code
+    assert response.status_code == 202  # Accepted
+    validate_fields(response)
     response = pull(response).json()
+    validate_fields(response)
     # Check that we got something as output
     assert len(response['output']) > 0
-    assert all(key in response for key in ('model', 'params', 'language'))
+
+
+def validate_fields(response):
+    """Check that a response contains all fields."""
+
+    assert all(key in response for key in ("summary_id", "started_at",
+                                           "ended_at", "status",
+                                           "output", "model",
+                                           "params", "language"))
     assert len(response['params']) == 11  # currently, there are 11 summary parameters
 
 
@@ -134,11 +144,27 @@ def test_request_only_source():
     # We add a hash at the end of the source to avoid caching
     json_attributes = {'source': f"{TEXT} {hash(random.random())}"}
     response = post(json_attributes)
-    validate_response(response, 202)  # Accepted
+    validate_response(response)
 
 
+def test_request_source_and_a_few_params():
+    # We add a hash at the end of the source to avoid caching
+    json_attributes = {'source': f"{TEXT} {hash(random.random())}",
+                       'params': {"relative_max_length": 0.4,
+                                  "relative_min_length": 0.2,
+                                  "do_sample": True}}
+    response = post(json_attributes)
+    validate_response(response)
 
 
+def test_request_source_and_non_existent_params():
+    # We add a hash at the end of the source to avoid caching
+    json_attributes = {'source': f"{TEXT} {hash(random.random())}",
+                       'params': {"relative_max_length": 0.4,
+                                  "non-existing-param": True,  #  should be ignored
+                                  "another-non-exixsting-param": 11}}
+    response = post(json_attributes)
+    validate_response(response)
 
 
 #def test_request_source_and_model
