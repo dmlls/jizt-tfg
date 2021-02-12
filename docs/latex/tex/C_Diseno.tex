@@ -240,11 +240,102 @@ El Post-procesador de textos tiene las siguientes clases.
 
 \subsubsection{\Large \emph{Frontend}}
 
-TODO
+El \emph{frontend} está compuesto por la aplicación multiplataforma desarrollada siguiendo los patrones de \emph{Clean Architectura} y Diseño guiado por el dominio \emph{Domain Driven Design}. Para conocer los detalles concretos de la implementación de la arquitectura de la \emph{app}, se recomienda acudir a la sección ``Motivación tras las arquitecturas desarrolladas'' del capítulo ``Aspectos relevantes'' de la Memoria.
+
+Las clases identificadas en la aplicación son las siguientes:
+
+\vspace{-0.2cm}
+\begin{itemize} [\textbullet]
+	\item \textbf{JiztApp}: esta clase representa la aplicación en su conjunto. En el \texttt{main} de la aplicación, se ejecuta una instancia de esta clase.
+	
+	\item \textbf{NewSummaryPage}: se corresponde con la pantalla desde la cual los usuarios pueden solicitar nuevos resúmenes.
+	
+	\item \textbf{SummaryPage}: se corresponde con la pantalla en la que se muestra el resumen generado.
+	
+	\item \textbf{NewSummaryCubit}: clase encargada de transformar los eventos procedentes de los usuarios en la pantalla \texttt{NewSummaryPage} (por ejemplo, un \emph{click}), en acciones particulares de la aplicación.
+	
+	\item \textbf{SummaryCubit}: análoga a la anterior solo que en este caso para la pantalla \texttt{SummaryPage}.
+	
+	\item \textbf{JiztRepository}: clase que encapsula y centraliza la lógica de acceso a las fuentes de datos.
+	
+	\item \textbf{JiztCacheClient}: clase que gestiona el acceso a la base de datos local.
+	
+	\item \textbf{JiztApiClient}: clase que gestiona la comunicación con la REST API de JIZT.
+	
+	\item \textbf{Summary}: representa un resumen. En realidad, disponemos de tres representaciones de un resumen, cada una correspondiéndose con cada uno de los dominios (capa de dominio, caché y REST API). No obstante, la estructura de las mismas es análoga; por consiguiente, las sintetizamos todas en una única clase para simplificar el esquema de diseño.
+\end{itemize}
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{classes-app}
+	\vspace{-0.5cm}
+	\caption{Diagrama de clases de la aplicación de JIZT.}
+\end{figure}
+
 
 \section{Diseño procedimental}
 
-TODO
+En esta sección repasamos una vez más los pasos que se llevan a cabo tanto en el \emph{backend} a la hora de atender las peticiones de los clientes y generar los resúmenes, como en la aplicación, encargada de gestionar los resúmenes de los usuarios.
+
+En la sección correspondiente al \emph{backend} del capítulo ``Técnicas y Herramientas'', explicábamos cómo se gestionaba la comunicación entre los clientes y la REST API a través de peticiones HTTP. Recordemos el proceso:
+
+\begin{enumerate}
+	\item El cliente realiza una petición HTTP POST, incluyendo en el cuerpo el texto a resumir, así como los parámetros del resumen a generar.
+	
+	\item Ingress (API \emph{Gateway}) comprueba que dicha petición se está haciendo a un \emph{endpoint} válido, y en ese caso la redirige hacia el \emph{Dispatcher}.
+	
+	\item El \emph{Dispatcher} realiza una serie de comprobaciones:
+	\begin{enumerate}	
+		\item Se consulta en la base de datos si ya existe un resumen generado para ese texto con esos parámetros. En ese caso, se responde al cliente con los datos del resumen (\texttt{output}, \texttt{source}, \texttt{started\_at}, \texttt{ended\_at}, etc.).
+		
+		\item En caso contrario, se responde con el mismo esquema de datos, solo que el \texttt{output} será \texttt{null}. Al mismo tiempo, se produce un mensaje al \emph{topic} del pre-procesador de textos, conteniendo el texto y los parámetros del resumen, comenzando el proceso de generación.
+	\end{enumerate}
+	
+	\item El pre-procesador está constantemente comprobando si existen mensajes nuevos en su \emph{topic}. En ese caso los consume, realiza las tareas de pre-procesado, y produce el resultado en el \emph{topic} del codificador.
+	
+	\item Este proceso continua de forma análoga hasta llegar al post-procesador, el cual produce el resumen final al \emph{topic} <<Listo>> (\emph{Ready}). El \emph{Dispatcher}, en ese momento, consume el mensaje, y actualiza la base de datos.
+	
+	\item Mientras el proceso de resumen se completa, el cliente realiza peticiones GET de manera periódica, hasta que la API REST finalmente responde con el resumen generado.
+\end{enumerate}
+
+La \autoref{seq-app} ilustra este proceso de forma gráfica, a través de un diagrama de secuencia.
+
+A su vez, en la aplicación, es decir, el \emph{frontend}, de llevan a cabo los siguientes pasos:
+
+\begin{enumerate}
+	\item El usuario solicita generar un nuevo resumen, pulsando para ello sobre la pantalla.
+	
+	\item El evento se transforma a través del \emph{cubit} en un petición de resumen al repositorio.
+	
+	\item El repositorio realiza una petición HTTP POST al \emph{backend} para obtener el \emph{id} del resumen a partir del texto fuente, los parámetros del resumen, y el modelo.
+	
+	\item Una vez obtenido el \emph{id} del resumen, se consulta la base de datos local (capa de caché) para conocer si ya se dispone localmente del resumen solicitado. En ese caso, se devuelve el resumen, y se actualiza la pantalla para mostrárselo al usuario.
+	
+	\item En caso contario, se realiza peticiones GET periódicas a la API REST hasta que el resumen se completa. Finalmente, se actualiza la pantalla.
+\end{enumerate}
+
+En la \autoref{seq-app}, se incluye un diagrama de clases que describe el proceso de manera más detallada.
+
+\vspace{1cm}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{seq-diagram-api}
+	\caption{Diagrama de secuencia del \emph{backend}.}
+	\label{seq-api}
+\end{figure}
+
+\vspace*{1cm}
+
+\begin{landscape}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=1.3\textwidth]{seq-diagram-app}
+		\caption{Diagrama de secuencia de la aplicación.}
+		\label{seq-app}
+	\end{figure}
+\end{landscape}
 
 \section{Diseño arquitectónico}
 
@@ -271,28 +362,13 @@ Otro de los principales aspectos de la arquitectura es cómo se lleva a cabo la 
 
 Inicialmente, se pensó en resolver esta situación mediante el patrón de \emph{routing-slips} (hojas de ruta) \cite{routing-slip}. Con este patrón se incluye en el propio mensaje la ruta que este debe seguir, por lo que, implementando un \emph{router} en cada microservicio que interpretara la hoja de ruta, podríamos, resolver el problema del enrutado. En cuanto a cómo se llevaría a cabo la comunicación, esta se podría hacer mediante peticiones HTTP, de forma que cada microservicio implementara su propia REST API.
 
-Siguiendo esta estrategia, junto con el patrón de API \emph{gateway}, a través que se ofrece un punto de entrada al \emph{backend}, el diseño de la arquitectura quedaba del siguiente modo:
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{deprecated-arch}
-	\vspace{-0.5cm}
-	\caption{Primera aproximación para el diseño arquitectónico del \emph{backend}.}
-\end{figure}
+Siguiendo esta estrategia, junto con el patrón de API \emph{gateway}, a través que se ofrece un punto de entrada al \emph{backend}, el diseño de la arquitectura quedaba como se muestra en la \autoref{fig:deprecated-arch}.
 
 Poco después, conocimos acerca de la \textbf{arquitectura dirigida por eventos} \cite{event-driven}, y de Kafka \cite{apache-kafka}, una de las herramientas más apropiadas y avanzadas a día de hoy para este tipo de arquitectura\footnote{\, De nuevo, referimos al lector a la Memoria, donde se recogen las principales ventajas, tanto de este patrón arquitectónico, como de Kafka.}.
 
 Con este nuevo diseño, la arquitectura se simplificaba en gran medida, y problemas como el escalado, o la entrega fiable de mensajes, corrían a cargo de Kafka, quienes gestionaba estos y otros aspectos de manera automática.
 
-La arquitectura final del \emph{backend}, por tanto, tiene el siguiente aspecto:
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{overview-arch}
-	\vspace{-0.5cm}
-	\caption{Diseño final de la arquitectura del \emph{backend}.}
-\end{figure}
-
+La arquitectura final del \emph{backend} se ilustra en la \autoref{fig:final-arch-backend}.
 
 
 \subsubsection{\Large \emph{Frontend}}
@@ -303,23 +379,49 @@ Antes de comenzar este proyecto, habíamos oído del concepto de \emph{Clean Arc
 
 A continuación, nos informamos sobre el patrón BLoC \cite{bloc-pattern}, muy popular también dentro de la comunidad Flutter. Por suerte, también existe un paquete para la implementación de este patrón \cite{bloc-package}.
 
-Finalmente, la arquitectura quedó de la siguiente forma:
+Finalmente, la arquitectura quedó como se muestra en la \autoref{fig:final-arch-app}.
 
-\begin{figure}[h]
+La información completa acerca de la arquitectura de la aplicación se encuentra, asimismo, en la Memoria.
+
+\newpage
+
+\vspace*{2cm}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{deprecated-arch}
+	\vspace{-0.5cm}
+	\caption{Primera aproximación para el diseño arquitectónico del \emph{backend}.}
+	\label{fig:deprecated-arch}
+\end{figure}
+
+\newpage
+
+\vspace*{2cm}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{overview-arch}
+	\vspace{-0.5cm}
+	\caption{Diseño final de la arquitectura del \emph{backend}.}
+	\label{fig:final-arch-backend}
+\end{figure}
+
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{jizt-app-arch}
 	\vspace{-0.5cm}
 	\caption{Diseño final de la arquitectura de la aplicación.}
+	\label{fig:final-arch-app}
 \end{figure}
 
-La información completa acerca de la arquitectura de la aplicación se encuentra, asimismo, en la Memoria.
-
+\newpage
 
 \section{Diseño de interfaces}
 
 \subsubsection{Diseño del logo}
 
-Una de las intenciones detrás de este proyecto siempre ha sido tratar de crear una cierta imagen corporativa y de producto. Por ello, el diseño de nuestra carta de presentación, es decir, nuestro logo, ocupó un papel central en las primeras iteraciones del proyecto.
+Una de las intenciones detrás de este proyecto siempre ha sido tratar de crear una cierta imagen corporativa y de producto. Como consecuencia, el diseño de nuestra carta de presentación, es decir, nuestro logo, ocupó un papel central en las primeras iteraciones del proyecto.
 
 En la búsqueda creativa de un logo atractivo, moderno y memorable, se experimentó con numerosos posibles diseños en papel.
 
@@ -330,23 +432,24 @@ En la búsqueda creativa de un logo atractivo, moderno y memorable, se experimen
 	\caption{Ideas, ideas, y más ideas. Pero solo unas pocas buenas.}
 \end{figure}
 
-Finalmente, dimos con un diseño que parecía tener potencial. Corrimos hacia el ordenador, y nos sumergimos en Adobe Illustrator, un editor de gráficos vectoriales muy popular. Por experiencia previa en diseño gráfico (autodidacta), sabemos que, teniendo una buena idea de partida, <<el resto está hecho>>.
+Finalmente, dimos con un diseño que parecía tener potencial. Cogimos nuestro ordenador, y nos sumergimos en Adobe Illustrator, un editor de gráficos vectoriales muy popular. Por experiencia previa en diseño gráfico (autodidacta), sabemos que, teniendo una buena idea de partida, equivale a tener una gran parte del trabajo hecho.
 
-Así pues, el logo final, nuestra carta de presentación, acabó luciendo del siguiente modo:
+Así pues, el logo final, nuestra carta de presentación, acabó luciendo como se muestra en la \autoref{fig:jizt-logo}. En nuestra opinión, cumple con los requisitos esperados.
+
+\newpage
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{jizt-logo}
-	\vspace{-0.5cm}
-	\caption{JIZT: generación de resúmenes mediante IA.}
+	\includegraphics[width=0.8\textwidth]{jizt-logo}
+	\caption{JIZT - Generación de resúmenes mediante IA.}
+	\label{fig:jizt-logo}
 \end{figure}
 
-Se trabajó también sobre una serie de variaciones, de forma que el logo se pudiera ajustar a cada situación de color:
+\vspace{0.3cm}
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{jizt-logo-variations}
-	\vspace{-0.5cm}
+	\includegraphics[width=0.91\textwidth]{jizt-logo-variations}
 	\caption{Variaciones sobre el logo de JIZT.}
 \end{figure}
 
@@ -356,7 +459,9 @@ Se trabajó también sobre una serie de variaciones, de forma que el logo se pud
 
 Para el diseño de la interfaz gráfica de usuario de la aplicación, trabajamos directamente sobre el ordenador, esta vez con el programa Inkscape, también editor de gráficos vectoriales, pero en este caso \emph{open-source} y gratuito.
 
-Se llevaron a cabo diferentes iteraciones hasta dar con un diseño que nos acabó convenciendo.
+Se llevaron a cabo diferentes iteraciones hasta dar con un diseño que nos acabó pareciendo adecuado.
+
+\bigskip
 
 \begin{figure}[h!]
 	\centering
@@ -365,11 +470,15 @@ Se llevaron a cabo diferentes iteraciones hasta dar con un diseño que nos acab�
 	\caption{Iteraciones sobre la pantalla principal.}
 \end{figure}
 
-Siguiendo el estilo de la pantalla principal, se diseñaron el resto de pantallas:
+Siguiendo el estilo de la pantalla principal, se diseñaron el resto de pantallas, las cuales se muestran en la \autoref{fig:app-screens}.
 
+\newpage
+
+\vspace*{1cm}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{app-screens}
 	\vspace{-0.5cm}
 	\caption{Capturas de pantalla de la aplicación para su publicación en Play Store.}
+    \label{fig:app-screens}
 \end{figure}
