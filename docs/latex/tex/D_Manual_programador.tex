@@ -1,4 +1,4 @@
-\apendice{Documentación técnica de programación}
+\apendice{Documentación técnica de programación} \label{apendice:programador}
 
 \section{Introducción}
 
@@ -393,9 +393,21 @@ En esta sección se incluye documentación detallada sobre la API REST de JIZT. 
 
 \subsection{Pruebas del sistema}
 
-TODO
+Las pruebas de sistema para el \emph{backend} de JIZT comprenden varias pruebas unitarias, de cada una de las etapas en la generación de resumen (pre-procesado, codificación, resumen y post-procesado) y una prueba de integración que prueba el correcto funcionamiento de la API REST y el \emph{backend} en su conjunto.
 
+\subsubsection{Prerrequisitos}
 
+Para poder ejecutar las pruebas, se requiere tener instalado el \emph{framework} de pruebas para Python \texttt{pytest}.
+
+Las instrucciones para su instalación se pueden encontrar en \href{https://docs.pytest.org/en/stable/getting-started.html}{https://docs.\newline pytest.org/en/stable/getting-started.html}. Si se dispone de \texttt{pip}, se puede instalar fácilmente ejecutando:
+
+\texttt{pip install -U pytest}.
+
+\subsubsection{Ejecución de las pruebas}
+
+Para ejecutar todas las pruebas, basta con ejecutar: \texttt{pytest}, bien desde el directorio raíz del proyecto, o desde el directorio de \texttt{tests}.
+
+Si se quieren ejecutar únicamente alguna de las pruebas en específico, se puede pasar el nombre del fichero al invocar a \texttt{pytest}.
 
 \section{Documentación técnica de la aplicación}
 
@@ -409,7 +421,20 @@ La estructura de directorios de la aplicación de JIZT, a la cual se puede acced
 \vspace{-0.2cm}
 \begin{itemize} [\textbullet]
 	\tightlist
-	\item TODO
+	\item \texttt{/}: el directorio raíz contiene todos los ficheros que componen el proyecto Flutter de la aplicación.
+	\item \texttt{/lib}: se trata del directorio principal del proyecto, donde se encuentra el código fuente de la aplicación, escrito en Dart.
+	\item \texttt{/lib/home)}: implementación de la interfaz gráfica y de la lógica de la pantalla principal de la aplicación.
+	\item \texttt{/lib/new\_text\_summary}: implementación de la interfaz gráfica y de la lógica de la pantalla para generar resúmenes a partir de texto.
+	\item \texttt{/lib/summaries}: implementación de la interfaz gráfica y de la lógica de la pantalla que lista todos los resúmenes generados por el usuario.
+	\item \texttt{/lib/summary}: implementación de la interfaz gráfica y de la lógica  de la pantalla de detalle de un resumen.
+	\item \texttt{/lib/utils}: utilidades varias.
+	\item \texttt{/lib/widgets}: \emph{widgets} de Flutter adicionales.
+	\item \texttt{/modules/data}: componentes relativos a la capa de datos de la aplicación.
+	\item \texttt{/modules/data}: componentes relativos a la capa de dominio de la aplicación.
+	\item \texttt{/assets/drawables}: imágenes y fuentes de las que hace uso la aplicación.
+	\item \texttt{/android}: proyecto de Android.
+	\item \texttt{/ios}: proyecto de iOS.
+	\item \texttt{/web}: proyecto para \emph{web}.
 \end{itemize}
 
 

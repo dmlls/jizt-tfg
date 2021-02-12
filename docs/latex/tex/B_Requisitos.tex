@@ -87,16 +87,16 @@ Es por ello que el producto desarrollado deberá ser lo más independiente del e
 
 \section{Catalogo de requisitos}
 
-A continuación se detallan los requisitos funcionales y no funcionales del producto a desarrollar.
+A continuación se detallan los requisitos funcionales y no funcionales del producto a desarrollar. Estos requisitos son globales al proyecto y, por tanto, involucran tanto al \emph{backend} como a la aplicación a desarrollar.
 
 \subsection{Requisitos funcionales}
 
 \begin{itemize}[\textbullet]
 	\item \textbf{RF-1 Solicitar resumen}: la API REST debe proporcionar un \emph{endpoint} para que el usuario pueda solicitar un resumen de un texto.
 	\begin{itemize}[◦]
-		\item \textbf{RF-1.1 Elegir modelo de generación de resumen}: el usuario deberá ser capaz de especificar el modelo de generar su resumen.
+		\item \textbf{RF-1.1 Elegir modelo de generación de resumen}: el usuario deberá ser capaz de especificar el modelo de generar su resumen\footnote{\, Este requisito solo se ha implementado en el \emph{backend}. En la aplicación decidimos no incluirlo dado que por el momento solo hacemos uso de un modelo.}.
 		\item \textbf{RF-1.2 Especificar longitud relativa del resumen}: el usuario deberá ser capaz de especificar la longitud del resumen generado, de manera relativa al texto original.
-		\item \textbf{RF-1.3 Especificar parámetros del resumen}: el usuario deberá ser capaz de especificar los parámetros concretos con los que se generará su resumen.
+		\item \textbf{RF-1.3 Especificar parámetros del resumen}: el usuario deberá ser capaz de especificar los parámetros concretos con los que se generará su resumen\footnote{\, Este requisito solo se ha implementado en el \emph{backend}. En la aplicación se añadirá en futuras iteraciones, al considerarse no prioritario, dado que se trata de opciones avanzadas.}.
 	\end{itemize}
 	\item \textbf{RF-2 Historial de resúmenes}: el usuario podrá acceder a los resúmenes que ha generado recientemente.
 	\item \textbf{RF-3 Compartir resumen}: se le brindará al usuario la opción de compartir el resumen generado a través de otra aplicación a su elección.
@@ -134,7 +134,13 @@ A continuación se detallan los requisitos funcionales y no funcionales del prod
 
 \section{Especificación de requisitos}
 
+En esta sección, nos centramos en la definición de los casos de uso de nuestro producto.
+
+Dado que el usuario interactuará únicamente con la aplicación (\emph{frontend}), el \emph{backend} no se considera en este caso, aunque sigue siendo vital para que los casos de uso de la aplicación se puedan completar con éxito.
+
 \subsection{Diagrama de casos de uso}
+
+
 
 \begin{figure}[h!]
 	\centering
@@ -190,78 +196,76 @@ Existe un único actor: el usuario que hace uso de la aplicación.
 
 \begin{longtable}{>{\raggedright}b{0.2\linewidth}>{\raggedright\arraybackslash}b{0.7\linewidth}}
 	\toprule
-	\textbf{CU-02} & \textbf{Seleccionar modelo} \\
+	\textbf{CU-02} & \textbf{Establecer longitud relativa mínima del resumen} \\
 	\toprule
 	\endhead
 	
 	\toprule
-	\caption{CU-02 Seleccionar modelo}
+	\caption{CU-02 Establecer longitud relativa mínima del resumen}
 	\endfoot
 	
-	\small{\textbf{Descripción}} & Seleccionar el modelo con el que se llevará a cabo \\
-	& el resumen. \\
+	\small{\textbf{Descripción}} & Establecer la longitud mínima que puede tener el \\
+	& resumen generado de manera relativa al texto \\ & original. \\
 	\small{\textbf{Autor}} & Diego Miguel Lozano \\
-	\small{\textbf{Requisitos}} & RF-1.1  \\
+	\small{\textbf{Requisitos}} & RF-1.2  \\
 	\small{\textbf{relacionados}} & \\
 	\small{\textbf{Precondición}} & - \\
-	\small{\textbf{Flujo normal}} & \quad \small{1. El usuario pulsa en el icono de opciones en el} \\
-	& \qquad \small{cuadro de texto.} \\
-	& \quad \small{2. El usuario elige el modelo.} \\
-	\small{\textbf{Postcondición}} & El modelo ha sido seleccionado. \\
+	\small{\textbf{Flujo normal}} & \quad \small{1. El usuario pulsa sobre el cuadro de texto en la} \\
+	& \qquad \small{pantalla principal.} \\
+	& \quad \small{2. El usuario ajusta la longitud mínima a través del} \\
+	& \qquad \small{\emph{slider} que aparece en la parte inferior de la pantalla} \\
+	\small{\textbf{Postcondición}} & Se ha establecido la lognitud mínima. \\
 	\small{\textbf{Excepciones}} & - \\
 	\small{\textbf{Incluye}} & - \\
 	\small{\textbf{Extiende}} & - \\
-	\small{\textbf{Prioridad}} & Baja. \\
-	\small{\textbf{Frecuencia de}} & \\
-	\small{\textbf{uso}} & Media. \\
-	\small{\textbf{Importancia}} & Media. \\
-	\small{\textbf{Comentarios}} &  Por implementar. \\
+	\small{\textbf{Prioridad}} & Alta. \\
+	\small{\textbf{Frecuencia de}} & Alta. \\
+	\small{\textbf{uso}} & \\
+	\small{\textbf{Importancia}} & Alta. \\
+	\small{\textbf{Comentarios}} &  - \\
 \end{longtable}
-
-%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{longtable}{>{\raggedright}b{0.2\linewidth}>{\raggedright\arraybackslash}b{0.7\linewidth}}
 	\toprule
-	\textbf{CU-02} & \textbf{Seleccionar modelo} \\
+	\textbf{CU-03} & \textbf{Establecer longitud relativa máxima del resumen} \\
 	\toprule
 	\endhead
 	
 	\toprule
-	\caption{CU-02 Seleccionar modelo}
+	\caption{CU-03 Establecer longitud relativa máxima del resumen}
 	\endfoot
 	
-	\small{\textbf{Descripción}} & Seleccionar el modelo con el que se llevará a cabo \\
-	& el resumen. \\
+	\small{\textbf{Descripción}} & Establecer la longitud máxima que puede tener el \\
+	& resumen generado de manera relativa al texto \\ & original. \\
 	\small{\textbf{Autor}} & Diego Miguel Lozano \\
-	\small{\textbf{Requisitos}} & RF-1.1  \\
+	\small{\textbf{Requisitos}} & RF-1.2  \\
 	\small{\textbf{relacionados}} & \\
 	\small{\textbf{Precondición}} & - \\
-	\small{\textbf{Flujo normal}} & \quad \small{1. El usuario pulsa en el icono de opciones en el} \\
-	& \qquad \small{cuadro de texto.} \\
-	& \quad \small{2. El usuario elige el modelo.} \\
-	\small{\textbf{Postcondición}} & El modelo ha sido seleccionado. \\
+	\small{\textbf{Flujo normal}} & \quad \small{1. El usuario pulsa sobre el cuadro de texto en la} \\
+	& \qquad \small{pantalla principal.} \\
+	& \quad \small{2. El usuario ajusta la longitud máxima a través del} \\
+	& \qquad \small{\emph{slider} que aparece en la parte inferior de la pantalla} \\
+	\small{\textbf{Postcondición}} & Se ha establecido la lognitud máxima. \\
 	\small{\textbf{Excepciones}} & - \\
 	\small{\textbf{Incluye}} & - \\
-	\small{\textbf{Extiende}} & CU-01 \\
-	\small{\textbf{Prioridad}} & Baja. \\
-	\small{\textbf{Frecuencia de}} & \\
-	\small{\textbf{uso}} & Media. \\
-	\small{\textbf{Importancia}} & Media. \\
-	\small{\textbf{Comentarios}} &  Por implementar. \\
+	\small{\textbf{Extiende}} & - \\
+	\small{\textbf{Prioridad}} & Alta. \\
+	\small{\textbf{Frecuencia de}} & Alta. \\
+	\small{\textbf{uso}} & \\
+	\small{\textbf{Importancia}} & Alta. \\
+	\small{\textbf{Comentarios}} &  - \\
 \end{longtable}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \begin{longtable}{>{\raggedright}b{0.2\linewidth}>{\raggedright\arraybackslash}b{0.7\linewidth}}
 	\toprule
-	\textbf{CU-06} & \textbf{Consultar historial de resúmenes} \\
+	\textbf{CU-04} & \textbf{Consultar historial de resúmenes} \\
 	\toprule
 	\endhead
 	
 	\toprule
-	\caption{CU-06 Consultar historial de resúmenes}
+	\caption{CU-04 Consultar historial de resúmenes}
 	\endfoot
 	
 	\small{\textbf{Descripción}} & Visualizar la lista de resúmenes generados previa- \\
@@ -288,12 +292,12 @@ Existe un único actor: el usuario que hace uso de la aplicación.
 
 \begin{longtable}{>{\raggedright}b{0.2\linewidth}>{\raggedright\arraybackslash}b{0.7\linewidth}}
 	\toprule
-	\textbf{CU-07} & \textbf{Consultar resumen} \\
+	\textbf{CU-05} & \textbf{Consultar resumen} \\
 	\toprule
 	\endhead
 	
 	\toprule
-	\caption{CU-07 Consultar resumen}
+	\caption{CU-05 Consultar resumen}
 	\endfoot
 	
 	\small{\textbf{Descripción}} & Consultar un resumen generado previamente. \\
@@ -323,12 +327,12 @@ Existe un único actor: el usuario que hace uso de la aplicación.
 
 \begin{longtable}{>{\raggedright}b{0.2\linewidth}>{\raggedright\arraybackslash}b{0.7\linewidth}}
 	\toprule
-	\textbf{CU-08} & \textbf{Ver texto original} \\
+	\textbf{CU-06} & \textbf{Ver texto original} \\
 	\toprule
 	\endhead
 	
 	\toprule
-	\caption{CU-08 Ver texto original}
+	\caption{CU-06 Ver texto original}
 	\endfoot
 	
 	\small{\textbf{Descripción}} & Visualizar el texto a partir del cual se ha generado \\
@@ -353,12 +357,12 @@ Existe un único actor: el usuario que hace uso de la aplicación.
 
 \begin{longtable}{>{\raggedright}b{0.2\linewidth}>{\raggedright\arraybackslash}b{0.7\linewidth}}
 	\toprule
-	\textbf{CU-09} & \textbf{Compartir el resumen} \\
+	\textbf{CU-07} & \textbf{Compartir el resumen} \\
 	\toprule
 	\endhead
 	
 	\toprule
-	\caption{CU-09 Compartir el resumen}
+	\caption{CU-07 Compartir el resumen}
 	\endfoot
 	
 	\small{\textbf{Descripción}} & Compartir el resumen generado a través de otra \\
@@ -385,12 +389,12 @@ Existe un único actor: el usuario que hace uso de la aplicación.
 
 \begin{longtable}{>{\raggedright}b{0.2\linewidth}>{\raggedright\arraybackslash}b{0.7\linewidth}}
 	\toprule
-	\textbf{CU-10} & \textbf{Borrar el resumen} \\
+	\textbf{CU-08} & \textbf{Borrar el resumen} \\
 	\toprule
 	\endhead
 	
 	\toprule
-	\caption{CU-10 Borrar el resumen}
+	\caption{CU-08 Borrar el resumen}
 	\endfoot
 	
 	\small{\textbf{Descripción}} & Borrar un resumen generado. \\

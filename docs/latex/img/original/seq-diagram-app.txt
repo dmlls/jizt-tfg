@@ -1,0 +1,37 @@
+sequenceDiagram
+    participant sp as NewSummaryPage
+    participant sc as NewSummaryCubit
+    participant jr as JiztRepository
+    participant ja as JiztApiClient
+    participant jc as JiztCacheClient
+    participant bd as BD Local
+    participant ar as API REST
+
+    sp->>+sc: «requestSummaryEvent»
+    activate sp
+    sc->>+jr: requestNewSummary(source)
+    jr->>+ja: requestSummary(source)
+    ja->>+ar: POST
+    ar-->>-ja: summary_id
+    ja-->>-jr: summaryId
+    jr->>+jc: add(summary_id, source)
+    jc->>+bd: add(summary_id, source)
+    bd-->>-jc: «resumen añadido»
+    jc-->>-jr: «resumen añadido»
+    jr-->>-sc: summaryId
+    loop Mientras summary.status != completed
+        sc->>+jr: getSummary(summary_id)
+        jr->>+ja: getSummary(summary_id)
+        ja->>+ar: GET
+        ar-->>-ja: summary
+        ja-->>-jr: summary
+        alt Si summary.status == completed
+            jr->>+jc: put(summary)
+            jc->>+bd: put(summary)
+            bd-->>-jc: «resumen actualizado»
+            jc-->>-jr: «resumen actualizado»
+        end
+        jr-->>-sc: summary
+    end
+    sc-->>-sp: «actualizar pantalla»
+    deactivate sp

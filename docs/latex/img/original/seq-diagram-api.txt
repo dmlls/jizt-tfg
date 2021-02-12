@@ -1,0 +1,58 @@
+sequenceDiagram
+    participant cl as Cliente
+    participant in as Ingress
+    participant di as Dispatcher
+    participant bd as Base de datos
+    participant pr as Pre-procesador
+    participant co as Codificador
+    participant ge as Generador de resúmenes
+    participant po as Post-procesador
+
+    cl->>+in: POST
+    activate cl
+    in->>+di: POST
+    di->>di: get_summary_id(source, model, params)
+    di->>+bd: get_summary(summary_id)
+    bd-->>-di: summary
+    di-->>-in: summary
+    in-->>-cl: summary
+    deactivate cl
+    Note left of cl: summary.output<br>podría ser null
+    alt Si summary.output == null
+        Note right of di: Generación del resumen
+        di->>+pr: produceMsg(summary_id, source, model, params)
+        activate di
+        pr->>pr: consumeMsg()
+        pr->>pr: preprocess(source)
+        pr->>co: produceMsg(summary_id,<br>preprocessed_text,<br>model, params))
+        deactivate pr
+        activate co
+        co->>co: consumeMsg()
+        co->>co: encode(preprocessed_text)
+        co->>+ge: produceMsg(summary_id,<br>encoded_text, <br>model, params)
+        deactivate co
+        activate ge
+        ge->>ge: consumeMsg()
+        ge->>ge: summarize(encoded_text)
+        ge->>+po: produceMsg(summary_id,<br>summary)
+        deactivate ge
+        activate po
+        po->>po: consumeMsg()
+        po->>po: postprocess(summary)
+        po-->>-di: produceMsg(summary_id, summary)
+        di->>di: consumeMsg()
+        di->>+bd: update(summary)
+        bd-->>-di: «resumen actualizado»
+        deactivate di
+    end
+
+    loop Mientras summary.output == null
+        cl->>+in: GET
+        activate cl
+        in->>+di: GET
+        di->>+bd: get_summary(summary_id)
+        bd-->>-di: summary
+        di-->>-in: summary
+        in-->>-cl: summary
+        deactivate cl
+    end
