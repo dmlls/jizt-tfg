@@ -415,4 +415,4 @@ TSWLatexianTemp*
 #*Notes.bib
 
 # Sphinx
-./docs/_build/*
+./docs/sphinx/build/*

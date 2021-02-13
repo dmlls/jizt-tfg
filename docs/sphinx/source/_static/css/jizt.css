@@ -1,0 +1,55 @@
+p {
+    font-size: 14px;
+}
+
+footer p {
+    font-size: 13px;
+}
+
+footer {
+    font-size: 12px;
+}
+
+.wy-side-nav-search {
+    background-color: #000155;
+}
+
+.wy-nav-side {
+    background: #20272B;
+}
+
+.wy-menu.wy-menu-vertical {
+    background-color: #252C31;
+}
+
+
+/*
+ * Fonts
+ */
+body{
+    font-family: Rubik-Light, sans-serif;
+    font-size: 14px;
+}
+
+h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
+    font-family: Rubik, sans-serif;
+}
+
+@font-face {
+    font-family: Rubik-Medium;
+    src: url(./Rubik-Medium.ttf);
+    font-weight:400;
+}
+
+@font-face {
+    font-family: Rubik;
+    src: url(./Rubik-Regular.otf);
+    font-weight:400;
+}
+
+
+@font-face {
+    font-family: Rubik-Light;
+    src: url(./Rubik-Light.otf);
+    font-weight:400;
+}
