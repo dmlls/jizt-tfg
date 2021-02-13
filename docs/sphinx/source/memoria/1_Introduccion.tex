@@ -1,0 +1,36 @@
+\capitulo{1}{Introducción}  \label{chapter:intro}
+
+\vspace{-0.5cm}
+
+El término Inteligencia Artificial (IA) fue acuñado por primera vez en la Conferencia de Dartmouth \cite{crevier95} hace ahora 65 años, esto es, en 1956. Sin embargo, ha sido en los últimos tiempos cuando su presencia e importancia en la sociedad han crecido de manera exponencial.
+
+Uno de los campos históricos dentro de la AI es el Procesamiento del Lenguaje Natural (NLP, por sus siglas en inglés), cuya significación se hizo patente con la aparición del célebre Test de Turing \cite{turing50}, en el cual un interrogador debe discernir entre un humano y una máquina conversando con ambos por escrito a través de una terminal.
+
+Hasta los años 80, la mayor parte de los sistemas de NLP estaban basados en complejas reglas escritas a mano \cite{mccorduck79}, las cuales conseguían generalmente modelos muy lentos, poco flexibles y con baja precisión. A partir de esta década, como fruto de los avances en Aprendizaje Automático (\emph{Machine Learning}), fueron apareciendo modelos estadísticos, consiguiendo notables avances en campos como el de la traducción automática.
+
+En la última década, el desarrollo ha sido aún mayor debido a factores como el aumento masivo de datos de entrenamiento (principalmente provenientes del contenido generado en la \emph{web}), avances en la capacidad de computación (GPU, TPU, ASIC...) y el progreso dentro del área de la Algoritmia \cite{rahmfeld19}.
+
+No obstante, ha sido desde la aparición del concepto de ``atención'' en 2015 \cite{luong15, bahdanau16, vaswani17} cuando el campo del NLP ha comenzado a lograr resultados cuanto menos sorprendentes \cite{macaulay20, wiggers21}.
+
+Con todo, la mayor parte de estos avances se han visto limitados al ámbito académico y corporativo. Los modelos cuyo código ha sido publicado, o bien no están entrenados, o bien requieren para ser usados conocimientos avanzados de matemáticas o programación, o simplemente son demasiado grandes para ser ejecutados en ordenadores convencionales.
+
+Con esta idea en mente, el objetivo de JIZT se centra en acercar los modelos NLP del estado del arte tanto a usuarios expertos, como no expertos.
+
+Para ello, JIZT proporciona:
+
+\vspace*{-0.3cm}
+
+\begin{itemize}
+	\item[\textbullet] Una infraestructura de microservicios en la nube que expone una API REST a través de la cual se puede solicitar la generación de resúmenes. Esta opción está dirigida a usuarios con conocimientos técnicos, a través de la cual se pueden llevar a cabo tareas de NLP.
+	\item[\textbullet] Una aplicación multiplataforma que consume dicha API, y que proporciona una interfaz gráfica sencilla e intuitiva. Esta aplicación puede ser utilizada por el público general, aunque no deja de ofrecer opciones avanzadas para aquellos usuarios con mayores conocimientos en la materia.
+\end{itemize}
+
+\vspace{-0.3cm}
+
+En un principio, dado el alcance de un Trabajo de Final de Grado, la única tarea de NLP implementada ha sido la de generación de resúmenes, aunque la arquitectura está diseñada para permitir la adición de otras tareas de NLP en un futuro. La motivación detrás de la elección de la generación de resúmenes se ha fundamentado principalmente en la relativa menor popularidad de esta área frente a otras como la traducción automática, el análisis de sentimientos, o los modelos conversacionales. Para estas últimas tareas existe actualmente una amplia oferta de grandes compañías como Google \cite{cloudNL}, IBM \cite{watson}, Amazon \cite{comprehend}, o Microsoft \cite{textAnalytics}, entre muchas otras. Nuestra mayor limitación reside en que los modelos pre-entrenados que utilizaremos para la generación de los resúmenes funcionan únicamente en inglés. Esperamos que en un futuro próximo aparezcan modelos que admitan otros idiomas.
+
+En un mundo en el que en cinco años se producirán globalmente 463 exabytes de información al día \cite{raconteur19}, siendo mucha de esa información textual, las generación de resúmenes aliviará en cierto modo el tratamiento de esos datos.
+
+Sin embargo, gran parte del esfuerzo de desarrollo de JIZT se ha centrado en el diseño de su arquitectura, la cual se describirá con detalle en el capítulo de \hyperref[chapter:conceptos]{Conceptos Teóricos}. Por ahora adelantaremos que ha sido concebida con el objetivo de ofrecer la mayor escalabilidad y flexibilidad posible, manteniendo además, como indicábamos anteriormente, la capacidad de poder añadir otras tareas de NLP diferentes de la generación de resúmenes próximamente.
+
+Por todo ello, el presente TFG conforma el punto de partida de un proyecto ambicioso, desafiante, pero con la certeza de que, independientemente de su recorrido más allá del TFG, habremos aprendido, disfrutado, y ojalá ayudado a alguien por el camino.
