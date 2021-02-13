@@ -1,12 +1,12 @@
 \capitulo{6}{Trabajos relacionados}
 
-A continuación, enumeraremos algunos proyectos relacionados con nuestro trabajo.
+A continuación, enumeraremos algunos proyectos que guardan ciertas similitudes con nuestro trabajo desarrollado.
 
 \subsubsection{Bert Extractive Summarizer}
 
 Este proyecto \emph{open-source} implementa un generador de resúmenes extractivos haciendo uso del modelo BERT \cite{devlin19} de Google para la codificación de palabras, y aplicando \emph{clústering} por \emph{k-means} para determinar las frases que se incluirán en el resumen. Este proceso se detalla en \cite{miller19}.
 
-El generador de resúmenes puede ser \emph{dockerizado}, pudiéndose ejecutar como servicio, proporcionando una REST API para solicitar los resúmenes. El autor ofrece \emph{endpoints} gratuitos con limitaciones a la hora de realizar peticiones, y \emph{endpoints} privados de pago para aquellos particulares o empresas que requieran de mayores prestaciones.
+El generador de resúmenes puede ser \emph{dockerizado}, pudiéndose ejecutar como servicio, proporcionando una REST API para solicitar la generación de resúmenes. El autor ofrece \emph{endpoints} gratuitos con limitaciones a la hora de realizar peticiones, y \emph{endpoints} privados de pago para aquellos particulares o empresas que requieran de mayores prestaciones.
 
 Se puede acceder al proyecto a través del siguiente enlace: \\
 \href{https://github.com/dmmiller612/bert-extractive-summarizer}{\texttt{{\small https://github.com/dmmiller612/bert-extractive-summarizer}}}.
@@ -37,17 +37,19 @@ Sin embargo, los resúmenes están compuestos de frases literales ordenadas cron
 En su página \emph{web} no se explicita el algoritmo concreto que se emplea, pero prestando atención a la descripción del proceso proporcionada \cite{smmry}, parecen emplear igualmente PageRank.
 
 Se puede acceder a SMMRY en:
-\href{https://smmry.com/}{\texttt{{\small https://smmry.com/}}}.
+\href{https://smmry.com}{\texttt{{\small https://smmry.com}}}.
 
 \newpage
 \subsubsection{Tabla comparativa}
+
+En la siguiente tabla, se recoge un análisis de las características que ofrece JIZT en comparación con las opciones introducidas anteriormente.
 
 \vspace{0.5cm}
 \begin{table}[h]\label{tabla:comparativa}
 	\centering
 	\begin{tabular}{lcccc}
 		\toprule
-		\multirow{2}{*}{Caraterísticas} & \multirow{2}{*}{\textbf{\href{https://www.jizt.it/}{\small{JIZT}}}} & \scriptsize{\href{https://github.com/dmmiller612/bert-extractive-summarizer}{Bert Extracive}} & \multirow{2}{*}{\scriptsize{\href{https://github.com/jjangsangy/ExplainToMe}{ExplainToMe}}} & \multirow{2}{*}{\href{https://smmry.com/}{\small{SMMRY}}} \\
+		\multirow{2}{*}{Características} & \multirow{2}{*}{\textbf{\href{https://www.jizt.it/}{\small{JIZT}}}} & \scriptsize{\href{https://github.com/dmmiller612/bert-extractive-summarizer}{Bert Extracive}} & \multirow{2}{*}{\scriptsize{\href{https://github.com/jjangsangy/ExplainToMe}{ExplainToMe}}} & \multirow{2}{*}{\href{https://smmry.com/}{\small{SMMRY}}} \\
 		& & \scriptsize{\href{https://github.com/dmmiller612/bert-extractive-summarizer}{Summarizer}} & & \\
 		\midrule
 		\small{Tipo de resumen$^1$} & {\small Abstractivo} & {\small Extractivo} & {\small Extractivo} & {\small Extractivo} \\

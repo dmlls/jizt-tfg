@@ -1,15 +1,19 @@
 \capitulo{2}{Objetivos del proyecto}
 
+En este apartado, detallamos los objetivos tanto generales, como técnicos, cuya consecución se pretende lograr a través del desarrollo del proyecto.
+
 \section{Objetivos generales}
+
+Los objetivos generales que persigue el proyecto son:
 
 \begin{itemize}
 	\item [\textbullet] Ofrecer la capacidad de llevar a cabo tareas de NLP tanto al público general, como al especializado. Como se ha mencionado con anterioridad, la única tarea NLP que implementará el presente TFG será la de generación de resúmenes.
 	
 	\item [\textbullet] Emplear modelos pre-entrenados del estado del arte para la generación de resúmenes abstractivos. Los resúmenes abstractivos se diferencian de los extractivos en que el resumen generado contiene palabras o expresiones que no aparecen en el texto original \cite{abigail17}. Dicho de forma más técnica, existe cierto nivel de paráfrasis.
 	
-	\item [\textbullet] Diseñar una arquitectura con aspectos como la flexibilidad, la escalabilidad y la alta disponibilidad como principios fundamentales.
+	\item [\textbullet] Diseñar una arquitectura, tanto como para el servicio de resúmenes en la nube, como para la aplicación multiplataforma, con aspectos como la flexibilidad, la escalabilidad y la robustez como principios fundamentales.
 	
-	\item [\textbullet] Poner en práctica lo aprendido a lo largo de la carrera en áreas como Ingeniería del Software, Sistemas Distribuidos, Programación, Minería de Datos, Algoritmia y Bases de Datos.
+	\item [\textbullet] Poner en práctica lo aprendido a lo largo del Grado en áreas como Ingeniería del Software, Sistemas Distribuidos, Programación, Minería de Datos, Algoritmia y Bases de Datos.
 	
 	\item [\textbullet] Ofrecer la totalidad del proyecto bajo licencias de \emph{Software} Libre.
 \end{itemize}
@@ -18,10 +22,13 @@
 
 \section{Objetivos técnicos}
 
+Además de los objetivos generales listados anteriormente, el objetivo cuenta con los siguientes objetivos técnicos:
+
+\vspace{-0.2cm}
 \begin{itemize}
-	\item [\textbullet] Los modelos pre-entrenados de generación de texto admiten parámetros específicos para configurar dicha generación, por lo que se deberá implementar una interfaz que permita a los usuarios establecer dichos parámetros de manera opcional. Por defecto, se proporcionarán los valores que mejores resultados ofrecen, extraídos mayoritariamente de manera experimental.
+	\item [\textbullet] Los modelos pre-entrenados de generación de texto admiten parámetros específicos para configurar dicha generación, por lo que se deberá implementar una interfaz que permita a los usuarios establecer estos parámetros de manera opcional. Por defecto, se proporcionarán los valores que mejores resultados ofrecen, extraídos mayoritariamente experimentalmente.
 	
-	\item [\textbullet] Los modelos pre-entrenados de generación estado del arte presentan frecuentemente limitación en la longitud de los textos de entrada que reciben, derivada de la longitud de las secuencias de entrada con las que han sido entrenados. Esta longitud llega a ser tan baja como 512 \emph{tókenes}\footnote{\, Este término se definirá posteriormente. Por ahora, el lector puede considerar que un \emph{tóken} es equivalente a una palabra.} \cite{raffel19}. Por tanto, se deberá establecer algún mecanismo que permita sortear esta limitación para poder generar resúmenes de textos arbitrariamente largos.
+	\item [\textbullet] Los modelos pre-entrenados de generación estado del arte presentan frecuentemente limitaciones en la longitud de los textos de entrada que reciben, derivadas de la longitud de las secuencias de entrada con las que han sido entrenados. Esta longitud llega a ser tan baja como 512 \emph{tókenes}\footnote{\, Este término se definirá posteriormente. Por ahora, el lector puede considerar que un \emph{tóken} es equivalente a una palabra.} \cite{raffel19}. Por tanto, se deberá establecer algún mecanismo que permita sortear esta limitación para poder generar resúmenes de textos arbitrariamente largos.
 
 	\item [\textbullet] Gestionar el pre-procesado de los textos a resumir para ajustarlos a la entrada que los modelos pre-entrenados esperan.
 
@@ -30,7 +37,7 @@
 	\item [\textbullet] Con el fin de cumplir con el objetivo general referente a la arquitectura, desarrollar una arquitectura de microservicios, basada en la filosofía \emph{Cloud Native} \cite{cloud20, arundel19}. Este objetivo se divide a su vez en dos puntos:
 	\begin{itemize}
 		\item [◦] Encapsular cada microservicio en un contenedor Docker.
-		\item [◦] Implementar la orquestración y balanceo de los microservicios a través de Kubernetes.
+		\item [◦] Implementar la orquestración y balanceo de los microservicios a través de herramientas como Kubernetes y Kafka.
 	\end{itemize}
 
 	\item [\textbullet] Complementariamente al punto anterior, implementar una arquitectura dirigida por eventos \cite{bellemare20}. La motivación detrás de la utilización de este patrón arquitectónico se justifica en el capítulo de \hyperref[chapter:conceptos]{Conceptos Teóricos}.
@@ -41,5 +48,5 @@
 	
 	\item [\textbullet] Desarrollar, con ayuda de Flutter, una aplicación multiplataforma con soporte nativo para Android, iOS, y \emph{web}. Esta aplicación consumirá la API y proporcionará una interfaz gráfica sencilla e intuitiva para que usuarios regulares puedan hacer uso del servicio de generación de resúmenes.
 	
-	\item [\textbullet] Seguir el patrón de diseño Clean Architecture \cite{martin15} y de \emph{offline-first} \cite{sauble15} para la implementación de la aplicación.
+	\item [\textbullet] Seguir el patrón de diseño Clean Architecture \cite{martin15} y de Diseño guiado por el dominio (DDD, por sus siglas en inglés) \cite{vernon13} para la implementación de la aplicación.
 \end{itemize}
