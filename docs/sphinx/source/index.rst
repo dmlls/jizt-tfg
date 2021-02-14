@@ -26,6 +26,7 @@ en el texto original.
    memoria/1_Introduccion
    memoria/2_Objetivos_del_proyecto
    memoria/3_Conceptos_teoricos
+   memoria/4_Tecnicas_y_herramientas
 
 Indices and tables
 ==================
