@@ -1,8 +1,8 @@
 .. _introduccion:
 
-========
+============
 Introducción
-========
+============
 
 El término Inteligencia Artificial (IA) fue acuñado por primera vez en
 la Conferencia de Dartmouth [crevier95]_ hace ahora 65 años, esto es,
@@ -29,7 +29,7 @@ provenientes del contenido generado en la *web*), avances en la
 capacidad de computación (GPU, TPU, ASIC...) y el progreso dentro del
 área de la Algoritmia [rahmfeld19]_.
 
-No obstante, ha sido desde la aparición del concepto de “atención” en
+No obstante, ha sido desde la aparición del concepto de "atención" en
 2015 [luong15]_ [bahdanau16]_ [vaswani17]_ cuando el campo del NLP ha
 comenzado a lograr resultados cuanto menos sorprendentes [macaulay20]_
 [wiggers21]_.
@@ -79,7 +79,7 @@ el tratamiento de esos datos.
 
 Sin embargo, gran parte del esfuerzo de desarrollo de JIZT se ha centrado en el diseño
 de su arquitectura, la cual se describirá con detalle en el capítulo de
-:ref:`conceptos-teoricos`. Por ahora adelantaremos que ha sido concebida con el
+:ref:`chapter:conceptos-teoricos`. Por ahora adelantaremos que ha sido concebida con el
 objetivo de ofrecer la mayor escalabilidad y flexibilidad posible, manteniendo además,
 como indicábamos anteriormente, la capacidad de poder añadir otras tareas de NLP
 diferentes de la generación de resúmenes próximamente.

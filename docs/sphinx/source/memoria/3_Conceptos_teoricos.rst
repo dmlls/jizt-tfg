@@ -1,8 +1,8 @@
 .. _chapter:conceptos-teoricos:
 
-========
+==================
 Conceptos teóricos
-========
+==================
 
 En este capítulo, detallaremos de forma teórica el proceso de generación
 de resúmenes, desde el momento que recibimos el texto a resumir, hasta
@@ -63,12 +63,12 @@ A grandes rasgos, la etapa de pre-procesado se divide a su vez en los
 siguientes pasos:
 
 -  Eliminar retornos de carro, tabuladores (``\n``, ``\t``) y espacios
-   sobrantes entre palabras (p. ej. ``“I    am”`` :math:`\rightarrow`
-   ``“I am”``).
+   sobrantes entre palabras (p. ej. ``"I    am"`` :math:`\rightarrow`
+   ``"I am"``).
 
 -  Añadir un espacio al inicio de las frases intermedias (p. ej.:
-   ``“How’s it going?Great!”`` :math:`\rightarrow`
-   ``“How’s it going? Great!”``. Esto es especialmente relevante en el
+   ``"How’s it going?Great!"`` :math:`\rightarrow`
+   ``"How’s it going? Great!"``. Esto es especialmente relevante en el
    caso de algunos modelos, como por ejemplo BART [lewis19]_, los cuales tienen en cuenta ese espacio inicial para
    distinguir entre frases iniciales y frases intermedias en la
    generación de resúmenes\ [1]_.
@@ -105,14 +105,14 @@ No obstante, la siguiente consideración se nos hace necesaria: el punto
 con una letra *y* además mayúscula.
 
 Por ejemplo, en el caso de:
-``“Your idea is interesting. However, I would [...].”`` se separaría en
+``"Your idea is interesting. However, I would [...]."`` se separaría en
 dos frases, dado que la palabra posterior al punto empieza con una letra
 mayúscula. Sin embargo:
-``“We already mentioned in Section 1.1 that this example shows [...].”``
+``"We already mentioned in Section 1.1 that this example shows [...]."``
 conformaría una única frase, ya que tras el punto no aparece una letra.
 Procedemos de igual modo en el caso de los signos de interrogación (?) y
 de exclamación (!). Por ejemplo:
-``“She asked ‘How’s it going?’, and I said ‘Great!’.”`` se tomará
+``"She asked ‘How’s it going?’, and I said ‘Great!’."`` se tomará
 correctamente como una sola frase; tras la interrogación, la siguiente
 palabra comienza con una letra *minúscula*.
 
@@ -120,10 +120,10 @@ Con la consideración anterior, también se agruparían correctamente los
 puntos suspensivos.
 
 Sin embargo, fallaría en situaciones como:
-``“NLP (i.e. Natural Language Processing) is a subfield of Linguistics, Computer Science, and Artificial Intelligence.”``,
-en la que la división sería: ``“NLP (i.e.”`` por un lado, y
-``“Natural Language Processing) is a subfield [...].”``, por otro, ya
-que ``“Natural”`` comienza con mayúscula y aparece tras un punto.
+``"NLP (i.e. Natural Language Processing) is a subfield of Linguistics, Computer Science, and Artificial Intelligence."``,
+en la que la división sería: ``"NLP (i.e."`` por un lado, y
+``"Natural Language Processing) is a subfield [...]."``, por otro, ya
+que ``"Natural"`` comienza con mayúscula y aparece tras un punto.
 
 Asimismo, la razón principal por la que no podemos apoyarnos únicamente
 en reglas predefinidas, reside en las llamadas Entidades Nombradas
@@ -131,7 +131,7 @@ en reglas predefinidas, reside en las llamadas Entidades Nombradas
 personas, lugares, instituciones, corporaciones, etc. Si empleáramos
 reglas predefinidas, podríamos incluir en un diccionario todas las
 entidades nombradas existentes conocidas que contengan puntos, de forma
-que si aparecieran en el texto las palabras ``“U.K.”`` o ``“A.W.O.L.”``
+que si aparecieran en el texto las palabras ``"U.K."`` o ``"A.W.O.L."``
 las agruparíamos como tal, sin partir la frase. Sin embargo, existen
 potencialmente miles (o incluso decenas de miles) de entidades nombradas
 que contienen puntos, por lo que crear y mantener manualmente dicho
@@ -216,10 +216,10 @@ o sufijación. En la siguiente figura, podemos ver un ejemplo de ello:
    Ejemplo de *tokenización* con el modelo T5.
 
 En el ejemplo mostrado, si decodificamos los *tókenes* correspondientes
-a la palabra ``“brutality”``, esto es, ``[14506, 485]``, obtenemos los
-fragmentos ``“brutal”`` e ``“ity”``, respectivamente. Análogamente, la
-palabra ``“backbone”``, se descompone, una vez decodificados los
-``tókenes``, en ``“back”`` y ``“bone”``.
+a la palabra ``"brutality"``, esto es, ``[14506, 485]``, obtenemos los
+fragmentos ``"brutal"`` e ``"ity"``, respectivamente. Análogamente, la
+palabra ``"backbone"``, se descompone, una vez decodificados los
+``tókenes``, en ``"back"`` y ``"bone"``.
 
 La idea detrás de esta fragmentación se basa en la composición, uno de
 los mecanismos morfológicos de formación de palabras más frecuentes
@@ -227,8 +227,8 @@ los mecanismos morfológicos de formación de palabras más frecuentes
 español o alemán. Por tanto, presupone que dividiendo las palabras
 desconocidas en fragmentos menores, podemos facilitar la comprensión de
 las mismas. Naturalmente, habrá casos en los que esta idea falle; por
-ejemplo, en la figura anterior, la palabra ``“JIZT”`` se descompone en
-``“J”``, ``“IZ”``, ``“T”``, lo cual no parece hacerla mucho más
+ejemplo, en la figura anterior, la palabra ``"JIZT"`` se descompone en
+``"J"``, ``"IZ"``, ``"T"``, lo cual no parece hacerla mucho más
 comprensible.
 
 Una vez explicado el concepto de *token*, volvamos al problema ya
@@ -448,8 +448,7 @@ general, al que han bautizado como T5, capaz de llevar a cabo diversas
 tareas de NLP, como muestra el siguiente diagrama:
 
 .. figure:: ../_static/images/memoria_y_anexos/t5-paper.png
-   :alt: El *framework* texto a texto permite emplear el mismo modelo, con los mismos hiperparámetros, función de pérdida, etc., para aplicarlo a diversas tareas de NLP [raffel19]_. En esta figura, además de la traducción y el resumen, se recogen tareas basadas en el *Semantic Textual Similarity Benchmark* (STS-B) y el
-   *Corpus of Linguistic Acceptability* (CoLA).
+   :alt: El *framework* texto a texto permite emplear el mismo modelo, con los mismos hiperparámetros, función de pérdida, etc., para aplicarlo a diversas tareas de NLP [raffel19]_. En esta figura, además de la traducción y el resumen, se recogen tareas basadas en el *Semantic Textual Similarity Benchmark* (STS-B) y el *Corpus of Linguistic Acceptability* (CoLA).
 
    El *framework* texto a texto permite emplear el mismo modelo, con los
    mismos hiperparámetros, función de pérdida, etc., para aplicarlo a
@@ -512,9 +511,9 @@ mayor probabilidad de ser la siguiente, es decir,
    Ejemplo de búsqueda voraz: en cada paso, se toma la palabra con mayor
    probabilidad.
 
-Tomando la figura anterior como ejemplo, dada la palabra ``“El”``,
-la siguiente palabra elegida sería ``“cielo”``, por ser la palabra con mayor
-probabilidad (0.5), y a continuación ``“está”`` (0.5), y así sucesivamente:
+Tomando la figura anterior como ejemplo, dada la palabra ``"El"``,
+la siguiente palabra elegida sería ``"cielo"``, por ser la palabra con mayor
+probabilidad (0.5), y a continuación ``"está"`` (0.5), y así sucesivamente:
 
 Este tipo de generación tiene dos problemas principales:
 
@@ -526,9 +525,9 @@ Este tipo de generación tiene dos problemas principales:
 
 -  Palabras con probabilidades altas pueden quedar enmascaradas tras
    otras con probabilidades bajas. Por ejemplo, en el anterior anterior
-   ejemplo, la secuencia ``“El niño juega”`` nunca se dará, porque a
-   pesar de que ``“juega”`` presenta una probabilidad muy alta (0.9),
-   está precedida por ``“niño”``, la cual no será escogida por tener una
+   ejemplo, la secuencia ``"El niño juega"`` nunca se dará, porque a
+   pesar de que ``"juega"`` presenta una probabilidad muy alta (0.9),
+   está precedida por ``"niño"``, la cual no será escogida por tener una
    probabilidad baja (0.3).
 
 **Beam search**
@@ -547,10 +546,10 @@ probabilidad conjunta. En la siguiente figura se ilustra un ejemplo con dos cami
    Ejemplo de *beam search* con ``n_beams = 2``. Durante la búsqueda, se
    consideran los dos caminos con mayor probabilidad conjunta.
 
-En este ejemplo vemos que, aunque ``“cielo”`` presenta mayor
-probabilidad que ``“niño”``, la secuencia ``“El niño juega”`` tiene una
+En este ejemplo vemos que, aunque ``"cielo"`` presenta mayor
+probabilidad que ``"niño"``, la secuencia ``"El niño juega"`` tiene una
 mayor probabilidad conjunta (:math:`0.3 \cdot 0.9 = 0.27`) que
-``“El cielo está”`` (:math:`0.5 \cdot 0.5  = 0.25`), y por tanto será la
+``"El cielo está"`` (:math:`0.5 \cdot 0.5  = 0.25`), y por tanto será la
 secuencia elegida.
 
 Este tipo de búsqueda funciona muy bien en tareas en las que la longitud
@@ -564,7 +563,7 @@ Sin embargo, presenta dos problemas fundamentales:
    dicha repetición, consiste en establecer penalizaciones de *n-gramas*
    repetidos. Por ejemplo, en el caso de que empleáramos una
    penalización de 6-gramas, la secuencia
-   ``“El niño juega en el parque”`` solo podría aparecer una vez en el
+   ``"El niño juega en el parque"`` solo podría aparecer una vez en el
    texto generado.
 
 -  Como se razona en [holtzman20]_, el lenguaje humano
@@ -735,35 +734,33 @@ Tras esta etapa, el resumen está listo para ser entregado al usuario.
    in Vector Space. 2013. arXiv: 1301.3781 [cs.CL].
 
 .. [word2vec2]
-   Tomás Mikolov y col. “Distributed Representations of Words and
-   Phrases and their Compositionality”. En: CoRR abs/1310.4546 (2013).
+   Tomás Mikolov y col. "Distributed Representations of Words and
+   Phrases and their Compositionality". En: CoRR abs/1310.4546 (2013).
    arXiv: 1310.4546. URL:
    `<http://arxiv.org/abs/1310.4546>`__.
    Último acceso: 28/01/2021.
 
 .. [glove14]
-   Jeffrey Pennington, Richard Socher y Christopher Manning. “GloVe:
-   Global Vectors for Word Representation”. En: Proceedings of the 2014
+   Jeffrey Pennington, Richard Socher y Christopher Manning. "GloVe:
+   Global Vectors for Word Representation". En: Proceedings of the 2014
    Conference on Empirical Methods in Natural Language Processing
    (EMNLP). Doha, Qatar: Association for Computational Linguistics,
    abr. de 2014, págs. 1532-1543. 
 
 .. [elmo18]
-   Matthew E. Peters y col. “Deep contextualized word representations”.
+   Matthew E. Peters y col. "Deep contextualized word representations".
    En: CoRR abs/1802.05365 (2018). arXiv: 1802.05365. URL:
    `<http://arxiv.org/abs/1802.05365>`__.
    Último acceso: 28/01/2021.
 
 .. [bert18]
-   Jacob Devlin y col. “BERT: Pre-training of Deep Bidirectional Trans-
-   formers for Language Understanding”. En: CoRR abs/1810.04805
-   (2018). arXiv: 1810 . 04805. URL:
-   `<http://arxiv.org/abs/1810.04805>`__.
-   Último acceso: 28/01/2021.
+   Jacob Devlin y col. "BERT: Pre-training of Deep Bidirectional Transformers for
+   Language Understanding". En: CoRR abs/1810.04805 (2018). arXiv: 1810 . 04805. URL:
+   `<http://arxiv.org/abs/1810.04805>`__. Último acceso: 28/01/2021.
 
 .. [lewis19]
-   Mike Lewis y col. “BART: Denoising Sequence-to-Sequence Pre-training
-   for Natural Language Generation, Translation, and Comprehension”.
+   Mike Lewis y col. "BART: Denoising Sequence-to-Sequence Pre-training
+   for Natural Language Generation, Translation, and Comprehension".
    En: CoRR abs/1910.13461 (2019).  arXiv: 1805.04833 [cs.CL]. URL:
    `<http://arxiv.org/abs/1910.13461>`__.
    Último acceso: 28/01/2021.
@@ -775,30 +772,26 @@ Tras esta etapa, el resumen está listo para ser entregado al usuario.
    Último acceso: 28/01/2021.
 
 .. [manning19]
-   Christopher Manning - Stanford University. Stanford CS224N: NLP
-   with Deep Learning. Winter 2019. Lecture 13. Contextual Word Embed-
-   dings. 2019. URL:
-   `<https://www.youtube.com/watch?v=S-CspeZ8FHc>`__.
-   Último acceso: 28/01/2021.
+   Christopher Manning - Stanford University. Stanford CS224N: NLP with Deep Learning.
+   Winter 2019. Lecture 13. Contextual Word Embeddings. 2019. URL:
+   `<https://www.youtube.com/watch?v=S-CspeZ8FHc>`__. Último acceso: 28/01/2021.
 
 .. [hou20]
    Linlin Hou y col. Method and Dataset Entity Mining in Scientific
    Literature: A CNN + Bi-LSTM Model with Self-attention. 2020.
 
-.. [raffel19]
-   Colin Raffel y col. “Exploring the Limits of Transfer Learning with a
-   Unified Text-to-Text Transformer”. En: CoRR abs/1910.10683 (2019),
-   pág. 11. arXiv: 1910.10683. URL:
-   `<http://arxiv.org/abs/1910.10683>`__.
-   Último acceso: 27/01/2020.
+.. [cetnarowska05]
+   Bożena Cetnarowska. “Ingo Plag, Word-formation in English (Cambridge Textbooks in
+   Linguistics). Cambridge: Cambridge University Press, 2003. Pp. xiv 240.” En:
+   Journal of Linguistics 41.1 (2005).
 
 .. [sarkar18]
    Dipanjan Sarkar, Raghav Bali y Tamoghna Ghosh. Hands-On Transfer
-   Learning with Python. Packt Publishing, 2018. isbn: 9781788831307.
+   Learning with Python. Packt Publishing, 2018. ISBN: 9781788831307.
 
 .. [kumar21]
-   Manoj Kumar y col. ProtoDA: Efficient Transfer Learning for Few-
-   Shot Intent Classification. 2021. arXiv: 2101.11753 [cs.CL].
+   Manoj Kumar y col. ProtoDA: Efficient Transfer Learning for Few-Shot Intent
+   Classification. 2021. arXiv: 2101.11753 [cs.CL].
 
 .. [ali21]
    Nuredin Ali. Exploring Transfer Learning on Face Recognition of
@@ -817,16 +810,16 @@ Tras esta etapa, el resumen está listo para ser entregado al usuario.
    Último acceso: 31/01/2021.
 
 .. [murray18]
-   Kenton Murray y David Chiang. “Correcting Length Bias in Neural
-   Machine Translation”. En: CoRR abs/1808.10006 (2018). arXiv: 1808.
+   Kenton Murray y David Chiang. "Correcting Length Bias in Neural
+   Machine Translation". En: CoRR abs/1808.10006 (2018). arXiv: 1808.
    10006. URL:
    `<http://arxiv.org/abs/1808.10006>`__.
    Último acceso: 31/01/2021.
 
 .. [yang18]
-   Yilin Yang, Liang Huang y Mingbo Ma. “Breaking the Beam Search
+   Yilin Yang, Liang Huang y Mingbo Ma. "Breaking the Beam Search
    Curse: A Study of (Re-)Scoring Methods and Stopping Criteria for
-   Neural Machine Translation”. En: CoRR abs/1808.09582 (2018). arXiv:
+   Neural Machine Translation". En: CoRR abs/1808.09582 (2018). arXiv:
    1808.09582. URL:
    `<http://arxiv.org/abs/1808.09582>`__.
    Último acceso: 31/01/2021.
@@ -840,7 +833,7 @@ Tras esta etapa, el resumen está listo para ser entregado al usuario.
    Generation. 2018. arXiv: 1805.04833 [cs.CL].
 
 .. [lita03]
-   Lucian Vlad Lita y col. “TRuEcasIng”. En: Proceedings of the 41st
+   Lucian Vlad Lita y col. "TRuEcasIng". En: Proceedings of the 41st
    Annual Meeting on Association for Computational Linguistics - Volume
    1. ACL ’03. Sapporo, Japan: Association for Computational Linguistics,
    2003, págs. 152-159.

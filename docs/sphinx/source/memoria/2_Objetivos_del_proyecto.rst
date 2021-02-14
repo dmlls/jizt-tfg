@@ -1,6 +1,6 @@
-========
+======================
 Objetivos del proyecto
-========
+======================
 
 En este apartado, detallamos los objetivos tanto generales, como
 técnicos, cuya consecución se pretende lograr a través del desarrollo
@@ -104,15 +104,15 @@ cuenta con los siguientes objetivos técnicos:
    considerar que un *tóken* es equivalente a una palabra.
 
 .. [abigail17]
-   Abigail See, Peter J. Liu y Christopher D. Manning. “Get To The
-   Point: Summarization with Pointer-Generator Networks”. En: CoRR
+   Abigail See, Peter J. Liu y Christopher D. Manning. eGet To The
+   Point: Summarization with Pointer-Generator Networks". En: CoRR
    abs/1704.04368 (2017), pág. 1. arXiv: 1704.04368. URL:
    `<http://arxiv.org/abs/1704.04368>`__.
    Último acceso: 27/01/2020.
 
 .. [raffel19]
-   Colin Raffel y col. “Exploring the Limits of Transfer Learning with a
-   Unified Text-to-Text Transformer”. En: CoRR abs/1910.10683 (2019),
+   Colin Raffel y col. "Exploring the Limits of Transfer Learning with a
+   Unified Text-to-Text Transformer". En: CoRR abs/1910.10683 (2019),
    pág. 11. arXiv: 1910.10683. URL:
    `<http://arxiv.org/abs/1910.10683>`__.
    Último acceso: 27/01/2020.
@@ -123,12 +123,12 @@ cuenta con los siguientes objetivos técnicos:
    Último acceso: 27/01/2020.
 
 .. [arundel19]
-   John Arundel y Justin Domingus. Cloud Native DevOps with Kuber-
-   netes. O’Reilly Media, Inc., mar. de 2019. isbn: 9781492040767.
+   John Arundel y Justin Domingus. Cloud Native DevOps with Kubernetes. O’Reilly
+   Media, Inc., mar. de 2019. ISBN: 9781492040767.
 
 .. [bellemare20]
-   Adam Bellemare. Building Event-Driven Microservices: Leveraging Or-
-   ganizational Data at Scale. O’Reilly Media, Inc., 2020. isbn: 9781492057895.
+   Adam Bellemare. Building Event-Driven Microservices: Leveraging Organizational Data
+   at Scale. O’Reilly Media, Inc., 2020. ISBN: 9781492057895.
 
 .. [crunchy21]
    Crunchy Data. Crunchy PostgreSQL Operator. Mayo de 2021. URL:
@@ -137,8 +137,8 @@ cuenta con los siguientes objetivos técnicos:
 
 .. [martin15]
    Robert Martin. Clean Architecture: A Craftsman’s Guide to Software
-   Structure and Design. Pearson Education, 2015. isbn: 9780134494166.
+   Structure and Design. Pearson Education, 2015. ISBN: 9780134494166.
 
 .. [vernon13]
    Vaughn Vernon. Implementing Domain-Driven Design. Addison-Wesley
-   Professional, 2013. isbn: 0321834577.
+   Professional, 2013. ISBN: 0321834577.
