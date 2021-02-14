@@ -24,6 +24,8 @@ en el texto original.
    :maxdepth: 2
 
    memoria/1_Introduccion
+   memoria/2_Objetivos_del_proyecto
+   memoria/3_Conceptos_teoricos
 
 Indices and tables
 ==================

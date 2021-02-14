@@ -1,191 +1,145 @@
-\relax 
-\providecommand\hyper@newdestlabel[2]{}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{Objetivos del proyecto}{5}{chapter*.4}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {2.1}Objetivos generales}{5}{section.2.1}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {2.2}Objetivos técnicos}{6}{section.2.2}\protected@file@percent }
-\@setckpt{./tex/2_Objetivos_del_proyecto}{
-\setcounter{page}{8}
-\setcounter{equation}{0}
-\setcounter{enumi}{0}
-\setcounter{enumii}{0}
-\setcounter{enumiii}{0}
-\setcounter{enumiv}{0}
-\setcounter{footnote}{1}
-\setcounter{mpfootnote}{0}
-\setcounter{@memmarkcntra}{0}
-\setcounter{storedpagenumber}{1}
-\setcounter{book}{0}
-\setcounter{part}{0}
-\setcounter{chapter}{2}
-\setcounter{section}{2}
-\setcounter{subsection}{0}
-\setcounter{subsubsection}{0}
-\setcounter{paragraph}{0}
-\setcounter{subparagraph}{0}
-\setcounter{@ppsavesec}{0}
-\setcounter{@ppsaveapp}{0}
-\setcounter{vslineno}{0}
-\setcounter{poemline}{0}
-\setcounter{modulo@vs}{0}
-\setcounter{memfvsline}{0}
-\setcounter{verse}{0}
-\setcounter{chrsinstr}{0}
-\setcounter{poem}{0}
-\setcounter{newflo@tctr}{4}
-\setcounter{@contsubnum}{0}
-\setcounter{maxsecnumdepth}{1}
-\setcounter{sidefootnote}{0}
-\setcounter{pagenote}{0}
-\setcounter{pagenoteshadow}{0}
-\setcounter{memfbvline}{0}
-\setcounter{bvlinectr}{0}
-\setcounter{cp@cntr}{0}
-\setcounter{ism@mctr}{0}
-\setcounter{xsm@mctr}{0}
-\setcounter{csm@mctr}{0}
-\setcounter{ksm@mctr}{0}
-\setcounter{xksm@mctr}{0}
-\setcounter{cksm@mctr}{0}
-\setcounter{msm@mctr}{0}
-\setcounter{xmsm@mctr}{0}
-\setcounter{cmsm@mctr}{0}
-\setcounter{bsm@mctr}{0}
-\setcounter{workm@mctr}{0}
-\setcounter{sheetsequence}{18}
-\setcounter{lastsheet}{85}
-\setcounter{lastpage}{75}
-\setcounter{figure}{0}
-\setcounter{lofdepth}{1}
-\setcounter{table}{0}
-\setcounter{lotdepth}{1}
-\setcounter{PWSTtable}{0}
-\setcounter{tabx@nest}{0}
-\setcounter{listtotal}{0}
-\setcounter{listcount}{0}
-\setcounter{liststart}{0}
-\setcounter{liststop}{0}
-\setcounter{citecount}{0}
-\setcounter{citetotal}{0}
-\setcounter{multicitecount}{0}
-\setcounter{multicitetotal}{0}
-\setcounter{instcount}{22}
-\setcounter{maxnames}{3}
-\setcounter{minnames}{1}
-\setcounter{maxitems}{3}
-\setcounter{minitems}{1}
-\setcounter{citecounter}{0}
-\setcounter{maxcitecounter}{0}
-\setcounter{savedcitecounter}{0}
-\setcounter{uniquelist}{0}
-\setcounter{uniquename}{0}
-\setcounter{refsection}{0}
-\setcounter{refsegment}{0}
-\setcounter{maxextratitle}{0}
-\setcounter{maxextratitleyear}{0}
-\setcounter{maxextraname}{3}
-\setcounter{maxextradate}{0}
-\setcounter{maxextraalpha}{0}
-\setcounter{abbrvpenalty}{50}
-\setcounter{highnamepenalty}{50}
-\setcounter{lownamepenalty}{25}
-\setcounter{maxparens}{3}
-\setcounter{parenlevel}{0}
-\setcounter{mincomprange}{10}
-\setcounter{maxcomprange}{100000}
-\setcounter{mincompwidth}{1}
-\setcounter{afterword}{0}
-\setcounter{savedafterword}{0}
-\setcounter{annotator}{0}
-\setcounter{savedannotator}{0}
-\setcounter{author}{0}
-\setcounter{savedauthor}{0}
-\setcounter{bookauthor}{0}
-\setcounter{savedbookauthor}{0}
-\setcounter{commentator}{0}
-\setcounter{savedcommentator}{0}
-\setcounter{editor}{0}
-\setcounter{savededitor}{0}
-\setcounter{editora}{0}
-\setcounter{savededitora}{0}
-\setcounter{editorb}{0}
-\setcounter{savededitorb}{0}
-\setcounter{editorc}{0}
-\setcounter{savededitorc}{0}
-\setcounter{foreword}{0}
-\setcounter{savedforeword}{0}
-\setcounter{holder}{0}
-\setcounter{savedholder}{0}
-\setcounter{introduction}{0}
-\setcounter{savedintroduction}{0}
-\setcounter{namea}{0}
-\setcounter{savednamea}{0}
-\setcounter{nameb}{0}
-\setcounter{savednameb}{0}
-\setcounter{namec}{0}
-\setcounter{savednamec}{0}
-\setcounter{translator}{0}
-\setcounter{savedtranslator}{0}
-\setcounter{shortauthor}{0}
-\setcounter{savedshortauthor}{0}
-\setcounter{shorteditor}{0}
-\setcounter{savedshorteditor}{0}
-\setcounter{labelname}{0}
-\setcounter{savedlabelname}{0}
-\setcounter{institution}{0}
-\setcounter{savedinstitution}{0}
-\setcounter{lista}{0}
-\setcounter{savedlista}{0}
-\setcounter{listb}{0}
-\setcounter{savedlistb}{0}
-\setcounter{listc}{0}
-\setcounter{savedlistc}{0}
-\setcounter{listd}{0}
-\setcounter{savedlistd}{0}
-\setcounter{liste}{0}
-\setcounter{savedliste}{0}
-\setcounter{listf}{0}
-\setcounter{savedlistf}{0}
-\setcounter{location}{0}
-\setcounter{savedlocation}{0}
-\setcounter{organization}{0}
-\setcounter{savedorganization}{0}
-\setcounter{origlocation}{0}
-\setcounter{savedoriglocation}{0}
-\setcounter{origpublisher}{0}
-\setcounter{savedorigpublisher}{0}
-\setcounter{publisher}{0}
-\setcounter{savedpublisher}{0}
-\setcounter{language}{0}
-\setcounter{savedlanguage}{0}
-\setcounter{origlanguage}{0}
-\setcounter{savedoriglanguage}{0}
-\setcounter{pageref}{0}
-\setcounter{savedpageref}{0}
-\setcounter{textcitecount}{0}
-\setcounter{textcitetotal}{0}
-\setcounter{textcitemaxnames}{0}
-\setcounter{biburlbigbreakpenalty}{100}
-\setcounter{biburlbreakpenalty}{200}
-\setcounter{biburlnumpenalty}{0}
-\setcounter{biburlucpenalty}{0}
-\setcounter{biburllcpenalty}{0}
-\setcounter{smartand}{1}
-\setcounter{bbx:relatedcount}{0}
-\setcounter{bbx:relatedtotal}{0}
-\setcounter{float@type}{8}
-\setcounter{algorithm}{0}
-\setcounter{ALG@line}{0}
-\setcounter{ALG@rem}{0}
-\setcounter{ALG@nested}{0}
-\setcounter{ALG@Lnr}{2}
-\setcounter{ALG@blocknr}{10}
-\setcounter{ALG@storecount}{0}
-\setcounter{ALG@tmpcounter}{0}
-\setcounter{Item}{0}
-\setcounter{Hfootnote}{1}
-\setcounter{memhycontfloat}{0}
-\setcounter{Hpagenote}{0}
-\setcounter{bookmark@seq@number}{6}
-\setcounter{parentequation}{0}
-\setcounter{section@level}{1}
-}
+========
+Objetivos del proyecto
+========
+
+En este apartado, detallamos los objetivos tanto generales, como
+técnicos, cuya consecución se pretende lograr a través del desarrollo
+del proyecto.
+
+Objetivos generales
+===================
+
+Los objetivos generales que persigue el proyecto son:
+
+-  Ofrecer la capacidad de llevar a cabo tareas de NLP tanto al público
+   general, como al especializado. Como se ha mencionado con
+   anterioridad, la única tarea NLP que implementará el presente TFG
+   será la de generación de resúmenes.
+
+-  Emplear modelos pre-entrenados del estado del arte para la generación
+   de resúmenes abstractivos. Los resúmenes abstractivos se diferencian de los
+   extractivos en que el resumen generado contiene palabras o expresiones que no
+   aparecen en el texto original [abigail17]_. Dicho de forma más técnica, existe
+   cierto nivel de paráfrasis.
+
+-  Diseñar una arquitectura, tanto como para el servicio de resúmenes en
+   la nube, como para la aplicación multiplataforma, con aspectos como
+   la flexibilidad, la escalabilidad y la robustez como principios
+   fundamentales.
+
+-  Poner en práctica lo aprendido a lo largo del Grado en áreas como
+   Ingeniería del Software, Sistemas Distribuidos, Programación, Minería
+   de Datos, Algoritmia y Bases de Datos.
+
+-  Ofrecer la totalidad del proyecto bajo licencias de *Software* Libre.
+
+Objetivos técnicos
+==================
+
+Además de los objetivos generales listados anteriormente, el objetivo
+cuenta con los siguientes objetivos técnicos:
+
+-  Los modelos pre-entrenados de generación de texto admiten parámetros
+   específicos para configurar dicha generación, por lo que se deberá
+   implementar una interfaz que permita a los usuarios establecer estos
+   parámetros de manera opcional. Por defecto, se proporcionarán los
+   valores que mejores resultados ofrecen, extraídos mayoritariamente
+   experimentalmente.
+
+-  Los modelos pre-entrenados de generación estado del arte presentan
+   frecuentemente limitaciones en la longitud de los textos de entrada
+   que reciben, derivadas de la longitud de las secuencias de entrada
+   con las que han sido entrenados. Esta longitud llega a ser tan baja
+   como 512 *tókenes*\ [1]_ [raffel19]_. Por tanto, se
+   deberá establecer algún mecanismo que permita sortear esta limitación
+   para poder generar resúmenes de textos arbitrariamente largos.
+
+-  Gestionar el pre-procesado de los textos a resumir para ajustarlos a
+   la entrada que los modelos pre-entrenados esperan.
+
+-  Algunos modelos pre-entrenados generan textos enteramente en
+   minúsculas. Se deberá, por tanto, incluir mecanismos en la etapa de
+   post-procesado que permitan recomponer el correcto uso de las
+   mayúsculas en los resúmenes generados.
+
+-  Con el fin de cumplir con el objetivo general referente a la
+   arquitectura, desarrollar una arquitectura de microservicios, basada en la
+   filosofía *Cloud Native* [cloud20]_ [arundel19]_. Este objetivo se divide
+   a su vez en dos puntos:
+
+   -  Encapsular cada microservicio en un contenedor Docker.
+
+   -  Implementar la orquestración y balanceo de los microservicios a
+      través de herramientas como Kubernetes y Kafka.
+
+-  Complementariamente al punto anterior, implementar una arquitectura
+   dirigida por eventos [bellemare20]_. La motivación
+   detrás de la utilización de este patrón arquitectónico se justifica
+   en el capítulo de :ref:`chapter:conceptos-teoricos`.
+
+-  Implementar una API REST escrita en Python empleando el *framework
+   web* Flask. Dicha API será el punto de conexión con el servicio de
+   generación de resúmenes en la nube.
+
+-  Desplegar PostgreSQL como servicio en Kubernetes mediante el Operador
+   PostgreSQL de Crunchy [crunchy21]_. Esta base de datos
+   cumplirá la doble función de (a) servir como caché para no volver a
+   producir resúmenes ya generados con anterioridad, incrementando la
+   velocidad de respuesta, y (b) almacenar los resúmenes generados con
+   fines de evaluación de la calidad de los mismos y extracción de
+   métricas.
+
+-  Desarrollar, con ayuda de Flutter, una aplicación multiplataforma con
+   soporte nativo para Android, iOS, y *web*. Esta aplicación consumirá
+   la API y proporcionará una interfaz gráfica sencilla e intuitiva para
+   que usuarios regulares puedan hacer uso del servicio de generación de
+   resúmenes.
+
+-  Seguir el patrón de diseño Clean Architecture [martin15]_ y de Diseño guiado por el
+   dominio (DDD, por sus siglas
+   en inglés) [vernon13]_ para la implementación de la
+   aplicación.
+
+.. [1]
+   Este término se definirá posteriormente. Por ahora, el lector puede
+   considerar que un *tóken* es equivalente a una palabra.
+
+.. [abigail17]
+   Abigail See, Peter J. Liu y Christopher D. Manning. “Get To The
+   Point: Summarization with Pointer-Generator Networks”. En: CoRR
+   abs/1704.04368 (2017), pág. 1. arXiv: 1704.04368. URL:
+   `<http://arxiv.org/abs/1704.04368>`__.
+   Último acceso: 27/01/2020.
+
+.. [raffel19]
+   Colin Raffel y col. “Exploring the Limits of Transfer Learning with a
+   Unified Text-to-Text Transformer”. En: CoRR abs/1910.10683 (2019),
+   pág. 11. arXiv: 1910.10683. URL:
+   `<http://arxiv.org/abs/1910.10683>`__.
+   Último acceso: 27/01/2020.
+
+.. [cloud20]
+   Microsoft. Defining Cloud Native. Mayo de 2020. URL:
+   `<https://docs.microsoft.com/en-us/dotnet/architecture/cloud-native/definition>`__.
+   Último acceso: 27/01/2020.
+
+.. [arundel19]
+   John Arundel y Justin Domingus. Cloud Native DevOps with Kuber-
+   netes. O’Reilly Media, Inc., mar. de 2019. isbn: 9781492040767.
+
+.. [bellemare20]
+   Adam Bellemare. Building Event-Driven Microservices: Leveraging Or-
+   ganizational Data at Scale. O’Reilly Media, Inc., 2020. isbn: 9781492057895.
+
+.. [crunchy21]
+   Crunchy Data. Crunchy PostgreSQL Operator. Mayo de 2021. URL:
+   `<https://access.crunchydata.com/documentation/postgres-operator/4.5.1/>`__.
+   Último acceso: 04/02/2020.
+
+.. [martin15]
+   Robert Martin. Clean Architecture: A Craftsman’s Guide to Software
+   Structure and Design. Pearson Education, 2015. isbn: 9780134494166.
+
+.. [vernon13]
+   Vaughn Vernon. Implementing Domain-Driven Design. Addison-Wesley
+   Professional, 2013. isbn: 0321834577.

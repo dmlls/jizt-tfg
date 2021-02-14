@@ -1,218 +1,516 @@
-\relax 
-\providecommand\hyper@newdestlabel[2]{}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{Técnicas y herramientas}{29}{chapter*.8}\protected@file@percent }
-\newlabel{chapter:tecnicas}{{\M@TitleReference {3.4}{Técnicas y herramientas}}{29}{Técnicas y herramientas}{chapter*.8}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.1}Modelo de generación de resúmenes}{29}{section.4.1}\protected@file@percent }
-\newlabel{sec:model}{{\M@TitleReference {4.1}{Modelo de generación de resúmenes}}{29}{Modelo de generación de resúmenes}{section.4.1}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.2}\emph  {Backend} --- Infraestructura escalable en la nube}{30}{section.4.2}\protected@file@percent }
-\newlabel{sec:backend}{{\M@TitleReference {4.2}{\emph  {Backend} --- Infraestructura escalable en la nube}}{30}{\emph {Backend} --- Infraestructura escalable en la nube}{section.4.2}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{Kubernetes}{30}{section*.9}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Vista general de la arquitectura del \emph  {backend}.}}{31}{figure.4.14}\protected@file@percent }
-\newlabel{fig:overview-arch}{{\M@TitleReference {4.14}{Vista general de la arquitectura del \emph  {backend}.}}{31}{Vista general de la arquitectura del \emph {backend}}{figure.4.14}{}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4.15}{\ignorespaces Componentes principales de Kubernetes.}}{33}{figure.4.15}\protected@file@percent }
-\newlabel{fig:k8s-components}{{\M@TitleReference {4.15}{Componentes principales de Kubernetes.}}{33}{Componentes principales de Kubernetes}{figure.4.15}{}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4.16}{\ignorespaces Ejemplo de un hipotético uso de Ingress con diferentes rutas.}}{34}{figure.4.16}\protected@file@percent }
-\newlabel{fig:k8s-ingress}{{\M@TitleReference {4.16}{Ejemplo de un hipotético uso de Ingress con diferentes rutas.}}{34}{Ejemplo de un hipotético uso de Ingress con diferentes rutas}{figure.4.16}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{Kafka y Strimzi}{34}{section*.10}\protected@file@percent }
-\newlabel{subsec:kafka}{{\M@TitleReference {4.2}{Kafka y Strimzi}}{34}{Kafka y Strimzi}{section*.10}{}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4.17}{\ignorespaces Vista general de la arquitectura del \emph  {backend}.}}{35}{figure.4.17}\protected@file@percent }
-\newlabel{fig:overview-arch-2}{{\M@TitleReference {4.17}{Vista general de la arquitectura del \emph  {backend}.}}{35}{Vista general de la arquitectura del \emph {backend}}{figure.4.17}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{Helm}{36}{section*.11}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{Crunchy PostgreSQL Operator}{37}{section*.12}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{Docker}{38}{section*.13}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4.18}{\ignorespaces Diferentes enfoques en el despliegue de sistemas.}}{38}{figure.4.18}\protected@file@percent }
-\newlabel{fig:vm-container}{{\M@TitleReference {4.18}{Diferentes enfoques en el despliegue de sistemas.}}{38}{Diferentes enfoques en el despliegue de sistemas}{figure.4.18}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{Flask y Flask-RESTful}{38}{section*.14}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.3}\emph  {Frontend} --- Aplicación multiplataforma}{39}{section.4.3}\protected@file@percent }
-\newlabel{sec:frontend}{{\M@TitleReference {4.3}{\emph  {Frontend} --- Aplicación multiplataforma}}{39}{\emph {Frontend} --- Aplicación multiplataforma}{section.4.3}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{Flutter}{39}{section*.15}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Desarrollo nativo (plataformas x64/ARM)}{40}{section*.16}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Desarrollo \emph  {web}}{40}{section*.17}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Producción nativa (plataformas x64/ARM)}{40}{section*.18}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Producción \emph  {web}}{41}{section*.19}\protected@file@percent }
-\@setckpt{./tex/4_Tecnicas_y_herramientas}{
-\setcounter{page}{42}
-\setcounter{equation}{0}
-\setcounter{enumi}{5}
-\setcounter{enumii}{3}
-\setcounter{enumiii}{0}
-\setcounter{enumiv}{0}
-\setcounter{footnote}{10}
-\setcounter{mpfootnote}{0}
-\setcounter{@memmarkcntra}{0}
-\setcounter{storedpagenumber}{1}
-\setcounter{book}{0}
-\setcounter{part}{0}
-\setcounter{chapter}{4}
-\setcounter{section}{3}
-\setcounter{subsection}{0}
-\setcounter{subsubsection}{0}
-\setcounter{paragraph}{0}
-\setcounter{subparagraph}{0}
-\setcounter{@ppsavesec}{0}
-\setcounter{@ppsaveapp}{0}
-\setcounter{vslineno}{0}
-\setcounter{poemline}{0}
-\setcounter{modulo@vs}{0}
-\setcounter{memfvsline}{0}
-\setcounter{verse}{0}
-\setcounter{chrsinstr}{0}
-\setcounter{poem}{0}
-\setcounter{newflo@tctr}{4}
-\setcounter{@contsubnum}{0}
-\setcounter{maxsecnumdepth}{1}
-\setcounter{sidefootnote}{0}
-\setcounter{pagenote}{0}
-\setcounter{pagenoteshadow}{0}
-\setcounter{memfbvline}{0}
-\setcounter{bvlinectr}{0}
-\setcounter{cp@cntr}{0}
-\setcounter{ism@mctr}{0}
-\setcounter{xsm@mctr}{0}
-\setcounter{csm@mctr}{0}
-\setcounter{ksm@mctr}{0}
-\setcounter{xksm@mctr}{0}
-\setcounter{cksm@mctr}{0}
-\setcounter{msm@mctr}{0}
-\setcounter{xmsm@mctr}{0}
-\setcounter{cmsm@mctr}{0}
-\setcounter{bsm@mctr}{0}
-\setcounter{workm@mctr}{0}
-\setcounter{sheetsequence}{52}
-\setcounter{lastsheet}{85}
-\setcounter{lastpage}{75}
-\setcounter{figure}{18}
-\setcounter{lofdepth}{1}
-\setcounter{table}{0}
-\setcounter{lotdepth}{1}
-\setcounter{PWSTtable}{0}
-\setcounter{tabx@nest}{0}
-\setcounter{listtotal}{0}
-\setcounter{listcount}{0}
-\setcounter{liststart}{0}
-\setcounter{liststop}{0}
-\setcounter{citecount}{0}
-\setcounter{citetotal}{0}
-\setcounter{multicitecount}{0}
-\setcounter{multicitetotal}{0}
-\setcounter{instcount}{75}
-\setcounter{maxnames}{3}
-\setcounter{minnames}{1}
-\setcounter{maxitems}{3}
-\setcounter{minitems}{1}
-\setcounter{citecounter}{0}
-\setcounter{maxcitecounter}{0}
-\setcounter{savedcitecounter}{0}
-\setcounter{uniquelist}{0}
-\setcounter{uniquename}{0}
-\setcounter{refsection}{0}
-\setcounter{refsegment}{0}
-\setcounter{maxextratitle}{0}
-\setcounter{maxextratitleyear}{0}
-\setcounter{maxextraname}{3}
-\setcounter{maxextradate}{0}
-\setcounter{maxextraalpha}{0}
-\setcounter{abbrvpenalty}{50}
-\setcounter{highnamepenalty}{50}
-\setcounter{lownamepenalty}{25}
-\setcounter{maxparens}{3}
-\setcounter{parenlevel}{0}
-\setcounter{mincomprange}{10}
-\setcounter{maxcomprange}{100000}
-\setcounter{mincompwidth}{1}
-\setcounter{afterword}{0}
-\setcounter{savedafterword}{0}
-\setcounter{annotator}{0}
-\setcounter{savedannotator}{0}
-\setcounter{author}{0}
-\setcounter{savedauthor}{0}
-\setcounter{bookauthor}{0}
-\setcounter{savedbookauthor}{0}
-\setcounter{commentator}{0}
-\setcounter{savedcommentator}{0}
-\setcounter{editor}{0}
-\setcounter{savededitor}{0}
-\setcounter{editora}{0}
-\setcounter{savededitora}{0}
-\setcounter{editorb}{0}
-\setcounter{savededitorb}{0}
-\setcounter{editorc}{0}
-\setcounter{savededitorc}{0}
-\setcounter{foreword}{0}
-\setcounter{savedforeword}{0}
-\setcounter{holder}{0}
-\setcounter{savedholder}{0}
-\setcounter{introduction}{0}
-\setcounter{savedintroduction}{0}
-\setcounter{namea}{0}
-\setcounter{savednamea}{0}
-\setcounter{nameb}{0}
-\setcounter{savednameb}{0}
-\setcounter{namec}{0}
-\setcounter{savednamec}{0}
-\setcounter{translator}{0}
-\setcounter{savedtranslator}{0}
-\setcounter{shortauthor}{0}
-\setcounter{savedshortauthor}{0}
-\setcounter{shorteditor}{0}
-\setcounter{savedshorteditor}{0}
-\setcounter{labelname}{0}
-\setcounter{savedlabelname}{0}
-\setcounter{institution}{0}
-\setcounter{savedinstitution}{0}
-\setcounter{lista}{0}
-\setcounter{savedlista}{0}
-\setcounter{listb}{0}
-\setcounter{savedlistb}{0}
-\setcounter{listc}{0}
-\setcounter{savedlistc}{0}
-\setcounter{listd}{0}
-\setcounter{savedlistd}{0}
-\setcounter{liste}{0}
-\setcounter{savedliste}{0}
-\setcounter{listf}{0}
-\setcounter{savedlistf}{0}
-\setcounter{location}{0}
-\setcounter{savedlocation}{0}
-\setcounter{organization}{0}
-\setcounter{savedorganization}{0}
-\setcounter{origlocation}{0}
-\setcounter{savedoriglocation}{0}
-\setcounter{origpublisher}{0}
-\setcounter{savedorigpublisher}{0}
-\setcounter{publisher}{0}
-\setcounter{savedpublisher}{0}
-\setcounter{language}{0}
-\setcounter{savedlanguage}{0}
-\setcounter{origlanguage}{0}
-\setcounter{savedoriglanguage}{0}
-\setcounter{pageref}{0}
-\setcounter{savedpageref}{0}
-\setcounter{textcitecount}{0}
-\setcounter{textcitetotal}{0}
-\setcounter{textcitemaxnames}{0}
-\setcounter{biburlbigbreakpenalty}{100}
-\setcounter{biburlbreakpenalty}{200}
-\setcounter{biburlnumpenalty}{0}
-\setcounter{biburlucpenalty}{0}
-\setcounter{biburllcpenalty}{0}
-\setcounter{smartand}{1}
-\setcounter{bbx:relatedcount}{0}
-\setcounter{bbx:relatedtotal}{0}
-\setcounter{float@type}{8}
-\setcounter{algorithm}{3}
-\setcounter{ALG@line}{19}
-\setcounter{ALG@rem}{0}
-\setcounter{ALG@nested}{0}
-\setcounter{ALG@Lnr}{2}
-\setcounter{ALG@blocknr}{11}
-\setcounter{ALG@storecount}{0}
-\setcounter{ALG@tmpcounter}{0}
-\setcounter{Item}{15}
-\setcounter{Hfootnote}{10}
-\setcounter{memhycontfloat}{0}
-\setcounter{Hpagenote}{0}
-\setcounter{bookmark@seq@number}{15}
-\setcounter{parentequation}{0}
-\setcounter{section@level}{3}
-}
+.. _chapter:tecnicas-herramientas:
+
+========
+Técnicas y herramientas
+========
+
+En este capítulo, se recogen las tecnologías principales empleadas en el
+desarrollo del proyecto, así como los detalles más relevantes de su
+implementación.
+
+Para facilitar la organización y comprensión de las mismas, se han
+separado en tres subsecciones: , en la que se detalla el funcionamiento
+del modelo de generación de lenguaje empleado, , donde profundizamos en
+la implementación del servicio escalable en la nube, y , en la que
+explicamos todo lo referente a la aplicación multiplataforma
+desarrollada.
+
+.. _sec:model:
+
+Modelo de generación de resúmenes
+=================================
+
+Como se ha venido mencionando a lo largo de los anteriores capítulos,
+nuestro proyecto, a la hora de generar resúmenes, solo hace uso por el
+momento del modelo T5 de Google. Más concretamente, utilizamos la
+implementación ``t5-large`` de Hugging Face [t5-hf] .. [t5-hf]_, el cual
+ha sido entrenado con texto en inglés procedente del Colossal Clean
+Crawled Corpus (C4), y contiene aproximadamente 770 millones de
+parámetros [hf-pretrained] .. [hf-pretrained]_.
+
+Esta implementación está escrita en Python, lo que nos facilita la
+integración con el resto de componentes de JIZT, también desarrollados
+en Python.
+
+El modelo ``t5-large`` consta, por un lado, del *tokenizer*, encargado
+de la codificación del texto, y por otro, del modelo en sí, el cual
+recibe el texto codificado por el *tokenizer*, y genera el resumen a
+partir de él. Dicho resumen, sigue estando en forma de *tókenes*
+codificados, por lo que tenemos que hacer uso una vez más del
+*tokenizer* para proceder a su decodificación. Una vez decodificado, el
+texto vuelve a contener caracteres legibles.
+
+Tanto el proceso de codificación, como el de generación de resúmenes, se
+pueden llevar a cabo empleando unidades de procesamiento gráfico (GPU).
+No obstante, en nuestro caso, ambos procesos se ejecutan en unidades
+centrales de procesamiento (CPU), debido a limitaciones económicas [1]_.
+Esto explica en parte los , los cuales pueden resultar algo dilatados
+con textos muy largos.
+
+Un último aspecto a destacar es que a la hora de generar los resúmenes,
+se pueden especificar los parámetros concretos con los que realizar
+dicha generación, permitiéndonos hacer uso de las diferentes estrategias
+vistas en la .
+
+.. _sec:backend:
+
+*Backend* — Infraestructura escalable en la nube
+================================================
+
+En la se recoge una visión general de la arquitectura que conforma el
+*backend* de JIZT, y que posibilita la implementación en la nube de las
+diferentes etapas en la generación de resúmenes descritas en el capítulo
+de .
+
+.. figure:: overview-arch
+   :alt: Vista general de la arquitectura del *backend*. Los rectángulos
+   en azul se corresponden con los microservicios de JIZT. Los
+   rectángulos en amarillo, representan los *topics* de Kafka,
+   explicados posteriormente.
+   :name: fig:overview-arch
+
+   Vista general de la arquitectura del *backend*. Los rectángulos en
+   azul se corresponden con los microservicios de JIZT. Los rectángulos
+   en amarillo, representan los *topics* de Kafka, explicados
+   posteriormente.
+
+En esta arquitectura, existen diferentes tecnologías, cada una encargada
+de realizar una tarea específica, pero a su vez integrándose con el
+resto. Veamos con más detalle cuáles son las características principales
+de las tecnologías empleadas.
+
+Kubernetes
+----------
+
+El *backend* sigue una arquitectura de microservicios [newman15] ..
+[newman15]_, de forma que cada una de las etapas (pre-procesado,
+codificación, generación del resúmen y post-procesado), está confinada
+en un contenedor Docker [docker] .. [docker]_, conformando un
+microservicio. Adicionalmente, existe un microservicio más, el
+*Dispatcher*, el cual lleva a cabo las siguientes tareas:
+
+-  Implementa una API REST que permite a los clientes solicitar
+   resúmenes.
+
+-  Gestiona una base de datos en la que se almacenan los resúmenes
+   generados.
+
+-  Redirige las peticiones de los clientes al microservicio apropiado.
+   Por ahora, todas las peticiones se redirigen hacia el pre-procesador
+   de textos, pero en un futuro podría existir otro microservicio que se
+   encargara, por ejemplo, de extraer el texto de un documento PDF o de
+   una página *web*. En estos casos, el *Dispatcher* se encargaría de
+   redirigirlo hacia el microservicio correspondiente.
+
+Kubernetes es una plataforma *open-source* destinada a la gestión de
+servicios y cargas de trabajo en contenedores, facilitando su
+automatización en cuanto a aspectos como el escalado, gestión de red y
+recursos, monitorización, etc. [kubernetes] .. [kubernetes]_.
+
+Kubernetes comprende numerosos componentes, entre los cuales, los más
+relevantes para nuestro proyecto son:
+
+-  *Pod*: es la unidad de computación básica en Kubernetes. Un *Pod*
+   puede ejecutar uno o varios contenedores intrínsecamente relacionados
+   (compartirán almacenamiento, red, recursos, etc.).
+
+-  *Deployment*: los *deployments* se pueden ver como <<plantillas>> o
+   <<moldes>> que contienen los detalles específicos para crear *pods*
+   de un determinado tipo. Por ejemplo, en el caso del mencionado
+   *Dispatcher*, dispondremos de un *deployment* que indicará cómo se
+   deben crear los *pods* para este servicio, todos ellos idénticos.
+   Estos *pods* a su vez, contendrán todos la misma imagen Docker que
+   implementará la lógica del servicio.
+
+-  *Service*: cada *pod* dispone de una dirección IP propia. Sin
+   embargo, los *pods* tienen un ciclo de vida *efímero*, dado que están
+   concebidos para ser reemplazados dinámicamente si se producen
+   errores, actualizaciones, etc. Por tanto, no podemos basar la
+   configuración de red en las IPs específicas de los *pods*, ya que
+   estás son susceptibles de cambiar a lo largo del tiempo, según los
+   *pods* vayan siendo reemplazados. Los *services* nos permiten asociar
+   una IP fija y persistente a un conjunto concreto de *pods*. A la hora
+   de realizar una conexión con dicha IP, Kubernetes se encarga de
+   remitir los datos al *pod* que esté menos ocupado en ese instante,
+   realizando por tanto un balance de carga de forma automática.
+
+-  *PersistentVolume*: al igual que en el caso de las IPs, los datos
+   almacenados localmente en un *pod* desaparecerán cuando este sea
+   reemplazado. Los *PersistentVolumes* nos proporcionan la capacidad de
+   almacenar datos de manera persistente, independientemente del ciclo
+   de vida de los *pods*. Nosotros, utilizamos este componente para
+   almacenar los modelos de generación de resúmenes, ya que ocupan
+   alrededor de 5 GB, de forma que los *pods* correspondientes a la
+   codificación de texto y generación del resumen consumen los modelos
+   desde una única fuente de datos, el *PersistentVolume*. Incluir los
+   modelos dentro de los propios *pods* sería contraproducente ya que
+   (a) todos los *pods* van a hacer uso de los mismos modelos, y (b) los
+   modelos tienen un tamaño del orden de *gigas*, por lo que si
+   quisiéramos crear varios *pods*, la demanda de almacenamiento
+   crecería rápida e innecesariamente.
+
+La pretende facilitar la comprensión de los diferentes componentes de
+manera más visual. Como podemos ver en dicha figura, existen *n* *pods*,
+todos ellos replicas de un mismo *deployment* y, por tanto, ejecutando
+los mismos contenedores, pero cada uno de ellos con una dirección IP
+propia. El *service* permite acceder a los diferentes *pods* a través de
+una única IP estática. Por último, todos los *pods* consumen un mismo
+*PersistentVolume* que, por ejemplo, podría contener los modelos ya
+mencionados.
+
+.. figure:: kubernetes-components
+   :alt: Componentes principales de Kubernetes.
+   :name: fig:k8s-components
+
+   Componentes principales de Kubernetes.
+
+De este modo, podemos escalar (o actualizar) cada uno de los
+microservicios de forma dinámica y sin periodos de inactividad
+(*downtime*). De hecho, Kubernetes permite configurar dicho escalado de
+manera automática. Así, en momentos en los que la carga de trabajo sea
+mayor, se crearán *pods* adicionales para responder ante dicha carga y,
+una vez esta desaparezca, se volverán a eliminar. Al habilitar esta
+opción, es muy recomendable configurar el número máximo de *pods* que se
+podrán crear, a fin de evitar un escalado descontrolado en momentos de
+carga extrema (en cualquier caso, Kubernetes detendría la creación de
+*pods* tan pronto como se consumieran los recursos disponibles del
+sistema [k8s-scheduling] .. [k8s-scheduling]_).
+
+Existe un último componente de Kubernetes del que hacemos uso, llamado
+Ingress. Este componente implementa una API *Gateway*, enrutando las
+peticiones API de los clientes hacia el microservicio correspondiente
+[api-gateway] .. [api-gateway]_. Por ahora, la API REST que hemos
+implementado solo dispone de rutas relacionadas a la generación de
+resúmenes, pero en un futuro, cuando se implementen otras tareas de NLP,
+existirán otros *endpoints* para dichas tareas. Ingress se encargará
+entonces de, en función de a qué *endpoint* se esté realizando la
+petición, redirigirla al microservicio correspondiente.
+
+.. figure:: kubernetes-ingress
+   :alt: Ejemplo de un hipotético uso de Ingress con diferentes rutas.
+   :name: fig:k8s-ingress
+   :width: 90.0%
+
+   Ejemplo de un hipotético uso de Ingress con diferentes rutas.
+
+.. _subsec:kafka:
+
+Kafka y Strimzi
+---------------
+
+Uno de los principales aspectos a considerar a la hora de implementar
+una arquitectura de microservicios, reside en la estrategia que se va
+seguir para permitir la comunicación entre los diferentes
+microservicios.
+
+Dicha comunicación puede llevarse a cabo de forma síncrona, por ejemplo
+a través de peticiones HTTP, o asíncrona, con tecnologías como Apache
+Kafka [microsoft-microsvcs] .. [microsoft-microsvcs]_.
+
+En nuestro caso la comunicación síncrona quedó rápidamente descartada,
+dado que la generación de resúmenes presenta tiempos de latencia que
+pueden ser elevados (del orden de segundos o incluso minutos).
+Decidimos, por tanto, adoptar la segunda opción.
+
+Apache Kafka nació internamente en LinkedIn, aunque actualmente es
+*open-source* y su desarrollo corre a cargo de la Apache Software
+Foundation  [wiki-kafka] .. [wiki-kafka]_.
+
+Kafka permite el intercambio asíncrono de mensajes entre productores y
+consumidores. En esencia, su funcionamiento es conceptualmente sencillo
+y está alineado con tecnologías más tradicionales: los consumidores se
+subscriben a un tema (*topic*), a los que los productores envían sus
+mensajes. La consumición de dichos mensajes es asíncrona.
+
+La novedad de Kafka reside, entre otras cosas, en su gran capacidad de
+escalado, pudiendo soportar billones de mensajes al día; su
+funcionamiento distribuido, de manera que puede operar fácilmente a lo
+largo de diferentes zonas geográficas; su gran fiabilidad en entornos
+críticos, en los que la pérdida de un solo mensaje es inadmisible; o su
+tolerancia frente a fallos [apache-kafka] .. [apache-kafka]_.
+
+Todas estas demandas no suponen, sin embargo, que Kafka no se pueda
+aplicar de igual modo a entornos más reducidos, como es el nuestro.
+Además, gracias a Strimzi, otro proyecto también *open-source*, el
+despliegue de Kafka en Kubernetes se simplifica en gran medida.
+
+Si volvemos a observar la figura que ilustra la arquitectura general del
+*backend*, podemos ver que JIZT dispone de cinco *topics*, los cuales se
+corresponden con cada una de las etapas en la generación resúmenes.
+
+.. figure:: overview-arch
+   :alt: Vista general de la arquitectura del *backend*.
+   :name: fig:overview-arch-2
+
+   Vista general de la arquitectura del *backend*.
+
+Con esta figura en mente, el proceso completo que se sigue es el
+siguiente:
+
+#. El cliente realiza una petición HTTP POST solicitando un nuevo
+   resumen. Para ello, debe incluir en el cuerpo el texto a resumir, y
+   de manera opcional los parámetros del resumen a generar.
+
+#. Ingress (API *Gateway*) comprueba que dicha petición se está haciendo
+   a un *endpoint* válido, y en ese caso la redirige hacia el
+   *Dispatcher*. En caso contrario devolverá un error HTTP 404.
+
+#. El *Dispatcher* realiza una serie de comprobaciones:
+
+   #. Si la petición no contiene ningún texto, se devuelve un error. En
+      el caso de los parámetros, si son incorrectos o inexistentes, se
+      ignoran y se utilizan valores por defecto.
+
+   #. Se consulta en la base de datos si ya existe un resumen generado
+      para ese texto con esos mismos parámetros. En ese caso, lo
+      devuelve directamente, sin generar de nuevo el resumen.
+
+   #. En caso contrario, produce un mensaje al *topic* del
+      pre-procesador de textos, conteniendo el texto y los parámetros
+      del resumen.
+
+#. El pre-procesador está constantemente comprobando si existen mensajes
+   nuevos en su *topic*. En ese caso los consume, realiza las tareas de
+   pre-procesado, y produce el resultado en el *topic* del codificador.
+
+#. Este proceso continua de forma análoga hasta llegar al
+   post-procesador, el cual produce el resumen final al *topic*
+   <<Listo>> (*Ready*). El *Dispatcher*, en ese momento, consume el
+   mensaje, actualiza la base de datos, y proporciona el resumen al
+   cliente.
+
+En dicha figura, vemos también que el *Dispatcher* consume de todos los
+*topics*. Esto permite actualizar el *estado* del resumen
+(pre-procesando, resumiendo, post-procesando, o listo), según va pasando
+por las diferentes etapas, a fin de proporcionar una retroalimentación
+más detallada al usuario [2]_.
+
+Finalmente, cabe destacar una vez más la facilidad de escalado que nos
+proporciona Kafka: si, por ejemplo, ampliásemos nuestra arquitectura de
+modo que tuviéramos tres réplicas de cada microservicio, Kafka se
+encargaría automáticamente de coordinar la producción y consumición de
+mensajes de cada *topic*, sin que nosotros tuviéramos que llevar a cabo
+ninguna acción adicional.
+
+Helm
+----
+
+Helm se define frecuentemente como un gestor de paquetes para
+Kubernetes, aunque en la práctica va más allá.
+
+La configuración de Kubernetes se lleva a cabo, principalmente, de forma
+declarativa a través de ficheros en formato ``yaml``, lo que en inglés
+se conoce como *templating*. Nuestro proyecto, el cual es relativamente
+pequeño, hace uso de más de 20 de estos ficheros de configuración. Es
+fácil imaginarse, por tanto, que un proyecto de mediana escala contendrá
+cientos de *templates*.
+
+Helm permite, a través de un único comando, desplegar todos estos
+componentes de forma automática, gestionando aspectos como el orden en
+el que se crean los componentes, el cual en muchos casos no es trivial.
+Una vez instalados, a través de otro comando, podemos actualizar los
+posibles cambios que haya sufrido alguno de los *templates*, de forma
+que solo afecte a los componentes involucrados en dichas modificaciones,
+y lleva a cabo la actualización sin tiempos de interrupción.
+
+Además, a tráves de las llamadas *Library Charts* [helm-lib-charts] ..
+[helm-lib-charts]_, Helm nos permite generar una plantilla que varios
+componentes pueden reutilizar. Esto es muy apropiado en nuestro caso
+dado que todos nuestros microservicios tienen una estructura similar; lo
+único que cambia es la imagen (contenedor) que implementan.
+
+Una última ventaja es que podemos distribuir el *backend* de JIZT como
+un único paquete, facilitando su instalación por parte de otros
+desarrolladores.
+
+Crunchy PostgreSQL Operator
+---------------------------
+
+De igual modo que Strimzi facilita el despliegue de Kafka en Kubernetes,
+el operador para PostgreSQL de Crunchy automatiza y simplifica el
+despliegue de *clústers* PostgreSQL en Kubernetes [crunchy21] ..
+[crunchy21]_.
+
+De este modo, podemos implementar una base de datos que almacene los
+resúmenes generados [3]_, con dos propósitos principales: (a) servir
+como capa de caché, evitando tener que producir el mismo resumen en
+repetidas ocasiones, y (b) construir un *dataset* que se podría utilizar
+en un futuro para tareas de evaluación, o incluso para el entrenamiento
+de otros modelos.
+
+La estructura de tablas empleada para la base de datos se puede
+consultar en los Anexos, en el capítulo de “Especificación de diseño”.
+
+Este operador coordina de forma automática los accesos a la base de
+datos, asegurando la integridad de la misma. Esto es posible dado que
+solo existe un única instancia (*pod*) con capacidades de
+escritura-lectura. El resto de instancias que accedan a la base de
+datos, solo podrán leer de la misma. Si la instancia primaria fallara,
+el operador se encargaría inmediatamente de elegir otra instancia como
+primaria.
+
+Docker
+------
+
+Docker nos permite encapsular nuestros microservicios en contenedores.
+De este modo, gracias a Kubernetes, podemos crear réplicas de cada
+microservicio, haciendo posible el escalado de nuestro sistema.
+
+A diferencia de las máquinas virtuales, en las cuales el sistema
+operativo subyacente se comparte a través del hipervisor, cada
+contenedor Docker ejecuta su propio sistema operativo, como podemos ver
+en la siguiente figura:
+
+.. figure:: docker
+   :alt: Comparativa de los diferentes enfoques en el despliegue de
+   sistemas: desarrollo tradicional, desarrollo virtualizado, y
+   desarrollo con contenedores [kubernetes] .. [kubernetes]_.
+   :name: fig:vm-container
+
+   Comparativa de los diferentes enfoques en el despliegue de sistemas:
+   desarrollo tradicional, desarrollo virtualizado, y desarrollo con
+   contenedores [kubernetes] .. [kubernetes]_.
+
+Otra ventaja de Docker es que nos permite distribuir la implementación
+de nuestros microservicios a través imágenes, por lo que un
+desarrollador que solo quisiera hacer uso de uno de los microservicios,
+podría hacerlo de manera sencilla.
+
+Flask y Flask-RESTful
+---------------------
+
+Flask es uno de los *frameworks* más populares para la creación de
+aplicaciones *web* en Python [flask] .. [flask]_, concebido para ser lo
+más simple posible. En nuestro caso, hemos empleado esta herramienta
+para implementar la lógica de la API REST. Además, hemos utilizado una
+conocida extensión de Flask, Flask-RESTful [flaskRestful] ..
+[flaskRestful]_, orientada a la construcción de APIs REST, como es
+nuestro caso.
+
+Dado que es el *Dispatcher* quien implementa la API REST, es únicamente
+este microservicio el que hace uso de este *framework*.
+
+.. _sec:frontend:
+
+*Frontend* — Aplicación multiplataforma
+=======================================
+
+Flutter
+-------
+
+Flutter es un *kit* de herramientas de UI (interfaz de usuario) que, a
+partir del mismo código fuente base, permite compilar de forma nativa
+aplicaciones para móvil, *web* y escritorio [flutter-es] ..
+[flutter-es]_, lo cual permite [miola20] .. [miola20]_:
+
+-  Un desarrollo más rápido, dado que solo se trabaja en una única base
+   de código.
+
+-  Costes más bajos, ya que solo mantenemos un proyecto en vez de
+   varios.
+
+-  Una mayor consistencia, proporcionando al usuario la misma interfaz
+   gráfica y herramientas en las distintas plataformas, conservando los
+   patrones de interacción de cada una de ellas.
+
+Pese a ser desarrollado por Google desde su nacimiento en 2017, Flutter
+cuenta en la actualidad con un gran apoyo de la comunidad *open-source*.
+Esto ha contribuido en gran medida al desarrollo de Flutter, y en
+nuestro caso nos ha facilitado la resolución de dudas y errores a la
+hora de desarrollar nuestra aplicación.
+
+Flutter emplea el lenguaje de programación Dart, un lenguaje orientado a
+objetos que guarda ciertas similitudes con otros lenguajes como Java o
+C#. Existen numerosos aspectos de Flutter y Dart que cabría explicar; no
+obstante, en pos de la brevedad introduciremos uno de los que más
+interesantes y relevantes nos parecen para este proyecto: ¿Cómo se
+consigue que Dart pueda ser ejecutado nativamente en plataformas que
+pueden resultar tan dispares como Android, iOS, *web*, Windows o
+GNU/Linux?
+
+Para responder a esta pregunta, es importante comenzar indicando que en
+el contexto de Flutter, se opera de manera diferente en el entorno de
+desarrollo y en el entorno de producción.
+
+Veamos cuáles son las diferencias principales.
+
+Desarrollo nativo (plataformas x64/ARM)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Así como Java requiere de la JVM (*Java Virtual Machine*) para
+ejecutarse, Dart también dispone de su propia DVM (*Dart Virtual
+Machine*).
+
+Durante la etapa de desarrollo, la máquina DVM se utiliza en combinación
+con un compilador JIT (*Just In Time*), es decir, se lleva a cabo una
+compilación en tiempo de ejecución, en lugar de *antes* de la ejecución.
+Esto permite tratar con el código de forma dinámica independientemente
+de la arquitectura de la máquina sobre la que se trabaje.
+
+Además, esta forma de operar hace posible lo que se conoce como *hot
+reload*, que permite visualizar los cambios realizados en la aplicación
+de manera prácticamente instantánea, dado que los cambios en el código
+se transfieren a la DVM, pero se conserva el estado de la *app*
+[flutter-hot-reload] .. [flutter-hot-reload]_. Esto decrementa
+notablemente los tiempos empleados en el *debug* de las aplicaciones.
+
+Desarrollo *web*
+~~~~~~~~~~~~~~~~
+
+Durante el desarrollo, el compilador de desarrollo Dart, conocido como
+``dartdevc``, permite ejecutar y depurar aplicaciones *web* Dart en
+Google Chrome. Usado en combinación con otras herramientas como
+``webdev``, el cual proporciona un servidor *web* de desarrollo, podemos
+visualizar en nuestro navegador los cambios realizados en el código
+fuente de manera casi inmediata.
+
+Producción nativa (plataformas x64/ARM)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+En este caso se emplea lo que se conoce como compilación anticipada
+(AOT, *Ahead-of-time* Compilation). Gracias a este tipo de compilación,
+Flutter es capaz de traducir un lenguaje de alto nivel, como en este
+caso Dart, a código máquina x64/ARM nativo [aot-wiki] .. [aot-wiki]_.
+Este código máquina sí que será, a partir de este momento, dependiente
+del sistema.
+
+Como consecuencia de lo anterior, en este caso ya no es necesario
+emplear una DVM, ya que con la compilación AOT obtenemos, para cada
+plataforma, un único binario ejecutable (``.apk`` o ``.aab`` para
+Android, ``.exe`` para Windows, etc.).
+
+La compilación AOT es, por tanto, lo que realmente convierte a Flutter
+en una herramienta rápida y portable.
+
+Producción *web*
+~~~~~~~~~~~~~~~~
+
+El código Dart también puede ser traducido a HTML, CSS y JavaScript (en
+el caso de este último gracias a una herramienta llamada ``dart2js``).
+
+Esto significa que podemos ejecutar nuestra aplicación en Chrome o
+Firefox [4]_, y la interfaz gráfica será la misma que en el resto de
+plataformas.
+
+Es importante mencionar, que el soporte para *web* de Flutter se
+encuentra aún en fase *beta*, por lo que no se recomienda para
+producción [flutter-web] .. [flutter-web]_. No obstante, nosotros no
+hemos experimentado problemas con nuestra aplicación en ninguno de los
+navegadores soportados.
+
+.. [1]
+     Cabe recordar que los modelos se ejecutan en <<la nube>>. Contratar
+   equipos que dispongan de GPU aumentaría notablemente los costes.
+
+.. [2]
+     Por ahora, el *Dispatcher* solo muestra el estado <<resumiendo>>.
+   El resto de estados se implementarán en futuras iteraciones.
+
+.. [3]
+     Una de las futuras historias de usuario implementará un <<modo
+   privado>>, de forma que los usuarios tengan la posibilidad de generar
+   sus resúmenes sin que se almacenen de manera permanente.
+
+.. [4]
+     Por ahora, solo Chrome, Safari, Edge y Firefox están soportados
+   [flutter-web] .. [flutter-web]_.

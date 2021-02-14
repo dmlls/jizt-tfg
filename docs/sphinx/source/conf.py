@@ -12,6 +12,7 @@
 #
 import os
 import sys
+sys.path.insert(0, os.path.abspath('_ext'))
 sys.path.insert(0, os.path.abspath('../../src/services'))
 sys.path.insert(0, os.path.abspath('../../src/services/dispatcher'))
 
@@ -38,7 +39,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
-    'recommonmark'
+    'recommonmark',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -84,3 +85,4 @@ autodoc_mock_imports = [
 ]
 
 html_use_modindex = True
+

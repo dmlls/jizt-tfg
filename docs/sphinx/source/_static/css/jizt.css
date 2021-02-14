@@ -22,6 +22,29 @@ footer {
     background-color: #252C31;
 }
 
+.wy-menu-vertical li.current > a, .wy-menu-vertical li.on a {
+    color: #000155;
+}
+
+.wy-breadcrumbs-aside {
+    font-size: 13px;
+}
+
+.docutils.literal.notranslate {
+    font-size: 12px;
+}
+
+h1 {
+    color: #000155;
+}
+
+h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
+    font-family: Rubik, sans-serif;
+}
+
+img {
+    margin-bottom: 10px;
+}
 
 /*
  * Fonts
@@ -29,10 +52,6 @@ footer {
 body{
     font-family: Rubik-Light, sans-serif;
     font-size: 14px;
-}
-
-h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
-    font-family: Rubik, sans-serif;
 }
 
 @font-face {
