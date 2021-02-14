@@ -240,7 +240,7 @@ debemos tener en cuenta algunos detalles adicionales, entre ellos el
 hecho de que los modelos generan *tókenes* especiales para marcar el
 inicio y/o el final de la secuencia de entrada.
 
-El modelo T5 (el cual como mencionábamos anteriormente, es el único
+El modelo T5 (el cual, como mencionábamos anteriormente, es el
 modelo que utilizamos por ahora), genera un único *token* de
 finalización de secuencia (EOS, *end-of-sequence*), que se coloca
 siempre al final del texto de entrada, una vez codificado, y en el caso
@@ -413,7 +413,7 @@ resultados obtenidos son lo suficientemente buenos.
 Modelo empleado para la generación de resúmenes: T5
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Come hemos mencionado previamente, JIZT hace uso del modelo T5 de
+Como hemos mencionado previamente, JIZT hace uso del modelo T5 de
 Google. Este modelo fue introducido en el artículo *Exploring the Limits
 of Transfer Learning with a Unified Text-to-Text Transformer* [raffel19]_, presentado en 2019. En él, Colin Raffel *et al.*
 estudian las ventajas de la técnica del aprendizaje por transferencia

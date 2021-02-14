@@ -13,7 +13,7 @@ Los objetivos generales que persigue el proyecto son:
 
 -  Ofrecer la capacidad de llevar a cabo tareas de NLP tanto al público
    general, como al especializado. Como se ha mencionado con
-   anterioridad, la única tarea NLP que implementará el presente TFG
+   anterioridad, la tarea de NLP que implementará el presente TFG
    será la de generación de resúmenes.
 
 -  Emplear modelos pre-entrenados del estado del arte para la generación
@@ -36,7 +36,7 @@ Los objetivos generales que persigue el proyecto son:
 Objetivos técnicos
 ==================
 
-Además de los objetivos generales listados anteriormente, el objetivo
+Además de los objetivos generales listados anteriormente, el proyecto
 cuenta con los siguientes objetivos técnicos:
 
 -  Los modelos pre-entrenados de generación de texto admiten parámetros
@@ -95,10 +95,9 @@ cuenta con los siguientes objetivos técnicos:
    que usuarios regulares puedan hacer uso del servicio de generación de
    resúmenes.
 
--  Seguir el patrón de diseño Clean Architecture [martin15]_ y de Diseño guiado por el
-   dominio (DDD, por sus siglas
-   en inglés) [vernon13]_ para la implementación de la
-   aplicación.
+-  Diseñar una arquitectura modular para la aplicación, inspirada en *Clean
+   Architecture* [martin15]_ y Diseño guiado por el dominio (DDD, por sus siglas en
+   inglés) [vernon13]_.
 
 .. [1]
    Este término se definirá posteriormente. Por ahora, el lector puede

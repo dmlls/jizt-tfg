@@ -6,47 +6,47 @@ En este apartado, detallamos los objetivos tanto generales, como técnicos, cuya
 
 Los objetivos generales que persigue el proyecto son:
 
-\begin{itemize}
-	\item [\textbullet] Ofrecer la capacidad de llevar a cabo tareas de NLP tanto al público general, como al especializado. Como se ha mencionado con anterioridad, la única tarea NLP que implementará el presente TFG será la de generación de resúmenes.
+\begin{itemize} [\textbullet]
+	\item Ofrecer la capacidad de llevar a cabo tareas de NLP tanto al público general, como al especializado. Como se ha mencionado con anterioridad, la tarea de NLP que implementará el presente TFG será la de generación de resúmenes.
 	
-	\item [\textbullet] Emplear modelos pre-entrenados del estado del arte para la generación de resúmenes abstractivos. Los resúmenes abstractivos se diferencian de los extractivos en que el resumen generado contiene palabras o expresiones que no aparecen en el texto original \cite{abigail17}. Dicho de forma más técnica, existe cierto nivel de paráfrasis.
+	\item Emplear modelos pre-entrenados del estado del arte para la generación de resúmenes abstractivos. Los resúmenes abstractivos se diferencian de los extractivos en que el resumen generado contiene palabras o expresiones que no aparecen en el texto original \cite{abigail17}. Dicho de forma más técnica, existe cierto nivel de paráfrasis.
 	
-	\item [\textbullet] Diseñar una arquitectura, tanto como para el servicio de resúmenes en la nube, como para la aplicación multiplataforma, con aspectos como la flexibilidad, la escalabilidad y la robustez como principios fundamentales.
+	\item Diseñar una arquitectura, tanto como para el servicio de resúmenes en la nube, como para la aplicación multiplataforma, con aspectos como la flexibilidad, la escalabilidad y la robustez como principios fundamentales.
 	
-	\item [\textbullet] Poner en práctica lo aprendido a lo largo del Grado en áreas como Ingeniería del Software, Sistemas Distribuidos, Programación, Minería de Datos, Algoritmia y Bases de Datos.
+	\item Poner en práctica lo aprendido a lo largo del Grado en áreas como Ingeniería del Software, Sistemas Distribuidos, Programación, Minería de Datos, Algoritmia y Bases de Datos.
 	
-	\item [\textbullet] Ofrecer la totalidad del proyecto bajo licencias de \emph{Software} Libre.
+	\item Ofrecer la totalidad del proyecto bajo licencias de \emph{Software} Libre.
 \end{itemize}
 
 \bigskip
 
 \section{Objetivos técnicos}
 
-Además de los objetivos generales listados anteriormente, el objetivo cuenta con los siguientes objetivos técnicos:
+Además de los objetivos generales listados anteriormente, el proyecto cuenta con los siguientes objetivos técnicos:
 
 \vspace{-0.2cm}
-\begin{itemize}
-	\item [\textbullet] Los modelos pre-entrenados de generación de texto admiten parámetros específicos para configurar dicha generación, por lo que se deberá implementar una interfaz que permita a los usuarios establecer estos parámetros de manera opcional. Por defecto, se proporcionarán los valores que mejores resultados ofrecen, extraídos mayoritariamente experimentalmente.
+\begin{itemize} [\textbullet]
+	\item Los modelos pre-entrenados de generación de texto admiten parámetros específicos para configurar dicha generación, por lo que se deberá implementar una interfaz que permita a los usuarios establecer estos parámetros de manera opcional. Por defecto, se proporcionarán los valores que mejores resultados ofrecen, extraídos mayoritariamente experimentalmente.
 	
-	\item [\textbullet] Los modelos pre-entrenados de generación estado del arte presentan frecuentemente limitaciones en la longitud de los textos de entrada que reciben, derivadas de la longitud de las secuencias de entrada con las que han sido entrenados. Esta longitud llega a ser tan baja como 512 \emph{tókenes}\footnote{\, Este término se definirá posteriormente. Por ahora, el lector puede considerar que un \emph{tóken} es equivalente a una palabra.} \cite{raffel19}. Por tanto, se deberá establecer algún mecanismo que permita sortear esta limitación para poder generar resúmenes de textos arbitrariamente largos.
+	\item Los modelos pre-entrenados de generación estado del arte presentan frecuentemente limitaciones en la longitud de los textos de entrada que reciben, derivadas de la longitud de las secuencias de entrada con las que han sido entrenados. Esta longitud llega a ser tan baja como 512 \emph{tókenes}\footnote{\, Este término se definirá posteriormente. Por ahora, el lector puede considerar que un \emph{tóken} es equivalente a una palabra.} \cite{raffel19}. Por tanto, se deberá establecer algún mecanismo que permita sortear esta limitación para poder generar resúmenes de textos arbitrariamente largos.
 
-	\item [\textbullet] Gestionar el pre-procesado de los textos a resumir para ajustarlos a la entrada que los modelos pre-entrenados esperan.
+	\item Gestionar el pre-procesado de los textos a resumir para ajustarlos a la entrada que los modelos pre-entrenados esperan.
 
-	\item [\textbullet] Algunos modelos pre-entrenados generan textos enteramente en minúsculas. Se deberá, por tanto, incluir mecanismos en la etapa de post-procesado que permitan recomponer el correcto uso de las mayúsculas en los resúmenes generados.
+	\item Algunos modelos pre-entrenados generan textos enteramente en minúsculas. Se deberá, por tanto, incluir mecanismos en la etapa de post-procesado que permitan recomponer el correcto uso de las mayúsculas en los resúmenes generados.
 
-	\item [\textbullet] Con el fin de cumplir con el objetivo general referente a la arquitectura, desarrollar una arquitectura de microservicios, basada en la filosofía \emph{Cloud Native} \cite{cloud20, arundel19}. Este objetivo se divide a su vez en dos puntos:
-	\begin{itemize}
-		\item [◦] Encapsular cada microservicio en un contenedor Docker.
-		\item [◦] Implementar la orquestración y balanceo de los microservicios a través de herramientas como Kubernetes y Kafka.
+	\item Con el fin de cumplir con el objetivo general referente a la arquitectura, desarrollar una arquitectura de microservicios, basada en la filosofía \emph{Cloud Native} \cite{cloud20, arundel19}. Este objetivo se divide a su vez en dos puntos:
+	\begin{itemize} [◦]
+		\item Encapsular cada microservicio en un contenedor Docker.
+		\item Implementar la orquestración y balanceo de los microservicios a través de herramientas como Kubernetes y Kafka.
 	\end{itemize}
 
-	\item [\textbullet] Complementariamente al punto anterior, implementar una arquitectura dirigida por eventos \cite{bellemare20}. La motivación detrás de la utilización de este patrón arquitectónico se justifica en el capítulo de \hyperref[chapter:conceptos]{Conceptos Teóricos}.
+	\item Complementariamente al punto anterior, implementar una arquitectura dirigida por eventos \cite{bellemare20}. La motivación detrás de la utilización de este patrón arquitectónico se justifica en el capítulo de \hyperref[chapter:conceptos]{Conceptos Teóricos}.
 	
-	\item [\textbullet] Implementar una API REST escrita en Python empleando el \emph{framework web} Flask. Dicha API será el punto de conexión con el servicio de generación de resúmenes en la nube.
+	\item Implementar una API REST escrita en Python empleando el \emph{framework web} Flask. Dicha API será el punto de conexión con el servicio de generación de resúmenes en la nube.
 	
-	\item [\textbullet] Desplegar PostgreSQL como servicio en Kubernetes mediante el Operador PostgreSQL de Crunchy \cite{crunchy21}. Esta base de datos cumplirá la doble función de (a) servir como caché para no volver a producir resúmenes ya generados con anterioridad, incrementando la velocidad de respuesta, y (b) almacenar los resúmenes generados con fines de evaluación de la calidad de los mismos y extracción de métricas.
+	\item Desplegar PostgreSQL como servicio en Kubernetes mediante el Operador PostgreSQL de Crunchy \cite{crunchy21}. Esta base de datos cumplirá la doble función de (a) servir como caché para no volver a producir resúmenes ya generados con anterioridad, incrementando la velocidad de respuesta, y (b) almacenar los resúmenes generados con fines de evaluación de la calidad de los mismos y extracción de métricas.
 	
-	\item [\textbullet] Desarrollar, con ayuda de Flutter, una aplicación multiplataforma con soporte nativo para Android, iOS, y \emph{web}. Esta aplicación consumirá la API y proporcionará una interfaz gráfica sencilla e intuitiva para que usuarios regulares puedan hacer uso del servicio de generación de resúmenes.
+	\item Desarrollar, con ayuda de Flutter, una aplicación multiplataforma con soporte nativo para Android, iOS, y \emph{web}. Esta aplicación consumirá la API y proporcionará una interfaz gráfica sencilla e intuitiva para que usuarios regulares puedan hacer uso del servicio de generación de resúmenes.
 	
-	\item [\textbullet] Seguir el patrón de diseño Clean Architecture \cite{martin15} y de Diseño guiado por el dominio (DDD, por sus siglas en inglés) \cite{vernon13} para la implementación de la aplicación.
+	\item Diseñar una arquitectura modular para la aplicación, inspirada en \emph{Clean Architecture} \cite{martin15} y Diseño guiado por el dominio (DDD, por sus siglas en inglés) \cite{vernon13}.
 \end{itemize}

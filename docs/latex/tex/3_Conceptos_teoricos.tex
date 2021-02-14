@@ -104,7 +104,7 @@ La idea detrás de esta fragmentación se basa en la composición, uno de los me
 
 Una vez explicado el concepto de \emph{token}, volvamos al problema ya mencionado con anterioridad: algunos modelos de generación de texto (entre ellos, el T5) admiten un tamaño de entrada máximo, determinado en función del número de \emph{tókens}. Debido a que la unidad de medida es el número de \emph{tókenes}, y no el número de palabras, o de caracteres, debemos tener en cuenta algunos detalles adicionales, entre ellos el hecho de que los modelos generan \emph{tókenes} especiales para marcar el inicio y/o el final de la secuencia de entrada.
 
-El modelo T5 (el cual como mencionábamos anteriormente, es el único modelo que utilizamos por ahora), genera un único \emph{token} de finalización de secuencia (EOS, \emph{end-of-sequence}), que se coloca siempre al final del texto de entrada, una vez codificado, y en el caso de de este modelo siempre tiene el \emph{id} 1. En la \autoref{fig:t5-eos-ejemplo} se presenta un pequeño ejemplo con un texto de entrada.
+El modelo T5 (el cual, como mencionábamos anteriormente, es el modelo que utilizamos por ahora), genera un único \emph{token} de finalización de secuencia (EOS, \emph{end-of-sequence}), que se coloca siempre al final del texto de entrada, una vez codificado, y en el caso de de este modelo siempre tiene el \emph{id} 1. En la \autoref{fig:t5-eos-ejemplo} se presenta un pequeño ejemplo con un texto de entrada.
 
 \begin{figure}[h]
 	\centering
@@ -286,7 +286,7 @@ Estos casos son difíciles de resolver. Una posible idea sería tratar de determ
 \bigskip
 \subsubsection{Modelo empleado para la generación de resúmenes: T5}
 
-Come hemos mencionado previamente, JIZT hace uso del modelo T5 de Google. Este modelo fue introducido en el artículo \emph{Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer} \cite{raffel19}, presentado en 2019. En él, Colin Raffel \emph{et al.} estudian las ventajas de la técnica del aprendizaje por transferencia (\emph{transfer learning}) al campo del Procesamiento del Lenguaje Natural (NLP).
+Como hemos mencionado previamente, JIZT hace uso del modelo T5 de Google. Este modelo fue introducido en el artículo \emph{Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer} \cite{raffel19}, presentado en 2019. En él, Colin Raffel \emph{et al.} estudian las ventajas de la técnica del aprendizaje por transferencia (\emph{transfer learning}) al campo del Procesamiento del Lenguaje Natural (NLP).
 
 Tradicionalmente, cada nuevo modelo se entrenaba desde cero. Esto ha cambiado con la inclusión del aprendizaje por transferencia; actualmente, la tendencia es emplear modelos pre-entrenados como punto de partida para la construcción de nuevos modelos.
 

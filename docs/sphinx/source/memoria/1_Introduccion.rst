@@ -46,7 +46,7 @@ expertos.
 
 Para ello, JIZT proporciona:
 
--  Una infraestructura de microservicios en la nube que expone una API
+-  Una plataforma en la nube que expone una API
    REST a través de la cual se puede solicitar la generación de
    resúmenes. Esta opción está dirigida a usuarios con conocimientos
    técnicos, a través de la cual se pueden llevar a cabo tareas de NLP.
