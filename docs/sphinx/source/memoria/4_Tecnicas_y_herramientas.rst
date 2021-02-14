@@ -1,8 +1,8 @@
 .. _chapter:tecnicas-herramientas:
 
-========
+=======================
 Técnicas y herramientas
-========
+=======================
 
 En este capítulo, se recogen las tecnologías principales empleadas en el
 desarrollo del proyecto, así como los detalles más relevantes de su
@@ -376,7 +376,7 @@ en un futuro para tareas de evaluación, o incluso para el entrenamiento
 de otros modelos.
 
 La estructura de tablas empleada para la base de datos se puede
-consultar en los Anexos, en el capítulo de “Especificación de diseño”.
+consultar en los Anexos, en el capítulo de "Especificación de diseño".
 
 Este operador coordina de forma automática los accesos a la base de
 datos, asegurando la integridad de la misma. Esto es posible dado que
@@ -533,7 +533,7 @@ navegadores soportados.
 
 .. [newman15]
    Sam Newman. Building Microservices. O’Reilly Media, Inc., feb. de
-   2015. isbn: 9781491950357.
+   2015. ISBN: 9781491950357.
 
 .. [docker]
    Docker. Why Docker? 2021. URL:
@@ -572,11 +572,6 @@ navegadores soportados.
    `<https://helm.sh/docs/topics/library_charts>`__.
    Último acceso: 04/02/2021.
 
-.. [crunchy21]
-   Crunchy Data. Crunchy PostgreSQL Operator. Mayo de 2021. URL:
-   `<https://access.crunchydata.com/documentation/postgres-operator/4.5.1>`__.
-   Último acceso: 04/02/2021.
-
 .. [flask]
    The Pallets Projects. Flask. 2021. URL:
    `<https://palletsprojects.com/p/flask>`__.
@@ -595,7 +590,7 @@ navegadores soportados.
 
 .. [miola20]
    Alberto Miola. Flutter Complete Reference: Create beautiful, fast and
-   native apps for any device. Sep. de 2020. isbn: 9798691939952.
+   native apps for any device. Sep. de 2020. ISBN: 9798691939952.
 
 .. [flutter-hot-reload]
    Flutter. Hot reload. Mayo de 2020. URL:

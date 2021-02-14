@@ -1,13 +1,13 @@
-| ========
-| Aspectos relevantes del desarrollo del proyecto
-| ========
-| A la hora de desarrollar el proyecto, nos encontramos con una serie de
-  decisiones a tomar, retos, y cuestiones que tratamos de solucionar a
-  través de la formación y la aplicación de mejores prácticas. Esta
-  labor fue relativamente sencilla gracias a la disponibilidad de
-  recursos *online* existente hoy en día, así como el entusiasmo y la
-  participación activa de la comunidad detrás de las herramientas
-  empleadas en este proyecto.
+===============================================
+Aspectos relevantes del desarrollo del proyecto
+===============================================
+A la hora de desarrollar el proyecto, nos encontramos con una serie de
+decisiones a tomar, retos, y cuestiones que tratamos de solucionar a
+través de la formación y la aplicación de mejores prácticas. Esta
+labor fue relativamente sencilla gracias a la disponibilidad de
+recursos *online* existente hoy en día, así como el entusiasmo y la
+participación activa de la comunidad detrás de las herramientas
+empleadas en este proyecto.
 
 En este apartado cubrimos los aspectos más destacados en este respecto.
 
@@ -91,26 +91,25 @@ sistema de trabajo:
 -  Periódicamente, se llevaron a cabo *revisiones* y *retrospectivas*,
    en las que participaron los tutores.
 
-.. figure:: kanban
+.. figure:: ../_static/images/memoria_y_anexos/kanban.png
    :alt: Tablero Kanban utilizado.
    :width: 80.0%
+   :align: center
 
    Tablero Kanban utilizado.
 
-Como herramienta de gestión Kanban, empleamos Kanboard [kanboard]_..
-[kanboard]. Se trata de una aplicación *web* *open-source* activamente
-desarrollada. Contratamos un servidor EC2 con Amazon Web Services (AWS)
-desde el cual podemos servir la aplicación *web* PHP, la cual a su vez
-hace uso de una base de datos PostgreSQL en la cual almacena los datos
-generados. Dicha base de datos está desplegada a través del servicio
-RDS, también perteneciente a1 AWS.
+Como herramienta de gestión Kanban, empleamos Kanboard [kanboard]_. Se trata de una
+aplicación *web* *open-source* activamente desarrollada. Contratamos un servidor EC2
+con Amazon Web Services (AWS) desde el cual podemos servir la aplicación *web* PHP, la
+cual a su vez hace uso de una base de datos PostgreSQL en la cual almacena los datos
+generados. Dicha base de datos está desplegada a través del servicio RDS, también
+perteneciente a1 AWS.
 
 Se puede acceder al tablero público a través de
-```https://kanban.jizt.it`` <https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__.
+`https://kanban.jizt.it <https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__.
 
-.. figure:: kanboard
-   :alt: Captura de pantalla de nuestro tablero Kanban en la aplicación
-   *web* Kanboard.
+.. figure:: ../_static/images/memoria_y_anexos/kanboard.png
+   :alt: Captura de pantalla de nuestro tablero Kanban en la aplicación *web* Kanboard.
 
    Captura de pantalla de nuestro tablero Kanban en la aplicación *web*
    Kanboard.
@@ -149,8 +148,7 @@ objetivos presentes:
 
 -  **Cloud native**: este punto engloba a todos los anteriores; los
    sistemas *cloud-native* están diseñados para adaptarse a entornos
-   cambiantes, operar a gran escala y poseer resiliencia [cloud20]_..
-   [cloud20].
+   cambiantes, operar a gran escala y poseer resiliencia [cloud20]_.
 
 Una de las arquitecturas que permiten conseguir los objetivos recogidos
 anteriormente, es la **arquitectura de microservicios**. Con este patrón
@@ -179,8 +177,8 @@ tecnología de Kubernetes.
 Arquitectura dirigida por eventos
 ---------------------------------
 
-Dado que ya ha sido introducida en la , no entraremos en mucho detalle
-para evitar repetirnos.
+Dado que ya ha sido introducida en la sección referente a :ref:`subsec:kafka`, no
+entraremos en mucho detalle para evitar repetirnos.
 
 Simplemente recordaremos que este patrón arquitectónico hace posible la
 comunicación entre los microservicios de forma fiable y rápida. En
@@ -226,16 +224,15 @@ de la misma el texto que desea resumir. La API le responde con un
 identificador único del resumen, el ``summary_id``, así como otros
 campos de interés:
 
-.. figure:: api-request-1
-   :alt: El primer paso es realizar una petición POST con el texto a
-   resumir.
+.. figure:: ../_static/images/memoria_y_anexos/api-request-1.png
+   :alt: El primer paso es realizar una petición POST con el texto a resumir.
    :name: fig:api-primer-paso
 
    El primer paso es realizar una petición POST con el texto a resumir.
 
-Como vemos en la , el estado del resumen es ``“resumiendo”``
-(``“summarizing”``), y aún no tenemos acceso al resumen (``ouput``), el
-cual es por el momento ``“null”``.
+Como vemos en la anterior figura, el estado del resumen es ``"resumiendo"``
+(``"summarizing"``), y aún no tenemos acceso al resumen (``ouput``), el
+cual es por el momento ``"null"``.
 
 Una de las principales ventajas de poder consultar el estado del
 resumen, es poder ofrecer al usuario retroalimentación de los pasos que
@@ -249,11 +246,11 @@ En ese momento, el cliente puede llevar a cabo peticiones HTTP GET con
 el *id* del resumen de manera periódica a fin de consultar el estado del
 mismo.
 
-En algún momento, el estado del resumen pasará a ser ``“completado”``
-(``“completed”``), y la respuesta a nuestra petición contendrá el
-resumen generado, como se ilustra en la .
+En algún momento, el estado del resumen pasará a ser ``"completado"``
+(``"completed"``), y la respuesta a nuestra petición contendrá el
+resumen generado, como se ilustra en la siguiente figura:
 
-.. figure:: api-request-2
+.. figure:: ../_static/images/memoria_y_anexos/api-request-2.png
    :alt: Finalmente, obtenemos el resumen generado.
    :name: fig:api-segundo-paso
 
@@ -273,8 +270,8 @@ de mantener y con capacidad para añadir nuevas funcionalidades.
 
 Con estos objetivos en mente, nos decantamos por implementar una
 arquitectura de cuatro capas y que se inspira principalmente en los
-patrones de *Clean Architecture* [martin15]_.. [martin15] y
-*Domain-Driven Design* (DDD) [vernon13]_.. [vernon13].
+patrones de *Clean Architecture* [martin15]_ y
+*Domain-Driven Design* (DDD) [vernon13]_.
 
 Como resultado, los principios fundamentales de la arquitectura
 desarrollada son:
@@ -294,8 +291,18 @@ desarrollada son:
 -  La estructura y lenguaje del código se deben basar en el dominio de
    negocio.
 
-La , ilustra el patrón de *Clean Architecture*, y se puede aplicar
+La siguiente figura ilustra el patrón de *Clean Architecture*, y se puede aplicar
 asimismo a nuestra arquitectura.
+
+.. figure:: ../_static/images/memoria_y_anexos/clean-architecture.jpg
+   :alt: Ilustración de *Clean Architecture* [martin15]_. La arquitectura se divide en capas, cada una con unas responsabilidades definidas y acotadas.
+   :name: fig:clean-arch
+   :width: 80%
+   :align: center
+
+   Ilustración de *Clean Architecture* [martin15]_. La
+   arquitectura se divide en capas, cada una con unas responsabilidades
+   definidas y acotadas.
 
 Estos principios nos garantizan que, aunque los requerimientos,
 tecnologías o la interfaz de usuario de la aplicación cambien con el
@@ -304,21 +311,11 @@ significativamente afectadas. Además, este aislamiento entre capas nos
 proporciona una mayor escalabilidad y capacidad de testeo de nuestro
 código.
 
-.. figure:: clean-architecture
-   :alt: Ilustración de *Clean Architecture* [martin15]_.. [martin15].
-   La arquitectura se divide en capas, cada una con unas
-   responsabilidades definidas y acotadas.
-   :name: fig:clean-arch
+A continuación, se muestra cómo está conformada la arquitectura de la aplicación. Como
+podemos ver, las cuatro capas mencionadas en las que se divide nuestra aplicación son:
+Presentación, Aplicación, Datos y Dominio.
 
-   Ilustración de *Clean Architecture* [martin15]_.. [martin15]. La
-   arquitectura se divide en capas, cada una con unas responsabilidades
-   definidas y acotadas.
-
-La muestra cómo se conforma la arquitectura de la aplicación. Como
-podemos ver, las cuatro capas mencionadas en las que se divide nuestra
-aplicación son: Presentación, Aplicación, Datos y Dominio.
-
-.. figure:: jizt-app-arch
+.. figure:: ../_static/images/memoria_y_anexos/jizt-app-arch.png
    :alt: Arquitectura de la aplicación.
    :name: fig:app-arch
 
@@ -381,14 +378,12 @@ representaciones diferentes nos permite:
    son relevantes para el usuario de la aplicación, o almacenando
    información adicional que no devuelve la API).
 
-.. figure:: repository-pattern
-   :alt: Patrón repositorio [brandi19]_.. [brandi19]. En esta imagen se
-   ilustran los diferentes dominios explicados, así como la
-   transformación de los modelos de unos dominios a otros por parte del
-   *Data Mapper*.
+.. figure:: ../_static/images/memoria_y_anexos/repository-pattern.png
+   :alt: Patrón repositorio [brandi19]_. En esta imagen se ilustran los diferentes dominios explicados, así como la transformación de los modelos de unos dominios a otros por parte del *Data Mapper*.
    :width: 90.0%
+   :align: center
 
-   Patrón repositorio [brandi19]_.. [brandi19]. En esta imagen se
+   Patrón repositorio [brandi19]_. En esta imagen se
    ilustran los diferentes dominios explicados, así como la
    transformación de los modelos de unos dominios a otros por parte del
    *Data Mapper*.
@@ -399,7 +394,7 @@ Capa de dominio
 Esta capa define la lógica de dominio de la aplicación, y es
 independiente de la plataforma de desarrollo, es decir, en nuestro caso
 estará escrita puramente en Dart, sin contener ningún elemento de
-Flutter [flutter-clean-arch]_.. [flutter-clean-arch]. El motivo reside
+Flutter [flutter-clean-arch]_. El motivo reside
 en que el dominio, como decíamos, solo debe ocuparse de la lógica de
 negocio, y no de los detalles de implementación. Esto también permite
 una fácil migración entre plataformas, en caso de ser necesario en algún
@@ -413,7 +408,7 @@ Además de los *domain models*, esta capa contiene las definiciones
 través de esta técnica, conocida como inversión de dependencias
 (*dependency inversion*), se logra mantener la capa de dominio
 totalmente independiente de las demás capas y de los *frameworks* que
-estas usan (por ejemplo, Flutter en la capa de presentación o Hive [1]_
+estas usan (por ejemplo, Flutter en la capa de presentación o Hive\ [1]_
 en la capa de datos), limitando su ámbito estrictamente a la
 representación de los conceptos de negocio junto con sus reglas.
 
@@ -426,12 +421,12 @@ logic de* la capa de dominio). Esta se encarga principalmente de
 orquestar el resto de capas.
 
 En ella utilizamos el patrón BLoC (Business Logic Component)
-[miola20]_.. [miola20], se basado en dos elementos principales: eventos
+[miola20]_, se basado en dos elementos principales: eventos
 y estados.
 
 Desde fuera podemos imaginarnos un BLoC como una caja negra a la que se
-le proporcionan eventos como entrada (por ejemplo “cargar todos los
-resúmenes”) y el BLoC emite un estado como salida (en el ejemplo
+le proporcionan eventos como entrada (por ejemplo "cargar todos los
+resúmenes") y el BLoC emite un estado como salida (en el ejemplo
 anterior, el nuevo estado incluiría la lista de resúmenes).
 
 En el interior del BLoC se encuentra la lógica de negocio de aplicación
@@ -451,22 +446,21 @@ ejecutar una animación, etc.).
 
 En esta capa encontramos todo el código específico de Flutter,
 especialmente los *widgets* que componen las vistas finales de la
-interfaz [flutter-widget]_.. [flutter-widget], como un botón o un
+interfaz [flutter-widget]_, como un botón o un
 *layout*. Los *widgets* se organizan de forma jerárquica, de modo que
-toda aplicación tendrá un *widget* raíz, del cual <<colgarán>> el resto
+toda aplicación tendrá un *widget* raíz, del cual «colgarán» el resto
 de *widgets*, como podemos ver en la siguiente figura:
 
-.. figure:: widget-hierarchy
-   :alt: Ejemplo de jerarquía de *widgets* de una aplicación sencilla.
-   Imagen del dispositivo móvil extraída de [miola20]_.. [miola20].
+.. figure:: ../_static/images/memoria_y_anexos/widget-hierarchy.png
+   :alt: Ejemplo de jerarquía de *widgets* de una aplicación sencilla. Imagen del dispositivo móvil extraída de [miola20]_.
    :name: flutter-widgets
 
    Ejemplo de jerarquía de *widgets* de una aplicación sencilla. Imagen
-   del dispositivo móvil extraída de [miola20]_.. [miola20].
+   del dispositivo móvil extraída de [miola20]_.
 
 Las interacciones del usuario se propagan como eventos a los BLoC de la
 capa de aplicación, y estos actualizan su estado acordemente. La capa de
-presentación <<escucha>> dichos estados y, cada vez que estos cambian,
+presentación «escucha» dichos estados y, cada vez que estos cambian,
 vuelve a dibujar los *widget*, actualizando la pantalla. Cabe mencionar
 que Flutter realiza esta operación de una forma muy optimizada,
 volviendo a dibujar solamente aquellas partes de la interfaz que han
@@ -480,18 +474,18 @@ implementado integración y despliegue continuos tanto del *backend*,
 como de la aplicación.
 
 Anteriormente, el uso de estas técnicas se llevaba a cabo a través de
-herramientas de automatización como Jenkins [jenkins]_.. [jenkins] o
-Travis CI [travis]_.. [travis].
+herramientas de automatización como Jenkins [jenkins]_ o
+Travis CI [travis]_.
 
 No obstante, GitHub (en el cual alojamos nuestros repositorios del
 proyecto) ha lanzado recientemente su propio servicio con este fin,
-llamado GitHub Actions [github-actions]_.. [github-actions], que permite
+llamado GitHub Actions [github-actions]_, que permite
 implementar CI/CD directamente desde esta plataforma, sin tener que
 hacer uso de aplicaciones de terceros. Esta ha sido, por tanto, la
 opción escogida en nuestro caso.
 
 Una de las grandes ventajas de GitHub Actions reside en que existen
-<<acciones>> predefinidas y reutilizables, escritas previamente por
+«acciones» predefinidas y reutilizables, escritas previamente por
 otros usuarios, que llevan a cabo tareas comunes o rutinarias. De este
 modo, no necesitamos encargarnos de, por ejemplo, lidiar con todos los
 detalles específicos para poder conectarnos a nuestro *clúster* en
@@ -521,7 +515,7 @@ Kubernetes y Helm, ya explicadas con anterioridad.
 **DeepSource - Revisión automatizada del código**
 
 Además de los *tests* implementados, hacemos uso de una herramienta
-llamada DeepSource [deepsource]_.. [deepsource]. Esta herramienta lleva
+llamada DeepSource [deepsource]_. Esta herramienta lleva
 a cabo análisis estáticos de nuestro código, detectando cualquier
 posible error de sintaxis, anti-patrones, problemas potenciales de
 seguridad, recomendaciones de estilo, etc.
@@ -532,12 +526,10 @@ sutiles, y por tanto nos ha sido de gran ayuda a la hora de potenciar la
 calidad de nuestro código.
 
 Se puede hacer uso de DeepSource de manera gratuita durante seis meses
-con el *pack* de estudiante de GitHub [gh-student-pack]_..
-[gh-student-pack].
+con el *pack* de estudiante de GitHub [gh-student-pack]_.
 
-.. figure:: checks-backend
-   :alt: Tareas llevadas a cabo cada vez que hacemos un *commit* a la
-   rama ``main`` del repositorio. Imagen extraída de GitHub.
+.. figure:: ../_static/images/memoria_y_anexos/checks-backend.png
+   :alt: Tareas llevadas a cabo cada vez que hacemos un *commit* a la rama ``main`` del repositorio. Imagen extraída de GitHub.
 
    Tareas llevadas a cabo cada vez que hacemos un *commit* a la rama
    ``main`` del repositorio. Imagen extraída de GitHub.
@@ -636,7 +628,7 @@ Kubernetes, lo cual incrementaría significativamente los costes.
 
 Actualmente, hacemos uso del servicio Google Kubernetes Engine (GKE) de
 Google Cloud, y disponemos de un único *clúster* de Kubernetes con un
-solo nodo que ejecuta una máquina de tipo “e2-standard-4”, la cual
+solo nodo que ejecuta una máquina de tipo "e2-standard-4", la cual
 cuenta con 4 CPUs virtuales y 16 GB de RAM. No obstante, un despliegue
 mínimo de la aplicación hace uso de tan solo 1,32 GB de RAM.
 
@@ -665,6 +657,53 @@ mantenimiento del sistema. El despliegue se podría hacer tanto a través
 de un *cloud provider* como en las dependencias propias del interesado.
 
 .. [1]
-     Hive es un paquete para Flutter que permite implementar bases de
+   Hive es un paquete para Flutter que permite implementar bases de
    datos clave-valor. En nuestro caso, lo empleamos para almacenar los
    resúmenes localmente.
+
+.. [kanboard]
+   Kanboard. Kanboard - Kanban Project Management Software. Feb. de
+   2021. URL:
+   `<https://github.com/kanboard/kanboard>`__.
+   Último acceso: 06/02/2021.
+
+.. [brandi19]
+   Denis Brandi. The "Real" Repository Pattern in Android. Sep. de
+   2019. URL:
+   `<https://proandroiddev.com/the-real-repository-pattern-in-android-efba8662b754>`__.
+   Último acceso: 13/02/2021.
+
+.. [flutter-clean-arch]
+   Shady Boukhary y Rafael Monteiro. Flutter Clean Architecture Package. Ene. de 2021.
+   URL: `<https://pub.dev/packages/flutter_clean_architecture>`__. Último acceso:
+   07/02/2021.
+
+.. [flutter-widget]
+   Flutter API. Widget class. Sep. de 2020. URL:
+   `<https://api.flutter.dev/flutter/widgets/Widget-class.html>`__.
+   Último acceso: 07/02/2021.
+
+.. [jenkins]
+   Jenkins. Jenkins - Build great things at any scale. Ene. de 2021. URL:
+   `<https://www.jenkins.io/index.html>`__.
+   Último acceso: 13/02/2021.
+
+.. [travis]
+   Travis CI. Travis CI - The simplest way to test and deploy your
+   projects. Ene. de 2021. URL:
+   `<https://travis-ci.com>`__.
+   Último acceso: 13/02/2021.
+
+.. [github-actions]
+   GitHub. GitHub Actions - Docs. Ene. de 2021. URL:
+   `<https://docs.github.com/en/actions>`__.
+   Último acceso: 13/02/2021.
+
+.. [gh-student-pack]
+   GitHub. GitHub Student Developer Pack. Feb. de 2021. URL:
+   `<https://education.github.com/pack>`__.
+   Último acceso: 13/02/2021.
+
+.. [deepsource]
+   DeepSource. DeepSource - Automate code reviews with static analysis. Feb. de 2021.
+   URL: `<https://deepsource.io>`__. Último acceso: 13/02/2021.

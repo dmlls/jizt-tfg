@@ -46,6 +46,10 @@ img {
     margin-bottom: 10px;
 }
 
+table.align-cols th:not(:first-child), td:not(:first-child) {
+    text-align: center;
+}
+
 /*
  * Fonts
  */

@@ -10,7 +10,7 @@
 JIZT - AI Summarization's
 ===================================================
 
-**¡Gracias por tu interés en JIZT!**
+**¡Gracias por interesarte en JIZT!**
 
 JIZT hace uso de los últimos avances en Lenguaje de Procesamiento Natural (NLP, por
 sus siglas en inglés), utilizando el modelos `T5
@@ -27,6 +27,15 @@ en el texto original.
    memoria/2_Objetivos_del_proyecto
    memoria/3_Conceptos_teoricos
    memoria/4_Tecnicas_y_herramientas
+   memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto
+   memoria/6_Trabajos_relacionados.rst
+
+.. toctree::
+   :caption: Memoria
+   :name: memo
+   :maxdepth: 2
+
+   memoria/1_Introduccion
 
 Indices and tables
 ==================
