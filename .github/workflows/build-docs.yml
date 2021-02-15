@@ -1,0 +1,14 @@
+name: Build Sphinx docs
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Push Sphinx Pages
+    runs-on: ubuntu-latest
+    steps:
+    - uses: seanzhengw/sphinx-pages@master
+      with:
+        github_token: ${{ secrets.ACTIONS_BUILD_DOCS_KEY }}

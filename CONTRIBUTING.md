@@ -10,7 +10,7 @@ contribuir al proyecto, a fin de mantener una buena organización.
 ## ¿Cómo contribuir al proyecto?
 
 
-Exiten numerosas formas en las que puedes contribuir al proyecto. Por
+Existen numerosas formas en las que puedes contribuir al proyecto. Por
 ejemplo:
 
 - Ayudando a mantener, corregir errores o traducir la documentación para
@@ -67,7 +67,7 @@ título "[Feature Request]" seguido de tu idea.
 Por favor, revisa primero que la funcionalidad deseada no ha sido sugerida
 previamente.
 
-Trataremos de antender todas las peticiones, pero trata de ser paciente,
+Trataremos de atender todas las peticiones, pero trata de ser paciente,
 aún somos un equipo pequeñito 😃
 
 ---
