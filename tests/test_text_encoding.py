@@ -18,19 +18,11 @@
 """Text pre-processing tests."""
 
 import pytest
-import text_preprocessing as tp
-import text_encoding as te
+from text_preprocessor import text_preprocessing as tp
+from t5_large_text_encoder import text_encoding as te
 import torch
 import copy
 from typing import List, Optional, Union
-
-
-@pytest.fixture(scope="module")
-def initialize_bart():
-    from transformers import BartTokenizer
-    bart_tokenizer = BartTokenizer.from_pretrained('facebook/bart-base')
-    bart_splitter = te.SplitterEncoder('facebook/bart-base')
-    return bart_tokenizer, bart_splitter
 
 
 @pytest.fixture(scope="module")
@@ -39,12 +31,6 @@ def initialize_t5():
     t5_tokenizer = T5Tokenizer.from_pretrained('t5-base')
     t5_splitter = te.SplitterEncoder('t5-base')
     return t5_tokenizer, t5_splitter
-
-
-@pytest.fixture(scope="module")
-def word_tokenize():
-    from nltk import word_tokenize
-    return word_tokenize
 
 
 sentences = ["The fish dreamed of escaping the fishbowl and into the toilet " +

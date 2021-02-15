@@ -107,14 +107,26 @@ class PlainTextRequestSchema(Schema):
     language = fields.Str(required=True)
 
     @pre_load
-    def set_defaults(self, data, many, **kwargs):
-        """Substitute :obj:`None` or missing fields by default values."""
+    def validate_and_set_defaults(self, data, many, **kwargs):
+        """Validate fields and substitute :obj:`None` or missing fields by default values."""
 
-        if "model" not in data or "model" in data and data["model"] is None:
+        supp_models = [model.value for model in SupportedModel]
+        supp_languages = [language.value for language in SupportedLanguage]
+
+        # Check model
+        if ("model" not in data
+            or "model" in data and (data["model"] is None
+                                    or data["model"] not in supp_models)):
             data["model"] = SupportedModel.T5_LARGE.value
+
+        # Check params
         if "params" not in data or "params" in data and data["params"] is None:
             data["params"] = {}
-        if "language" not in data or "language" in data and data["language"] is None:
+
+        # Check languages
+        if ("language" not in data
+            or "language" in data and (data["language"] is None
+                                       or data["language"] not in supp_languages)):
             data["language"] = SupportedLanguage.ENGLISH.value
         return data
 

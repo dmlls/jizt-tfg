@@ -79,19 +79,137 @@ TEXT = """Social cooling refers to the idea that if “you feel you are being wa
           c) Privacy is the right to be human."""
 
 
+def test_request_no_source():
+    """Request with no source -> Invalid."""
+
+    json_attributes = {}
+    response = post(json_attributes)
+    assert response.status_code == 400  # Bad Request
+    assert (response.json()['errors'] == 
+            {'source': ['Missing data for required field.']})
+
+
+def test_request_only_source():
+    """Request only specifying source -> Valid"""
+
+    # We add a hash at the end of the source to avoid caching
+    json_attributes = {'source': f'{TEXT} {hash(random.random())}'}
+    post_pull_validate_response(json_attributes)
+
+
+def test_request_source_and_params():
+    """Request specifying source and params -> Valid."""
+    # We add a hash at the end of the source to avoid caching
+    json_attributes = {'source': f'{TEXT} {hash(random.random())}',
+                       'params': {'relative_max_length': 0.4,
+                                  'relative_min_length': 0.2,
+                                  'do_sample': True}}
+    response = post_pull_validate_response(json_attributes)
+    validate_fields(response, json_attributes)
+
+
+def test_request_source_and_non_existent_params():
+    """Request specifying source and a few non existent params -> Valid.
+
+    Non existent params will be ignored and the default model will be used
+    """
+
+    json_attributes = {'source': f'{TEXT} {hash(random.random())}',
+                       'params': {'relative_max_length': 0.4,
+                                  'non-existing-param': True,  # should be ignored
+                                  'another-non-existing-param': 11}}
+    response = post_pull_validate_response(json_attributes)
+    assert 'non-existing-param' not in response.json()['params']
+    assert 'another-non-existing-param' not in response.json()['params']
+    del json_attributes['params']['non-existing-param']
+    del json_attributes['params']['another-non-existing-param']
+    validate_fields(response, json_attributes)  # validate correct params
+
+
+def test_request_source_and_model():
+    """Request specifying source and model -> Valid."""
+
+    json_attributes = {'source': f'{TEXT} {hash(random.random())}',
+                       'model': 't5-large'}
+    response = post_pull_validate_response(json_attributes)
+    validate_fields(response, json_attributes)
+
+
+def test_request_source_and_non_existent_model():
+    """Request specifying source and non existent model -> Valid.
+
+    The specified model will be ignored and the default model will be used
+    """
+
+    json_attributes = {'source': f'{TEXT} {hash(random.random())}',
+                       'model': 't5-huge'}
+    response = post_pull_validate_response(json_attributes)
+    assert response.json()['model'] != 't5-huge'
+    del json_attributes['model']
+    validate_fields(response, json_attributes)  # validate correct params
+
+
+def test_request_source_params_model():
+    """Request specifying source, params and model -> Valid."""
+
+    json_attributes = {'source': f'{TEXT} {hash(random.random())}',
+                       'params': {'relative_max_length': 0.4,
+                                  'relative_min_length': 0.2,
+                                  'do_sample': True,
+                                  'temperature': 0.9},
+                       'model': 't5-large'}
+    response = post_pull_validate_response(json_attributes)
+    validate_fields(response, json_attributes)
+
+
+def test_default_values():
+    """Check that the API returns the correct default values."""
+
+    default_values = {
+        "model": "t5-large",
+        "params": {
+            "relative_max_length": 0.4,
+            "relative_min_length": 0.1,
+            "do_sample": True,
+            "early_stopping": None,
+            "num_beams": 4,
+            "temperature": None,
+            "top_k": None,
+            "top_p": None,
+            "repetition_penalty": None,
+            "length_penalty": None,
+            "no_repeat_ngram_size": 4
+        },
+        "language": "en"
+    }
+    json_attributes = {'source': f'{TEXT} {hash(random.random())}'}
+    response_json = post_pull_validate_response(json_attributes).json()
+    assert default_values["model"] == response_json["model"]
+    assert default_values["params"] == response_json["params"]
+    assert default_values["language"] == response_json["language"]
+
+
+###########
+# Helpers #
+###########
+
+def post_pull_validate_response(json_attributes):
+    """HTTP POST request, pull and validation."""
+
+    response = post(json_attributes)
+    assert response.status_code == 202  # Accepted
+    validate_response(response)
+    response = pull(response)
+    validate_response(response, validate_params=True)
+    assert len(response.json()['output']) > 0  # check that we got something as output
+    return response
+
+
 def post(json_attributes):
     """HTTP POST request."""
 
     url = f"{API_URL}/v1/summaries/plain-text"
     response = requests.post(url, json=json_attributes)
-    return response
-
-
-def get(summary_id):
-    """HTTP POST request."""
-
-    url = f"{API_URL}/v1/summaries/plain-text/{summary_id}"
-    response = requests.get(url)
     return response
 
 
@@ -107,64 +225,36 @@ def pull(response):
         assert response.status_code == 200  # OK
 
 
-def validate_response(response):
-    """Validate HTTP response."""
+def get(summary_id):
+    """HTTP POST request."""
 
-    assert response.status_code == 202  # Accepted
-    validate_fields(response)
-    response = pull(response).json()
-    validate_fields(response)
-    # Check that we got something as output
-    assert len(response['output']) > 0
+    url = f"{API_URL}/v1/summaries/plain-text/{summary_id}"
+    response = requests.get(url)
+    return response
 
 
-def validate_fields(response):
+def validate_response(response, validate_params=False):
     """Check that a response contains all fields."""
 
-    assert all(key in response for key in ("summary_id", "started_at",
-                                           "ended_at", "status",
-                                           "output", "model",
-                                           "params", "language"))
-    assert len(response['params']) == 11  # currently, there are 11 summary parameters
+    all_attributes = ("summary_id", "started_at", "ended_at",
+                      "status","output", "model", "params", "language")
+    response_json = response.json()
+    for attr in all_attributes:
+        assert attr in response_json
+    if validate_params:
+        # Currently, there are 11 summary parameters
+        assert len(response_json['params']) == 11
 
+def validate_fields(response, json_attributes):
+    """Check that the specified attributes have been correctly set."""
 
-def test_all_tests():
-    pass
-
-
-def test_request_no_source():
-    json_attributes = {}
-    response = post(json_attributes)
-    assert response.status_code == 400  # Bad Request
-    assert (response.json()['errors'] == 
-            {'source': ['Missing data for required field.']})
-
-
-def test_request_only_source():
-    # We add a hash at the end of the source to avoid caching
-    json_attributes = {'source': f"{TEXT} {hash(random.random())}"}
-    response = post(json_attributes)
-    validate_response(response)
-
-
-def test_request_source_and_a_few_params():
-    # We add a hash at the end of the source to avoid caching
-    json_attributes = {'source': f"{TEXT} {hash(random.random())}",
-                       'params': {"relative_max_length": 0.4,
-                                  "relative_min_length": 0.2,
-                                  "do_sample": True}}
-    response = post(json_attributes)
-    validate_response(response)
-
-
-def test_request_source_and_non_existent_params():
-    # We add a hash at the end of the source to avoid caching
-    json_attributes = {'source': f"{TEXT} {hash(random.random())}",
-                       'params': {"relative_max_length": 0.4,
-                                  "non-existing-param": True,  #  should be ignored
-                                  "another-non-exixsting-param": 11}}
-    response = post(json_attributes)
-    validate_response(response)
-
-
-#def test_request_source_and_model
+    response_json = response.json()
+    # The source is not included in the response, so we ignore it
+    del json_attributes["source"]
+    for attr in json_attributes:
+        if attr == 'params':
+            for prm in json_attributes[attr]:
+            # Check that specified parameters have been set correctly
+                assert json_attributes[attr][prm] == response_json[attr][prm]
+        else:
+            assert json_attributes[attr] == response_json[attr]

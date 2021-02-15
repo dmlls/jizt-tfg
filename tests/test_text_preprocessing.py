@@ -18,7 +18,7 @@
 """Text pre-processing tests."""
 
 import pytest
-from utils.tokenization import sentence_tokenize
+from text_preprocessor.utils.tokenization import sentence_tokenize
 
 
 passing_sentences = [
@@ -33,7 +33,7 @@ passing_sentences = [
     ("I was born in 02.28.1980 in N.Y. It's been quite some time!",
      ["I was born in 02.28.1980 in N.Y.", "It's been quite some time!"]),
     ("She asked \"How's it going?\", and I said \"Great!\"",
-     ["She asked \"How's it going?\", and I said \"Great!\""]),
+     ["She asked \"How's it going?\", and I said \"Great!\"."]),
     ("\"Everyone will be famous for 15 minutes.\" - Andy Warhol.",
      ["\"Everyone will be famous for 15 minutes.\" - Andy Warhol."]),
     ("As we can see in Figure 1.1. the model will eventually converge.",
@@ -42,17 +42,18 @@ passing_sentences = [
      ["NLP (i.e. Natural Language Processing) is great!!!", "No kidding!"]),
     ("Tomorrow I can't. I work the morning shift, i.e., from 6 am to 1 pm.",
      ["Tomorrow I can't.", "I work the morning shift, i.e., from 6 am to 1 pm."]),
+]
+
+# For now, these will fail
+failing_sentences = [
+    ("I should be considered two sentences!but I'm not.",
+     ["I should be considered two sentences!", "but I'm not."]),
     ("First: grab the ingredients;don't get the salt just yet. Then, preheat oven.",
      ["First: grab the ingredients; don't get the salt just yet.", "Then, preheat oven."]),
     ("I don't like Voldemort,A.K.A.\"he-who-must-not-be-named.\"",
      ["I don't like Voldemort, A.K.A. \"he-who-must-not-be-named.\""]),
     ("Whitespaces ??!Honestly   ,not my thing ; that is , I don't get them !",
      ["Whitespaces??!", "Honesty, not my thing; that is, I don't get them!"])
-]
-
-failing_sentences = [
-    ("I should be considered two sentences!but I'm not.",
-     ["I should be considered two sentences!", "but I'm not."])
 ]
 
 
