@@ -121,6 +121,10 @@ Este microservicio cuenta con las siguientes clases:
 \noindent
 \textbf{Diagrama E/R de la base de datos}
 
+A su vez, la base de datos gobernada por el \emph{Dispatcher} y encargada de almacenar los resúmenes generados, cuenta con el siguiente esquema de tablas:
+
+\smallskip
+
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{dispatcher-db}
@@ -128,6 +132,7 @@ Este microservicio cuenta con las siguientes clases:
 	\caption{Diagrama E/R de la base de datos (tipos de datos de PostgreSQL).}
 \end{figure}
 
+\newpage
 
 \noindent
 \textbf{\large Microservicio Pre-procesador de textos}
@@ -299,7 +304,7 @@ En la sección correspondiente al \emph{backend} del capítulo ``Técnicas y Her
 	\item Mientras el proceso de resumen se completa, el cliente realiza peticiones GET de manera periódica, hasta que la API REST finalmente responde con el resumen generado.
 \end{enumerate}
 
-La \autoref{seq-app} ilustra este proceso de forma gráfica, a través de un diagrama de secuencia.
+La \autoref{seq-api} ilustra este proceso de forma gráfica, a través de un diagrama de secuencia.
 
 A su vez, en la aplicación, es decir, el \emph{frontend}, de llevan a cabo los siguientes pasos:
 

@@ -7,6 +7,8 @@
     A copy of the license is included in the section entitled "GNU
     Free Documentation License".
 
+.. _chapter:aspectos-relevantes:
+
 ===============================================
 Aspectos relevantes del desarrollo del proyecto
 ===============================================
@@ -122,6 +124,8 @@ Se puede acceder al tablero público a través de
 
    Captura de pantalla de nuestro tablero Kanban en la aplicación *web*
    Kanboard.
+
+.. _section:arch-motivation:
 
 Motivación tras las arquitecturas desarrolladas
 ===============================================
@@ -269,6 +273,8 @@ En el caso de que previamente se hubiera solicitado un resumen del mismo
 texto, con el mismo modelo y parámetros, el resumen ya estaría
 almacenado en la base de datos, por lo que la respuesta al primer POST
 ya contendría dicho resumen.
+
+.. _subsubsec:app-development:
 
 Desarrollo de la aplicación
 ---------------------------

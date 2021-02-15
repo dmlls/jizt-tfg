@@ -11,8 +11,7 @@ necesarios. Para ello, puedes copiar y ejecutar el siguiente comando:
 
 ```bash
 pip install -U sphinx &&  # instalar sphinx
-pip install -U sphinx_rtd_theme &&  # instalar tema de sphinx
-pip install -U recommonmark  # soporte para markdown 
+pip install -U sphinx_rtd_theme  # instalar tema de sphinx
 ```
 
 ## Compilar la documentación

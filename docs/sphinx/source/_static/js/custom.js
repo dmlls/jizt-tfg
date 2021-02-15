@@ -10,7 +10,8 @@ function addTocEntry(caption, link) {
     const entry = `
         <p class="caption" style="padding:0;">
             <span class="caption-text">
-            <a href="${link}" style="padding:0; color:#55a5d9; line-height: 32px; padding: 0 1.618em;">${caption}</a>
+            <a href="${link}" class="external-link" target="_blank"
+               style="padding:0; color:#55a5d9; line-height: 32px; padding: 0 1.618em; background-position:40%;">${caption}</a>
             </span>
         </p>
     `;
@@ -18,8 +19,8 @@ function addTocEntry(caption, link) {
 }
 
 function onLoad() {
-    addGithubButton();
     addTocEntry("Docs API REST", "https://docs.api.jizt.it");
+    addGithubButton();
 }
 
 window.addEventListener("load", onLoad);

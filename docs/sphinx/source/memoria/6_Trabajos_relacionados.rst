@@ -7,6 +7,8 @@
     A copy of the license is included in the section entitled "GNU
     Free Documentation License".
 
+.. _chapter:trabajos-relacionados:
+
 =====================
 Trabajos relacionados
 =====================
@@ -154,13 +156,13 @@ ofrece JIZT en comparación con las opciones introducidas anteriormente.
 
 
 .. [miller19]
-   Derek Miller. “Leveraging BERT for Extractive Text Summarization
-   on Lectures”. En: CoRR abs/1906.04165 (2019). arXiv: 1906.04165. URL:
+   Derek Miller. "Leveraging BERT for Extractive Text Summarization
+   on Lectures". En: CoRR abs/1906.04165 (2019). arXiv: 1906.04165. URL:
    `<http://arxiv.org/abs/1906.04165>`__.
    Último acceso: 04/02/2021.
 
 .. [mihalce04]
-   Rada Mihalcea y Paul Tarau. “TextRank: Bringing Order into Text.”
+   Rada Mihalcea y Paul Tarau. "TextRank: Bringing Order into Text."
    En: jul. de 2004.
 
 .. [page99]
