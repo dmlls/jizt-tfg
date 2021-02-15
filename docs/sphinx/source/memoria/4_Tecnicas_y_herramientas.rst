@@ -1,3 +1,12 @@
+..
+    Copyright (C) 2020-2021  Diego Miguel Lozano
+    Permission is granted to copy, distribute and/or modify this document
+    under the terms of the GNU Free Documentation License, Version 1.3
+    or any later version published by the Free Software Foundation;
+    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+    A copy of the license is included in the section entitled "GNU
+    Free Documentation License".
+
 .. _chapter:tecnicas-herramientas:
 
 =======================
@@ -581,12 +590,6 @@ navegadores soportados.
    Flask-RESTful Community. Flask-RESTful. 2021. URL:
    `<https://flask-restful.readthedocs.io/en/latest>`__.
    Último acceso: 04/02/2021.
-
-.. [flutter-es]
-   Flutter. Flutter - Hermosas apps nativas en tiempo record. Sep. de
-   2020. URL:
-   `<https://esflutter.dev>`__.
-   Último acceso: 05/02/2021.
 
 .. [miola20]
    Alberto Miola. Flutter Complete Reference: Create beautiful, fast and
