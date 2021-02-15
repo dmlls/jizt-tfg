@@ -1,4 +1,4 @@
-name: Build Sphinx docs
+name: Build & Publish Sphinx docs
 on:
   push:
     branches:
@@ -6,9 +6,18 @@ on:
 
 jobs:
   build:
-    name: Push Sphinx Pages
     runs-on: ubuntu-latest
     steps:
-    - uses: seanzhengw/sphinx-pages@master
+    - name: Checkout
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+    - name: Build and Commit
+      uses: sphinx-notes/pages@master
+      with:
+        documentation_path: docs
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.ACTIONS_BUILD_DOCS_KEY }}
+        branch: gh-pages
