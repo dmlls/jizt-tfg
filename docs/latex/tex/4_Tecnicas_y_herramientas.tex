@@ -171,7 +171,7 @@ De igual modo que Strimzi facilita el despliegue de Kafka en Kubernetes, el oper
 
 De este modo, podemos implementar una base de datos que almacene los resúmenes generados\footnote{\, Una de las futuras historias de usuario implementará un <<modo privado>>, de forma que los usuarios tengan la posibilidad de generar sus resúmenes sin que se almacenen de manera permanente.}, con dos propósitos principales: (a) servir como capa de caché, evitando tener que producir el mismo resumen en repetidas ocasiones, y (b) construir un \emph{dataset} que se podría utilizar en un futuro para tareas de evaluación, o incluso para el entrenamiento de otros modelos.
 
-La estructura de tablas empleada para la base de datos se puede consultar en los Anexos, en el capítulo de ``Especificación de diseño''.
+La estructura de tablas empleada para la base de datos se puede consultar en los Anexos, en el apéndice de ``Especificación de diseño''.
 
 Este operador coordina de forma automática los accesos a la base de datos, asegurando la integridad de la misma. Esto es posible dado que solo existe un única instancia (\emph{pod}) con capacidades de escritura-lectura. El resto de instancias que accedan a la base de datos, solo podrán leer de la misma. Si la instancia primaria fallara, el operador se encargaría inmediatamente de elegir otra instancia como primaria.
 

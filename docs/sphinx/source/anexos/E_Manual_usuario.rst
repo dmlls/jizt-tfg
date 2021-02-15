@@ -1,4 +1,3 @@
-
 ..
     Copyright (C) 2020-2021 Diego Miguel Lozano <jizt@diegomiguel.me>
     Permission is granted to copy, distribute and/or modify this document

@@ -79,13 +79,13 @@ pero prestando atención a la descripción del proceso proporcionada
 Se puede acceder a SMMRY en:
 https://smmry.com.
 
+.. _subsec:tabla-comparativa:
+
 Tabla comparativa
 ~~~~~~~~~~~~~~~~~
 
 En la siguiente tabla, se recoge un análisis de las características que
 ofrece JIZT en comparación con las opciones introducidas anteriormente.
-
-[tabla:comparativa]
 
 .. rst-class:: .table-related-works
 .. table:: Comparativa de las características ofrecidas por las diferentes alternativas para la generación de resúmenes.
