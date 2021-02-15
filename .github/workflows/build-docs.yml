@@ -18,4 +18,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3 # https://github.com/peaceiris/actions-gh-pages
       with:
         deploy_key: ${{ secrets.ACTIONS_BUILD_DOCS_KEY }}
+        publish_dir: docs/sphinx/build/html
         force_orphan: true

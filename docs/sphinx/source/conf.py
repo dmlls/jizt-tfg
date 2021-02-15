@@ -56,6 +56,8 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
+    'recommonmark',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -71,7 +73,7 @@ language = 'es'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ['requirements.txt']
 
 source_suffix = {
     '.rst': 'restructuredtext',
@@ -85,6 +87,7 @@ source_suffix = {
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+html_baseurl = 'docs.jizt.it'
 numfig = True
 
 html_logo = '_static/images/jizt-docs.png'
