@@ -10,7 +10,7 @@ Para compilar la documentación, primero tienes que instalar los módulos de Pyt
 necesarios. Para ello, ejecuta el siguiente comando:
 
 ```bash
-pip install -r requirements.txt
+pip install -r source/requirements.txt
 ```
 
 ## Compilar la documentación

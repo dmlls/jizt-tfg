@@ -12,7 +12,7 @@ jobs:
     - name: Build Sphinx docs
       uses: sphinx-notes/pages@master
       with:
-        documentation_path: docs/sphinx
+        documentation_path: docs/sphinx/source
         install_requirements: true 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3 # https://github.com/peaceiris/actions-gh-pages
