@@ -1,5 +1,5 @@
 ..
-    Copyright (C)  2020-2021  Diego Miguel Lozano
+    Copyright (C) 2020-2021 Diego Miguel Lozano <jizt@diegomiguel.me>
     Permission is granted to copy, distribute and/or modify this document
     under the terms of the GNU Free Documentation License, Version 1.3
     or any later version published by the Free Software Foundation;
@@ -20,7 +20,7 @@ en el texto original.
 
 .. toctree::
    :caption: Memoria
-   :name: memo
+   :name: memoria
    :maxdepth: 2
 
    memoria/1_Introduccion
@@ -31,15 +31,14 @@ en el texto original.
    memoria/6_Trabajos_relacionados.rst
 
 .. toctree::
-   :caption: Memoria
-   :name: memo
+   :caption: Anexos
+   :name: anexos
    :maxdepth: 2
 
-   memoria/1_Introduccion
+   anexos/A_Plan_proyecto
+   anexos/B_Requisitos
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+   :caption: Docs API REST
+   :name: docs-api-rest
+   :maxdepth: 1
