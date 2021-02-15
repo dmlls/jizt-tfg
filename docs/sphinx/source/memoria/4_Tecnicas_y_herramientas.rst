@@ -51,8 +51,9 @@ Tanto el proceso de codificación, como el de generación de resúmenes, se han
 implementado de forma que se puedan llevar a cabo empleando unidades de procesamiento
 gráfico (GPU). No obstante, en nuestro caso y por el momento, ambos procesos se
 ejecutan en unidades centrales de procesamiento (CPU), debido a limitaciones
-económicas\ [1]_. Esto explica en parte los tiempos de resumen obtenidos, los cuales
-pueden resultar algo dilatados con textos muy largos.
+económicas\ [1]_. Esto explica en parte los :ref:`tiempos de resumen obtenidos
+<subsec:tabla-comparativa>`, los cuales pueden resultar algo dilatados con textos muy
+largos.
 
 Un último aspecto a destacar es que a la hora de generar los resúmenes,
 se pueden especificar los parámetros concretos con los que realizar
@@ -385,7 +386,7 @@ en un futuro para tareas de evaluación, o incluso para el entrenamiento
 de otros modelos.
 
 La estructura de tablas empleada para la base de datos se puede
-consultar en los Anexos, en el capítulo de "Especificación de diseño".
+consultar en los Anexos, en el apéndice de :ref:`apendix:diseno`.
 
 Este operador coordina de forma automática los accesos a la base de
 datos, asegurando la integridad de la misma. Esto es posible dado que

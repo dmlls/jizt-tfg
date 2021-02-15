@@ -472,9 +472,10 @@ https://www.gnu.org/licenses/fdl-1.3.html.
 Licencia de la Memoria y los Anexos del proyecto
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Los documentos referentes a la Memoria y a los Anexos (excepto los
-apéndices y ), se encuentran licenciados bajo Creative Commons
-Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0).
+Los documentos referentes a la Memoria y a los Anexos (excepto los apéndices
+:ref:`apendix:manual-programador` y :ref:`apendix:manual-usuario`), se encuentran
+licenciados bajo Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC
+BY-SA 4.0).
 
 Esta licencia se puede resumir en los siguientes puntos
 [creative-commons]_:

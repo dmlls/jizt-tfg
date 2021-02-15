@@ -80,7 +80,9 @@ a.external-link {
 .table-dependencies th:last-child,
 .table-dependencies td:last-child,
 .table-name-poll th:not(:first-child),
-.table-name-poll td:not(:first-child) {
+.table-name-poll td:not(:first-child),
+.table-exp th:first-child,
+.table-exp td[rowspan="3"] {
     text-align: center;
 }
 

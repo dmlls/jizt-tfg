@@ -2,11 +2,11 @@
 
 En la sección de ``Codificación del texto'' del capítulo de ``Conceptos Teóricos'' de la Memoria, se introduce el problema que presentan muchos de los modelos de generación del lenguaje, entre ellos el modelo T5, el cual utilizamos. 
 
-Dicho problema deriva del hecho de que estos modelos admiten un número de \emph{tókenes} de entrada máximo, 512 dn el caso del modelo T5.
+Dicho problema deriva del hecho de que estos modelos admiten un número de \emph{tókenes} de entrada máximo, 512 en el caso del modelo T5.
 
 Por tanto, desarrollamos un algoritmo que divide el texto en fragmentos, sin que ninguna frase quede partida, y siendo las diferencias entre el número de \emph{tókenes} en cada una de las divisiones tan pequeñas como sea posible.
 
-Para ello, primero dividimos primero el texto de manera voraz, de forma que se van añadiendo frases a una subdivisión siempre que estas quepan sin ser fragmentadas. 
+Para ello, primero dividimos el texto de manera voraz, de forma que se van añadiendo frases a una subdivisión siempre que estas quepan sin ser fragmentadas. 
 
 Esto puede resultar en que la última subdivisión contenga un número de frases muy inferior a la del resto de subdivisiones. Para solucionar este problema, se realiza un <<balanceo>> de las subdivisiones, moviendo frases de unas a otras, pero conservando su orden.
 
