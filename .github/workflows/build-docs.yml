@@ -10,10 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Sphinx docs
-      uses: sphinx-notes/pages@master
+      uses: ammaraskar/sphinx-action@master
       with:
-        documentation_path: docs/sphinx/source
-        install_requirements: true 
+        docs-folder: docs/sphinx/source
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3 # https://github.com/peaceiris/actions-gh-pages
       with:
