@@ -120,7 +120,7 @@ Además, se debe crear un Disco Persistente de GCE, siguiendo los pasos listados
 
 Actualmente, se hace uso del modelo \textbf{t5-large} implementado por Hugging Face, el cual se puede descargar a través del siguiente \emph{link}: \href{https://huggingface.co/t5-large}{https://huggingface.\newline co/t5-large}. Este modelo se divide a su vez en el \emph{tokenizer}, encargado de la codificación, y el modelo propiamente dicho, el cual se encarga de la generación de los resúmenes.
 
-Una vez tenemos el modelo descargado localmente, los cargaremos en el Disco Persistente creado anteriormente. Para ello, nos conectamos a través de \texttt{ssh} o desde la Consola de Google Cloud (\href{https://cloud.google.com/compute/docs/instances/connecting-to-instance?hl=es-419#console}{más información}), y copiamos el modelo a las siguientes rutas:
+Una vez tenemos el modelo descargado localmente, los cargaremos en el Disco Persistente creado anteriormente. Para ello, nos conectamos a través de \texttt{ssh} o desde la Consola de Google Cloud (más información en \href{https://cloud.google.com/compute/docs/instances/connecting-to-instance?hl=es-419#console}{https://cloud.google.com/compute/docs/instances/connecting-to-instance?\newline hl=es-419\#console}), y copiamos el modelo a las siguientes rutas:
 
 \vspace{-0.2cm}
 \begin{itemize} [\textbullet]

@@ -37,8 +37,12 @@ en el texto original.
 
    anexos/A_Plan_proyecto
    anexos/B_Requisitos
+   anexos/C_Diseno
+   anexos/D_Manual_programador
+   anexos/E_Manual_usuario
 
 .. toctree::
-   :caption: Docs API REST
-   :name: docs-api-rest
-   :maxdepth: 1
+   :caption: Ayúdanos
+   :name: ayúdanos
+
+   anexos/CONTRIBUTING.rst

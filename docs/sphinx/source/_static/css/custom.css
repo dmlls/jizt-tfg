@@ -65,12 +65,22 @@ img {
     margin-bottom: 10px;
 }
 
+a.external-link {
+    background: url(../images/external-link.svg) center right no-repeat;
+    background-size: 3%;
+}
+
+/*
+ * Tables
+ */
 .table-related-works th:not(:first-child),
 .table-related-works td:not(:first-child),
 .table-dependencies th:nth-child(2),
 .table-dependencies td:nth-child(2),
 .table-dependencies th:last-child,
-.table-dependencies td:last-child {
+.table-dependencies td:last-child,
+.table-name-poll th:not(:first-child),
+.table-name-poll td:not(:first-child) {
     text-align: center;
 }
 
@@ -82,6 +92,7 @@ img {
 .table-indirect-costs td:not(:first-child) {
     text-align: right;
 }
+
 
 /*
  * Fonts
