@@ -7,11 +7,10 @@ indicados a continuación.
 ## Prerrequisitos
 
 Para compilar la documentación, primero tienes que instalar los módulos de Python
-necesarios. Para ello, puedes copiar y ejecutar el siguiente comando:
+necesarios. Para ello, ejecuta el siguiente comando:
 
 ```bash
-pip install -U sphinx &&  # instalar sphinx
-pip install -U sphinx_rtd_theme  # instalar tema de sphinx
+pip install -r requirements.txt
 ```
 
 ## Compilar la documentación
