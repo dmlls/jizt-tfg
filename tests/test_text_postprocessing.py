@@ -18,13 +18,6 @@
 
 """Text post-processing tests."""
 
-import sys
-from os.path import abspath, dirname, join
-
-src_path = abspath(join(dirname(dirname(__file__)),
-                   "src/services/text_postprocessor"))
-sys.path.insert(1, src_path)
-
 import pytest
 from text_postprocessor import text_postprocessing as tp
 
@@ -95,7 +88,6 @@ input_and_expected_texts = [
       'where white, but Lee and Kevin Willmott purposefully called '
       'them black soldiers.'))
 ]
-
 
 
 @pytest.mark.parametrize("input_text, expected", input_and_expected_texts)

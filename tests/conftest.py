@@ -4,13 +4,13 @@ from os.path import abspath, dirname, join
 paths = (
     abspath(join(dirname(dirname(__file__)), "src/services")),
     abspath(join(dirname(dirname(__file__)),
-                    "src/services/text_preprocessor")),
+                 "src/services/text_preprocessor")),
     abspath(join(dirname(dirname(__file__)),
-                    "src/services/t5_large_encoder")),
+                 "src/services/t5_large_encoder")),
     abspath(join(dirname(dirname(__file__)),
-                    "src/services/t5_large_summarizer")),
+                 "src/services/t5_large_summarizer")),
     abspath(join(dirname(dirname(__file__)),
-                    "src/services/text_postprocessor"))
+                 "src/services/text_postprocessor"))
 )
 
 for p in paths:

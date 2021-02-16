@@ -114,4 +114,3 @@ autodoc_mock_imports = [
 ]
 
 html_use_modindex = True
-

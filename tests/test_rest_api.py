@@ -18,10 +18,8 @@
 """REST API tests."""
 
 
-import pytest
 import time
 import requests
-import json
 import random
 
 __version__ = '0.1.0'
@@ -85,12 +83,12 @@ def test_request_no_source():
     json_attributes = {}
     response = post(json_attributes)
     assert response.status_code == 400  # Bad Request
-    assert (response.json()['errors'] == 
+    assert (response.json()['errors'] ==
             {'source': ['Missing data for required field.']})
 
 
 def test_request_only_source():
-    """Request only specifying source -> Valid"""
+    """Request only specifying source -> Valid."""
 
     # We add a hash at the end of the source to avoid caching
     json_attributes = {'source': f'{TEXT} {hash(random.random())}'}
@@ -237,13 +235,14 @@ def validate_response(response, validate_params=False):
     """Check that a response contains all fields."""
 
     all_attributes = ("summary_id", "started_at", "ended_at",
-                      "status","output", "model", "params", "language")
+                      "status", "output", "model", "params", "language")
     response_json = response.json()
     for attr in all_attributes:
         assert attr in response_json
     if validate_params:
         # Currently, there are 11 summary parameters
         assert len(response_json['params']) == 11
+
 
 def validate_fields(response, json_attributes):
     """Check that the specified attributes have been correctly set."""
@@ -254,7 +253,7 @@ def validate_fields(response, json_attributes):
     for attr in json_attributes:
         if attr == 'params':
             for prm in json_attributes[attr]:
-            # Check that specified parameters have been set correctly
+                # Check that specified parameters have been set correctly
                 assert json_attributes[attr][prm] == response_json[attr][prm]
         else:
             assert json_attributes[attr] == response_json[attr]
