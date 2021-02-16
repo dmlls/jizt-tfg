@@ -110,7 +110,7 @@ cuenta con los siguientes objetivos técnicos:
 
 .. [1]
    Este término se definirá posteriormente. Por ahora, el lector puede
-   considerar que un *tóken* es equivalente a una palabra.
+   considerar que un *token* es equivalente a una palabra.
 
 .. [abigail17]
    Abigail See, Peter J. Liu y Christopher D. Manning. eGet To The

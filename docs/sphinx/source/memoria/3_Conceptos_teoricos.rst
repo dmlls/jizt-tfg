@@ -167,7 +167,7 @@ Codificación del texto
 
 En esta etapa, se lleva a cabo lo que se conoce en inglés como *word
 embedding*\ [3]_. Los modelos de IA trabajan, por lo general, con
-representaciones númericas. Por ello, las técnicas de *word embedding*
+representaciones numéricas. Por ello, las técnicas de *word embedding*
 se centran en vincular texto (bien sea palabras, frases, etc.), con
 vectores de números reales [manning19]_. Esto hace
 posible aplicar a la generación de texto arquitecturas comunes dentro de
@@ -243,7 +243,7 @@ comprensible.
 Una vez explicado el concepto de *token*, volvamos al problema ya
 mencionado con anterioridad: algunos modelos de generación de texto
 (entre ellos, el T5) admiten un tamaño de entrada máximo, determinado en
-función del número de *tókens*. Debido a que la unidad de medida es el
+función del número de *tókenes*. Debido a que la unidad de medida es el
 número de *tókenes*, y no el número de palabras, o de caracteres,
 debemos tener en cuenta algunos detalles adicionales, entre ellos el
 hecho de que los modelos generan *tókenes* especiales para marcar el
@@ -257,14 +257,14 @@ de de este modelo siempre tiene el *id* 1. En la siguiente figura
 se presenta un pequeño ejemplo con un texto de entrada:
 
 .. figure:: ../_static/images/memoria_y_anexos/t5-eos-ejemplo.png
-   :alt: Pasaje del libro *A Wrinkle in Time*. El *tóken* EOS se ha marcado en rojo.
+   :alt: Pasaje del libro *A Wrinkle in Time*. El *token* EOS se ha marcado en rojo.
    :name: fig:t5-eos-ejemplo
    :align: center
 
-   Pasaje del libro *A Wrinkle in Time*. El *tóken* EOS se ha marcado en
+   Pasaje del libro *A Wrinkle in Time*. El *token* EOS se ha marcado en
    rojo.
 
-Como podemos ver, el *tóken* EOS aparece una única vez por cada texto de
+Como podemos ver, el *token* EOS aparece una única vez por cada texto de
 entrada, y es independiente de las palabras o frases que este contiene.
 
 Otro aspecto a tener en cuenta, reside en que este modelo no solo es

@@ -65,7 +65,7 @@ En nuestro caso emplearemos un modelo pre-entrenado para solucionar, al menos en
 
 \section{Codificación del texto} \label{sec:codificacion}
 
-En esta etapa, se lleva a cabo lo que se conoce en inglés como \emph{word embedding}\footnote{\, En el presente documento, hemos traducido este término como <<codificación del texto>>.}. Los modelos de IA trabajan, por lo general, con representaciones númericas. Por ello, las técnicas de \emph{word embedding} se centran en vincular texto (bien sea palabras, frases, etc.), con vectores de números reales \cite{manning19}. Esto hace posible aplicar a la generación de texto arquitecturas comunes dentro de la IA (y especialmente, del \emph{Deep Learning}), como por ejemplo las Redes Neuronales Convolucionales (CNN) \cite{hou20}.
+En esta etapa, se lleva a cabo lo que se conoce en inglés como \emph{word embedding}\footnote{\, En el presente documento, hemos traducido este término como <<codificación del texto>>.}. Los modelos de IA trabajan, por lo general, con representaciones numéricas. Por ello, las técnicas de \emph{word embedding} se centran en vincular texto (bien sea palabras, frases, etc.), con vectores de números reales \cite{manning19}. Esto hace posible aplicar a la generación de texto arquitecturas comunes dentro de la IA (y especialmente, del \emph{Deep Learning}), como por ejemplo las Redes Neuronales Convolucionales (CNN) \cite{hou20}.
 
 Esta idea, conceptualmente sencilla, encierra una gran complejidad, dado que los vectores generados deben retener la máxima información posible del texto original, incluyendo aspectos semánticos y gramaticales. Por poner un ejemplo, los vectores correspondientes a las palabras <<profesor>> y <<alumno>>, deben preservar cierta relación entre ambos, y a su vez con la palabra <<educación>> o <<escuela>>. Además, su vínculo con las palabras <<enseñar>> o <<aprender>> será ligeramente distinto, dado que en este caso se trata de una categoría gramatical diferente (verbos, en vez de sustantivos). A través de este ejemplo, podemos comprender que se trata de un proceso complejo.
 
@@ -102,18 +102,18 @@ En el ejemplo mostrado, si decodificamos los \emph{tókenes} correspondientes a 
 
 La idea detrás de esta fragmentación se basa en la composición, uno de los mecanismos morfológicos de formación de palabras más frecuentes \cite{cetnarowska05} en muchos idiomas, como el inglés, español o alemán. Por tanto, presupone que dividiendo las palabras desconocidas en fragmentos menores, podemos facilitar la comprensión de las mismas. Naturalmente, habrá casos en los que esta idea falle; por ejemplo, en la figura anterior, la palabra \texttt{``JIZT''} se descompone en \texttt{``J''}, \texttt{``IZ''}, \texttt{``T''}, lo cual no parece hacerla mucho más comprensible.
 
-Una vez explicado el concepto de \emph{token}, volvamos al problema ya mencionado con anterioridad: algunos modelos de generación de texto (entre ellos, el T5) admiten un tamaño de entrada máximo, determinado en función del número de \emph{tókens}. Debido a que la unidad de medida es el número de \emph{tókenes}, y no el número de palabras, o de caracteres, debemos tener en cuenta algunos detalles adicionales, entre ellos el hecho de que los modelos generan \emph{tókenes} especiales para marcar el inicio y/o el final de la secuencia de entrada.
+Una vez explicado el concepto de \emph{token}, volvamos al problema ya mencionado con anterioridad: algunos modelos de generación de texto (entre ellos, el T5) admiten un tamaño de entrada máximo, determinado en función del número de \emph{tókenes}. Debido a que la unidad de medida es el número de \emph{tókenes}, y no el número de palabras, o de caracteres, debemos tener en cuenta algunos detalles adicionales, entre ellos el hecho de que los modelos generan \emph{tókenes} especiales para marcar el inicio y/o el final de la secuencia de entrada.
 
 El modelo T5 (el cual, como mencionábamos anteriormente, es el modelo que utilizamos por ahora), genera un único \emph{token} de finalización de secuencia (EOS, \emph{end-of-sequence}), que se coloca siempre al final del texto de entrada, una vez codificado, y en el caso de de este modelo siempre tiene el \emph{id} 1. En la \autoref{fig:t5-eos-ejemplo} se presenta un pequeño ejemplo con un texto de entrada.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{t5-eos-ejemplo}
-	\caption[Ejempo de codificación del texto.]{Pasaje del libro \emph{A Wrinkle in Time}. El \emph{tóken} EOS se ha marcado en rojo.}
+	\caption[Ejempo de codificación del texto.]{Pasaje del libro \emph{A Wrinkle in Time}. El \emph{token} EOS se ha marcado en rojo.}
 	\label{fig:t5-eos-ejemplo}
 \end{figure}
 
-Como podemos ver, el \emph{tóken} EOS aparece una única vez por cada texto de entrada, y es independiente de las palabras o frases que este contiene.
+Como podemos ver, el \emph{token} EOS aparece una única vez por cada texto de entrada, y es independiente de las palabras o frases que este contiene.
 
 Otro aspecto a tener en cuenta, reside en que este modelo no solo es capaz de generar resúmenes, si no que puede ser empleado para otras tareas como la traducción, respuesta de preguntas \cite{raffel19}, etc. Para indicarle cuál de estas es la tarea que queremos que desempeñe, curiosamente se lo tenemos que indicar tal y cómo lo haríamos en la vida real; en nuestro caso, simplemente precedemos el texto a resumir con la orden <<resume>> (<<\emph{summarize}>>). Por poner otro ejemplo, si quisiéramos traducir del alemán al español, le señalaríamos: <<traduce de alemán a español>> (<<\emph{translate German to Spanish}>>) seguido de nuestro texto.
 

@@ -76,8 +76,8 @@ exclude_patterns = ['requirements.txt']
 
 source_suffix = {
     '.rst': 'restructuredtext',
-    '.txt': 'markdown',
-    '.md': 'markdown',
+    # '.txt': 'markdown',
+    # '.md': 'markdown',
 }
 
 # -- Options for HTML output -------------------------------------------------

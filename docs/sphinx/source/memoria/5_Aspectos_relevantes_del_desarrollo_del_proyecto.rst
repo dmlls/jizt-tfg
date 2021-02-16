@@ -52,13 +52,13 @@ metodologías ágiles, se consideraron las siguientes:
    final de las cuales se produce una entrega parcial del producto.
 
 -  **Kanban**: esta metodología se centra en mantener un flujo constante
-   de trabajo, maximizando la eficencia del equipo de forma que cada
+   de trabajo, maximizando la eficiencia del equipo de forma que cada
    tarea sea completada con la mayor celeridad posible.
 
 -  **Programación Extrema (XP)**: se centra en producir *software* de la
    mejor calidad posible, siendo una de las metodologías ágiles que más
    profundiza en los aspectos de buenas prácticas de ingeniería para el
-   desarrollo de software.
+   desarrollo de *software*.
 
 Tras una valoración de las ventajas y desventajas de cada una de estas
 metodologías, decidimos adoptar la metodología Kanban, gracias también a
@@ -75,7 +75,7 @@ Scrumban, una metodología híbrida entre Scrum y Kanban.
 A continuación, se recogen las principales características de nuestro
 sistema de trabajo:
 
--  Empleamos un tablero Kanban para organizr las historias de usuario, y
+-  Empleamos un tablero Kanban para organizar las historias de usuario, y
    hacemos uso de instrumentos como los límites WIP (*Work In Progress*)
    y de herramientas como los Diagramas de Flujo Acumulado (CFD, por sus
    siglas en inglés).
@@ -114,7 +114,7 @@ aplicación *web* *open-source* activamente desarrollada. Contratamos un servido
 con Amazon Web Services (AWS) desde el cual podemos servir la aplicación *web* PHP, la
 cual a su vez hace uso de una base de datos PostgreSQL en la cual almacena los datos
 generados. Dicha base de datos está desplegada a través del servicio RDS, también
-perteneciente a1 AWS.
+perteneciente a AWS.
 
 Se puede acceder al tablero público a través de
 `https://kanban.jizt.it <https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__.
@@ -508,7 +508,7 @@ Google Cloud desde GitHub Actions, a fin de poder desplegar el *backend*
 de forma automática.
 
 Resumamos los principales aspectos del CI/CD en el caso del *backend* y
-de la aplicación, los cuales se alojan en dos repositorios diferentes.
+de la aplicación, los cuales se alojan en dos repositorios diferentes\ [2]_.
 
 CI/CD en el repositorio del *backend*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -543,11 +543,11 @@ calidad de nuestro código.
 Se puede hacer uso de DeepSource de manera gratuita durante seis meses
 con el *pack* de estudiante de GitHub [gh-student-pack]_.
 
-.. figure:: ../_static/images/memoria_y_anexos/checks-backend.png
-   :alt: Tareas llevadas a cabo cada vez que hacemos un *commit* a la rama ``main`` del repositorio. Imagen extraída de GitHub.
+.. figure:: ../_static/images/memoria_y_anexos/actions-backend.png
+   :alt: Tareas llevadas a cabo cada vez que hacemos un *commit* a la rama ``main`` del repositorio del *backend*. Imagen extraída de GitHub.
 
    Tareas llevadas a cabo cada vez que hacemos un *commit* a la rama
-   ``main`` del repositorio. Imagen extraída de GitHub.
+   ``main`` del repositorio del *backend*. Imagen extraída de GitHub.
 
 El repositorio en GitHub correspondiente al *backend* es accesible a
 través de https://github.com/dmlls/jizt.
@@ -579,10 +579,14 @@ En este caso, se llevan a cabo tres tareas principales:
    ``v0.1.1``), se compila la nueva versión de la aplicación de Android
    y se propaga automáticamente a Google Play.
 
-TODO: añadir captura de los checks de GitHub.
+.. figure:: ../_static/images/memoria_y_anexos/actions-frontend.png
+   :alt: Tareas llevadas a cabo cada vez que hacemos un *commit* a la rama ``main`` del repositorio de la *app*. Imagen extraída de GitHub.
 
-Se puede acceder al repositorio correspondiente a la aplicación de JIZT
-en https://github.com/dmlls/jizt-app.
+   Tareas llevadas a cabo cada vez que hacemos un *commit* a la rama
+   ``main`` del repositorio de la *app*. Imagen extraída de GitHub.
+
+De nuevo, mencionar que se puede acceder al repositorio correspondiente a la
+aplicación de JIZT en https://github.com/dmlls/jizt-app.
 
 Distribución de la aplicación
 -----------------------------
@@ -597,7 +601,14 @@ Cada vez que se produce una nueva versión de la aplicación, se crea una
 nueva *Release* en GitHub que contiene el código fuente de la
 aplicación.
 
-TODO: desarrollar un poco más, añadir alguna captura.
+Los usuarios más avanzados pueden descargarse dicho código fuente y compilar la
+aplicación ellos mismos. Esto les permite poder acceder a la *app* sin tener que
+depender directamente de los servicios de Google.
+
+.. figure:: ../_static/images/memoria_y_anexos/github-distribution.png
+   :alt: Distribución de la *app* a través de GitHub.
+
+   Distribución de la *app* a través de GitHub.
 
 **GitHub Pages**
 
@@ -608,10 +619,15 @@ gratuita.
 Se puede acceder a la aplicación de JIZT a través de
 https://app.jizt.it.
 
-En nuestro caso, también hacemos uso de este servicio para alojar la
-*landing page* del proyecto (https://www.jizt.it), así como la
-documentación del proyecto (https://docs.jizt.it), y la documentación de
-la API REST (https://docs.api.jizt.it).
+Cabe mencionar que también hacemos uso de este servicio para alojar la *landing page*
+de JIZT (https://www.jizt.it}{https://www.jizt.it), así como la documentación del
+proyecto (https://docs.jizt.it), y la documentación de la API REST
+(https://docs.api.jizt.it). En el caso del tablero Kanban que recoge las historias de
+usuario del proyecto (`https://kanban.jizt.it
+<https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__),
+al implementarse a través de una aplicación PHP (Kanboard), como mencionábamos
+anteriormente, no podemos alojarla en GitHub Pages. Para servirla, hacemos uso del
+servicio EC2 de AWS.
 
 Play Store
 ~~~~~~~~~~
@@ -675,6 +691,11 @@ de un *cloud provider* como en las dependencias propias del interesado.
    Hive es un paquete para Flutter que permite implementar bases de
    datos clave-valor. En nuestro caso, lo empleamos para almacenar los
    resúmenes localmente.
+
+.. [2]
+   Recordamos que el repositorio del *backend* se puede acceder a través de
+   https://github.com/dmlls/jizt, y el de la aplicación en
+   https://github.com/dmlls/jizt-app.
 
 .. [kanboard]
    Kanboard. Kanboard - Kanban Project Management Software. Feb. de

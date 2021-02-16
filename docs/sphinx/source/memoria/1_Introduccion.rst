@@ -93,10 +93,10 @@ objetivo de ofrecer la mayor escalabilidad y flexibilidad posible, manteniendo a
 como indicábamos anteriormente, la capacidad de poder añadir otras tareas de NLP
 diferentes de la generación de resúmenes próximamente.
 
-Por todo ello, el presente TFG conforma el punto de partida de un
-proyecto ambicioso, desafiante, pero con la certeza de que,
-independientemente de su recorrido más allá del TFG, habremos aprendido,
-disfrutado, y ojalá ayudado a alguien por el camino.
+Por todo ello, el presente TFG conforma el punto de partida de un proyecto ambicioso,
+desafiante, pero con la certeza de que, independientemente de su recorrido más allá
+del TFG (que esperemos sea largo), habremos aprendido, disfrutado, y ojalá ayudado a
+alguien por el camino.
 
 .. [crevier95] Daniel Crevier (1995). AI: The tumultuous history of the search for
    artificial intelligence. NY: Basic Books, 1993. 432 pp. (Reviewed by Charles
