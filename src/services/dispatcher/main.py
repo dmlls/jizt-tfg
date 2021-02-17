@@ -17,7 +17,7 @@
 
 """Dispatcher REST API v1."""
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 
 import os
 import re
@@ -28,6 +28,7 @@ from datetime import datetime
 from werkzeug import serving
 from flask import Flask, request
 from flask_restful import Api, Resource, abort
+from flask_cors import CORS
 from confluent_kafka import Message, KafkaError
 from kafka.kafka_topics import KafkaTopic
 from kafka.kafka_producer import Producer
@@ -69,12 +70,18 @@ class DispatcherService:
         self.app = Flask(__name__)
         self.api = Api(self.app)
 
+        self.cors = CORS(self.app, resources={
+            r"*": {"origins": "*",
+                   "allow_headers": ['Content-Type']}
+        })
+
         logging.basicConfig(
             format='%(asctime)s %(name)s %(levelname)-8s %(message)s',
             level=log_level,
             datefmt='%d/%m/%Y %I:%M:%S %p'
         )
         self.logger = logging.getLogger("Dispatcher")
+        logging.getLogger("flask_cors").level = log_level
 
         # PostgreSQL connection data
         pg_username = None
