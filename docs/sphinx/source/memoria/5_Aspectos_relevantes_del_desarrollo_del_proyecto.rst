@@ -482,7 +482,7 @@ volviendo a dibujar solamente aquellas partes de la interfaz que han
 sido modificadas.
 
 Integración y despliegue continuos (CI/DC)
-------------------------------------------
+==========================================
 
 A fin de seguir buenas prácticas en el entorno de DevOps, hemos
 implementado integración y despliegue continuos tanto del *backend*,
@@ -511,7 +511,7 @@ Resumamos los principales aspectos del CI/CD en el caso del *backend* y
 de la aplicación, los cuales se alojan en dos repositorios diferentes\ [2]_.
 
 CI/CD en el repositorio del *backend*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 En el caso del *backend*, hemos reservado la rama ``main`` como rama
 principal de producción. Por tanto, siempre que trabajamos sobre alguna
@@ -527,7 +527,8 @@ producción de Google Kubernetes Engine (GKE). Esta actualización se
 realiza sin tiempos de interrupción, gracias a las ventajas que ofrecen
 Kubernetes y Helm, ya explicadas con anterioridad.
 
-**DeepSource - Revisión automatizada del código**
+DeepSource - Revisión automatizada del código
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Además de los *tests* implementados, hacemos uso de una herramienta
 llamada DeepSource [deepsource]_. Esta herramienta lleva
@@ -553,7 +554,7 @@ El repositorio en GitHub correspondiente al *backend* es accesible a
 través de https://github.com/dmlls/jizt.
 
 CI/CD en el repositorio de la aplicación
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 Para la aplicación, también hacemos uso de GitHub Actions para
 implementar el CI/CD de la misma.
@@ -589,13 +590,14 @@ De nuevo, mencionar que se puede acceder al repositorio correspondiente a la
 aplicación de JIZT en https://github.com/dmlls/jizt-app.
 
 Distribución de la aplicación
------------------------------
+=============================
+
 
 La distribución de la aplicación se lleva a cabo a través de GitHub y,
 en su versión Android, también a través de Google Play.
 
 GitHub
-~~~~~~
+------
 
 Cada vez que se produce una nueva versión de la aplicación, se crea una
 nueva *Release* en GitHub que contiene el código fuente de la
@@ -610,7 +612,8 @@ depender directamente de los servicios de Google.
 
    Distribución de la *app* a través de GitHub.
 
-**GitHub Pages**
+GitHub Pages
+~~~~~~~~~~~~
 
 GitHub Pages es un servicio de *hosting* para páginas *web* estáticas
 que nos permite servir nuestra aplicación en su versión *web* de manera
@@ -637,32 +640,93 @@ anteriormente, no podemos alojarla en GitHub Pages. Para servirla, hacemos uso d
 servicio EC2 de AWS.
 
 Play Store
-~~~~~~~~~~
+----------
 
-La aplicación, en su versión Android, también está disponible a través
-de Play Store, de momento únicamente a través del programa *Internal
-Early Access*. Esto significa que únicamente aquellos usuarios que
-dispongan del *link* podrán hacer uso de ella.
+La aplicación, en su versión Android, se distribuye principalmente a
+través de Play Store. La publicación de las actualizaciones de la *app*
+en esta plataforma se realizan de manera automatizada gracias al
+*pipeline* de CI/CD que hemos implementado, como explicábamos en la .
 
-TODO: añadir link.
+| Se puede acceder a la aplicación en Google Play a través de
+| https://play.google.com/store/apps/details?id=it.jizt.app.
 
-En las próximas semanas, se publicará la primera versión estable de la
-aplicación.
+.. figure:: ../_static/images/memoria_y_anexos/jizt-google-play.png
+   :alt: Aplicación de JIZT publicada en Play Store.
+   :width: 70%
+   :align: center
 
-TODO: añadir captura Google Play.
+   Aplicación de JIZT publicada en Play Store.
 
-Limitaciones económicas del proyecto
-------------------------------------
+F-Droid
+-------
 
-Por último, creemos conveniente mencionar uno de los principales
-inconvenientes del proyecto desarrollado. Por introducirlo de manera
-rápida y sencilla: la contratación de servidores en la nube no es
-gratuita.
+En un principio, se ha priorizado la distribución de la *app* a través
+de Google Play, por considerarse una plataforma más ampliamente
+utilizada, y por tanto, con una mayor audiencia potencial.
 
-Para desplegar toda nuestra infraestructura de microservicios, y
-escalarla de forma que podamos atender a un alto volumen de usuarios,
-necesitaríamos aumentar el número de nodos en nuestro *clúster* de
-Kubernetes, lo cual incrementaría significativamente los costes.
+No obstante, la aplicación también estará pronto disponible en F-Droid,
+un popular repositorio de aplicaciones *open-source* para Android
+[f-droid]_. Con este gesto, queremos mostrar nuestro apoyo y
+compromiso con la comunidad de *Software* Libre y *open-source*.
+
+Documentación del proyecto
+==========================
+
+A lo largo de este proyecto, se ha dado gran importancia a la
+documentación, considerándola como una parte integral del proyecto en sí
+mismo.
+
+Como consecuencia, además de la presente Memoria y sus correspondientes
+Anexos, se ha generado una versión en línea de los mismos a través de
+Sphinx, una herramienta para generar de documentación, creada
+originalmente para documentar el lenguaje de programación Python
+[sphinx-doc]_.
+
+Una vez más, recordar que se puede acceder a dicha documentación a
+través de https://docs.jizt.it. En la se muestra una captura de pantalla
+de la misma.
+
+.. figure:: ../_static/images/memoria_y_anexos/jizt-docs.png
+   :alt: Captura de pantalla de la documentación en línea de JIZT.
+   :name: fig:jizt-docs
+
+   Captura de pantalla de la documentación en línea de JIZT.
+
+Asimismo, se ha documentado de forma detallada la especificación de la
+API REST, a fin de que cualquier desarrollador interesado pueda obtener
+información clara, precisa y actualizada de la misma.
+
+En este caso, se ha empleado la herramienta Redoc [redoc]_, la
+cual a su vez es una extensión de Swagger, que abarca un conjunto de
+herramientas para el diseño, construcción y documentación de APIs
+REST(ful) [swagger]_. Para la definición y descripción de
+las APIs, estas herramientas hacen uso de la especificación OpenAPI 3.0
+[openapi]_, la cual se define a través de documentos
+``yaml`` o ``json``, con una sintaxis sencilla e intuitiva. Una vez
+hemos definido nuestra API a través de estos documentos, Redoc se
+encarga de generar una página *web* de la misma de manera automática, y
+con una interfaz clara y elegante.
+
+En la se puede ver una captura de pantalla de la documentación generada
+con Redoc, disponible en https://docs.api.jizt.it.
+
+.. figure:: ../_static/images/memoria_y_anexos/jizt-api-docs.png
+   :alt: Captura de pantalla de la especificación de la API REST.
+   :name: fig:jizt-api-docs
+
+   Captura de pantalla de la especificación de la API REST.
+
+Financiación del proyecto
+=========================
+
+Por último, creemos conveniente mencionar uno de los aspectos más
+importantes en cualquier proyecto de ingeniería: su financiación.
+
+En nuestro caso, hemos podido financiar hasta ahora el despliegue del
+servicio en la nube gracias a los créditos gratuitos que ofrecen los
+principales *cloud providers*, Google Cloud y AWS, así como la Beca de
+Colaboración de Estudiantes en Departamentos Universitarios que se nos
+concedió en noviembre del pasado año 2020.
 
 Actualmente, hacemos uso del servicio Google Kubernetes Engine (GKE) de
 Google Cloud, y disponemos de un único *clúster* de Kubernetes con un
@@ -670,29 +734,27 @@ solo nodo que ejecuta una máquina de tipo "e2-standard-4", la cual
 cuenta con 4 CPUs virtuales y 16 GB de RAM. No obstante, un despliegue
 mínimo de la aplicación hace uso de tan solo 1,32 GB de RAM.
 
-No nos vamos a engañar: el elevado coste de estos servicios es una de
-las principales amenazas de la continuación del proyecto.
+Como parece lógico pensar, el tipo de financiación del que disponemos actualmente no
+es sostenible a medio-largo plazo. En el apartado referente a la :ref:`Viabilidad
+económica <subsection:beneficios>` recogido en los Anexos, se propone un posible
+modelo de financiación para el proyecto.
 
-Por ahora, tenemos capacidad para mantenernos algunos meses más (3 o 4,
-calculamos), con los créditos gratuitos que ofrecen *cloud providers*
-como Google Cloud o Amazon Web Services (AWS).
+Este modelo, en esencia, pasa por establecer limitaciones en el número y
+frecuencia de peticiones a la API REST que se pueden llevar a cabo
+durante un periodo de tiempo establecido.
 
-Por hacernos una idea de la magnitud de los costes, Google Cloud nos
-ofreció un crédito gratuito de 273 €, los cuales se habrán consumido en
-las próximas dos o tres semanas.
+Este medio de financiación es común dentro de las estrategias de
+monetización de APIs REST en general, y lo mismo ocurre dentro del
+contexto del NLP. Algunos ejemplos de populares APIs REST relacionadas
+con tareas de NLP que siguen métodos de financiación similares son:
+Azure Bot (Microsoft) [azure-bot]_, el cual es un agente
+conversacional (se establecen límites en el número de mensajes); Watson
+Speech to Text (IBM) [watson-stt]_, que realiza
+reconocimiento del habla (los límites, en este caso, son en minutos); o
+Cloud Translation (Google) [cloud-translation]_,
+que ofrece servicios de traducción automática (límites en número de
+caracteres).
 
-Actualmente, estamos pensando en alternativas para la financiación del
-proyecto, aunque creemos que por ahora la única solución a corto plazo
-pasa por confiar en posibles donaciones puntuales y en los créditos
-gratuitos de los diferentes *cloud providers*.
-
-Asimismo, otra alternativa pasa por ofrecer un servicio de despliegue de
-la infraestructura desarrollada en este proyecto para terceras partes
-(instituciones, empresas, particulares, etc.) que pudieran estar
-interesadas. Con la contratación de este servicio, nos encargaríamos de
-atender todos los detalles de instalación, puesta en marcha y
-mantenimiento del sistema. El despliegue se podría hacer tanto a través
-de un *cloud provider* como en las dependencias propias del interesado.
 
 .. [1]
    Hive es un paquete para Flutter que permite implementar bases de
@@ -750,3 +812,45 @@ de un *cloud provider* como en las dependencias propias del interesado.
 .. [deepsource]
    DeepSource. DeepSource - Automate code reviews with static analysis. Feb. de 2021.
    URL: `<https://deepsource.io>`__. Último acceso: 13/02/2021.
+
+.. [f-droid]
+   F-Droid. Free and Open Source Android App Repository. Feb. de 2021. URL:
+   `<https://f-droid.org>`__.
+   Último acceso: 16/02/2021.
+
+.. [sphinx-doc]
+   Sphinx - Python Documentation Generator. Overview. 2021. URL:
+   `<https://www.sphinx-doc.org/en/master>`__.
+   Último acceso: 16/02/2021.
+
+.. [redoc]
+   Redoc - GitHub. OpenAPI/Swagger-generated API Reference Docu-
+   mentation. 2021. URL:
+   `<https://www.sphinx-doc.org/en/master>`__.
+   Último acceso: 16/02/2021.
+
+.. [swagger]
+   Swagger. API Documentation & Design Tools for Teams. 2021. URL:
+   `<https://swagger.io>`__.
+   Último acceso: 16/02/2021.
+
+.. [openapi]
+   OpenAPI Initiative. OpenAPI Specification - Version 3.0.3. Feb. de
+   2021.  URL:
+   `<https://spec.openapis.org/oas/v3.0.3>`__.
+   Último acceso: 16/02/2021.
+
+.. [azure-bot]
+   Microsoft Azure. Azure Bot Services - Pricing. URL:
+   `<https://azure.microsoft.com/en-us/pricing/details/bot-services>`__.
+   Último acceso: 16/02/2021.
+
+.. [watson-stt]
+   IBM. Watson Speech to Text - Pricing. URL:
+   `<https://www.ibm.com/cloud/watson-speech-to-text/pricing>`__.
+   Último acceso: 16/02/2021.
+
+.. [cloud-translation]
+   Google Cloud. Cloud Translation - Pricing. URL:
+   `<https://cloud.google.com/translate/pricing>`__.
+   Último acceso: 16/02/2021.

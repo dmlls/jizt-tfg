@@ -44,7 +44,8 @@ contienen palabras y expresiones que no están presentes en el texto original.
    memoria/3_Conceptos_teoricos
    memoria/4_Tecnicas_y_herramientas
    memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto
-   memoria/6_Trabajos_relacionados.rst
+   memoria/6_Trabajos_relacionados
+   memoria/7_Conclusiones_Lineas_de_trabajo_futuras
 
 .. toctree::
    :caption: Anexos

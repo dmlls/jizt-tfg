@@ -41,7 +41,7 @@ En el caso de **iOS**:
 
 Y en el caso de la versión **web**:
 
--  Los navegadores *web* soportados son Google Chrome, Mozilla Firefox,
+-  Los navegadores *web* soportados son Google Chrome\ [2]_, Mozilla Firefox,
    Safari o Edge.
 
 En todos los casos se requiere conexión a Internet para generar nuevos
@@ -82,7 +82,7 @@ iOS
 
 Por el momento, la aplicación no ha sido publicada en la App Store, e
 iOS no proporciona ninguna manera oficial para la instalación de
-aplicaciones desde fichero\ [2]_.
+aplicaciones desde fichero\ [3]_.
 
 Por tanto, se recomienda a los usuarios que accedan desde su navegador
 móvil a la versión *web* de JIZT (ver siguiente sección).
@@ -102,7 +102,7 @@ comenzar a utilizarla. El funcionamiento en interfaz de la aplicación en
 las diferentes plataformas es homogéneo, por lo que todo lo explicado a
 continuación es válido para cualquiera de ellas.
 
-TODO: añadir capturas de la app.
+.. _subsection:nuevo-resumen:
 
 Generar un nuevo resumen
 ------------------------
@@ -128,6 +128,25 @@ siguientes:
 #. Una vez completado el resumen, se mostrará una nueva pantalla con el
    resumen.
 
+Se puede visualizar un vídeo que recoge el proceso `aquí
+<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/1-generar-nuevo-resumen.mp4>`__.
+
+Ajustar la longitud del resumen a generar
+-----------------------------------------
+
+JIZT nos permite establecer la longitud deseada del resumen generado. Esta longitud se
+establece como un porcentaje de la longitud del texto original.
+
+Para ajustar la longitud del resumen que vamos a generar, debemos seguir los dos
+primeros pasos indicados en la sección ":ref:`subsection:nuevo-resumen`".
+
+Una vez en la pantalla de nuevo resumen, podemos ajustar el *slider* que aparece
+en la parte inferior de la pantalla, estableciendo la longitud mínima y máxima de
+nuestro resumen.
+
+Se puede visualizar un vídeo que recoge el proceso `aquí
+<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/2-ajustar-longitud.mp4>`__.
+
 Ver todos los resúmenes generados
 ---------------------------------
 
@@ -140,6 +159,9 @@ Si se quieren ver todos los resúmenes, se puede pulsar en "*See all*"
 lista con todos los resúmenes, ordenados temporalmente de más recientes
 a más antiguos. Se puede pulsar sobre cualquiera de ellos para obtener
 más detalles.
+
+Se puede visualizar un vídeo que recoge el proceso `aquí
+<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/3-ver-todos-resúmenes.mp4>`__.
 
 .. _subsection:borrar:
 
@@ -159,6 +181,9 @@ Se puede acceder a esta pantalla de tres formas diferentes:
 #. Pulsando en "*See all*" ("ver todos") y haciendo *click* en
    cualquiera de los resúmenes.
 
+Se puede visualizar un vídeo que recoge el proceso `aquí
+<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/4-borrar-resumen.mp4>`__.
+
 Copiar un resumen
 -----------------
 
@@ -170,6 +195,9 @@ Una vez en esta pantalla, se debe pulsar en el siguiente icono:
 
 Tras pulsar dicho icono, el texto se habrá copiado al portapapeles de
 nuestro dispositivo.
+
+Se puede visualizar un vídeo que recoge el proceso `aquí
+<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/5-copiar-resumen.mp4>`__.
 
 Compartir un resumen
 --------------------
@@ -183,6 +211,10 @@ Una vez en esta pantalla, se debe pulsar en el siguiente icono:
 A continuación, se mostrará una lista de aplicaciones a través de las
 cuales se puede compartir el resumen.
 
+Se puede visualizar un vídeo que recoge el proceso `aquí
+<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/6-compartir-resumen.mp4>`__.
+
+
 Ver el texto a partir del cual se generó un resumen
 ---------------------------------------------------
 
@@ -191,6 +223,9 @@ de "*Summary*" (resumen). Para acceder a esta pantalla, seguir
 cualquiera de las alternativas listadas en la sección .
 
 Una vez en dicha pantalla, se debe pulsar sobre "*Original*".
+
+Se puede visualizar un vídeo que recoge el proceso `aquí
+<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/7-ver-original.mp4>`__.
 
 Obtener más información acerca de un resumen
 --------------------------------------------
@@ -201,6 +236,9 @@ cualquiera de las alternativas listadas en la sección .
 
 Una vez en dicha pantalla, se debe pulsar sobre "*More info*" ("Más
 información").
+
+Se puede visualizar un vídeo que recoge el proceso `aquí
+<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/8-m%C3%A1s-info.mp4>`__.
 
 Generar un resumen a partir de un documento
 -------------------------------------------
@@ -220,6 +258,10 @@ implementada.
    está aún en fase *alfa* [flutter-desktop]_.
 
 .. [2]
+   Hemos probado la *app* en navegadores basados en Chromium, como Brave, y
+   también parecen funcionar.
+
+.. [3]
    Como aclaración al margen de Manual de Usuario, la aplicación no ha
    sido publicada en la App Store por su elevado precio (99$ al año por
    la cuenta de desarrollador, frente a los 25$ de por vida, en el caso

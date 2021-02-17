@@ -146,11 +146,11 @@ fundamentales:
 En cuanto al sexo, el uso por parte tanto de hombres como mujeres será
 aproximadamente equivalente.
 
-Un tercer tipo de usuario, no incluido anteriormente, serían partidos
-interesados en el uso del producto, como empresas o particulares, que
-fueran a hacer un uso extensivo y exhaustivo del mismo. Este tipo de
-usuario requiere unas prestaciones más exigentes, pudiendo llegar a
-solicitar el despliegue de JIZT en sus propias dependencias.
+Un tercer tipo de usuario, no incluido anteriormente, serían partidos interesados en
+el uso del producto (empresas, particulares, etc.), que fueran a hacer un uso
+extensivo y exhaustivo del mismo. Este tipo de usuario requiere unas prestaciones más
+exigentes, pudiendo llegar a solicitar el despliegue de JIZT en sus propias
+dependencias.
 
 Es por ello que el producto desarrollado deberá ser lo más independiente
 del entorno en el que se despliegue como sea posible.

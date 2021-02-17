@@ -142,6 +142,13 @@ balanceo es, por lo general, mínimo\ [1]_.
    |                      | Tiempo            | 1,08 s                     | 1,11 s                     |
    +----------------------+-------------------+----------------------------+----------------------------+
 
+Por último, queremos mencionar que, al comienzo del proyecto, escribimos
+diferentes *notebooks* de Jupyter que explican cómo llegamos a ciertas
+conclusiones a la hora de realizar el pre-procesado y post-procesado de
+los textos, así como un pequeño estudio comparativo realizado con dos
+modelos de generación de textos. Se puede acceder a dichos *notebooks* a
+través de https://github.com/dmlls/jizt/tree/main/notebooks.
+
 .. [1]
    Posteriormente a la realización de este experimento, se optimizó
    notablemente el rendimiento global del algoritmo para el modelo T5.

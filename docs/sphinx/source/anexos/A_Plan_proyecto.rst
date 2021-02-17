@@ -53,8 +53,7 @@ Kanban nos permitía un flujo continuo de trabajo, permitiendo añadir
 historias de usuario no contempladas inicialmente si así se consideraba
 apropiado.
 
-En total se estimaron 465 horas, de las cuales se emplearon realmente
-464:
+En total se estimaron 523,15 horas, empleando finalmente 542,92:
 
 .. figure:: ../_static/images/memoria_y_anexos/hours-spent.png
    :alt: Horas estimadas frente horas empleadas.
@@ -208,6 +207,8 @@ Kanban <https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c2
 se puede encontrar información más detallada de cada historia de usuario
 y *epic*.
 
+.. _section:estudio-viabilidad:
+
 Estudio de viabilidad
 =====================
 
@@ -314,6 +315,8 @@ Considerando las tres categorías de costes recogidas anteriormente, la
 suma de los costes totales del proyecto asciende a **13006,10 €**.
 
 -------
+
+.. _subsection:beneficios:
 
 Beneficios
 ~~~~~~~~~~

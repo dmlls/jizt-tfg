@@ -136,7 +136,7 @@ Kubernetes
 ----------
 
 El *backend* sigue una arquitectura de microservicios [newman15]_, de forma que cada
-una de las etapas (pre-procesado, codificación, generación del resúmen y
+una de las etapas (pre-procesado, codificación, generación del resumen y
 post-procesado), está confinada en un contenedor Docker [docker]_, conformando un
 microservicio. Adicionalmente, existe un microservicio más, el *Dispatcher*, el cual
 lleva a cabo las siguientes tareas:
