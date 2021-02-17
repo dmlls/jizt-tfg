@@ -159,7 +159,7 @@ cliente de manera frecuente.
 Como vemos en la anterior figura, el *lead time* medio fue de algo menos de 7 días, y
 el *cycle time* de 4 días y 8 horas. Como es lógico, las primeras tareas
 se completaron más rápido, pero según la complejidad de las mismas fue
-incrementándose, también se reflejo en los tiempos. En el punto central
+incrementándose, también se reflejó en los tiempos. En el punto central
 del proyecto, se alcanzó una media de *lead time* de 9 días, aunque el
 *cycle time* se mantuvo por debajo de los 5, lo que indica que existía
 un mayor número de tareas esperando a ser atendidas.
@@ -331,9 +331,14 @@ La API REST de JIZT se ofrece en tres planes de suscripción diferentes.
    minuto. Incluye soporte técnico y de integración. El precio es de 166
    €/mes.
 
--  **Personalizado**: para aquellos usuarios cuyas necesidades no
-   encajen en ninguno de los anteriores precios. El precio se
-   establecerá en función de los requerimientos concretos del usuario.
+-  **Personalizado**: para aquellos usuarios cuyas necesidades no encajen en ninguno
+   de los anteriores planes. El precio se establecerá en función de los requerimientos
+   concretos del usuario. Por ejemplo, este plan podría incluir el despliegue del
+   *backend* de JIZT para el cliente, bien en sus propias dependencias, o bien a
+   través de un *cloud provider*. De esta forma, este tipo de clientes tendrían
+   control total sobre el *backend*, sin experimentar ninguna de las limitaciones
+   recogidas anteriormente. El posterior mantenimiento del servicio podría estar
+   incluido o no.
 
 En cuanto a la aplicación, es totalmente gratuita y no contiene
 publicidad.
@@ -347,6 +352,8 @@ nuestro proyecto son las siguientes:
 
 .. figure:: ../_static/images/memoria_y_anexos/dafo.png
    :alt: Análisis DAFO de JIZT.
+   :width: 95%
+   :align: left
 
    Análisis DAFO de JIZT.
 

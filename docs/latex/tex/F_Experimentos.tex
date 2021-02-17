@@ -1,6 +1,6 @@
-\apendice{Experimentos sobre el algoritmo de división de texto}
+\chapter[Experimentos llevados a cabo]{Experimentos sobre el algoritmo de división de texto}
 
-En la sección de ``Codificación del texto'' del capítulo de ``Conceptos Teóricos'' de la Memoria, se introduce el problema que presentan muchos de los modelos de generación del lenguaje, entre ellos el modelo T5, el cual utilizamos. 
+En la sección de <<Codificación del texto>> del capítulo de <<Conceptos Teóricos>> de la Memoria, se introduce el problema que presentan muchos de los modelos de generación del lenguaje, entre ellos el modelo T5, el cual utilizamos. 
 
 Dicho problema deriva del hecho de que estos modelos admiten un número de \emph{tókenes} de entrada máximo, 512 en el caso del modelo T5.
 
@@ -18,7 +18,7 @@ La \autoref{fig:balanceo} muestra el proceso de manera visual a través de un ej
 	\centering
 	\includegraphics[width=\textwidth]{algoritmo-balanceo}
 	\vspace{-0.5cm}
-	\caption{Proceso de balanceo de las subdivisones generadas de forma voraz. Ejemplo con una longitud máxima de 100 \emph{tókenes}.}
+	\caption[Algoritmo de balanceo.]{Proceso de balanceo de las subdivisones generadas de forma voraz. Ejemplo con una longitud máxima de 100 \emph{tókenes}.}
 	\label{fig:balanceo}
 \end{figure}
 
@@ -86,7 +86,7 @@ Las diferencias entre el número de \emph{tókenes} antes y después de realizar
 		
 		\bottomrule
 	\end{tabular}
-	\caption{Resultados en la codificación de hilos de Twitter reales. Desviación estándar calculada sobre el número de \emph{tókenes} por subdivisión.}
+	\caption[Experimentos con hilos de Twitter.]{Resultados en la codificación de hilos de Twitter reales. Desviación estándar calculada sobre el número de \emph{tókenes} por subdivisión.}
 \end{table}
 
 \newpage
@@ -126,5 +126,5 @@ Las diferencias entre el número de \emph{tókenes} antes y después de realizar
 		& \small{Tiempo} & \small{1,08 s} & \small{1,11 s} \\
 		\bottomrule
 	\end{tabular}
-	\caption{Resultados en la codificación de textos muy largos. Desviación estándar calculada sobre el número de \emph{tókenes} por subdivisión.}
+	\caption[Experimentos con textos muy largos.]{Resultados en la codificación de textos muy largos. Desviación estándar calculada sobre el número de \emph{tókenes} por subdivisión.}
 \end{table}

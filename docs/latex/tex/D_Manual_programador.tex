@@ -96,9 +96,9 @@ Google Kubernetes Engine, GKE, ha sido la plataforma con la que se ha trabajado 
 
 Google Cloud ofrece actualmente 300\$ de crédito gratuitos durante 90 días la primera vez que nos registramos en el servicio.
 
-Para la creación de una cuenta de Google Cloud, y la creación de un clúster de Kubernetes en GKE, se deben seguir los pasos recogidos en la siguiente página: \href{https://cloud.google.com/kubernetes-engine/docs/quickstart}{https://cloud.google.com/kubernetes-engine/docs/quickstart}.
+Para la creación de una cuenta de Google Cloud, y la creación de un \emph{clúster} de Kubernetes en GKE, se deben seguir los pasos recogidos en la siguiente página: \href{https://cloud.google.com/kubernetes-engine/docs/quickstart}{https://cloud.google.com/kubernetes-engine/docs/quickstart}.
 
-La configuración recomendada a la hora de crear un nuevo clúster es la siguiente:
+La configuración recomendada a la hora de crear un nuevo \emph{clúster} es la siguiente:
 
 \vspace{-0.2cm}
 \begin{itemize} [\textbullet]
@@ -137,9 +137,9 @@ Finalizados estos pasos, estamos en disposición de instalar las dependencias de
 
 Este operador nos permite desplegar PostgreSQL en Kubernetes. Para su instalación y despliegue, se deben seguir los pasos recogidos en \href{https://access.crunchydata.com/documentation/postgres-operator/4.5.1/installation/other/google-cloud-marketplace}{https://access.crunchydata.com/documentation/postgres-operator/4.5.1/\newline installation/other/google-cloud-marketplace}.
 
-Una vez instalado el operador, nos conectaremos al clúster de PostgreSQL creado del siguiente modo: \href{https://access.crunchydata.com/documentation/postgres-operator/4.5.1/tutorial/connect-cluster}{https://access.crunchydata.com/documentation/\newline postgres-operator/4.5.1/tutorial/connect-cluster}.
+Una vez instalado el operador, nos conectaremos al \emph{clúster} de PostgreSQL creado del siguiente modo: \href{https://access.crunchydata.com/documentation/postgres-operator/4.5.1/tutorial/connect-cluster}{https://access.crunchydata.com/documentation/\newline postgres-operator/4.5.1/tutorial/connect-cluster}.
 
-Una vez conectados al cluster, debemos ejecutar el \emph{script} SQL situado en el directorio del proyecto de JIZT: \texttt{src/services/postgres/schemas.sql}. Este \emph{script} proveerá la base de datos con la estructura de tablas inciales.
+Una vez conectados al \emph{clúster}, debemos ejecutar el \emph{script} SQL situado en el directorio del proyecto de JIZT: \texttt{src/services/postgres/schemas.sql}. Este \emph{script} proveerá la base de datos con la estructura de tablas iniciales.
 
 Finalmente debemos crear un \emph{secret} de Kubernetes conteniendo los detalles de conexión a la base de datos, esto es, el nombre de usuario y la contraseña especificados a la hora de instalar el \emph{clúster} de PostgreSQL. Para ello, se deben seguir los pasos indicados en \href{https://kubernetes.io/docs/concepts/configuration/secret/#creating-a-secret}{https://kubernetes.io/docs/\newline concepts/configuration/secret/\#creating-a-secret}.  El nombre del secreto debe ser ``\texttt{pg-dispatcher}''.
 
@@ -430,7 +430,7 @@ La estructura de directorios de la aplicación de JIZT, a la cual se puede acced
 	\item \texttt{/lib/utils}: utilidades varias.
 	\item \texttt{/lib/widgets}: \emph{widgets} de Flutter adicionales.
 	\item \texttt{/modules/data}: componentes relativos a la capa de datos de la aplicación.
-	\item \texttt{/modules/data}: componentes relativos a la capa de dominio de la aplicación.
+	\item \texttt{/modules/domain}: componentes relativos a la capa de dominio de la aplicación.
 	\item \texttt{/assets/drawables}: imágenes y fuentes de las que hace uso la aplicación.
 	\item \texttt{/android}: proyecto de Android.
 	\item \texttt{/ios}: proyecto de iOS.
@@ -546,7 +546,7 @@ En cualquier caso, lo incluimos en este documento también, por considerarlo de 
 	Para contribuir con tu código al proyecto, crea primero una \emph{Pull request} y
 	realiza las modificaciones o adicciones pertinentes.
 	
-	Altenativamente, puedes hacer un \emph{Fork} manual, realizar las modificaciones,
+	Alternativamente, puedes hacer un \emph{Fork} manual, realizar las modificaciones,
 	y más tarde abrir una \emph{Pull request}.
 	
 	Por favor, no olvides explicar de manera detallada y clara los cambios

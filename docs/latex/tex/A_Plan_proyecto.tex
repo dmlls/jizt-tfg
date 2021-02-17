@@ -93,7 +93,7 @@ Esta métrica nos aporta información que nos permite conocer cuánto tiempo tar
 	\label{average-lead-cycle}
 \end{figure}
 
-Como vemos en la \hyperref[average-lead-cycle]{anterior figura}, el \emph{lead time} medio fue de algo menos de 7 días, y el \emph{cycle time} de 4 días y 8 horas. Como es lógico, las primeras tareas se completaron más rápido, pero según la complejidad de las mismas fue incrementándose, también se reflejo en los tiempos. En el punto central del proyecto, se alcanzó una media de \emph{lead time} de 9 días, aunque el \emph{cycle time} se mantuvo por debajo de los 5, lo que indica que existía un mayor número de tareas esperando a ser atendidas.
+Como vemos en la \hyperref[average-lead-cycle]{anterior figura}, el \emph{lead time} medio fue de algo menos de 7 días, y el \emph{cycle time} de 4 días y 8 horas. Como es lógico, las primeras tareas se completaron más rápido, pero según la complejidad de las mismas fue incrementándose, también se reflejó en los tiempos. En el punto central del proyecto, se alcanzó una media de \emph{lead time} de 9 días, aunque el \emph{cycle time} se mantuvo por debajo de los 5, lo que indica que existía un mayor número de tareas esperando a ser atendidas.
 
 Otro de los gráficos propios de Kanban que nos puede ofrecer información valiosa es el llamado diagrama de flujo acumulado (CFD, por sus siglas en inglés). Este gráfico muestra el número de tareas que hay en cada columna a lo largo del tiempo.
 
@@ -119,9 +119,9 @@ Podemos visualizar también la distribución de las tareas en función de su tip
 
 Como es lógico, la mayor parte de las tareas se dedicaron a ofrecer nuevas funcionalidades (\emph{feature}), aunque gran número de ellas se dedicaron al aprendizaje y búsqueda de información (\emph{research}), lo cual también parece ajustarse a la realidad, puesto que como ya hemos mencionado, muchas de las herramientas y técnicas que hemos utilizado eran nuevas para nosotros. 
 
-Para finalizar esta sección, cabe mencionar que en el \href{https://github.com/dmlls/jizt/milestones}{repositorio del proyecto}, y en su \href{https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b}{tablero Kanban}, se puede encontrar información más detallada de cada historia de usuario y \emph{epic}.
+Para finalizar esta sección, cabe mencionar que en el \href{https://github.com/dmlls/jizt/milestones}{repositorio del proyecto}, y en su \href{https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b}{tablero Kanban}\footnote{\, Disponibles a través de \href{https://github.com/dmlls/jizt/milestones}{https://github.com/dmlls/jizt/milestones} y \\ \href{https://kanban.jizt.it}{https://kanban.jizt.it}, respectivamente.}, se puede encontrar información más detallada de cada historia de usuario y \emph{epic}.
 
-\newpage
+\vspace{2cm}
 
 \section{Estudio de viabilidad}
 
@@ -148,25 +148,29 @@ Los costes fijos son aquellos costes invariables que debemos abonar, independien
 		\toprule
 		\textbf{{\scriptsize CONCEPTO}}  & \textbf{{\scriptsize IMPORTE}} \\
 		\midrule
+		\small{\; Servicio GKE$^1$ de Google Cloud} & \small{1449,58 €} \\
+		\midrule
 		\small{\; Servicio de Internet} & \small{200,00 €} \\
 		\midrule
-		\small{\; Servicio de Luz$^1$} & \small{225,00 €} \\
+		\small{\; Servicio de Luz$^2$} & \small{225,00 €} \\
 		\midrule
 		\small{\; Materiales de oficina} & \small{5,00 €} \\
 		\midrule
-		\small{\; Salarios$^2$} & \small{9911,88 €} \\
+		\small{\; Salarios$^3$} & \small{9911,88 €} \\
+		\cline{2-2}
 		\scriptsize{\qquad Salario mensual neto} & \scriptsize{1000,00 €} \\
-		\scriptsize{\qquad Retenciones1 por IRPF (24 \%)$^3$} & \scriptsize{528,63 €} \\
-		\scriptsize{\qquad Cuotas a la Seg. Social (30,6 \%)$^4$} & \scriptsize{674,01 €} \\
+		\scriptsize{\qquad Retenciones por IRPF (24 \%)$^4$} & \scriptsize{528,63 €} \\
+		\scriptsize{\qquad Cuotas a la Seg. Social (30,6 \%)$^5$} & \scriptsize{674,01 €} \\
 		\scriptsize{\qquad Salario mensual bruto} & \scriptsize{2202,64 €} \\
 		\bottomrule
 		\textbf{{\scriptsize TOTAL}}  & \textbf{\small 10341,88 €} \\
 		\bottomrule
-		\multicolumn{2}{l}{\scriptsize{$^1$ Costes calculados para 4,5 meses, con tarifa de mercado libre y potencia}} \\
+		\multicolumn{2}{l}{\scriptsize{$^1$ Google Kubernetes Engine \cite{gke}.}} \\
+		\multicolumn{2}{l}{\scriptsize{$^2$ Costes calculados para 4,5 meses, con tarifa de mercado libre y potencia}} \\
 		\multicolumn{2}{l}{\hspace{0.11cm} \scriptsize{contratada de 3,3 kW (precio mensual medio de 50 €).}} \\
-		\multicolumn{2}{l}{\scriptsize{$^2$ Costes calculados para 4,5 meses.}} \\
-		\multicolumn{2}{l}{\scriptsize{$^3$ Según la tabla de retenciones por IRPF aplicable al ejercicio 2021 \cite{irpf21}}} \\
-		\multicolumn{2}{l}{\scriptsize{$^4$ Porcentaje para autónomos según la Ley 11/2020, de 30 de diciembre, de}} \\
+		\multicolumn{2}{l}{\scriptsize{$^3$ Costes calculados para 4,5 meses.}} \\
+		\multicolumn{2}{l}{\scriptsize{$^4$ Según la tabla de retenciones por IRPF aplicable al ejercicio 2021 \cite{irpf21}}} \\
+		\multicolumn{2}{l}{\scriptsize{$^5$ Porcentaje para autónomos según la Ley 11/2020, de 30 de diciembre, de}} \\
 		\multicolumn{2}{l}{\hspace{0.11cm} \scriptsize{Presupuestos Generales del Estado para el año 2021 \cite{boe341}.}} \\
 		\bottomrule
 	\end{tabular}
@@ -187,11 +191,12 @@ Los costes directos son aquellos costes derivados directamente del desarrollo de
 		\textbf{{\scriptsize CONCEPTO}}  & \textbf{{\scriptsize IMPORTE}} & \textbf{{\scriptsize IMPORTE AMORTIZ.}} \\
 		\midrule
 		\small{\; Costes de \emph{hardware}$^1$} & \small{2509,58 €} & \small{79,49 €} \\
+		\cline{2-3}
 		\scriptsize{\qquad Ordenador personal} & \scriptsize{845,00 €} & \scriptsize{63,37 €} \\
 		\scriptsize{\qquad \emph{Smartphone} Android} & \scriptsize{215,00 €} & \scriptsize{16,12 €} \\
-		\scriptsize{\qquad Servicio GKE$^2$ de Google Cloud} & \scriptsize{1449,58 €} & - \\
 		\midrule
-		\small{\; Costes de \emph{software}$^3$} & \small{89,95 €} & \small{16,86 €} \\
+		\small{\; Costes de \emph{software}$^2$} & \small{89,95 €} & \small{16,86 €} \\
+		\cline{2-3}
 		\scriptsize{\qquad Adobe Illustrator} & \scriptsize{89,95 €} &  \scriptsize{16,86 €} \\
 
 	
@@ -199,8 +204,7 @@ Los costes directos son aquellos costes derivados directamente del desarrollo de
 		\textbf{{\scriptsize TOTAL}}  & \textbf{\small 2599,53 €} & \textbf{\small 96,35 €} \\
 		\bottomrule
 		\multicolumn{3}{l}{\scriptsize{$^1$ Se han calculado con una amortización de 5 años, habiendo sido utilizado 4,5 meses.}} \\
-		\multicolumn{3}{l}{\scriptsize{$^2$ Google Kubernetes Engine \cite{gke}.}} \\
-		\multicolumn{3}{l}{\scriptsize{$^3$ Se han calculado con una amortización de 2 años, habiendo sido utilizado 4,5 meses.}} \\
+		\multicolumn{3}{l}{\scriptsize{$^2$ Se han calculado con una amortización de 2 años, habiendo sido utilizado 4,5 meses.}} \\
 		\bottomrule
 	\end{tabular}
 	\caption{Desglose de costes directos del proyecto.}
@@ -236,7 +240,7 @@ Considerando las tres categorías de costes recogidas anteriormente, la suma de 
 
 \subsubsection{Beneficios}
 
-La API REST de JIZT se ofrece en tres planes de suscripción diferentes.
+La API REST de JIZT se ofrecerá en tres planes de suscripción diferentes.
 
 \vspace{-0.3cm}
 \begin{itemize}[\textbullet]
@@ -244,12 +248,8 @@ La API REST de JIZT se ofrece en tres planes de suscripción diferentes.
 	
 	\item \textbf{Estándar}: para aquellas empresas o particulares que van a realizar un uso más intensivo del servicio. Se incluyen 15.000 peticiones a la API REST, pudiendo hacerse hasta 15 peticiones por minuto. Incluye soporte técnico y de integración. El precio es de 166 €/mes.
 	
-	\item \textbf{Personalizado}: para aquellos usuarios cuyas necesidades no encajen en ninguno de los anteriores precios. El precio se establecerá en función de los requerimientos concretos del usuario.
+	\item \textbf{Personalizado}: para aquellos usuarios cuyas necesidades no encajen en ninguno de los anteriores planes. El precio se establecerá en función de los requerimientos concretos del usuario. Por ejemplo, este plan podría incluir el despliegue del \emph{backend} de JIZT para el cliente, bien en sus propias dependencias, o bien a través de un \emph{cloud provider}. De esta forma, este tipo de clientes tendrían control total sobre el \emph{backend}, sin experimentar ninguna de las limitaciones recogidas anteriormente. El posterior mantenimiento del servicio podría estar incluido o no.
 \end{itemize}
-
-Asimismo, otra alternativa pasa por ofrecer un servicio de despliegue de la infraestructura desarrollada en este proyecto para terceras partes (instituciones, empresas, particulares, etc.) que pudieran estar interesadas. Con la contratación de este servicio, nos encargaríamos de atender todos los detalles de instalación, puesta en marcha y mantenimiento del sistema. El despliegue se podría hacer tanto a través de un \emph{cloud provider} como en las dependencias propias del interesado.
-
-TODO: Pay As you go
 
 En cuanto a la aplicación, es totalmente gratuita y no contiene publicidad.
 
@@ -261,7 +261,7 @@ Tras llevar a cabo un pequeño análisis de mercado, hemos identificado que las 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{dafo}
-	\vspace{-0.5cm}
+	\vspace{-1.1cm}
 	\caption{Análisis DAFO de JIZT.}
 \end{figure}
 
@@ -309,7 +309,7 @@ A continuación, se recoge una lista detallada de las mismas:
 		\toprule
 		\textbf{Dependencia} & \textbf{Versión} & \textbf{Descripción} & \textbf{Licencia} \\
 		\midrule
-		\small{\; API REST} & & & \\
+		\; \emph{Backend} & & & \\
 		\small{\qquad \texttt{NLTK}} & \small{3.5} & \scriptsize{Utilidades de NLP.} & \small{Apache v2.0} \\
 		\small{\qquad \texttt{transformers}} & \small{4.1.1} & \scriptsize{Modelos pre-entrenados.} & \small{Apache v2.0} \\
 		\small{\qquad \texttt{truecase}} & \small{0.0.12} & \scriptsize{\emph{Truecaser}.} & \small{Apache v2.0} \\
@@ -325,7 +325,7 @@ A continuación, se recoge una lista detallada de las mismas:
 		
 		\midrule
 		
-		\small{\; Aplicación} & & & \\
+		\; Aplicación & & & \\
 		\small{\qquad \texttt{hive}} & \small{1.4.4+1} & \scriptsize{Base de datos noSQL.} & \small{Apache v2.0} \\
 		\small{\qquad \texttt{flutter\_bloc}} & \small{6.1.2 } & \scriptsize{Patrón bloc en Flutter.} & \small{MIT} \\
 		\small{\qquad \texttt{flutter\_svg}} & \small{0.19.2+1} & \scriptsize{Soporte para SVG.} & \small{MIT} \\
@@ -340,7 +340,7 @@ A continuación, se recoge una lista detallada de las mismas:
 		\bottomrule
 	\end{tabular}
 	\caption{Listado de dependencias.}
-\end{table}1
+\end{table}
 
 \subsubsection{Licencia de la documentación del proyecto}
 

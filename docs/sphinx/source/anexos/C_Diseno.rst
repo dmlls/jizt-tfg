@@ -50,7 +50,7 @@ productos y proyectos con este nombre.
 En ese momento, se llevó a cabo una pequeña encuesta para determinar el
 nombre final. Dado que el proyecto aspira a tener un carácter
 internacional, el objetivo de la encuesta no era tanto obtener un gran
-numero de votaciones, sino que las que tuviéramos fueran muy variada: en
+numero de votaciones, sino que las que tuviéramos fueran muy variadas: en
 total se preguntó a 22 personas de 15 nacionalidades diferentes.
 
 A continuación, se incluye una tabla resumiendo los resultados de la
@@ -188,15 +188,15 @@ Este microservicio cuenta con las siguientes clases:
 
    Diagrama de clases del *Dispatcher*.
 
-**Diagrama E/R de la base de datos**
+**Modelo relacional de la base de datos**
 
 A su vez, la base de datos gobernada por el *Dispatcher* y encargada de almacenar los
 resúmenes generados, cuenta con el siguiente esquema de tablas:
 
 .. figure:: ../_static/images/memoria_y_anexos/dispatcher-db.png
-   :alt: Diagrama E/R de la base de datos (tipos de datos de PostgreSQL).
+   :alt: Modelo relacional de la base de datos (tipos de datos de PostgreSQL).
 
-   Diagrama E/R de la base de datos (tipos de datos de PostgreSQL).
+   Modelo relacional de la base de datos (tipos de datos de PostgreSQL).
 
 **Microservicio Pre-procesador de textos**
 
@@ -311,7 +311,7 @@ El Post-procesador de textos tiene las siguientes clases.
 ~~~~~~~~~~
 
 El *frontend* está compuesto por la aplicación multiplataforma
-desarrollada siguiendo los patrones de *Clean Architectura* y Diseño
+desarrollada siguiendo los patrones de *Clean Architecture* y Diseño
 guiado por el dominio *Domain Driven Design*. Para conocer los detalles
 concretos de la implementación de la arquitectura de la *app*, se
 recomienda acudir a la sección ":ref:`section:arch-motivation`"
@@ -377,16 +377,17 @@ entre los clientes y la REST API a través de peticiones HTTP. Recordemos el pro
 
 #. El *Dispatcher* realiza una serie de comprobaciones:
 
-   #. Se consulta en la base de datos si ya existe un resumen generado
-      para ese texto con esos parámetros. En ese caso, se responde al
-      cliente con los datos del resumen (``output``, ``source``,
-      ``started_at``, ``ended_at``, etc.).
+   #. Se consulta en la base de datos si ya existe un resumen generado para
+      ese texto con esos parámetros. En ese caso, se responde al cliente
+      con los datos del resumen (``output``, ``source``, ``started_at``,
+      ``ended_at``, etc.). El ``status`` del resumen será ``completed``
+      ("completado").
 
    #. En caso contrario, se responde con el mismo esquema de datos, solo
-      que el ``output`` será ``null``. Al mismo tiempo, se produce un
-      mensaje al *topic* del pre-procesador de textos, conteniendo el
-      texto y los parámetros del resumen, comenzando el proceso de
-      generación.
+      que el ``output`` será ``null``, y el ``status`` será ``summarizing``
+      ("resumiendo"). Al mismo tiempo, se produce un mensaje al *topic*
+      del pre-procesador de textos, conteniendo el texto y los parámetros
+      del resumen, comenzando el proceso de generación
 
 #. El pre-procesador está constantemente comprobando si existen mensajes
    nuevos en su *topic*. En ese caso los consume, realiza las tareas de
@@ -428,7 +429,7 @@ los siguientes pasos:
    resumen solicitado. En ese caso, se devuelve el resumen, y se
    actualiza la pantalla para mostrárselo al usuario.
 
-#. En caso contario, se realiza peticiones GET periódicas a la API REST
+#. En caso contrario, se realiza peticiones GET periódicas a la API REST
    hasta que el resumen se completa. Finalmente, se actualiza la
    pantalla.
 
@@ -461,7 +462,7 @@ dando con el diseño arquitectónico final.
 Como se indica en la Memoria, para el *backend* se ha desarrollado una
 **arquitectura de microservicios**, a través de la cual podemos separar
 cada paso en la generación de resúmenes (pre-procesado, codificación,
-generación del resumen, post-procesado0), en módulos independientes,
+generación del resumen, post-procesado), en módulos independientes,
 favoreciendo los siguientes aspectos:
 
 -  Gracias a la división en microservicios, conseguimos una gran
@@ -534,16 +535,14 @@ Gracias a la vibrante comunidad de Flutter [flutter-es]_,
 dar con la arquitectura más apropiada para la aplicación resultó un
 proceso más fluido.
 
-Antes de comenzar este proyecto, habíamos oído del concepto de *Clean
-Architecture* [martin15]_, aunque no habíamos indagado muy
-en profundidad en sus proposiciones. No obstante, en nuestra formación
-de Flutter, apareció de nuevo, e incluso supimos que existe un paquete
-para Flutter que simplifica la implementación de este patrón
-[flutter-clean-arch]_.
+Antes de comenzar este proyecto, habíamos oído del concepto de *Clean Architecture*
+[martin15]_, aunque lo conocíamos únicamente de manera superficial. No obstante,
+en nuestra formación de Flutter, apareció de nuevo, y esta vez sí que profundizamos en
+él.
 
-A continuación, nos informamos sobre el patrón BLoC [bloc-pattern]_, muy popular también dentro de la comunidad Flutter. Por
-suerte, también existe un paquete para la implementación de este patrón
-[bloc-package]_.
+A continuación, nos informamos sobre el patrón BLoC [bloc-pattern]_, muy popular
+también dentro de la comunidad Flutter. Por suerte, también existe un paquete para la
+implementación de este patrón [bloc-package]_.
 
 Finalmente, la arquitectura quedó como se muestra a continuación:
 

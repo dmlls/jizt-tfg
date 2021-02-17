@@ -10,7 +10,7 @@ Para la versión \textbf{Android}, se deben cumplir los siguientes requisitos:
 
 \vspace{-0.3cm}
 \begin{itemize} [\textbullet]
-	\item Mínimo 18 MB de espacio de almacenamiento libre. La aplicación por sí misma ocupa 16,36 MB, pero ese tamaño aumentará ligeramente según se vayan almacenando resúmenes.
+	\item Mínimo 18 MB de espacio de almacenamiento libre. El paquete de instalación tiene un tamaño de 6,3 MB, y una vez instalada ocupa 16,36 MB. No obstante, ese tamaño aumentará ligeramente según se vayan almacenando resúmenes.
 	
 	\item Versión de Android igual o superior a la 4.1 (\emph{JellyBean} - API 16).
 \end{itemize}
@@ -19,19 +19,24 @@ En el caso de \textbf{iOS}:
 
 \vspace{-0.3cm}
 \begin{itemize} [\textbullet]
-	\item Mínimo MB de espacio de almacenamiento libre.
+	\item Mínimo 20 MB de espacio de almacenamiento libre. En este caso, el peso del paquete es de 6,9 MB, y una vez instalada ocupa 17,2 MB.
+	
 	\item Versión de iOS 8 o superior.
 \end{itemize}
+
+\newpage
 
 Y en el caso de la versión \emph{\textbf{web}}:
 
 \begin{itemize} [\textbullet]
-	\item Los navegadores \emph{web} soportados son Google Chrome, Mozilla Firefox, Safari o Edge.
+	\item Los navegadores \emph{web} soportados son Google Chrome\footnote{Hemos probado la \emph{app} en navegadores basados en Chromium, como Brave, y también parecen funcionar.}, Mozilla Firefox, Safari o Edge.
 \end{itemize}
 
 En todos los casos se requiere conexión a Internet para generar nuevos resúmenes (los resúmenes ya generados se pueden consultar \emph{offline}). La \emph{app} de JIZT no requiere de permisos adicionales en ninguna de las plataformas.
 
 La aplicación solo está disponible por el momento en inglés, dado que este es el único lenguaje soportado actualmente por el servicio de generación de resúmenes.
+
+\vspace{2cm}
 
 \section{Instalación}
 
@@ -43,7 +48,15 @@ En esta sección detallamos el proceso de instalación en las diferentes platafo
 
 Se recomienda que el usuario instale la aplicación desde Google Play.
 
-TODO: añadir capturas Google Play y explicar proceso.
+Para ello, simplemente basta con buscar la aplicación <<JIZT AI Summarization>> y pulsar en <<Instalar>>.
+
+\newpage
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{jizt-google-play}
+	\caption{Instalar JIZT desde Google Play.}
+\end{figure}
 
 \subsection{iOS}
 
@@ -60,8 +73,6 @@ Se puede acceder a la aplicación directamente a través de \href{https://app.ji
 \section{Manual del usuario}
 
 Una vez instalada la aplicación, el usuario está en disposición de comenzar a utilizarla. El funcionamiento en interfaz de la aplicación en las diferentes plataformas es homogéneo, por lo que todo lo explicado a continuación es válido para cualquiera de ellas.
-
-TODO: añadir capturas de la app.
 
 \subsection{Generar un nuevo resumen}
 
@@ -81,6 +92,7 @@ Los pasos que debemos seguir para generar un nuevo resumen son los siguientes:
 	\item Una vez completado el resumen, se mostrará una nueva pantalla con el resumen.
 \end{enumerate}
 
+Se puede visualizar un vídeo que recoge el proceso en \href{}{}.
 
 \subsection{Ver todos los resúmenes generados}
 
@@ -88,6 +100,7 @@ La aplicación muestra en la pantalla principal una vista previa de los últimos
 
 Si se quieren ver todos los resúmenes, se puede pulsar en <<\emph{See all}>> (<<ver todos>>). Se mostrará una nueva pantalla en la que aparece una lista con todos los resúmenes, ordenados temporalmente de más recientes a más antiguos. Se puede pulsar sobre cualquiera de ellos para obtener más detalles.
 
+Se puede visualizar un vídeo que recoge el proceso en \href{}{}.
 
 \subsection{Borrar un resumen} \label{subsection:borrar}
 
@@ -103,6 +116,7 @@ Se puede acceder a esta pantalla de tres formas diferentes:
 	\item Pulsando en <<\emph{See all}>> (<<ver todos>>) y haciendo \emph{click} en cualquiera de los resúmenes.
 \end{enumerate}
 
+Se puede visualizar un vídeo que recoge el proceso en \href{}{}.
 
 \subsection{Copiar un resumen}
 
@@ -112,6 +126,7 @@ Una vez en esta pantalla, se debe pulsar en el siguiente icono:
 
 Tras pulsar dicho icono, el texto se habrá copiado al portapapeles de nuestro dispositivo.
 
+Se puede visualizar un vídeo que recoge el proceso en \href{}{}.
 
 \subsection{Compartir un resumen}
 
@@ -121,18 +136,23 @@ Una vez en esta pantalla, se debe pulsar en el siguiente icono:
 
 A continuación, se mostrará una lista de aplicaciones a través de las cuales se puede compartir el resumen.
 
+Se puede visualizar un vídeo que recoge el proceso en \href{}{}.
 
 \subsection{Ver el texto a partir del cual se generó un resumen}
 
-Para ver el texto original de un resumen, se debe estar en la pantalla de <<\emph{Summary}>> (resumen). Para acceder a esta pantalla, seguir cualquiera de las alternativas listadas en la sección ``\hyperref[subsection:borrar]{Borrar un resumen}''.
+Para ver el texto original de un resumen, se debe estar en la pantalla de <<\emph{Summary}>> (resumen). Para acceder a esta pantalla, seguir cualquiera de las alternativas listadas en la sección <<\hyperref[subsection:borrar]{Borrar un resumen}>>.
 
 Una vez en dicha pantalla, se debe pulsar sobre <<\emph{Original}>>.
 
+Se puede visualizar un vídeo que recoge el proceso en \href{}{}.
+
 \subsection{Obtener más información acerca de un resumen}
 
-Para obtener más información de un resumen, se debe estar en la pantalla de <<\emph{Summary}>> (resumen). Para acceder a esta pantalla, seguir cualquiera de las alternativas listadas en la sección ``\hyperref[subsection:borrar]{Borrar un resumen}''.
+Para obtener más información de un resumen, se debe estar en la pantalla de <<\emph{Summary}>> (resumen). Para acceder a esta pantalla, seguir cualquiera de las alternativas listadas en la sección <<\hyperref[subsection:borrar]{Borrar un resumen}>>.
 
 Una vez en dicha pantalla, se debe pulsar sobre <<\emph{More info}>> (<<Más información>>).
+
+Se puede visualizar un vídeo que recoge el proceso en \href{}{}.
 
 \subsection{Generar un resumen a partir de un documento}
 

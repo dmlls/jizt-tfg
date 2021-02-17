@@ -35,7 +35,7 @@ aprendan a usarlo.
 Para contribuir con tu código al proyecto, crea primero una _Pull request_ y
 realiza las modificaciones o adicciones pertinentes.
 
-Altenativamente, puedes hacer un _Fork_ manual, realizar las modificaciones,
+Alternativamente, puedes hacer un _Fork_ manual, realizar las modificaciones,
 y más tarde abrir una _Pull request_.
 
 Por favor, no olvides explicar de manera detallada y clara los cambios

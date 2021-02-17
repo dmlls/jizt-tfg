@@ -26,15 +26,16 @@ Requisitos de usuarios
 
 Para la versión **Android**, se deben cumplir los siguientes requisitos:
 
--  Mínimo 18 MB de espacio de almacenamiento libre. La aplicación por sí
-   misma ocupa 16,36 MB, pero ese tamaño aumentará ligeramente según se
-   vayan almacenando resúmenes.
+-  Mínimo 18 MB de espacio de almacenamiento libre. El paquete de instalación tiene un
+   tamaño de 6,3 MB, y una vez instalada ocupa 16,36 MB. No obstante, ese tamaño
+   aumentará ligeramente según se vayan almacenando resúmenes.
 
 -  Versión de Android igual o superior a la 4.1 (*JellyBean* - API 16).
 
 En el caso de **iOS**:
 
--  Mínimo MB de espacio de almacenamiento libre.
+-  Mínimo 20 MB de espacio de almacenamiento libre. En este caso, el peso del paquete
+   es de 6,9 MB, y una vez instalada ocupa 17,2 MB.
 
 -  Versión de iOS 8 o superior.
 
@@ -66,7 +67,15 @@ Instalación recomendada
 
 Se recomienda que el usuario instale la aplicación desde Google Play.
 
-TODO: añadir capturas Google Play y explicar proceso.
+Para ello, simplemente basta con buscar la aplicación "JIZT AI Summarization" y
+pulsar en "Instalar".
+
+.. figure:: ../_static/images/memoria_y_anexos/jizt-google-play.png
+   :alt: Instalar JIZT desde Google Play.
+   :width: 70%
+   :align: center
+
+   Instalar JIZT desde Google Play.
 
 iOS
 ---

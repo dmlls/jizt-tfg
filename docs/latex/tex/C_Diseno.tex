@@ -19,7 +19,7 @@ Para la elección del nombre bajo el cual se englobara todo el servicio de resum
 
 De estas tres, se juzgaron más interesantes las dos últimas; la primera resulta menos original debido a que ya existen numerosas empresas, productos y proyectos con este nombre.
 
-En ese momento, se llevó a cabo una pequeña encuesta para determinar el nombre final. Dado que el proyecto aspira a tener un carácter internacional, el objetivo de la encuesta no era tanto obtener un gran numero de votaciones, sino que las que tuviéramos fueran muy variada: en total se preguntó a 22 personas de 15 nacionalidades diferentes.
+En ese momento, se llevó a cabo una pequeña encuesta para determinar el nombre final. Dado que el proyecto aspira a tener un carácter internacional, el objetivo de la encuesta no era tanto obtener un gran numero de votaciones, sino que las que tuviéramos fueran muy variadas: en total se preguntó a 22 personas de 15 nacionalidades diferentes.
 
 A continuación, se incluye una tabla resumiendo los resultados de la encuesta:
 
@@ -119,7 +119,7 @@ Este microservicio cuenta con las siguientes clases:
 \newpage
 
 \noindent
-\textbf{Diagrama E/R de la base de datos}
+\textbf{Modelo relacional de la base de datos}
 
 A su vez, la base de datos gobernada por el \emph{Dispatcher} y encargada de almacenar los resúmenes generados, cuenta con el siguiente esquema de tablas:
 
@@ -129,7 +129,7 @@ A su vez, la base de datos gobernada por el \emph{Dispatcher} y encargada de alm
 	\centering
 	\includegraphics[width=\textwidth]{dispatcher-db}
 	\vspace{-0.5cm}
-	\caption{Diagrama E/R de la base de datos (tipos de datos de PostgreSQL).}
+	\caption[Modelo relacional de la base de datos.]{Modelo relacional de la base de datos (tipos de datos de PostgreSQL).}
 \end{figure}
 
 \newpage
@@ -160,6 +160,7 @@ Este microservicio está compuesto por siguientes clases:
 	\caption{Diagrama de clases del Pre-procesador de textos.}
 \end{figure}
 
+\newpage
 
 \noindent
 \textbf{\large Microservicio Codificador de textos}
@@ -187,6 +188,7 @@ El Codificador cuenta con las siguientes clases:
 	\caption{Diagrama de clases del Codificador de textos.}
 \end{figure}
 
+\newpage
 
 \noindent
 \textbf{\large Microservicio Generador de resúmenes}
@@ -214,7 +216,7 @@ Las clases del Generador de resúmenes son:
 	\caption{Diagrama de clases del Generador de resúmenes.}
 \end{figure}
 
-
+\newpage
 
 \noindent
 \textbf{\large Microservicio Post-procesador de textos}
@@ -245,7 +247,7 @@ El Post-procesador de textos tiene las siguientes clases.
 
 \subsubsection{\Large \emph{Frontend}}
 
-El \emph{frontend} está compuesto por la aplicación multiplataforma desarrollada siguiendo los patrones de \emph{Clean Architectura} y Diseño guiado por el dominio \emph{Domain Driven Design}. Para conocer los detalles concretos de la implementación de la arquitectura de la \emph{app}, se recomienda acudir a la sección ``Motivación tras las arquitecturas desarrolladas'' del capítulo ``Aspectos relevantes'' de la Memoria.
+El \emph{frontend} está compuesto por la aplicación multiplataforma desarrollada siguiendo los patrones de \emph{Clean Architecture} y Diseño guiado por el dominio \emph{Domain Driven Design}. Para conocer los detalles concretos de la implementación de la arquitectura de la \emph{app}, se recomienda acudir a la sección <<Motivación tras las arquitecturas desarrolladas>> del capítulo <<Aspectos relevantes>> de la Memoria.
 
 Las clases identificadas en la aplicación son las siguientes:
 
@@ -278,12 +280,13 @@ Las clases identificadas en la aplicación son las siguientes:
 	\caption{Diagrama de clases de la aplicación de JIZT.}
 \end{figure}
 
+\newpage
 
 \section{Diseño procedimental}
 
 En esta sección repasamos una vez más los pasos que se llevan a cabo tanto en el \emph{backend} a la hora de atender las peticiones de los clientes y generar los resúmenes, como en la aplicación, encargada de gestionar los resúmenes de los usuarios.
 
-En la sección correspondiente al \emph{backend} del capítulo ``Técnicas y Herramientas'', explicábamos cómo se gestionaba la comunicación entre los clientes y la REST API a través de peticiones HTTP. Recordemos el proceso:
+En la sección correspondiente al \emph{backend} del capítulo <<Técnicas y Herramientas>>, explicábamos cómo se gestionaba la comunicación entre los clientes y la REST API a través de peticiones HTTP. Recordemos el proceso:
 
 \begin{enumerate}
 	\item El cliente realiza una petición HTTP POST, incluyendo en el cuerpo el texto a resumir, así como los parámetros del resumen a generar.
@@ -292,9 +295,9 @@ En la sección correspondiente al \emph{backend} del capítulo ``Técnicas y Her
 	
 	\item El \emph{Dispatcher} realiza una serie de comprobaciones:
 	\begin{enumerate}	
-		\item Se consulta en la base de datos si ya existe un resumen generado para ese texto con esos parámetros. En ese caso, se responde al cliente con los datos del resumen (\texttt{output}, \texttt{source}, \texttt{started\_at}, \texttt{ended\_at}, etc.).
+		\item Se consulta en la base de datos si ya existe un resumen generado para ese texto con esos parámetros. En ese caso, se responde al cliente con los datos del resumen (\texttt{output}, \texttt{source}, \texttt{started\_at}, \texttt{ended\_at}, etc.). El \texttt{status} del resumen será \texttt{completed} (<<completado>>).
 		
-		\item En caso contrario, se responde con el mismo esquema de datos, solo que el \texttt{output} será \texttt{null}. Al mismo tiempo, se produce un mensaje al \emph{topic} del pre-procesador de textos, conteniendo el texto y los parámetros del resumen, comenzando el proceso de generación.
+		\item En caso contrario, se responde con el mismo esquema de datos, solo que el \texttt{output} será \texttt{null}, y el \texttt{status} será \texttt{summarizing} (<<resumiendo>>). Al mismo tiempo, se produce un mensaje al \emph{topic} del pre-procesador de textos, conteniendo el texto y los parámetros del resumen, comenzando el proceso de generación.
 	\end{enumerate}
 	
 	\item El pre-procesador está constantemente comprobando si existen mensajes nuevos en su \emph{topic}. En ese caso los consume, realiza las tareas de pre-procesado, y produce el resultado en el \emph{topic} del codificador.
@@ -317,30 +320,33 @@ A su vez, en la aplicación, es decir, el \emph{frontend}, de llevan a cabo los 
 	
 	\item Una vez obtenido el \emph{id} del resumen, se consulta la base de datos local (capa de caché) para conocer si ya se dispone localmente del resumen solicitado. En ese caso, se devuelve el resumen, y se actualiza la pantalla para mostrárselo al usuario.
 	
-	\item En caso contario, se realiza peticiones GET periódicas a la API REST hasta que el resumen se completa. Finalmente, se actualiza la pantalla.
+	\item En caso contrario, se realiza peticiones GET periódicas a la API REST hasta que el resumen se completa. Finalmente, se actualiza la pantalla.
 \end{enumerate}
 
 En la \autoref{seq-app}, se incluye un diagrama de clases que describe el proceso de manera más detallada.
 
-\vspace{1cm}
+\newpage
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{seq-diagram-api}
+	\hbox{\hspace{-2.3cm}\includegraphics[width=1.3\textwidth]{seq-diagram-api}}
 	\caption{Diagrama de secuencia del \emph{backend}.}
 	\label{seq-api}
 \end{figure}
 
-\vspace*{1cm}
+
+\newpage
 
 \begin{landscape}
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\centering
-		\includegraphics[width=1.3\textwidth]{seq-diagram-app}
-		\caption{Diagrama de secuencia de la aplicación.}
+		\hbox{\hspace{-2cm}\includegraphics[width=1.5\textwidth]{seq-diagram-app}}
+		\hspace{-2cm}\caption{Diagrama de secuencia de la aplicación.}
 		\label{seq-app}
 	\end{figure}
 \end{landscape}
+
+\newpage
 
 \section{Diseño arquitectónico}
 
@@ -350,7 +356,7 @@ Dado que el diseño arquitectónico conforma uno de los principales aspectos a d
 
 Por tanto, en esta sección llevaremos a cabo un resumen de los principales puntos de la arquitectura, e incluiremos información adicional acerca de los retos que surgieron, y cómo se resolvieron, dando con el diseño arquitectónico final.
 
-Como se indica en la Memoria, para el \emph{backend} se ha desarrollado una \textbf{arquitectura de microservicios}, a través de la cual podemos separar cada paso en la generación de resúmenes (pre-procesado, codificación, generación del resumen, post-procesado0), en módulos independientes, favoreciendo los siguientes aspectos:
+Como se indica en la Memoria, para el \emph{backend} se ha desarrollado una \textbf{arquitectura de microservicios}, a través de la cual podemos separar cada paso en la generación de resúmenes (pre-procesado, codificación, generación del resumen, post-procesado), en módulos independientes, favoreciendo los siguientes aspectos:
 
 \vspace{-0.2cm}
 \begin{itemize} [\textbullet]
@@ -380,31 +386,27 @@ La arquitectura final del \emph{backend} se ilustra en la \autoref{fig:final-arc
 
 Gracias a la vibrante comunidad de Flutter \cite{flutter-es}, dar con la arquitectura más apropiada para la aplicación resultó un proceso más fluido.
 
-Antes de comenzar este proyecto, habíamos oído del concepto de \emph{Clean Architecture} \cite{martin15}, aunque no habíamos indagado muy en profundidad en sus proposiciones. No obstante, en nuestra formación de Flutter, apareció de nuevo, e incluso supimos que existe un paquete para Flutter que simplifica la implementación de este patrón \cite{flutter-clean-arch}.
+Antes de comenzar este proyecto, habíamos oído del concepto de \emph{Clean Architecture} \cite{martin15}, aunque lo conocíamos únicamente de manera superficial. No obstante, en nuestra formación de Flutter, apareció de nuevo, y esta vez sí que profundizamos en él.
 
-A continuación, nos informamos sobre el patrón BLoC \cite{bloc-pattern}, muy popular también dentro de la comunidad Flutter. Por suerte, también existe un paquete para la implementación de este patrón \cite{bloc-package}.
+A continuación, nos informamos sobre el patrón BLoC \cite{bloc-pattern}, muy popular también dentro de la comunidad Flutter. Por suerte, existe asimismo un paquete para la implementación de este patrón \cite{bloc-package}.
 
 Finalmente, la arquitectura quedó como se muestra en la \autoref{fig:final-arch-app}.
 
-La información completa acerca de la arquitectura de la aplicación se encuentra, asimismo, en la Memoria.
+La información completa acerca de la arquitectura de la aplicación se puede encontrar en la Memoria.
 
 \newpage
 
-\vspace*{2cm}
-
-\begin{figure}[h!]
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{deprecated-arch}
+	\includegraphics[width=1.05\textwidth]{deprecated-arch}
 	\vspace{-0.5cm}
-	\caption{Primera aproximación para el diseño arquitectónico del \emph{backend}.}
+	\caption[Primera aproximación para la arquitectura del \emph{backend}]{Primera aproximación para el diseño arquitectónico del \emph{backend}.}
 	\label{fig:deprecated-arch}
 \end{figure}
 
 \newpage
 
-\vspace*{2cm}
-
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{overview-arch}
 	\vspace{-0.5cm}
@@ -412,7 +414,7 @@ La información completa acerca de la arquitectura de la aplicación se encuentr
 	\label{fig:final-arch-backend}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{jizt-app-arch}
 	\vspace{-0.5cm}
@@ -432,8 +434,7 @@ En la búsqueda creativa de un logo atractivo, moderno y memorable, se experimen
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{logo-drafts}
-	\vspace{-0.5cm}
+	\includegraphics[width=0.9\textwidth]{logo-drafts}
 	\caption{Ideas, ideas, y más ideas. Pero solo unas pocas buenas.}
 \end{figure}
 
@@ -443,18 +444,16 @@ Así pues, el logo final, nuestra carta de presentación, acabó luciendo como s
 
 \newpage
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{jizt-logo}
+	\includegraphics[width=0.73\textwidth]{jizt-logo}
 	\caption{JIZT - Generación de resúmenes mediante IA.}
 	\label{fig:jizt-logo}
 \end{figure}
 
-\vspace{0.3cm}
-
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.91\textwidth]{jizt-logo-variations}
+	\includegraphics[width=0.95\textwidth]{jizt-logo-variations}
 	\caption{Variaciones sobre el logo de JIZT.}
 \end{figure}
 
@@ -468,7 +467,7 @@ Se llevaron a cabo diferentes iteraciones hasta dar con un diseño que nos acab�
 
 \bigskip
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{ui-design}
 	\vspace{-0.5cm}
@@ -479,11 +478,13 @@ Siguiendo el estilo de la pantalla principal, se diseñaron el resto de pantalla
 
 \newpage
 
-\vspace*{1cm}
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{app-screens}
-	\vspace{-0.5cm}
-	\caption{Capturas de pantalla de la aplicación para su publicación en Play Store.}
-    \label{fig:app-screens}
-\end{figure}
+
+\begin{landscape}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{app-screens}
+		\vspace{-0.5cm}
+		\caption[Aplicación en Google Play.]{Capturas de pantalla de la aplicación para su publicación en Play Store.}
+	    \label{fig:app-screens}
+	\end{figure}
+\end{landscape}

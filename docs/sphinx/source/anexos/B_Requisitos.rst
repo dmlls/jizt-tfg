@@ -307,7 +307,7 @@ Casos de uso
    | Flujo normal  | | 1. El usuario inicia la aplicación.                                                           |
    |               | | 2. El usuario hace *click* en el área de texto.                                               |
    |               | | 3. El usuario introduce el texto a resumir o, alternativamente lo pega desde el portapapeles. |
-   |               | | 4. El usuario pulsa en el botón «*Summarize*».                                                |
+   |               | | 4. El usuario pulsa en el botón «Resumir».                                                    |
    |               | | 5. Se muestra un indicador de «procesando».                                                   |
    |               | | 6. Se muestra un indicador de «resumen completado».                                           |
    |               | | 7. Se muestra el resumen generado.                                                            |
@@ -410,7 +410,7 @@ Casos de uso
    +---------------+----------------------------------------------------------------------+
    | Precondición  | Haber generado al menos un resumen previamente.                      |
    +---------------+----------------------------------------------------------------------+
-   | Flujo normal  | | 1. El usuario pulsa en «*See all*» en la pantalla principal.       |
+   | Flujo normal  | | 1. El usuario pulsa en «Ver todos» en la pantalla principal.       |
    |               | | 2. Se muestra la lista de resúmenes previos.                       |
    +---------------+----------------------------------------------------------------------+
    | Postcondición | Se visualizan los resúmenes generados.                               |
@@ -447,7 +447,7 @@ Casos de uso
    |               | | 1. El usuario pulsa en uno de los resúmenes que aperecen en el inferior de la pantalla. |
    |               | | 2. Se muestra la lista de resúmenes previos.                                            |
    |               | | Flujo 2 (alternativa):                                                                  |
-   |               | | 1. El usuario pulsa en «*See all*» en la pantalla prinpal.                              |
+   |               | | 1. El usuario pulsa en «Ver todos» en la pantalla prinpal.                              |
    |               | | 2. Se muestra la lista de resúmenes previos.                                            |
    |               | | 3. El usuario pulsa en uno de los resúmenes.                                            |
    |               |                                                                                           |
@@ -482,7 +482,7 @@ Casos de uso
    +---------------+------------------------------------------------------------------+
    | Precondición  | Haber generado un resumen.                                       |
    +---------------+------------------------------------------------------------------+
-   | Flujo normal  | | 1. El usuario pulsa en «Original».                             |
+   | Flujo normal  |   1. El usuario pulsa en «Original».                             |
    +---------------+------------------------------------------------------------------+
    | Postcondición | Se ha mostrado el texto original.                                |
    +---------------+------------------------------------------------------------------+

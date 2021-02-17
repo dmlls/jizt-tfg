@@ -39,7 +39,7 @@ ejemplo:
 Para contribuir con tu código al proyecto, crea primero una *Pull
 request* y realiza las modificaciones o adicciones pertinentes.
 
-Altenativamente, puedes hacer un *Fork* manual, realizar las
+Alternativamente, puedes hacer un *Fork* manual, realizar las
 modificaciones, y más tarde abrir una *Pull request*.
 
 Por favor, no olvides explicar de manera detallada y clara los cambios

@@ -176,11 +176,11 @@ Google Cloud ofrece actualmente 300$ de crédito gratuitos durante 90
 días la primera vez que nos registramos en el servicio.
 
 Para la creación de una cuenta de Google Cloud, y la creación de un
-clúster de Kubernetes en GKE, se deben seguir los pasos recogidos en la
+*clúster* de Kubernetes en GKE, se deben seguir los pasos recogidos en la
 siguiente página:
 https://cloud.google.com/kubernetes-engine/docs/quickstart.
 
-La configuración recomendada a la hora de crear un nuevo clúster es la
+La configuración recomendada a la hora de crear un nuevo *clúster* es la
 siguiente:
 
 -  **Tipo de ubicación**: zonal.
@@ -231,14 +231,14 @@ Este operador nos permite desplegar PostgreSQL en Kubernetes. Para su
 instalación y despliegue, se deben seguir los pasos recogidos en
 https://access.crunchydata.com/documentation/postgres-operator/4.5.1/installation/other/google-cloud-marketplace.
 
-Una vez instalado el operador, nos conectaremos al clúster de PostgreSQL
+Una vez instalado el operador, nos conectaremos al *clúster* de PostgreSQL
 creado del siguiente modo:
 https://access.crunchydata.com/documentation/postgres-operator/4.5.1/tutorial/connect-cluster.
 
-Una vez conectados al cluster, debemos ejecutar el *script* SQL situado
+Una vez conectados al *clúster*, debemos ejecutar el *script* SQL situado
 en el directorio del proyecto de JIZT:
 ``src/services/postgres/schemas.sql``. Este *script* proveerá la base de
-datos con la estructura de tablas inciales.
+datos con la estructura de tablas iniciales.
 
 Finalmente debemos crear un *secret* de Kubernetes conteniendo los
 detalles de conexión a la base de datos, esto es, el nombre de usuario y
@@ -651,7 +651,7 @@ siguiente:
 -  ``/modules/data``: componentes relativos a la capa de datos de la
    aplicación.
 
--  ``/modules/data``: componentes relativos a la capa de dominio de la
+-  ``/modules/domain``: componentes relativos a la capa de dominio de la
    aplicación.
 
 -  ``/assets/drawables``: imágenes y fuentes de las que hace uso la

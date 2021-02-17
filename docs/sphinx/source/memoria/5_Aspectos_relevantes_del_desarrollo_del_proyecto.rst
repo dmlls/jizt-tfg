@@ -619,6 +619,13 @@ gratuita.
 Se puede acceder a la aplicación de JIZT a través de
 https://app.jizt.it.
 
+.. figure:: ../_static/images/memoria_y_anexos/kanban.png
+   :alt: Tablero Kanban utilizado.
+   :width: 80.0%
+   :align: center
+
+   Tablero Kanban utilizado.
+
 Cabe mencionar que también hacemos uso de este servicio para alojar la *landing page*
 de JIZT (https://www.jizt.it}{https://www.jizt.it), así como la documentación del
 proyecto (https://docs.jizt.it), y la documentación de la API REST
