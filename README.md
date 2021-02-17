@@ -25,7 +25,7 @@ JIZT hace uso de los últimos avances en Lenguaje de Procesamiento Natural (NLP,
 
 ## Documentación del proyecto
 
-Puede acceder a la documentación del proyecto a través de [docs.jizt.it](https://docs.jizt.it).
+Puedes acceder a la documentación del proyecto a través de [docs.jizt.it](https://docs.jizt.it).
 
 ## Contribuye
 
