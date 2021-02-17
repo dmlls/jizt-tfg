@@ -71,7 +71,8 @@ class DispatcherService:
         self.api = Api(self.app)
 
         self.cors = CORS(self.app, resources={
-            r"*": {"origins": "*",
+            # Origins examples: http://jizt.it, https://app.jizt.it, http://jizt.it/hi
+            r"*": {"origins": r"https?://\w*\.?jizt\.it/?.*",
                    "allow_headers": ['Content-Type']}
         })
 
