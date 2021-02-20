@@ -4,7 +4,7 @@
   <a href="https://github.com/dmlls/jizt/actions?query=workflow%3A%22Deploy+to+GKE%22">
     <img src="https://github.com/dmlls/jizt/workflows/Deploy%20to%20GKE/badge.svg?branch=main" alt="Deploy to GKE">
   </a>
-  <a href="https://github.com/dmlls/jizt/actions/workflows/build-docs.yml">
+  <a href="https://docs.jizt.it">
     <img src="https://github.com/dmlls/jizt/actions/workflows/build-docs.yml/badge.svg" alt="Build & Publish docs">
   </a>
   <a href="https://deepsource.io/gh/dmlls/jizt/?ref=repository-badge">
