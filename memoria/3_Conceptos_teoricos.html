@@ -1,0 +1,941 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Conceptos teóricos &mdash; documentación de JIZT - AI Summarization - 0.1.0</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="docs.jizt.it/memoria/3_Conceptos_teoricos.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Técnicas y herramientas" href="4_Tecnicas_y_herramientas.html" />
+    <link rel="prev" title="Objetivos del proyecto" href="2_Objetivos_del_proyecto.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JIZT - AI Summarization
+          
+
+          
+            
+            <img src="../_static/jizt-docs.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Memoria</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_Introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Objetivos_del_proyecto.html">Objetivos del proyecto</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Conceptos teóricos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pre-procesado-del-texto">Pre-procesado del texto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#codificacion-del-texto">Codificación del texto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generacion-del-resumen">Generación del resumen</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modelo-empleado-para-la-generacion-de-resumenes-t5">Modelo empleado para la generación de resúmenes: T5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#principales-estrategias-de-generacion-de-resumenes">Principales estrategias de generación de resúmenes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#post-procesado-del-texto">Post-procesado del texto</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4_Tecnicas_y_herramientas.html">Técnicas y herramientas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_Aspectos_relevantes_del_desarrollo_del_proyecto.html">Aspectos relevantes del desarrollo del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_Trabajos_relacionados.html">Trabajos relacionados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Conclusiones_Lineas_de_trabajo_futuras.html">Conclusiones y Líneas de trabajo futuras</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Anexos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/A_Plan_proyecto.html">Plan de Proyecto Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/B_Requisitos.html">Especificación de Requisitos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/C_Diseno.html">Especificación de diseño</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/D_Manual_programador.html">Documentación técnica de programación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/E_Manual_usuario.html">Documentación de usuario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/F_Experimentos.html">Experimentos sobre el algoritmo de división de texto</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Ayúdanos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/CONTRIBUTING.html">Contribuir a JIZT</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JIZT - AI Summarization</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Conceptos teóricos</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/memoria/3_Conceptos_teoricos.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="conceptos-teoricos">
+<span id="chapter-conceptos-teoricos"></span><h1>Conceptos teóricos<a class="headerlink" href="#conceptos-teoricos" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>En este capítulo, detallaremos de forma teórica el proceso de generación
+de resúmenes, desde el momento que recibimos el texto a resumir, hasta
+que se le entrega al usuario el resumen generado. En el
+<a class="reference internal" href="4_Tecnicas_y_herramientas.html"><span class="doc">siguiente capítulo</span></a>, explicaremos
+las herramientas que hacen posible que todo este proceso se pueda llevar
+a cabo de forma distribuida «en la nube».</p>
+<p>La generación de resúmenes se divide en cuatro etapas fundamentales:</p>
+<ol class="arabic simple">
+<li><p><strong>Pre-procesado</strong>: en esta etapa, se realizan pequeñas modificaciones
+sobre el texto de entrada para adecuarlo a la entrada que el modelo
+de generación de resúmenes espera.</p></li>
+<li><p><strong>Codificación</strong>: dicho modelo no «entiende» las palabras como tal.
+Por tanto, es necesario convertir texto de entrada a vectores
+numéricos, con los cuales el modelo ya sí que puede trabajar.</p></li>
+<li><p><strong>Generación del resumen</strong>: en esta etapa es cuando se produce la
+generación del resumen propiamente dicha.</p></li>
+<li><p><strong>Post-procesado</strong>: por último, el texto final producido por el
+modelo puede que contenga pequeños defectos. Por ejemplo, algunos
+modelos no son capaces de escribir mayúsculas. En esta etapa, se
+trata de solucionar este tipo de problemas, lo que involucra aspectos
+como el Reconocimiento de Entidades Nombradas (NER), que explicaremos
+más adelante.</p></li>
+</ol>
+<p>En la siguiente figura se muestran gráficamente estas cuatro etapas.</p>
+<div class="figure align-center" id="fig-etapas-resumen">
+<img alt="Etapas en la generación de resúmenes." src="../_images/etapas-resumen.png" />
+<p class="caption"><span class="caption-number">Figura 1 </span><span class="caption-text">Etapas en la generación de resúmenes.</span><a class="headerlink" href="#fig-etapas-resumen" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Una vez hemos adquirido una idea general del proceso, veamos en detalle
+en qué consiste cada una de las etapas.</p>
+<div class="section" id="pre-procesado-del-texto">
+<span id="sec-preprocesado"></span><h2>Pre-procesado del texto<a class="headerlink" href="#pre-procesado-del-texto" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>El principal objetivo de esta etapa es adecuar el texto de entrada para
+que se aproxime lo máximo posible a lo que el modelo espera.
+Adicionalmente, se separa en texto de entrada en frases. Esta separación
+puede parecer <em>a priori</em> una tarea trivial, pero involucra una serie de
+dificultades que se detallarán a continuación.</p>
+<p>Cabe destacar que, como mencionábamos en la <a class="reference internal" href="1_Introduccion.html#introduccion"><span class="std std-ref">Introducción</span></a>, los modelos pre-entrenados
+de los que hacemos uso solo admiten textos en inglés, por lo que algunas
+de las consideraciones que tomamos en el pre-procesado del texto podrían
+no ser aplicables a otros idioma.</p>
+<p>A grandes rasgos, la etapa de pre-procesado se divide a su vez en los
+siguientes pasos:</p>
+<ul class="simple">
+<li><p>Eliminar retornos de carro, tabuladores (<code class="docutils literal notranslate"><span class="pre">\n</span></code>, <code class="docutils literal notranslate"><span class="pre">\t</span></code>) y espacios
+sobrantes entre palabras (p. ej. <code class="docutils literal notranslate"><span class="pre">&quot;I</span>&#160;&#160;&#160; <span class="pre">am&quot;</span></code> <span class="math notranslate nohighlight">\(\rightarrow\)</span>
+<code class="docutils literal notranslate"><span class="pre">&quot;I</span> <span class="pre">am&quot;</span></code>).</p></li>
+<li><p>Añadir un espacio al inicio de las frases intermedias (p. ej.:
+<code class="docutils literal notranslate"><span class="pre">&quot;How’s</span> <span class="pre">it</span> <span class="pre">going?Great!&quot;</span></code> <span class="math notranslate nohighlight">\(\rightarrow\)</span>
+<code class="docutils literal notranslate"><span class="pre">&quot;How’s</span> <span class="pre">it</span> <span class="pre">going?</span> <span class="pre">Great!&quot;</span></code>. Esto es especialmente relevante en el
+caso de algunos modelos, como por ejemplo BART <a class="reference internal" href="#lewis19" id="id1"><span>[lewis19]</span></a>, los cuales tienen en cuenta ese espacio inicial para
+distinguir entre frases iniciales y frases intermedias en la
+generación de resúmenes<a class="footnote-reference brackets" href="#id28" id="id2">1</a>.</p></li>
+<li><p>Establecer un mecanismo que permita llevar a cabo la ya mencionada
+separación del texto en frases. Esto es importante dado que los
+modelos presentan un tamaño de entrada máximo. Dos estrategias
+comunes para eludir esta limitación consisten en (a) truncar el texto
+de entrada, lo cual puede llevar asociado pérdidas notables de
+información, o (b) dividir el texto en fragmentos de menor tamaño. En
+nuestro caso, la primera opción quedó rápidamente descartada ya que
+los textos que vamos a recibir, por lo general, superarán el tamaño
+máximo permitido (en caso contrario tendría poco sentido querer
+generar un resumen). Refiriéndonos, por tanto, a la segunda opción,
+es frecuente llevar a cabo dicha separación de manera «ingenua»,
+únicamente atendiendo al tamaño de entrada máximo. Sin embargo, en
+nuestro caso decidimos refinar este proceso e implementamos un
+algoritmo original<a class="footnote-reference brackets" href="#id29" id="id3">2</a> en el que dicha separación se realiza de tal
+modo que ninguna frase queda dividida. Para garantizar el éxito de
+este algoritmo, es fundamental que las frases estén correctamente
+divididas; el porqué se clarificará en la <a class="reference internal" href="#sec-codificacion"><span class="std std-ref">siguiente sección</span></a>, referente a la
+codificación del texto, en la que también se incluye la
+implementación concreta del algoritmo.</p></li>
+</ul>
+<p>A continuación, nos centraremos en el proceso de división del texto en
+frases. A la hora de llevar a cabo este proceso, debemos tener en cuenta
+que el texto de entrada podría contener errores ortográficos o
+gramaticales, por lo que debemos tratar de realizar el mínimo número de
+suposiciones posibles.</p>
+<p>No obstante, la siguiente consideración se nos hace necesaria: el punto
+(.) indica el final de una frase solo si la siguiente palabra empieza
+con una letra <em>y</em> además mayúscula.</p>
+<p>Por ejemplo, en el caso de:
+<code class="docutils literal notranslate"><span class="pre">&quot;Your</span> <span class="pre">idea</span> <span class="pre">is</span> <span class="pre">interesting.</span> <span class="pre">However,</span> <span class="pre">I</span> <span class="pre">would</span> <span class="pre">[...].&quot;</span></code> se separaría en
+dos frases, dado que la palabra posterior al punto empieza con una letra
+mayúscula. Sin embargo:
+<code class="docutils literal notranslate"><span class="pre">&quot;We</span> <span class="pre">already</span> <span class="pre">mentioned</span> <span class="pre">in</span> <span class="pre">Section</span> <span class="pre">1.1</span> <span class="pre">that</span> <span class="pre">this</span> <span class="pre">example</span> <span class="pre">shows</span> <span class="pre">[...].&quot;</span></code>
+conformaría una única frase, ya que tras el punto no aparece una letra.
+Procedemos de igual modo en el caso de los signos de interrogación (?) y
+de exclamación (!). Por ejemplo:
+<code class="docutils literal notranslate"><span class="pre">&quot;She</span> <span class="pre">asked</span> <span class="pre">‘How’s</span> <span class="pre">it</span> <span class="pre">going?’,</span> <span class="pre">and</span> <span class="pre">I</span> <span class="pre">said</span> <span class="pre">‘Great!’.&quot;</span></code> se tomará
+correctamente como una sola frase; tras la interrogación, la siguiente
+palabra comienza con una letra <em>minúscula</em>.</p>
+<p>Con la consideración anterior, también se agruparían correctamente los
+puntos suspensivos.</p>
+<p>Sin embargo, fallaría en situaciones como:
+<code class="docutils literal notranslate"><span class="pre">&quot;NLP</span> <span class="pre">(i.e.</span> <span class="pre">Natural</span> <span class="pre">Language</span> <span class="pre">Processing)</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">subfield</span> <span class="pre">of</span> <span class="pre">Linguistics,</span> <span class="pre">Computer</span> <span class="pre">Science,</span> <span class="pre">and</span> <span class="pre">Artificial</span> <span class="pre">Intelligence.&quot;</span></code>,
+en la que la división sería: <code class="docutils literal notranslate"><span class="pre">&quot;NLP</span> <span class="pre">(i.e.&quot;</span></code> por un lado, y
+<code class="docutils literal notranslate"><span class="pre">&quot;Natural</span> <span class="pre">Language</span> <span class="pre">Processing)</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">subfield</span> <span class="pre">[...].&quot;</span></code>, por otro, ya
+que <code class="docutils literal notranslate"><span class="pre">&quot;Natural&quot;</span></code> comienza con mayúscula y aparece tras un punto.</p>
+<p>Asimismo, la razón principal por la que no podemos apoyarnos únicamente
+en reglas predefinidas, reside en las llamadas Entidades Nombradas
+(<em>Named Entities</em>, en inglés). Esto es, palabras que hacen referencia a
+personas, lugares, instituciones, corporaciones, etc. Si empleáramos
+reglas predefinidas, podríamos incluir en un diccionario todas las
+entidades nombradas existentes conocidas que contengan puntos, de forma
+que si aparecieran en el texto las palabras <code class="docutils literal notranslate"><span class="pre">&quot;U.K.&quot;</span></code> o <code class="docutils literal notranslate"><span class="pre">&quot;A.W.O.L.&quot;</span></code>
+las agruparíamos como tal, sin partir la frase. Sin embargo, existen
+potencialmente miles (o incluso decenas de miles) de entidades nombradas
+que contienen puntos, por lo que crear y mantener manualmente dicho
+diccionario sería muy costoso.</p>
+<p>Actualmente, para resolver este tipo de problemas, se emplean modelos
+estadísticos o de <em>Deep Learning</em>. Esta disciplina se conoce como
+Reconocimiento de Entidades Nombradas (NER, por sus siglas en inglés), y
+pese a los buenos resultados conseguidos por algunos de los modelos
+propuestos, se considera un problema lejos de estar resuelto <a class="reference internal" href="#ner20" id="id4"><span>[ner20]</span></a>.</p>
+<p>En nuestro caso emplearemos un modelo pre-entrenado para solucionar, al
+menos en parte, el problema de las Entidades Nombradas. Este modelo
+también solventa situaciones como la descrita anteriormente, en las que
+las reglas escritas a mano se quedan cortas. En el capítulo de
+<a class="reference internal" href="4_Tecnicas_y_herramientas.html#chapter-tecnicas-herramientas"><span class="std std-ref">Técnicas y herramientas</span></a>,
+hablaremos de dicho modelo y de la implementación concreta en código de
+los procedimientos expuestos anteriormente.</p>
+</div>
+<div class="section" id="codificacion-del-texto">
+<span id="sec-codificacion"></span><h2>Codificación del texto<a class="headerlink" href="#codificacion-del-texto" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En esta etapa, se lleva a cabo lo que se conoce en inglés como <em>word
+embedding</em><a class="footnote-reference brackets" href="#id30" id="id5">3</a>. Los modelos de IA trabajan, por lo general, con
+representaciones numéricas. Por ello, las técnicas de <em>word embedding</em>
+se centran en vincular texto (bien sea palabras, frases, etc.), con
+vectores de números reales <a class="reference internal" href="#manning19" id="id6"><span>[manning19]</span></a>. Esto hace
+posible aplicar a la generación de texto arquitecturas comunes dentro de
+la IA (y especialmente, del <em>Deep Learning</em>), como por ejemplo las Redes
+Neuronales Convolucionales (CNN) <a class="reference internal" href="#hou20" id="id7"><span>[hou20]</span></a>.</p>
+<p>Esta idea, conceptualmente sencilla, encierra una gran complejidad, dado
+que los vectores generados deben retener la máxima información posible
+del texto original, incluyendo aspectos semánticos y gramaticales. Por
+poner un ejemplo, los vectores correspondientes a las palabras
+«profesor» y «alumno», deben preservar cierta relación entre ambos,
+y a su vez con la palabra «educación» o «escuela». Además, su
+vínculo con las palabras «enseñar» o «aprender» será ligeramente
+distinto, dado que en este caso se trata de una categoría gramatical
+diferente (verbos, en vez de sustantivos). A través de este ejemplo,
+podemos comprender que se trata de un proceso complejo.</p>
+<p>Dado que los modelos pre-entrenados se encargan de realizar esta
+codificación por nosotros, no entraremos en más detalle en los
+algoritmos concretos empleados, dado que consideramos que queda fuera
+del alcance de este trabajo<a class="footnote-reference brackets" href="#id31" id="id8">4</a>.</p>
+<p>Lo que sí hemos tenido que implementar en esta etapa, ha sido la
+división del texto en fragmentos a fin de no superar el tamaño máximo de
+entrada del modelo.</p>
+<p>De este modo, podremos realizar resúmenes de textos arbitrariamente
+largos, a través de los siguientes pasos:</p>
+<ol class="arabic simple">
+<li><p>Dividimos el texto en fragmentos.</p></li>
+<li><p>Generamos un resumen de cada fragmento.</p></li>
+<li><p>Concatenamos los resúmenes generados.</p></li>
+</ol>
+<p>Anteriormente, habíamos mencionado el término <em>token</em>. Este concepto se
+puede traducir al español como «símbolo». En nuestro caso concreto, un
+<em>token</em> se corresponde con el vector numérico asociado a una palabra al
+realizar la codificación. Más concretamente, en modelos más actuales,
+como el modelo T5 <a class="reference internal" href="2_Objetivos_del_proyecto.html#raffel19" id="id9"><span>[raffel19]</span></a>, el cual empleamos, los
+<em>tókenes</em> pueden referirse a palabras completas o a <em>fragmentos</em> de las
+mismas.</p>
+<p>Por lo general, las palabras que aparecen en el vocabulario con el que
+ha sido entrenado el modelo van a generar un único <em>token</em>. Sin embargo,
+las palabras desconocidas, se descompondrán en varios <em>tókenes</em>. Lo
+mismo sucede con palabras compuestas, o formadas a partir de prefijación
+o sufijación. En la siguiente figura, podemos ver un ejemplo de ello:</p>
+<div class="figure align-center" id="fig-t5-tokenizer">
+<img alt="Ejemplo de *tokenización* con el modelo T5." src="../_images/t5-tokenizer.png" />
+<p class="caption"><span class="caption-number">Figura 2 </span><span class="caption-text">Ejemplo de <em>tokenización</em> con el modelo T5.</span><a class="headerlink" href="#fig-t5-tokenizer" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>En el ejemplo mostrado, si decodificamos los <em>tókenes</em> correspondientes
+a la palabra <code class="docutils literal notranslate"><span class="pre">&quot;brutality&quot;</span></code>, esto es, <code class="docutils literal notranslate"><span class="pre">[14506,</span> <span class="pre">485]</span></code>, obtenemos los
+fragmentos <code class="docutils literal notranslate"><span class="pre">&quot;brutal&quot;</span></code> e <code class="docutils literal notranslate"><span class="pre">&quot;ity&quot;</span></code>, respectivamente. Análogamente, la
+palabra <code class="docutils literal notranslate"><span class="pre">&quot;backbone&quot;</span></code>, se descompone, una vez decodificados los
+<code class="docutils literal notranslate"><span class="pre">tókenes</span></code>, en <code class="docutils literal notranslate"><span class="pre">&quot;back&quot;</span></code> y <code class="docutils literal notranslate"><span class="pre">&quot;bone&quot;</span></code>.</p>
+<p>La idea detrás de esta fragmentación se basa en la composición, uno de
+los mecanismos morfológicos de formación de palabras más frecuentes
+<a class="reference internal" href="#cetnarowska05" id="id10"><span>[cetnarowska05]</span></a> en muchos idiomas, como el inglés,
+español o alemán. Por tanto, presupone que dividiendo las palabras
+desconocidas en fragmentos menores, podemos facilitar la comprensión de
+las mismas. Naturalmente, habrá casos en los que esta idea falle; por
+ejemplo, en la figura anterior, la palabra <code class="docutils literal notranslate"><span class="pre">&quot;JIZT&quot;</span></code> se descompone en
+<code class="docutils literal notranslate"><span class="pre">&quot;J&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;IZ&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;T&quot;</span></code>, lo cual no parece hacerla mucho más
+comprensible.</p>
+<p>Una vez explicado el concepto de <em>token</em>, volvamos al problema ya
+mencionado con anterioridad: algunos modelos de generación de texto
+(entre ellos, el T5) admiten un tamaño de entrada máximo, determinado en
+función del número de <em>tókenes</em>. Debido a que la unidad de medida es el
+número de <em>tókenes</em>, y no el número de palabras, o de caracteres,
+debemos tener en cuenta algunos detalles adicionales, entre ellos el
+hecho de que los modelos generan <em>tókenes</em> especiales para marcar el
+inicio y/o el final de la secuencia de entrada.</p>
+<p>El modelo T5 (el cual, como mencionábamos anteriormente, es el
+modelo que utilizamos por ahora), genera un único <em>token</em> de
+finalización de secuencia (EOS, <em>end-of-sequence</em>), que se coloca
+siempre al final del texto de entrada, una vez codificado, y en el caso
+de de este modelo siempre tiene el <em>id</em> 1. En la siguiente figura
+se presenta un pequeño ejemplo con un texto de entrada:</p>
+<div class="figure align-center" id="fig-t5-eos-ejemplo">
+<img alt="Pasaje del libro *A Wrinkle in Time*. El *token* EOS se ha marcado en rojo." src="../_images/t5-eos-ejemplo.png" />
+<p class="caption"><span class="caption-number">Figura 3 </span><span class="caption-text">Pasaje del libro <em>A Wrinkle in Time</em>. El <em>token</em> EOS se ha marcado en
+rojo.</span><a class="headerlink" href="#fig-t5-eos-ejemplo" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Como podemos ver, el <em>token</em> EOS aparece una única vez por cada texto de
+entrada, y es independiente de las palabras o frases que este contiene.</p>
+<p>Otro aspecto a tener en cuenta, reside en que este modelo no solo es
+capaz de generar resúmenes, si no que puede ser empleado para otras
+tareas como la traducción, respuesta de preguntas <a class="reference internal" href="2_Objetivos_del_proyecto.html#raffel19" id="id11"><span>[raffel19]</span></a>, etc.
+Para indicarle cuál de estas es la tarea que queremos
+que desempeñe, curiosamente se lo tenemos que indicar tal y cómo lo
+haríamos en la vida real; en nuestro caso, simplemente precedemos el
+texto a resumir con la orden «resume» («<em>summarize</em>»). Por poner
+otro ejemplo, si quisiéramos traducir del alemán al español, le
+señalaríamos: «traduce de alemán a español» («<em>translate German to
+Spanish</em>») seguido de nuestro texto.</p>
+<p>Por consiguiente, este prefijo deberá aparecer al principio de cada una
+de las subdivisiones generadas y, del mismo modo, deberemos tenerlo en
+cuenta a la hora de calcular el número de <em>tókenes</em> de las mismas.</p>
+<p>Con las anteriores consideraciones en mente, el objetivo principal será
+llevar a cabo la división del texto de entrada de forma que el número de
+<em>tókenes</em> varíe lo mínimo posible entre las diferentes subdivisiones, y
+todo ello sin partir ninguna frase.</p>
+<p>Esta es una tarea más compleja de lo que puede parecer. En nuestro caso,
+hemos propuesto un <a class="reference internal" href="#fig-algoritmo-1"><span class="std std-ref">algoritmo</span></a> que emplea una
+estrategia voraz para llevar a cabo
+una primera división del texto; posteriormente procede al <em>balanceo</em> de
+las subdivisiones generadas en el paso anterior, de forma que el número
+de <em>tókenes</em> en cada subdivisión sea lo más parecido posible. Y esto,
+evidentemente, sin superar el máximo tamaño de entrada del modelo en
+ninguna de las subdivisiones.</p>
+<div class="figure align-left" id="fig-algoritmo-1">
+<img alt="División y codificación del texto." src="../_images/algoritmo-1.png" />
+<p class="caption"><span class="caption-number">Figura 4 </span><span class="caption-text">División y codificación del texto.</span><a class="headerlink" href="#fig-algoritmo-1" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Este algoritmo devuelve las subdivisiones en las que se ha separado el
+texto, ya codificadas. Por tanto, <span class="math notranslate nohighlight">\(subdivsCodif\)</span> tendrá la
+siguiente forma:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[[23,</span> <span class="pre">34,</span> <span class="pre">543,</span> <span class="pre">45,</span> <span class="pre">...,</span> <span class="pre">1],</span> <span class="pre">[23,</span> <span class="pre">32.</span> <span class="pre">401,</span> <span class="pre">11,</span> <span class="pre">...,</span> <span class="pre">1],</span> <span class="pre">[23,</span> <span class="pre">74.</span> <span class="pre">25,</span> <span class="pre">204,</span> <span class="pre">...,</span> <span class="pre">1],</span> <span class="pre">...]</span></code></p>
+<p>Es decir, cada una de las listas contenidas en <span class="math notranslate nohighlight">\(subdivsCodif\)</span>
+contiene los <em>tókenes</em> correspondientes a dicha subdivisión, con el
+prefijo (23) y el <em>token</em> EOS (1) añadidos.</p>
+<p>La lógica detrás de la función <span class="math notranslate nohighlight">\(divideVoraz\)</span> es la siguiente:</p>
+<div class="figure align-left" id="fig-algoritmo-2">
+<img alt="División voraz del texto." src="../_images/algoritmo-2.png" />
+<p class="caption"><span class="caption-number">Figura 5 </span><span class="caption-text">División voraz del texto.</span><a class="headerlink" href="#fig-algoritmo-2" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>En este algoritmo, <span class="math notranslate nohighlight">\(ptosCorte\)</span> será una lista que indique los
+índices que delimitan cada subdivisión, por ejemplo:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">45,</span> <span class="pre">91,</span> <span class="pre">130,</span> <span class="pre">179,</span> <span class="pre">190]</span></code></p>
+<p>En este caso, la primera subdivisión iría desde la frase 0 hasta la 45,
+la segunda subdivisión de la 46 a la 91, la tercera de la 92 a la 130, y
+así sucesivamente.</p>
+<p>Como podemos ver en el ejemplo, el número de <em>tókenes</em> por subdivisión
+está en torno a los 45, menos en la última subdivisión que solo contiene
+10 <em>tókenes</em> (190 - 180). Debido a la propia naturaleza del
+algoritmo voraz, será siempre la última subdivisión la que pueda
+contener un número de <em>tókenes</em> muy por debajo de la media, lo que puede
+causar que el resumen de está última subdivisión sea demasiado corto (o
+incluso sea la cadena vacía). Para evitar esto, balanceamos las
+subdivisiones, de forma que el número de <em>tókenes</em> en cada una de ellas
+esté equilibrado. Este proceso se muestra a continuación:</p>
+<div class="figure align-left" id="fig-algoritmo-3">
+<img alt="Balanceo de las subdivisiones." src="../_images/algoritmo-3.png" />
+<p class="caption"><span class="caption-number">Figura 6 </span><span class="caption-text">Balanceo de las subdivisiones.</span><a class="headerlink" href="#fig-algoritmo-3" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>En esencia, lo que este último algoritmo hace es comparar la diferencia
+en número de <em>tókenes</em> entre subdivisiones consecutivas, empezando por
+el final, de forma que primero se compara la penúltima con la última
+subdivisión, después la antepenúltima con la penúltima, y así
+sucesivamente. Si es necesario, va moviendo frases completas desde una
+subdivisión a la siguiente, por ejemplo, desde la penúltima a la última
+subdivisión. Este algoritmo tiene una complejidad en el peor de los
+casos de <span class="math notranslate nohighlight">\(O(n^3)\)</span>, siendo <span class="math notranslate nohighlight">\(n\)</span> el número de subdivisiones.</p>
+<p>Podemos visualizarlo gráficamente con un ejemplo muy simple:</p>
+<div class="figure align-center" id="fig-algoritmo-balanceo">
+<img alt="Ejemplo gráfico del algoritmo de balanceo. En este caso, la longitud máxima de cada subdivisión es de 100 *tókenes*. Las desviación estándar del número de *tókenes* de cada frase en :math:`t_1` es :math:`\sigma_1 = 39.63` y en :math:`t_5`, acaba siendo :math:`\sigma_5 = 1.53`." src="../_images/algoritmo-balanceo1.png" />
+<p class="caption"><span class="caption-number">Figura 7 </span><span class="caption-text">Ejemplo gráfico del algoritmo de balanceo. En este caso, la longitud
+máxima de cada subdivisión es de 100 <em>tókenes</em>. Las desviación
+estándar del número de <em>tókenes</em> de cada frase en <span class="math notranslate nohighlight">\(t_1\)</span> es
+<span class="math notranslate nohighlight">\(\sigma_1 = 39.63\)</span> y en <span class="math notranslate nohighlight">\(t_5\)</span>, acaba siendo
+<span class="math notranslate nohighlight">\(\sigma_5 = 1.53\)</span>.</span><a class="headerlink" href="#fig-algoritmo-balanceo" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="generacion-del-resumen">
+<span id="sec-resumen"></span><h2>Generación del resumen<a class="headerlink" href="#generacion-del-resumen" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Una vez codificado y dividido el texto apropiadamente, generamos los
+resúmenes parciales para posteriormente unirlos, dando lugar a un único
+resumen del texto completo.</p>
+<p>En la figura mostrada a continuación, podemos ver los pasos llevados a cabo tanto en
+la anterior etapa, la codificación y división del texto, como en esta, la generación
+del resumen.</p>
+<div class="figure align-default" id="fig-proceso-resumen">
+<img alt="Proceso de generación de resúmenes, ilustrado con un fragmento del libro *The Catcher in the Rye*." src="../_images/t5-proceso-resumen.png" />
+<p class="caption"><span class="caption-number">Figura 8 </span><span class="caption-text">Proceso de generación de resúmenes, ilustrado con un fragmento del
+libro <em>The Catcher in the Rye</em>.</span><a class="headerlink" href="#fig-proceso-resumen" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Como podemos apreciar en la anterior figura, el modelo generador de
+resúmenes toma el texto codificado, y devuelve una versión reducida del
+mismo, también codificado. Por ello, antes de poder unir y devolver el
+resumen generado, debemos realizar un paso de <em>decodificación</em>, esto es,
+el proceso contrario a la <em>codificación</em>. Algo con lo que tendremos que
+lidiar en la siguiente etapa, el post-procesado, será corregir el
+resumen generado para que se ajuste a las reglas ortográficas vigentes,
+en especial en lo relativo al uso de mayúsculas.</p>
+<p>La ventaja de utilizar modelos pre-entrenados es clara: estos modelos
+son para nosotros cajas negras, a las que solo tenemos que encargarnos
+de proporcionarles la entrada en el formato concreto que esperan.</p>
+<p>Cabe destacar que el hecho de realizar la división del texto de esta manera, sin
+atender a aspectos semánticos, podría resultar en que frases estrechamente
+relacionadas acabaran en distintas subdivisiones. Por ejemplo, en la <a class="reference internal" href="#fig-proceso-resumen"><span class="std std-ref">anterior
+figura</span></a>, la frase final de uno de las subdivisiones es: <em>«It was
+a very descriptive subject»</em> («Era un tema muy descriptivo»), a la cual le sigue, ya
+en la siguiente subdivisión: <em>«It really was»</em> («De veras que lo era»), aludiendo a la
+anterior frase.</p>
+<p>Estos casos son difíciles de resolver. Una posible idea sería tratar de
+determinar si una frase está relacionada con la anterior, quizás
+mediante el uso de otro modelo, y de ser así, tratar de mantenerlas en
+una misma subdivisión, a fin de que el resumen final mantuviese la
+máxima cohesión y coherencia posibles. Esto incrementaría, no obstante,
+los tiempos de generación de resúmenes. Por ahora, creemos que los
+resultados obtenidos son lo suficientemente buenos.</p>
+<div class="section" id="modelo-empleado-para-la-generacion-de-resumenes-t5">
+<h3>Modelo empleado para la generación de resúmenes: T5<a class="headerlink" href="#modelo-empleado-para-la-generacion-de-resumenes-t5" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Como hemos mencionado previamente, JIZT hace uso del modelo T5 de
+Google. Este modelo fue introducido en el artículo <em>Exploring the Limits
+of Transfer Learning with a Unified Text-to-Text Transformer</em> <a class="reference internal" href="2_Objetivos_del_proyecto.html#raffel19" id="id12"><span>[raffel19]</span></a>, presentado en 2019. En él, Colin Raffel <em>et al.</em>
+estudian las ventajas de la técnica del aprendizaje por transferencia
+(<em>transfer learning</em>) al campo del Procesamiento del Lenguaje Natural
+(NLP).</p>
+<p>Tradicionalmente, cada nuevo modelo se entrenaba desde cero. Esto ha
+cambiado con la inclusión del aprendizaje por transferencia;
+actualmente, la tendencia es emplear modelos pre-entrenados como punto
+de partida para la construcción de nuevos modelos.</p>
+<p>Las tres principales ventajas del empleo del aprendizaje por
+transferencia son <a class="reference internal" href="#sarkar18" id="id13"><span>[sarkar18]</span></a>:</p>
+<ul class="simple">
+<li><p>Mejora del rendimiento de partida. El hecho de comenzar con un modelo
+pre-entrenado en vez de un modelo ignorante (<em>ignorant learner</em>),
+proporciona un rendimiento base desde el primer momento.</p></li>
+<li><p>Disminución del tiempo de desarrollo del modelo, consecuencia del
+punto anterior.</p></li>
+<li><p>Mejora del rendimiento final. Esta mejora ha sido estudiada tanto en
+el caso del NLP <a class="reference internal" href="#kumar21" id="id14"><span>[kumar21]</span></a>, como de otros ámbitos, como
+la visión artificial <a class="reference internal" href="#ali21" id="id15"><span>[ali21]</span></a>, o el campo de la medicina
+<a class="reference internal" href="#liu21" id="id16"><span>[liu21]</span></a>.</p></li>
+</ul>
+<p>La principal novedad de este artículo se encuentra en su propuesta de
+tratar todos los problemas de procesamiento de texto como problemas
+texto a texto (<em>text-to-text</em>), es decir, tomar un texto como entrada, y
+producir un nuevo texto como salida. Esto permite crear un modelo
+general, al que han bautizado como T5, capaz de llevar a cabo diversas
+tareas de NLP, como muestra el siguiente diagrama:</p>
+<div class="figure align-default" id="id38">
+<img alt="El *framework* texto a texto permite emplear el mismo modelo, con los mismos hiperparámetros, función de pérdida, etc., para aplicarlo a diversas tareas de NLP [raffel19]_. En esta figura, además de la traducción y el resumen, se recogen tareas basadas en el *Semantic Textual Similarity Benchmark* (STS-B) y el *Corpus of Linguistic Acceptability* (CoLA)." src="../_images/t5-paper.png" />
+<p class="caption"><span class="caption-number">Figura 9 </span><span class="caption-text">El <em>framework</em> texto a texto permite emplear el mismo modelo, con los
+mismos hiperparámetros, función de pérdida, etc., para aplicarlo a
+diversas tareas de NLP <a class="reference internal" href="2_Objetivos_del_proyecto.html#raffel19" id="id17"><span>[raffel19]</span></a>. En esta figura,
+además de la traducción y el resumen, se recogen tareas basadas en el
+<em>Semantic Textual Similarity Benchmark</em> (STS-B) y el <em>Corpus of
+Linguistic Acceptability</em> (CoLA).</span><a class="headerlink" href="#id38" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>En cualquier caso, se puede realizar un ajuste fino del modelo para una
+de las tareas, a fin de mejorar su rendimiento en esa tarea en
+específico.</p>
+<p>Las posibilidades que este modelo nos ofrece son muy interesantes, dado
+que en un futuro, nuestro proyecto podría incluir otras tareas de
+Procesamiento de Lenguaje Natural, haciendo uso de un único modelo.</p>
+</div>
+<div class="section" id="principales-estrategias-de-generacion-de-resumenes">
+<span id="subsec-estrategias-gen"></span><h3>Principales estrategias de generación de resúmenes<a class="headerlink" href="#principales-estrategias-de-generacion-de-resumenes" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>JIZT permite al usuario avanzado configurar de manera precisa los
+parámetros con los que se genera el resumen. En este apartado,
+exploraremos las diferentes técnicas con las que se pueden generar
+resúmenes.</p>
+<p>La generación de lenguaje, en general, se basa en la auto-regresión, la
+cual parte del supuesto de que la distribución de probabilidad de una
+secuencia de palabras puede descomponerse en el producto de las
+distribuciones de probabilidades condicionales de las palabras sucesivas
+<a class="reference internal" href="#platen20" id="id18"><span>[platen20]</span></a>. Expresado matemáticamente, de manera más
+concisa:</p>
+<div class="math notranslate nohighlight">
+\[P(w_{1:t} | W_0) = \prod_{t=1}^{T} P(w_t | w_{1:t-1}, W_0), \; siendo \enspace w_{1:0} = \emptyset\]</div>
+<p>donde <span class="math notranslate nohighlight">\(W_0\)</span> es la secuencia inicial de <em>contexto</em>. En nuestro
+caso, esa secuencia inicial va a ser el propio texto de entrada. La
+longitud de <span class="math notranslate nohighlight">\(T\)</span> no se puede conocer de antemano, dado que se
+corresponde con el momento <span class="math notranslate nohighlight">\(t = T\)</span> en el que el modelo genera el
+<em>token</em> de finalización de secuencia (EOS), mencionado anteriormente.</p>
+<p>Una vez introducido el concepto de auto-regresión, podemos explicar
+brevemente las cinco principales estrategias de generación de lenguaje,
+las cuales se pueden aplicar todas ellas a la generación de resúmenes:
+búsqueda voraz, <em>beam search</em>, muestreo, muestreo <em>top-k</em>, y muestreo
+<em>top-p</em>.</p>
+<p><strong>Búsqueda voraz</strong></p>
+<p>La búsqueda voraz, en cada paso, selecciona simplemente la palabra con
+mayor probabilidad de ser la siguiente, es decir,
+<span class="math notranslate nohighlight">\(w_t = argmax_w P(w|w_{t-1})\)</span> para cada paso <em>t</em>.</p>
+<div class="figure align-center" id="fig-greedy-search">
+<a class="reference internal image-reference" href="../_images/greedy-search.png"><img alt="Ejemplo de búsqueda voraz: en cada paso, se toma la palabra con mayor probabilidad." src="../_images/greedy-search.png" style="width: 70.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 10 </span><span class="caption-text">Ejemplo de búsqueda voraz: en cada paso, se toma la palabra con mayor
+probabilidad.</span><a class="headerlink" href="#fig-greedy-search" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Tomando la figura anterior como ejemplo, dada la palabra <code class="docutils literal notranslate"><span class="pre">&quot;El&quot;</span></code>,
+la siguiente palabra elegida sería <code class="docutils literal notranslate"><span class="pre">&quot;cielo&quot;</span></code>, por ser la palabra con mayor
+probabilidad (0.5), y a continuación <code class="docutils literal notranslate"><span class="pre">&quot;está&quot;</span></code> (0.5), y así sucesivamente:</p>
+<p>Este tipo de generación tiene dos problemas principales:</p>
+<ul class="simple">
+<li><p>Los modelos, llegados a cierto punto, comienzan a repetir las mismas
+palabras una y otra vez. En realidad, esto es un problema que afecta
+a todos los modelos de generación, pero especialmente a los que
+emplean búsqueda voraz y <em>beam search</em> [vijayakumar16, shao17] ..
+[vijayakumar16, shao17]_.</p></li>
+<li><p>Palabras con probabilidades altas pueden quedar enmascaradas tras
+otras con probabilidades bajas. Por ejemplo, en el anterior anterior
+ejemplo, la secuencia <code class="docutils literal notranslate"><span class="pre">&quot;El</span> <span class="pre">niño</span> <span class="pre">juega&quot;</span></code> nunca se dará, porque a
+pesar de que <code class="docutils literal notranslate"><span class="pre">&quot;juega&quot;</span></code> presenta una probabilidad muy alta (0.9),
+está precedida por <code class="docutils literal notranslate"><span class="pre">&quot;niño&quot;</span></code>, la cual no será escogida por tener una
+probabilidad baja (0.3).</p></li>
+</ul>
+<p><strong>Beam search</strong></p>
+<p>En este caso, durante el proceso de generación se consideran varios caminos
+simultáneamente, y finalmente se escoge aquel camino que presenta una mayor
+probabilidad conjunta. En la siguiente figura se ilustra un ejemplo con dos caminos
+(<code class="docutils literal notranslate"><span class="pre">num_beams</span> <span class="pre">=</span> <span class="pre">2</span></code>):</p>
+<div class="figure align-center" id="fig-beam-search">
+<a class="reference internal image-reference" href="../_images/beam-search.png"><img alt="Ejemplo de *beam search* con ``n_beams = 2``. Durante la búsqueda, se consideran los dos caminos con mayor probabilidad conjunta." src="../_images/beam-search.png" style="width: 70.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 11 </span><span class="caption-text">Ejemplo de <em>beam search</em> con <code class="docutils literal notranslate"><span class="pre">n_beams</span> <span class="pre">=</span> <span class="pre">2</span></code>. Durante la búsqueda, se
+consideran los dos caminos con mayor probabilidad conjunta.</span><a class="headerlink" href="#fig-beam-search" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>En este ejemplo vemos que, aunque <code class="docutils literal notranslate"><span class="pre">&quot;cielo&quot;</span></code> presenta mayor
+probabilidad que <code class="docutils literal notranslate"><span class="pre">&quot;niño&quot;</span></code>, la secuencia <code class="docutils literal notranslate"><span class="pre">&quot;El</span> <span class="pre">niño</span> <span class="pre">juega&quot;</span></code> tiene una
+mayor probabilidad conjunta (<span class="math notranslate nohighlight">\(0.3 \cdot 0.9 = 0.27\)</span>) que
+<code class="docutils literal notranslate"><span class="pre">&quot;El</span> <span class="pre">cielo</span> <span class="pre">está&quot;</span></code> (<span class="math notranslate nohighlight">\(0.5 \cdot 0.5  = 0.25\)</span>), y por tanto será la
+secuencia elegida.</p>
+<p>Este tipo de búsqueda funciona muy bien en tareas en las que la longitud
+deseada de la secuencia generada se conoce de antemano, como es el caso
+de la generación de resúmenes, o la traducción automática <a class="reference internal" href="#murray18" id="id19"><span>[murray18]</span></a> <a class="reference internal" href="#yang18" id="id20"><span>[yang18]</span></a>.</p>
+<p>Sin embargo, presenta dos problemas fundamentales:</p>
+<ul>
+<li><p>De nuevo, aparece el problema de la repetición. Tanto en este caso,
+como en el de la búsqueda voraz, una estrategia común para evitar
+dicha repetición, consiste en establecer penalizaciones de <em>n-gramas</em>
+repetidos. Por ejemplo, en el caso de que empleáramos una
+penalización de 6-gramas, la secuencia
+<code class="docutils literal notranslate"><span class="pre">&quot;El</span> <span class="pre">niño</span> <span class="pre">juega</span> <span class="pre">en</span> <span class="pre">el</span> <span class="pre">parque&quot;</span></code> solo podría aparecer una vez en el
+texto generado.</p></li>
+<li><p>Como se razona en <a class="reference internal" href="#holtzman20" id="id21"><span>[holtzman20]</span></a>, el lenguaje humano
+no sigue una distribución de palabras con mayor probabilidad. Como vemos en la
+figura recogida a continuación, extraída de dicho artículo, la
+estrategia de <em>beam search</em> puede resultar poco espontánea, dando lugar a textos
+menos «naturales».</p>
+<div class="figure align-center" id="fig-natural-beam-search">
+<a class="reference internal image-reference" href="../_images/beam-search-problem.png"><img alt="Distribución de probabilidades del lenguaje natural frente a la estrategia de *beam search* [holtzman20]_." src="../_images/beam-search-problem.png" style="width: 70.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 12 </span><span class="caption-text">Distribución de probabilidades del lenguaje natural frente a la
+estrategia de <em>beam search</em> <a class="reference internal" href="#holtzman20" id="id22"><span>[holtzman20]</span></a>.</span><a class="headerlink" href="#fig-natural-beam-search" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</li>
+</ul>
+<p><strong>Muestreo</strong></p>
+<p>Es su forma más básica, el muestreo simplemente consiste en escoger la
+siguiente palabra <span class="math notranslate nohighlight">\(w_i\)</span> de manera aleatoria en función de la
+distribución de su probabilidad condicional, es decir:</p>
+<div class="math notranslate nohighlight">
+\[w_t \sim P(w_t | w_{1:t-1})\]</div>
+<p>De manera gráfica, siguiendo con el ejemplo anterior:</p>
+<div class="figure align-center" id="fig-muestreo">
+<a class="reference internal image-reference" href="../_images/sampling.png"><img alt="Ejemplo de muestreo. En cada paso, se elige una palabra aleatoriamente en función de su probabilidad." src="../_images/sampling.png" style="width: 80.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 13 </span><span class="caption-text">Ejemplo de muestreo. En cada paso, se elige una palabra
+aleatoriamente en función de su probabilidad.</span><a class="headerlink" href="#fig-muestreo" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Haciendo uso del muestreo, la generación deja de ser determinista, dando
+lugar a textos más espontáneos y naturales. Sin embargo, como se estudia
+en <a class="reference internal" href="#holtzman20" id="id23"><span>[holtzman20]</span></a>, esta espontaneidad es a menudo
+excesiva, dando lugar a textos poco coherentes.</p>
+<p>Una solución a este problema consiste en hacer que la distribución
+<span class="math notranslate nohighlight">\(P(w_t|w_{1:t-1})\)</span> sea más acusada, aumentando la verosimilitud
+(<em>likelihood</em>) de palabras con alta probabilidad, y disminuyendo la
+verosimilitud de palabras con baja probabilidad. Esto se consigue
+disminuyendo un parámetro denominado <em>temperatura</em><a class="footnote-reference brackets" href="#id37" id="id24">5</a>. De esta
+forma, el ejemplo mostrado en la queda de la siguiente forma:</p>
+<div class="figure align-center" id="id39">
+<a class="reference internal image-reference" href="../_images/sampling-temperature.png"><img alt="Al decrementar la temperatura, las diferencias en las probabilidades se hacen más acusadas." src="../_images/sampling-temperature.png" style="width: 80.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 14 </span><span class="caption-text">Al decrementar la temperatura, las diferencias en las probabilidades
+se hacen más acusadas.</span><a class="headerlink" href="#id39" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Con este ajuste de la temperatura, logramos reducir la aleatoriedad,
+pero seguimos manteniendo una orientación no determinista.</p>
+<p><strong>Muestreo top-k</strong></p>
+<p>En este tipo de muestreo, introducido en <a class="reference internal" href="#fan18" id="id25"><span>[fan18]</span></a>, en cada
+paso solo se consideran las <em>k</em> palabras con mayor probabilidad (la
+probabilidad del resto de las palabras será 0):</p>
+<div class="figure align-default" id="fig-top-k">
+<img alt="Ejemplo de muestreo *top-k*. En cada paso, solo se consideran las 6 palabras con mayor probabilidad." src="../_images/top-k.png" />
+<p class="caption"><span class="caption-number">Figura 15 </span><span class="caption-text">Ejemplo de muestreo <em>top-k</em>. En cada paso, solo se consideran las 6
+palabras con mayor probabilidad.</span><a class="headerlink" href="#fig-top-k" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Tanto la búsqueda voraz como el muestreo «puro», visto anteriormente,
+se pueden como ver casos particulares del muestreo <em>top-k</em>. Si
+establecemos <span class="math notranslate nohighlight">\(k = 1\)</span>, estaremos realizando una búsqueda voraz, y
+si establecemos <span class="math notranslate nohighlight">\(k = N\)</span>, donde <span class="math notranslate nohighlight">\(N\)</span> es la longitud total del
+vocabulario, estaremos llevando a cabo un muestreo puro.</p>
+<p>Este tipo de muestreo suele producir textos de mayor calidad en situaciones en las que
+el tamaño de secuencia no está prefijado. Sin embargo, presenta el problema de que el
+tamaño de <em>k</em> se mantiene fijo a lo largo de la generación. Como consecuencia, en
+pasos en los que la diferencia de probabilidades sea menos acusada, como en el primer
+paso de la <a class="reference internal" href="#fig-top-k"><span class="std std-ref">anterior figura</span></a>, la espontaneidad del modelo será menor;
+y en pasos en los que ocurra lo contrario, el modelo será más propenso de escoger
+palabras que suenen menos naturales, como podría haber ocurrido en el segundo paso de
+la figura ya mencionada.</p>
+<p><strong>Muestreo top-p</strong></p>
+<p>Este tipo de muestreo, en vez de escoger entre un número prefijado de
+palabras, en cada paso considera el mínimo conjunto de palabras cuyas
+probabilidades acumuladas superan un cierto valor <span class="math notranslate nohighlight">\(p\)</span> <a class="reference internal" href="#holtzman20" id="id26"><span>[holtzman20]</span></a>.</p>
+<div class="figure align-default" id="fig-top-p">
+<img alt="Con el muestreo *top-p*, el número de palabras entre las cuales elegir en cada paso varía en función de las probabilidades de las palabras candidatas." src="../_images/top-p.png" />
+<p class="caption"><span class="caption-number">Figura 16 </span><span class="caption-text">Con el muestreo <em>top-p</em>, el número de palabras entre las cuales
+elegir en cada paso varía en función de las probabilidades de las
+palabras candidatas.</span><a class="headerlink" href="#fig-top-p" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>La figura anterior muestra como, con <span class="math notranslate nohighlight">\(p=0.9\)</span>, en el primer paso se consideran 9
+palabras, mientras que en el segundo solo 3. De este modo, cuando la siguiente palabra
+a elegir es menos predecible, el modelo puede considerar más candidatas, como en el
+primer paso del ejemplo mostrado y, en el caso contrario, el número de palabras
+candidatas se reduce.</p>
+<p>Los resultados del muestreo <em>top-k</em> y <em>top-p</em> son, en la práctica,
+similares. De hecho, se pueden utilizar de manera conjunta, a fin de
+evitar la selección de palabras con probabilidades muy bajas, pero
+manteniendo cierta variación en el número de palabras consideradas.</p>
+</div>
+</div>
+<div class="section" id="post-procesado-del-texto">
+<span id="sec-postprocesado"></span><h2>Post-procesado del texto<a class="headerlink" href="#post-procesado-del-texto" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Como veíamos en la <a class="reference internal" href="#fig-etapas-resumen"><span class="std std-ref">figura del comienzo del capítulo</span></a>, el
+resumen producido por el modelo T5, una vez decodificado, se encuentra íntegramente en
+minúsculas. Por lo demás, el modelo parece hacer un buen trabajo a la hora de generar
+el texto en lo que a colocación de puntuación y espacios se refiere, luego la
+principal labor de esta etapa será poner mayúsculas allí donde sean necesarias. Este
+proceso se denomina en inglés <em>truecasing</em> <a class="reference internal" href="#lita03" id="id27"><span>[lita03]</span></a>.</p>
+<p>Las mayúsculas, tanto en inglés como español, se emplean principalmente
+en dos situaciones:</p>
+<ul class="simple">
+<li><p>Al inicio de cada frase. Como veíamos en la sección referente al
+<a class="reference internal" href="#sec-preprocesado"><span class="std std-ref">Pre-procesado del texto</span></a>, la separación de un texto en frases no es, por lo general,
+una tarea trivial. En este caso, podemos reutilizar lo aplicado en dicha
+etapa. Teniendo el resumen generado dividido en frases, podemos
+fácilmente poner la primera letra de cada una de ellas en mayúsculas.</p></li>
+<li><p>En los nombres propios. En este aspecto, de nuevo vuelve a aparecer
+el problema del Reconocimiento de Entidades Nombradas (NER). De modo
+similar a como procedíamos en el pre-procesado, emplearemos un modelo
+estadístico que realiza la labor de <em>truecasing</em>.</p></li>
+</ul>
+<p>Tras esta etapa, el resumen está listo para ser entregado al usuario.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id28"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>Por el momento, no hacemos uso de este modelo, aunque podría
+incluirse en el futuro.</p>
+</dd>
+<dt class="label" id="id29"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>Utilizamos el término «original» porque no encontramos ningún
+recurso en el que se tratara este problema, por lo que tuvimos que
+resolverlo sin apoyos bibliográficos. Esto no quiere decir, sin
+embargo, que no se hayan implementado estrategias similares en otros
+problemas diferentes al aquí expuesto.</p>
+</dd>
+<dt class="label" id="id30"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
+<dd><p>En el presente documento, hemos traducido este término como
+«codificación del texto».</p>
+</dd>
+<dt class="label" id="id31"><span class="brackets"><a class="fn-backref" href="#id8">4</a></span></dt>
+<dd><p>En cualquier caso, el lector curioso puede explorar los algoritmos
+más populares de codificación, los cuales, ordenados
+cronológicamente, son: word2vec <a class="reference internal" href="#word2vec1" id="id32"><span>[word2vec1]</span></a> <a class="reference internal" href="#word2vec2" id="id33"><span>[word2vec2]</span></a>, GloVe <a class="reference internal" href="#glove14" id="id34"><span>[glove14]</span></a>, y más
+recientemente, ELMo <a class="reference internal" href="#elmo18" id="id35"><span>[elmo18]</span></a> y BERT <a class="reference internal" href="#bert18" id="id36"><span>[bert18]</span></a>.</p>
+</dd>
+<dt class="label" id="id37"><span class="brackets"><a class="fn-backref" href="#id24">5</a></span></dt>
+<dd><p>Por motivos de brevedad, no incluiremos una explicación detallada de
+este parámetro.</p>
+</dd>
+</dl>
+<dl class="citation">
+<dt class="label" id="word2vec1"><span class="brackets"><a class="fn-backref" href="#id32">word2vec1</a></span></dt>
+<dd><p>Tomas Mikolov y col. Efficient Estimation of Word Representations
+in Vector Space. 2013. arXiv: 1301.3781 [cs.CL].</p>
+</dd>
+<dt class="label" id="word2vec2"><span class="brackets"><a class="fn-backref" href="#id33">word2vec2</a></span></dt>
+<dd><p>Tomás Mikolov y col. «Distributed Representations of Words and
+Phrases and their Compositionality». En: CoRR abs/1310.4546 (2013).
+arXiv: 1310.4546. URL:
+<a class="reference external" href="http://arxiv.org/abs/1310.4546">http://arxiv.org/abs/1310.4546</a>.
+Último acceso: 28/01/2021.</p>
+</dd>
+<dt class="label" id="glove14"><span class="brackets"><a class="fn-backref" href="#id34">glove14</a></span></dt>
+<dd><p>Jeffrey Pennington, Richard Socher y Christopher Manning. «GloVe:
+Global Vectors for Word Representation». En: Proceedings of the 2014
+Conference on Empirical Methods in Natural Language Processing
+(EMNLP). Doha, Qatar: Association for Computational Linguistics,
+abr. de 2014, págs. 1532-1543.</p>
+</dd>
+<dt class="label" id="elmo18"><span class="brackets"><a class="fn-backref" href="#id35">elmo18</a></span></dt>
+<dd><p>Matthew E. Peters y col. «Deep contextualized word representations».
+En: CoRR abs/1802.05365 (2018). arXiv: 1802.05365. URL:
+<a class="reference external" href="http://arxiv.org/abs/1802.05365">http://arxiv.org/abs/1802.05365</a>.
+Último acceso: 28/01/2021.</p>
+</dd>
+<dt class="label" id="bert18"><span class="brackets"><a class="fn-backref" href="#id36">bert18</a></span></dt>
+<dd><p>Jacob Devlin y col. «BERT: Pre-training of Deep Bidirectional Transformers for
+Language Understanding». En: CoRR abs/1810.04805 (2018). arXiv: 1810 . 04805. URL:
+<a class="reference external" href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>. Último acceso: 28/01/2021.</p>
+</dd>
+<dt class="label" id="lewis19"><span class="brackets"><a class="fn-backref" href="#id1">lewis19</a></span></dt>
+<dd><p>Mike Lewis y col. «BART: Denoising Sequence-to-Sequence Pre-training
+for Natural Language Generation, Translation, and Comprehension».
+En: CoRR abs/1910.13461 (2019).  arXiv: 1805.04833 [cs.CL]. URL:
+<a class="reference external" href="http://arxiv.org/abs/1910.13461">http://arxiv.org/abs/1910.13461</a>.
+Último acceso: 28/01/2021.</p>
+</dd>
+<dt class="label" id="ner20"><span class="brackets"><a class="fn-backref" href="#id4">ner20</a></span></dt>
+<dd><p>Wikipedia. Reconocimiento de entidades nombradas - Wikipedia, La
+enciclopedia libre. 2020. URL:
+<a class="reference external" href="https://es.wikipedia.org/wiki/Reconocimiento_de_entidades_nombradas">https://es.wikipedia.org/wiki/Reconocimiento_de_entidades_nombradas</a>.
+Último acceso: 28/01/2021.</p>
+</dd>
+<dt class="label" id="manning19"><span class="brackets"><a class="fn-backref" href="#id6">manning19</a></span></dt>
+<dd><p>Christopher Manning - Stanford University. Stanford CS224N: NLP with Deep Learning.
+Winter 2019. Lecture 13. Contextual Word Embeddings. 2019. URL:
+<a class="reference external" href="https://www.youtube.com/watch?v=S-CspeZ8FHc">https://www.youtube.com/watch?v=S-CspeZ8FHc</a>. Último acceso: 28/01/2021.</p>
+</dd>
+<dt class="label" id="hou20"><span class="brackets"><a class="fn-backref" href="#id7">hou20</a></span></dt>
+<dd><p>Linlin Hou y col. Method and Dataset Entity Mining in Scientific
+Literature: A CNN + Bi-LSTM Model with Self-attention. 2020.</p>
+</dd>
+<dt class="label" id="cetnarowska05"><span class="brackets"><a class="fn-backref" href="#id10">cetnarowska05</a></span></dt>
+<dd><p>Bożena Cetnarowska. “Ingo Plag, Word-formation in English (Cambridge Textbooks in
+Linguistics). Cambridge: Cambridge University Press, 2003. Pp. xiv 240.” En:
+Journal of Linguistics 41.1 (2005).</p>
+</dd>
+<dt class="label" id="sarkar18"><span class="brackets"><a class="fn-backref" href="#id13">sarkar18</a></span></dt>
+<dd><p>Dipanjan Sarkar, Raghav Bali y Tamoghna Ghosh. Hands-On Transfer
+Learning with Python. Packt Publishing, 2018. ISBN: 9781788831307.</p>
+</dd>
+<dt class="label" id="kumar21"><span class="brackets"><a class="fn-backref" href="#id14">kumar21</a></span></dt>
+<dd><p>Manoj Kumar y col. ProtoDA: Efficient Transfer Learning for Few-Shot Intent
+Classification. 2021. arXiv: 2101.11753 [cs.CL].</p>
+</dd>
+<dt class="label" id="ali21"><span class="brackets"><a class="fn-backref" href="#id15">ali21</a></span></dt>
+<dd><p>Nuredin Ali. Exploring Transfer Learning on Face Recognition of
+Dark Skinned, Low Quality and Low Resource Face Data. 2021. arXiv:
+2101.10809 [cs.CV].</p>
+</dd>
+<dt class="label" id="liu21"><span class="brackets"><a class="fn-backref" href="#id16">liu21</a></span></dt>
+<dd><p>Yi Liu y Shuiwang Ji. A Multi-Stage Attentive Transfer Learning
+Framework for Improving COVID-19 Diagnosis. 2021. arXiv: 2101.
+05410 [eess.IV].</p>
+</dd>
+<dt class="label" id="platen20"><span class="brackets"><a class="fn-backref" href="#id18">platen20</a></span></dt>
+<dd><p>Patrick von Platen. How to generate text: using different decoding
+methods for language generation with Transformers. Mar. de 2020. URL:
+<a class="reference external" href="https://huggingface.co/blog/how-to-generate">https://huggingface.co/blog/how-to-generate</a>.
+Último acceso: 31/01/2021.</p>
+</dd>
+<dt class="label" id="murray18"><span class="brackets"><a class="fn-backref" href="#id19">murray18</a></span></dt>
+<dd><p>Kenton Murray y David Chiang. «Correcting Length Bias in Neural
+Machine Translation». En: CoRR abs/1808.10006 (2018). arXiv: 1808.
+10006. URL:
+<a class="reference external" href="http://arxiv.org/abs/1808.10006">http://arxiv.org/abs/1808.10006</a>.
+Último acceso: 31/01/2021.</p>
+</dd>
+<dt class="label" id="yang18"><span class="brackets"><a class="fn-backref" href="#id20">yang18</a></span></dt>
+<dd><p>Yilin Yang, Liang Huang y Mingbo Ma. «Breaking the Beam Search
+Curse: A Study of (Re-)Scoring Methods and Stopping Criteria for
+Neural Machine Translation». En: CoRR abs/1808.09582 (2018). arXiv:
+1808.09582. URL:
+<a class="reference external" href="http://arxiv.org/abs/1808.09582">http://arxiv.org/abs/1808.09582</a>.
+Último acceso: 31/01/2021.</p>
+</dd>
+<dt class="label" id="holtzman20"><span class="brackets">holtzman20</span><span class="fn-backref">(<a href="#id21">1</a>,<a href="#id22">2</a>,<a href="#id23">3</a>,<a href="#id26">4</a>)</span></dt>
+<dd><p>Ari Holtzman y col. The Curious Case of Neural Text Degeneration.
+2020. arXiv: 1904.09751 [cs.CL].</p>
+</dd>
+<dt class="label" id="fan18"><span class="brackets"><a class="fn-backref" href="#id25">fan18</a></span></dt>
+<dd><p>Angela Fan, Mike Lewis y Yann Dauphin. Hierarchical Neural Story
+Generation. 2018. arXiv: 1805.04833 [cs.CL].</p>
+</dd>
+<dt class="label" id="lita03"><span class="brackets"><a class="fn-backref" href="#id27">lita03</a></span></dt>
+<dd><p>Lucian Vlad Lita y col. «TRuEcasIng». En: Proceedings of the 41st
+Annual Meeting on Association for Computational Linguistics - Volume
+1. ACL ’03. Sapporo, Japan: Association for Computational Linguistics,
+2003, págs. 152-159.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="4_Tecnicas_y_herramientas.html" class="btn btn-neutral float-right" title="Técnicas y herramientas" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="2_Objetivos_del_proyecto.html" class="btn btn-neutral float-left" title="Objetivos del proyecto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Derechos de autor 2021, Diego Miguel Lozano.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

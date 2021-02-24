@@ -1,0 +1,950 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Documentación técnica de programación &mdash; documentación de JIZT - AI Summarization - 0.1.0</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="docs.jizt.it/anexos/D_Manual_programador.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Documentación de usuario" href="E_Manual_usuario.html" />
+    <link rel="prev" title="Especificación de diseño" href="C_Diseno.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JIZT - AI Summarization
+          
+
+          
+            
+            <img src="../_static/jizt-docs.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Memoria</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/1_Introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/2_Objetivos_del_proyecto.html">Objetivos del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/3_Conceptos_teoricos.html">Conceptos teóricos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html">Técnicas y herramientas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.html">Aspectos relevantes del desarrollo del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/6_Trabajos_relacionados.html">Trabajos relacionados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/7_Conclusiones_Lineas_de_trabajo_futuras.html">Conclusiones y Líneas de trabajo futuras</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Anexos</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="A_Plan_proyecto.html">Plan de Proyecto Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="B_Requisitos.html">Especificación de Requisitos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_Diseno.html">Especificación de diseño</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentación técnica de programación</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduccion">Introducción</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentacion-tecnica-del-backend">Documentación técnica del <em>backend</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#estructura-de-directorios">Estructura de directorios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#manual-del-programador">Manual del programador</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#instalacion-y-despliegue-del-backend">Instalación y despliegue del <em>backend</em></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fichero-de-configuracion-de-kubernetes">Fichero de configuración de Kubernetes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#especificacion-de-la-api-rest">Especificación de la API REST</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#operacion-post-solicitar-resumen">Operación POST - Solicitar resumen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#operacion-get-consultar-resumen">Operación GET - Consultar resumen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#operacion-get-salud-del-servidor">Operación GET - Salud del servidor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pruebas-del-sistema">Pruebas del sistema</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prerrequisitos">Prerrequisitos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ejecucion-de-las-pruebas">Ejecución de las pruebas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documentacion-tecnica-de-la-aplicacion">Documentación técnica de la aplicación</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#estructura-de-directorios-1">Estructura de directorios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#manual-del-programador-1">Manual del programador</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prerrequisitos-1">Prerrequisitos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#entorno-de-desarrollo">Entorno de desarrollo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#compilacion-de-la-aplicacion">Compilación de la aplicación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#contribuir-al-proyecto">Contribuir al proyecto</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="E_Manual_usuario.html">Documentación de usuario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="F_Experimentos.html">Experimentos sobre el algoritmo de división de texto</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Ayúdanos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribuir a JIZT</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JIZT - AI Summarization</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Documentación técnica de programación</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/anexos/D_Manual_programador.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documentacion-tecnica-de-programacion">
+<span id="apendix-manual-programador"></span><h1>Documentación técnica de programación<a class="headerlink" href="#documentacion-tecnica-de-programacion" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En este apéndice se detalla toda la información que pueda ser de ayuda
+para cualquier desarrollador interesado en desplegar y/o contribuir al
+proyecto.</p>
+<p>De igual modo a como hemos venido haciendo en los anteriores apéndices,
+separaremos los detalles referentes al <em>backend</em> y al <em>frontend</em>, ya que
+se trata de entornos completamente independientes, cada uno con sus
+características y peculiaridades concretas.</p>
+</div>
+<div class="section" id="documentacion-tecnica-del-backend">
+<h2>Documentación técnica del <em>backend</em><a class="headerlink" href="#documentacion-tecnica-del-backend" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="estructura-de-directorios">
+<h3>Estructura de directorios<a class="headerlink" href="#estructura-de-directorios" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La estructura de directorios del <em>backend</em> de JIZT, a la cual se puede
+acceder a través de
+<a class="reference external" href="https://https://github.com/dmlls/jizt-tfg">github.com/dmlls/jizt-tfg</a>, es la
+siguiente:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/src</span></code>: este directorio contiene el código fuente completo del
+<em>backend</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/helm</span></code>: ficheros relativos a Helm <a class="reference internal" href="#helm" id="id1"><span>[helm]</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/helm/jizt</span></code>: ficheros para el despliegue de los componentes
+relativos a JIZT en Kubernetes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/helm/jizt/charts</span></code>: dependencias de paquetes Helm externos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/helm/jizt/jiztlibchart</span></code>: librería de plantillas Helm para los
+componentes de JIZT.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/helm/jizt/setup</span></code>: <em>scripts</em> para el despliegue de JIZT en
+Kubernetes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/services</span></code>: microservicios de JIZT.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/services/dispatcher</span></code>: microservicio <em>Dispatcher</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/services/postgres</span></code>: esquemas iniciales de la base de datos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/services/t5_large_text_encoder</span></code>: microservicio Codificador.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/services/t5_large_text_summarizer</span></code>: microservicio Generador
+de resúmenes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/services/text_postprocessor</span></code>: microservicio Postprocesador de
+texto.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/src/services/text_preprocessor</span></code>: microservicio Preprocesador de
+texto.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/test</span></code>: pruebas unitarias y de sistema.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-del-programador">
+<h3>Manual del programador<a class="headerlink" href="#manual-del-programador" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>En esta sección, se recogen todos los detalles necesarios para la
+instalación y despliegue de la arquitectura de microservicios en
+Kubernetes.</p>
+<div class="section" id="instalacion-y-despliegue-del-backend">
+<h4>Instalación y despliegue del <em>backend</em><a class="headerlink" href="#instalacion-y-despliegue-del-backend" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>El primer paso será descargarnos el código fuente correspondiente al
+<em>backend</em>, clonando el repositorio del proyecto alojado en GitHub:</p>
+<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/dmlls/jizt-tfg.git</span></code></p>
+<p>Una vez disponemos del código fuente, debemos proceder primero a la
+instalación y provisión de los prerrequisitos necesarios para la
+instalación de JIZT.</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>El despliegue del <em>backend</em> requiere de
+<strong>conocimientos intermedios de Kubernetes</strong>. En el presente manual,
+trataremos de explicar el proceso de instalación de la manera más
+detallada posible. No obstante, <strong>no podemos condensar todo el
+conocimiento necesario de Kubernetes en este manual</strong>, dado que para
+ello ya existe la propia documentación oficial de Kubernetes, la cual se
+recomienda encarecidamente revisar antes de comenzar la instalación de
+JIZT. Dicha documentación es accesible a través de
+<a class="reference external" href="https://kubernetes.io/es/docs/home">https://kubernetes.io/es/docs/home</a>.</p>
+</div>
+<p>En cualquier caso, para cualquier tipo de ayuda o duda acerca de la
+instalación o utilización de JIZT, se puede contactar con el equipo de
+soporte técnico de JIZT a través de la siguiente dirección de correo
+electrónico: <a class="reference external" href="mailto:jizt&#37;&#52;&#48;diegomiguel&#46;me">jizt<span>&#64;</span>diegomiguel<span>&#46;</span>me</a>. Estaremos encantados de atenderle.</p>
+<p><strong>Prerrequisitos</strong></p>
+<p>La infraestructura en la nube de JIZT se apoya en la utilización de
+diferentes plataformas y <em>frameworks</em> que se deben instalar con
+antelación.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Se recomienda ejecutar la instalación de JIZT a través de una máquina
+<strong>GNU/Linux</strong>. La instalación a través de otros sistemas operativos no
+ha sido probada y, por tanto, no se asegura una instalación exitosa.</p>
+</div>
+<p><strong>Programas requeridos</strong></p>
+<p>Antes de comenzar con la instalación de JIZT, se deben instalar
+localmente los siguientes programas:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">kubectl</span></code>: herramienta de línea de comandos de Kubernetes, empleada
+para el despliegue y la gestión de aplicaciones en Kubernetes. Se
+pueden encontrar las instrucciones de instalación en
+<a class="reference external" href="https://kubernetes.io/es/docs/tasks/tools/install-kubectl">https://kubernetes.io/es/docs/tasks/tools/install-kubectl</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">helm</span></code>: CLI para Helm, un popular gestor de paquetes para
+Kubernetes. Para su instalación, se deben seguir los pasos recogidos
+en <a class="reference external" href="https://helm.sh/docs/intro/install">https://helm.sh/docs/intro/install</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pgo</span></code>: CLI para el operador de PostgreSQL de Crunchy. A través de
+esta herramienta, podemos conectarnos con nuestra base de datos
+PostgreSQL desplegada en Kubernetes. Se puede consultar
+<a class="reference external" href="https://access.crunchydata.com/documentation/postgres-operator/4.5.1/installation/pgo-client">https://access.crunchydata.com/documentation/postgres-operator/4.5.1/installation/pgo-client</a>
+para su instalación.</p></li>
+<li><p>SDK de Google Cloud: este SDK nos permite conectarnos y gestionar
+<em>clústers</em> de Kubernetes alojados en Google Cloud. En
+<a class="reference external" href="https://cloud.google.com/sdk/docs/install">https://cloud.google.com/sdk/docs/install</a> se detalla el proceso de
+instalación.</p></li>
+</ul>
+<p>Se considera, asimismo, que el programador cuenta con <code class="docutils literal notranslate"><span class="pre">git</span></code> de
+antemano. En caso contrario, puede acceder a las instrucciones para su
+instalación en
+<a class="reference external" href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">https://git-scm.com/book/en/v2/Getting-Started-Installing-Git</a>.</p>
+<p><strong>Requisitos de hardware</strong></p>
+<p>La arquitectura ha de desplegarse, como es lógico, en un servidor
+físico. Existen dos alternativas para ello:</p>
+<ul class="simple">
+<li><p><strong>Bare metal</strong>: con esta opción, se dispone de un servidor dedicado
+en el que es necesario instalar todas las dependencias (listadas a
+continuación) manualmente.</p></li>
+<li><p><strong>Cloud provider</strong>: <strong>esta es la opción de despliegue recomendada</strong>.
+En este caso, contratamos un servicio <em>cloud</em> con un <em>cloud provider</em>
+concreto, como puede ser Google Cloud, Amazon Web Services (AWS), o
+Microsoft Azure. Estos <em>cloud providers</em> disponen de servicios
+concretos para el despliegue de aplicaciones en Kubernetes (como
+Google Kubernetes Engine, GKE, en el caso de Google Cloud). Esto
+facilita en gran medida la labor de despliegue.</p></li>
+</ul>
+<p><strong>Despliegue en Google Kubernetes Engine (GKE)</strong></p>
+<p>Google Kubernetes Engine, GKE, ha sido la plataforma con la que se ha
+trabajado en el desarrollo del proyecto. Es, por tanto, la <strong>opción que
+más garantías de correcto funcionamiento ofrece</strong>.</p>
+<p>Google Cloud ofrece actualmente 300$ de crédito gratuitos durante 90
+días la primera vez que nos registramos en el servicio.</p>
+<p>Para la creación de una cuenta de Google Cloud, y la creación de un
+<em>clúster</em> de Kubernetes en GKE, se deben seguir los pasos recogidos en la
+siguiente página:
+<a class="reference external" href="https://cloud.google.com/kubernetes-engine/docs/quickstart">https://cloud.google.com/kubernetes-engine/docs/quickstart</a>.</p>
+<p>La configuración recomendada a la hora de crear un nuevo <em>clúster</em> es la
+siguiente:</p>
+<ul class="simple">
+<li><p><strong>Tipo de ubicación</strong>: zonal.</p></li>
+<li><p><strong>Zona principal</strong>: europe-west2-a.</p></li>
+<li><p><strong>Canal de versiones</strong>: Canal rápido.</p></li>
+<li><p><strong>Versión</strong>: 1.18.12-gke.1206.</p></li>
+<li><p><strong>Nodos</strong>:</p>
+<ul>
+<li><p><strong>Número de nodos</strong>: 1.</p></li>
+<li><p><strong>Tipo de máquina</strong>: e2-standard-4 (4 vCPUS, 16GB de RAM).</p></li>
+<li><p><strong>Tipo de imagen</strong>; Container-Optimized OS con Docker (cos).</p></li>
+</ul>
+</li>
+</ul>
+<p>Además, se debe crear un Disco Persistente de GCE, siguiendo los pasos
+listados en
+<a class="reference external" href="https://cloud.google.com/compute/docs/disks/add-persistent-disk?hl=es-419">https://cloud.google.com/compute/docs/disks/add-persistent-disk?hl=es-419</a>.
+En este disco, se almacenarán los modelos de generación de lenguaje que
+empleará JIZT.</p>
+<p>Actualmente, se hace uso del modelo <strong>t5-large</strong> implementado por
+Hugging Face, el cual se puede descargar a través del siguiente <em>link</em>:
+<a class="reference external" href="https://huggingface.co/t5-large">https://huggingface.co/t5-large</a>. Este modelo se divide a su vez en el
+<em>tokenizer</em>, encargado de la codificación, y el modelo propiamente
+dicho, el cual se encarga de la generación de los resúmenes.</p>
+<p>Una vez tenemos el modelo descargado localmente, los cargaremos en el
+Disco Persistente creado anteriormente. Para ello, nos conectamos a
+través de <code class="docutils literal notranslate"><span class="pre">ssh</span></code> o desde la Consola de Google Cloud (<a class="reference external" href="https://cloud.google.com/compute/docs/instances/connecting-to-instance?hl=es-419#console">más
+información</a>),
+y copiamos el modelo a las siguientes rutas:</p>
+<ul>
+<li><div class="line-block">
+<div class="line">El <em>tokenizer</em> debe estar alojado en el directorio</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">/home/text_encoder/models</span></code>.</div>
+</div>
+</li>
+<li><p>El modelo debe situarse en <code class="docutils literal notranslate"><span class="pre">/home/text_summarizer/models</span></code>.</p></li>
+</ul>
+<p>Finalizados estos pasos, estamos en disposición de instalar las
+dependencias de JIZT.</p>
+<p><strong>Instalación del Operador de PostgreSQL</strong></p>
+<p>Este operador nos permite desplegar PostgreSQL en Kubernetes. Para su
+instalación y despliegue, se deben seguir los pasos recogidos en
+<a class="reference external" href="https://access.crunchydata.com/documentation/postgres-operator/4.5.1/installation/other/google-cloud-marketplace">https://access.crunchydata.com/documentation/postgres-operator/4.5.1/installation/other/google-cloud-marketplace</a>.</p>
+<p>Una vez instalado el operador, nos conectaremos al <em>clúster</em> de PostgreSQL
+creado del siguiente modo:
+<a class="reference external" href="https://access.crunchydata.com/documentation/postgres-operator/4.5.1/tutorial/connect-cluster">https://access.crunchydata.com/documentation/postgres-operator/4.5.1/tutorial/connect-cluster</a>.</p>
+<p>Una vez conectados al <em>clúster</em>, debemos ejecutar el <em>script</em> SQL situado
+en el directorio del proyecto de JIZT:
+<code class="docutils literal notranslate"><span class="pre">src/services/postgres/schemas.sql</span></code>. Este <em>script</em> proveerá la base de
+datos con la estructura de tablas iniciales.</p>
+<p>Finalmente debemos crear un <em>secret</em> de Kubernetes conteniendo los
+detalles de conexión a la base de datos, esto es, el nombre de usuario y
+la contraseña especificados a la hora de instalar el <em>clúster</em> de
+PostgreSQL. Para ello, se deben seguir los pasos indicados en
+<a class="reference external" href="https://kubernetes.io/docs/concepts/configuration/secret/#creating-a-secret">https://kubernetes.io/docs/concepts/configuration/secret/#creating-a-secret</a>.
+El nombre del secreto debe ser <code class="docutils literal notranslate"><span class="pre">pg-dispatcher</span></code>.</p>
+<p><strong>Instalación de JIZT</strong></p>
+<p>La instalación de los prerrequisitos es, probablemente, la parte más
+complicada de todo el proceso de instalación.</p>
+<p>Por suerte, para la instalación de JIZT, hemos creado un <em>script</em> bash
+que automatiza el despliegue de Strimzi (Kafka en Kubernetes) y de los
+componentes propios de JIZT<a class="footnote-reference brackets" href="#id13" id="id2">1</a>.</p>
+<p>Dicho <em>script</em> se encuentra en el directorio
+<code class="docutils literal notranslate"><span class="pre">src/helm/setup/setup.sh</span></code>. Si se ejecuta sin especificar ninguna
+opción, se instalan los componentes tanto de Strimzi como de JIZT. El
+<em>script</em> también admite la opción <code class="docutils literal notranslate"><span class="pre">-p</span></code> o <code class="docutils literal notranslate"><span class="pre">--partial</span></code> para realizar
+una instalación parcial únicamente de los componentes de JIZT. Esto es
+útil para el caso de que ya hayamos instalado previamente los
+componentes relativos a Strimzi.</p>
+<p>Podemos comprobar la correcta instalación de los componentes ejecutando:
+<code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">deployment</span></code>. Deberían aparecer los siguientes
+<em>deployments</em>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dispatcher-deployment</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jizt-cluster-entity-operator</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t5-large-text-encoding-deployment</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t5-large-text-summarization-deployment</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">text-postprocessing-deployment</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">text-preprocessing-deployment</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="fichero-de-configuracion-de-kubernetes">
+<h4>Fichero de configuración de Kubernetes<a class="headerlink" href="#fichero-de-configuracion-de-kubernetes" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>A través del fichero <code class="docutils literal notranslate"><span class="pre">src/helm/jizt/values.yaml</span></code>, se pueden configurar
+los parámetros de instalación y despliegue de JIZT en Kubernetes.</p>
+<p>A continuación, se detallan los parámetros que este fichero permite
+modificar:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">namespace</span></code>: <em>namespace</em> (espacio de nombres) en el que se
+instalarán los componentes de JIZT. Para más información sobre los
+<em>namespaces</em> de Kubernetes, se puede consultar
+<a class="reference external" href="https://kubernetes.io/es/docs/concepts/overview/working-with-objects/namespaces">https://kubernetes.io/es/docs/concepts/overview/working-with-objects/namespaces</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ingress</span></code>: configuración de Ingress. Para más información sobre el
+componente Ingress de Kubernetes, se puede visitar
+<a class="reference external" href="https://kubernetes.io/docs/concepts/services-networking/ingress">https://kubernetes.io/docs/concepts/services-networking/ingress</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">replicaCount</span></code>: número de réplicas global para todos los
+<em>deployments</em>. Es decir, si por ejemplo se configura con 2 réplicas,
+todos los <em>deployments</em> relativos a JIZT tendrán 2 <em>pods</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">autoscaling</span></code>: permite activar o desactivar el auto-escalado, de
+modo que en momentos de mayor carga, el número de réplicas aumente
+automáticamente. Desactivado por defecto.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dispatcher</span></code>: configuración relativa al <em>deployment</em> del
+<em>Dispatcher</em>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: nombre del microservicio.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ports</span></code>: puertos relativos al microservicio.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">svc</span></code>: puerto del <em>service</em> asociado al <em>deployment</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">container</span></code>: puerto de la aplicación que se ejecuta en la
+imagen Docker que emplean los <em>pods</em> del <em>deployment</em>.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">image</span></code>: imagen Docker que ejecutan los <em>pods</em> del <em>deployment</em>.</p></li>
+</ul>
+</li>
+<li><p>Los campos del <code class="docutils literal notranslate"><span class="pre">dispatcher</span></code> son comunes al resto de microservicios,
+esto es <code class="docutils literal notranslate"><span class="pre">textPreprocessor</span></code>, <code class="docutils literal notranslate"><span class="pre">t5LargeTextEncoder</span></code>,
+<code class="docutils literal notranslate"><span class="pre">t5LargeTextSumma</span></code>-<code class="docutils literal notranslate"><span class="pre">rizer</span></code>, y <code class="docutils literal notranslate"><span class="pre">textPostprocessor</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t5LargeTextEncoder</span></code> y <code class="docutils literal notranslate"><span class="pre">t5LargeTextSummarizer</span></code>: además de los
+campos comunes a <code class="docutils literal notranslate"><span class="pre">dispatcher</span></code>, estos microservicios disponen de la
+siguiente configuración:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">volumeMounts</span></code>: configuración relativa al Volumen Persistente en
+el que se almacenan los modelos de <em>tokenización</em> y generación de
+resúmenes.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">modelsMountPath</span></code>: ruta (directorio) en la que se encuentran
+almacenados los modelos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tokenizerPath</span></code>: ruta del <em>tokenizer</em>. Esto es, la ruta
+absoluta del <em>tokenizer</em> será <code class="docutils literal notranslate"><span class="pre">modelMountPath/tokenizerPath</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modelPath</span></code>: ruta del modelo generador de resúmenes. Esto es,
+la ruta absoluta del modelo generador será
+<code class="docutils literal notranslate"><span class="pre">modelMountPath/modelPath</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t5LargeTextSummarizer</span></code>: además de los campos mencionados
+anteriormente, este microservicio permite establecer los parámetros
+por defecto para la generación de resúmenes a través del campo
+<code class="docutils literal notranslate"><span class="pre">params</span></code>. El significado de cada uno de los parámetros se recoge en
+la sección correspondiente a la <a class="reference internal" href="#subsection-api-docs"><span class="std std-ref">Especificación de la API REST</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">postgres</span></code>: configuración referente a la base de datos PostgreSQL.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">host</span></code>: <em>host</em> de PostgreSQL.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dbName</span></code>: nombre de la base de datos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">secret</span></code>: información relativa al <em>secret</em> de Kubernetes que
+contiene el nombre de usuario y la contraseña de PostgreSQL.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modelsPV</span></code>: configuración relativa al Volumen Persistente en el que
+se alojan los modelos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kafka</span></code>: configuración de Kafka. Para más información, se puede
+consultar la documentación de Strimzi en
+<a class="reference external" href="https://strimzi.io/docs/0.5.0">https://strimzi.io/docs/0.5.0</a>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: nombre del <em>clúster</em> de Kafka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">namespace</span></code>: espacio de nombres en el que se desplegarán los
+componentes de Kafka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code>: versión de Kafka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">replicas</span></code>: número de réplicas de los componentes de Kafka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resources</span></code>: límites de recursos para los componentes de Kafka.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">memoryRequests</span></code>: memoria solicitada por los componentes de
+Kafka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memoryLimits</span></code>: límites de memoria que los componentes de
+Kafka pueden solicitar.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config</span></code>: otras configuraciones.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">autoCreateTopics</span></code>: permitir a Kafka crear <em>topics</em> de manera
+automática. Desactivado por defecto.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">messageMaxBytes</span></code>: máximo tamaño que un mensaje puede tener.
+Por defecto 1MB.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">topicReplicationFactor</span></code>: factor de replicación de los
+<em>topics</em>.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zookeeper</span></code>: configuración relativa al <em>zookeeper</em> de Kafka. Se
+puede encontrar más información relativa a este componente en
+<a class="reference external" href="https://kafka.apache.org/documentation/#zk">https://kafka.apache.org/documentation/#zk</a>.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">topics</span></code>: configuración relativa a los <em>topics</em> de Kafka. Para más
+información acerca de los <em>topics</em> de Kafka, visitar
+<a class="reference external" href="https://kafka.apache.org/documentation/#intro_topics">https://kafka.apache.org/documentation/#intro_topics</a>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">partitions</span></code>: número de particiones (común a todos los
+<em>topics</em>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">replicas</span></code>: número de réplicas (común a todos los <em>topics</em>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">retentionMs</span></code>: máximo tiempo de retención de los mensajes en los
+<em>topics</em>. Si tras este tiempo, el mensaje no ha sido consumido, se
+descarta. Por defecto fijado a 10 minutos.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="especificacion-de-la-api-rest">
+<span id="subsection-api-docs"></span><h3>Especificación de la API REST<a class="headerlink" href="#especificacion-de-la-api-rest" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>En esta sección se incluye documentación detallada sobre la API REST de
+JIZT. Más concretamente, se especifican los <em>enpoints</em> existentes, así
+como las operaciones HTTP permitidas, y la estructura tanto de las
+peticiones HTTP, como de las respuestas del <em>backend</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>En <a class="reference external" href="https://dmlls.github.io/jizt-tfg-api-docs">docs.api.jizt.it</a> se puede encontrar la
+documentación en línea referente a la API REST. Dado que dicha
+documentación está en inglés, recogemos su traducción al español. El
+usuario puede referirse a cualquiera de las dos documentaciones, ya que
+son idénticas.</p>
+</div>
+<div class="section" id="operacion-post-solicitar-resumen">
+<h4>Operación POST - Solicitar resumen<a class="headerlink" href="#operacion-post-solicitar-resumen" title="Enlazar permanentemente con este título">¶</a></h4>
+<p><strong>Endpoint</strong>: <code class="docutils literal notranslate"><span class="pre">https://api.jizt.it/v1/summaries/plain-text</span></code></p>
+<p><strong>Petición HTTP</strong>:</p>
+<ul class="simple">
+<li><p>Content-Type: <code class="docutils literal notranslate"><span class="pre">application/json</span></code></p></li>
+<li><p>Atributos del JSON del cuerpo de la petición<a class="footnote-reference brackets" href="#id14" id="id3">2</a>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code> (<em>string</em>) <strong>obligatorio</strong>: el texto a resumir.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model</span></code> (<em>string</em>): el modelo a emplear para la generación del
+resumen. Valores permitidos: <code class="docutils literal notranslate"><span class="pre">&quot;t5-large&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">params</span></code> (<em>object</em>): parámetros del resumen.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">relative_max_length</span></code> (<em>number &lt;float&gt;</em>): longitud máxima del
+resumen a generar, relativa a la longitud del texto original.
+Por ejemplo, un valor de <code class="docutils literal notranslate"><span class="pre">0.4</span></code> significa que la longitud del
+resumen será, como máximo, un 40% de la longitud del texto
+original.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">relative_min_length</span></code> (<em>number &lt;float&gt;</em>): longitud mínima del
+resumen a generar, relativa a la longitud del texto original.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">do_sample</span></code> (<em>boolean</em>): usar muestreo o no. Si se establece
+como falso, se emplea búsqueda voraz<a class="footnote-reference brackets" href="#id15" id="id4">3</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">early_stopping</span></code> (<em>boolean</em>): detener la búsqueda si se
+terminan <code class="docutils literal notranslate"><span class="pre">num_beams</span></code> frases o no.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_beams</span></code> (<em>integer &lt;int32&gt;</em>): número de <em>beams</em> en la
+<em>beam_search</em>. Si se fija como <code class="docutils literal notranslate"><span class="pre">1</span></code>, no se lleva a cabo <em>beam
+search</em>. Cuanto mayor sea el número, más tiempo tardará en
+generarse el resumen, pero su calidad será probablemente mejor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code> (<em>number &lt;float&gt;</em>): valor utilizado para
+modular las probabilidades del siguiente <em>token</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">top_k</span></code> (<em>integer &lt;int32&gt;</em>): número de <em>tókenes</em> con mayor
+probabilidad a considerar al realizar muestreo <em>top-k</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">top_p</span></code> (<em>number &lt;float&gt;</em>): si se fija a valores menores de
+<code class="docutils literal notranslate"><span class="pre">1</span></code>, solo se consideran los <em>tókenes</em> más probables cuya suma
+de probabilidades es igual o mayor a <em>top_k</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">repetition_penalty</span></code> (<em>number &lt;float&gt;</em>): penalización
+aplicada a la repetición de <em>tókenes</em>. Si se establece a <em>1.0</em>
+no se aplica penalización.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">length_penalty</span></code> (<em>number &lt;float&gt;</em>): penalización aplicada de
+manera exponencial a la longitud de las secuencias generadas.
+Si se establece a <code class="docutils literal notranslate"><span class="pre">1.0</span></code> no hay penalización. Valores por
+debajo de <code class="docutils literal notranslate"><span class="pre">1.0</span></code> resultarán en resúmenes más cortos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">no_repeat_ngram_size</span></code> (<em>integer &lt;int32&gt;</em>):longitud de los
+<em>n-gramas</em> que se pueden repetir una única vez. Por ejemplo, si
+se fija a <em>2</em>, las palabras «Ingeniería Informática» solo
+podrán aparecer una vez en el resumen.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">language</span></code> (<em>string</em>): el idioma del texto. Valores permitidos:
+<code class="docutils literal notranslate"><span class="pre">&quot;en&quot;</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Respuestas</strong></p>
+<p><strong>Status code: 200 OK</strong></p>
+<ul class="simple">
+<li><p><em>Response schema</em>: <code class="docutils literal notranslate"><span class="pre">application/json</span></code></p></li>
+<li><p>Atributos del JSON del cuerpo de la respuesta:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary_id</span></code> (<em>string</em>): el <em>id</em> del resumen.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">started_at</span></code> (<em>string &lt;date-time&gt;</em>): el instante de tiempo en el
+que se solicitó por primera vez un resumen con un texto de
+entrada, parámetros, y modelo específicos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ended_at</span></code> (<em>string &lt;date-time&gt;</em>): el instante de tiempo en el
+que se finalizó por primera vez un resumen con un texto de
+entrada, parámetros, y modelo específicos. Restando este valor al
+anterior, se puede conocer el tiempo que tomó la generación del
+resumen.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code> (<em>string</em>): el estado del resumen. Posibles valores:
+<code class="docutils literal notranslate"><span class="pre">&quot;preprocessing&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;encoding&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;summarizing&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;postprocessing&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output</span></code> (<em>string</em>): el resumen generado.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model</span></code> (<em>string</em>): modelo empleado para la generación del
+resumen. Valores posibles: <code class="docutils literal notranslate"><span class="pre">&quot;t5-large&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">params</span></code> (<em>object</em>): los parámetros con los que se ha generado
+el resumen (mismo esquema que en la petición).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">language</span></code> (<em>string</em>): el idioma del resumen. Valores posibles:
+<code class="docutils literal notranslate"><span class="pre">&quot;en&quot;</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Status code: 502 Server Error</strong></p>
+<ul class="simple">
+<li><p><em>Response schema</em>: <code class="docutils literal notranslate"><span class="pre">text/html;</span> <span class="pre">charset=utf-8</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="operacion-get-consultar-resumen">
+<h4>Operación GET - Consultar resumen<a class="headerlink" href="#operacion-get-consultar-resumen" title="Enlazar permanentemente con este título">¶</a></h4>
+<p><strong>Endpoint</strong>:
+<code class="docutils literal notranslate"><span class="pre">https://api.jizt.it/v1/summaries/plain-text/{summaryId}</span></code></p>
+<p><strong>Parámetros del path</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">summaryId</span></code> (<em>string</em>) <strong>obligatorio</strong>: el <em>id</em> del resumen a
+consultar.</p></li>
+</ul>
+<p><strong>Respuestas</strong></p>
+<p><strong>Status code: 200 OK</strong></p>
+<ul class="simple">
+<li><p><em>Response schema</em>: <code class="docutils literal notranslate"><span class="pre">application/json</span></code></p></li>
+<li><p>Atributos del JSON del cuerpo de la respuesta: mismos que en la
+respuesta HTTP 200 de la operación POST.</p></li>
+</ul>
+<p><strong>Status code: 404 Not found</strong></p>
+<ul class="simple">
+<li><p><em>Response schema</em>: <code class="docutils literal notranslate"><span class="pre">application/json</span></code></p></li>
+<li><p>Atributos del JSON del cuerpo de la respuesta:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">errors</span></code> (<em>string</em>): mensaje de error.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Status code: 502 Server Error</strong></p>
+<ul class="simple">
+<li><p><em>Response schema</em>: <code class="docutils literal notranslate"><span class="pre">text/html;</span> <span class="pre">charset=utf-8</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="operacion-get-salud-del-servidor">
+<h4>Operación GET - Salud del servidor<a class="headerlink" href="#operacion-get-salud-del-servidor" title="Enlazar permanentemente con este título">¶</a></h4>
+<p><strong>Endpoint</strong>: <code class="docutils literal notranslate"><span class="pre">https://api.jizt.it/v1/healthz</span></code></p>
+<p><strong>Respuestas</strong></p>
+<p><strong>Status code: 200 OK</strong></p>
+<ul class="simple">
+<li><p><em>Response schema</em>: <code class="docutils literal notranslate"><span class="pre">text/html;</span> <span class="pre">charset=utf-8</span></code></p></li>
+</ul>
+<p><strong>Status code: 502 Server Error</strong></p>
+<ul class="simple">
+<li><p><em>Response schema</em>: <code class="docutils literal notranslate"><span class="pre">text/html;</span> <span class="pre">charset=utf-8</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="pruebas-del-sistema">
+<h3>Pruebas del sistema<a class="headerlink" href="#pruebas-del-sistema" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Las pruebas de sistema para el <em>backend</em> de JIZT comprenden varias
+pruebas unitarias, de cada una de las etapas en la generación de resumen
+(pre-procesado, codificación, resumen y post-procesado) y una prueba de
+integración que prueba el correcto funcionamiento de la API REST y el
+<em>backend</em> en su conjunto.</p>
+<div class="section" id="prerrequisitos">
+<h4>Prerrequisitos<a class="headerlink" href="#prerrequisitos" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Para poder ejecutar las pruebas, se requiere tener instalado el
+<em>framework</em> de pruebas para Python <code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p>
+<p>Las instrucciones para su instalación se pueden encontrar en
+<a class="reference external" href="https://docs.pytest.org/en/stable/getting-started.html">https://docs.pytest.org/en/stable/getting-started.html</a>. Si se dispone de
+<code class="docutils literal notranslate"><span class="pre">pip</span></code>, se puede instalar fácilmente ejecutando:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">pytest</span></code>.</p>
+</div>
+<div class="section" id="ejecucion-de-las-pruebas">
+<h4>Ejecución de las pruebas<a class="headerlink" href="#ejecucion-de-las-pruebas" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Para ejecutar todas las pruebas, basta con ejecutar: <code class="docutils literal notranslate"><span class="pre">pytest</span></code>, bien
+desde el directorio raíz del proyecto, o desde el directorio de
+<code class="docutils literal notranslate"><span class="pre">tests</span></code>.</p>
+<p>Si se quieren ejecutar únicamente alguna de las pruebas en específico,
+se puede pasar el nombre del fichero al invocar a <code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="documentacion-tecnica-de-la-aplicacion">
+<h2>Documentación técnica de la aplicación<a class="headerlink" href="#documentacion-tecnica-de-la-aplicacion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En esta sección, se recoge toda la información necesaria para poder
+trabajar sobre el código fuente de la aplicación, así como compilarlo.</p>
+<div class="section" id="estructura-de-directorios-1">
+<span id="id5"></span><h3>Estructura de directorios<a class="headerlink" href="#estructura-de-directorios-1" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La estructura de directorios de la aplicación de JIZT, a la cual se
+puede acceder a través de
+<a class="reference external" href="https://github.com/dmlls/jizt-tfg-app">github.com/dmlls/jizt-tfg-app</a>, es la
+siguiente:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/</span></code>: el directorio raíz contiene todos los ficheros que componen el
+proyecto Flutter de la aplicación.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/lib</span></code>: se trata del directorio principal del proyecto, donde se
+encuentra el código fuente de la aplicación, escrito en Dart.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/lib/home)</span></code>: implementación de la interfaz gráfica y de la lógica
+de la pantalla principal de la aplicación.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/lib/new_text_summary</span></code>: implementación de la interfaz gráfica y de
+la lógica de la pantalla para generar resúmenes a partir de texto.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/lib/summaries</span></code>: implementación de la interfaz gráfica y de la
+lógica de la pantalla que lista todos los resúmenes generados por el
+usuario.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/lib/summary</span></code>: implementación de la interfaz gráfica y de la
+lógica de la pantalla de detalle de un resumen.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/lib/utils</span></code>: utilidades varias.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/lib/widgets</span></code>: <em>widgets</em> de Flutter adicionales.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/modules/data</span></code>: componentes relativos a la capa de datos de la
+aplicación.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/modules/domain</span></code>: componentes relativos a la capa de dominio de la
+aplicación.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/assets/drawables</span></code>: imágenes y fuentes de las que hace uso la
+aplicación.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/android</span></code>: proyecto de Android.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/ios</span></code>: proyecto de iOS.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/web</span></code>: proyecto para <em>web</em>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-del-programador-1">
+<span id="id6"></span><h3>Manual del programador<a class="headerlink" href="#manual-del-programador-1" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Una vez introducida la estructura de directorios, explicaremos cómo
+podemos compilar la aplicación para las diferentes plataformas, y qué
+programas necesitamos para ello.</p>
+<div class="section" id="prerrequisitos-1">
+<span id="id7"></span><h4>Prerrequisitos<a class="headerlink" href="#prerrequisitos-1" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Lo primero que debemos hacer, es instalar Flutter en nuestro ordenador.
+Flutter está disponible para GNU/Linux, macOS, Windows, y Chrome OS. A
+diferencia del caso del <em>backend</em>, el cual recomendamos instalar y
+desplegar empleando un dispositivo GNU/Linux, la compilación de la <em>app</em>
+se puede llevar a cabo en el sistema operativo que el programador
+considere oportuno.</p>
+<p>Las instrucciones para instalar Flutter en los distintos sistemas
+operativos se pueden encontrar en
+<a class="reference external" href="https://flutter.dev/docs/get-started/install">https://flutter.dev/docs/get-started/install</a>.</p>
+<p>Se considera, asimismo, que el programador cuenta con <code class="docutils literal notranslate"><span class="pre">git</span></code> de
+antemano. En caso contrario, puede acceder a las instrucciones para su
+instalación en
+<a class="reference external" href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">https://git-scm.com/book/en/v2/Getting-Started-Installing-Git</a>.</p>
+</div>
+<div class="section" id="entorno-de-desarrollo">
+<h4>Entorno de desarrollo<a class="headerlink" href="#entorno-de-desarrollo" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Para conseguir la mejor experiencia de desarrollo en Flutter, se
+recomienda emplear uno de los siguientes tres IDEs:</p>
+<ul class="simple">
+<li><p><strong>Android Studio</strong>: se trata del IDE que proporciona oficialmente
+Google para el desarrollo de aplicaciones Android <a class="reference internal" href="#android-studio" id="id8"><span>[android-studio]</span></a>.</p></li>
+<li><p><strong>IntelliJ IDEA</strong>: es otro de los IDEs recomendados para el
+desarrollo en Flutter, en este caso desarrollado por JetBrains. Como
+curiosidad, Android Studio se construyó sobre este IDE <a class="reference internal" href="#intellij" id="id9"><span>[intellij]</span></a>.</p></li>
+<li><p><strong>Visual Studio Code</strong>: este es el tercer IDE recomendado,
+desarrollado por Microsoft <a class="reference internal" href="#visual-code" id="id10"><span>[visual-code]</span></a>.</p></li>
+</ul>
+<p>Estos tres IDEs cuentan con sendos <em>plugins</em> para la programación en
+Dart en el contexto de Flutter. Se puede encontrar más información de
+como configurar cada uno de los IDEs a través de la documentación
+oficial de Flutter:
+<a class="reference external" href="https://flutter.dev/docs/development/tools/android-studio">https://flutter.dev/docs/development/tools/android-studio</a>.</p>
+</div>
+<div class="section" id="compilacion-de-la-aplicacion">
+<h4>Compilación de la aplicación<a class="headerlink" href="#compilacion-de-la-aplicacion" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>La compilación de la <em>app</em> requiere únicamente de tres comandos:</p>
+<ul>
+<li><div class="line-block">
+<div class="line">Clonar el repositorio desde GitHub:</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/dmlls/jizt-tfg-app.git</span></code></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Descargar los paquetes requeridos por la aplicación:</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">flutter</span> <span class="pre">pub</span> <span class="pre">get</span></code></div>
+</div>
+</li>
+<li><p>Compilar la aplicación para la plataforma deseada:</p>
+<p><code class="docutils literal notranslate"><span class="pre">flutter</span> <span class="pre">build</span> <span class="pre">[appbundle|apk|ios|web|linux|windows|macos]</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">appbundle</span></code>: compila a un App Bundle de Android.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">apk</span></code>: compilar a una APK de Android.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ios</span></code>: compilar una aplicación para iOS. Solo se puede ejecutar
+desde MacOS.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">web</span></code>: compilar para <em>web</em><a class="footnote-reference brackets" href="#id16" id="id11">4</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linux</span></code>: compilar para GNU/Linux<a class="footnote-reference brackets" href="#id18" id="id12">5</a>. Solo se puede ejecutar
+desde Linux.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">windows</span></code>: compilar para Windows. Solo se puede ejecutar desde
+Windows.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">macos</span></code>: compilar para MacOS. Solo se puede ejecutar desde
+MacOS.</p></li>
+</ul>
+</li>
+</ul>
+<p>Con estos tres sencillos pasos, obtendremos un binario de la aplicación
+para la plataforma deseada.</p>
+</div>
+</div>
+</div>
+<div class="section" id="contribuir-al-proyecto">
+<h2>Contribuir al proyecto<a class="headerlink" href="#contribuir-al-proyecto" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A fin de organizar las posibles contribuciones de la comunidad al
+proyecto JIZT, se ha creado un documento que contiene algunas pautas y
+recomendaciones a la hora de contribuir.</p>
+<p>Dicho documento es válido tanto para el caso del <em>backend</em>, como de la
+aplicación. Se ha escrito en un registro informal, a fin de animar todo
+tipo de contribuciones, por muy pequeñas que parezcan, ya que no es
+necesario tener conocimientos de programación para contribuir al
+proyecto.</p>
+<p>El documento se puede consultar en el apartado <a class="reference internal" href="CONTRIBUTING.html#contributing"><span class="std std-ref">Contribuir a JIZT</span></a>.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>Este <em>script</em> solo se ha probado en GNU/Linux. No se asegura su
+correcto funcionamiento en otros sistemas operativos.</p>
+</dd>
+<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>Todos los atributos no marcados como «obligatorio» se pueden
+omitir. En ese caso, tomarán valores por defecto.</p>
+</dd>
+<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id4">3</a></span></dt>
+<dd><p>Para más información sobre los distintos tipos de generación de
+lenguaje, referirse al capítulo de <a class="reference internal" href="../memoria/3_Conceptos_teoricos.html#chapter-conceptos-teoricos"><span class="std std-ref">Conceptos teóricos</span></a> de la
+Memoria</p>
+</dd>
+<dt class="label" id="id16"><span class="brackets"><a class="fn-backref" href="#id11">4</a></span></dt>
+<dd><p>El soporte de Flutter para <em>web</em> se encuentra aún en fase <em>beta</em>
+<a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html#flutter-web" id="id17"><span>[flutter-web]</span></a>. No se recomienda su uso en
+producción.</p>
+</dd>
+<dt class="label" id="id18"><span class="brackets"><a class="fn-backref" href="#id12">5</a></span></dt>
+<dd><p>El soporte de Flutter para escritorio (GNU/Linux, MacOS y Windows)
+se encuentra en fase <em>alfa</em> <a class="reference internal" href="#flutter-desktop" id="id19"><span>[flutter-desktop]</span></a>.
+No se recomienda su uso fuera del entorno de desarrollo.</p>
+</dd>
+</dl>
+<dl class="citation">
+<dt class="label" id="helm"><span class="brackets"><a class="fn-backref" href="#id1">helm</a></span></dt>
+<dd><p>Helm. Helm - The package manager for Kubernetes. Dic. de 2020. URL:
+<a class="reference external" href="https://helm.sh">https://helm.sh</a>.
+Último acceso: 11/02/2021.</p>
+</dd>
+<dt class="label" id="android-studio"><span class="brackets"><a class="fn-backref" href="#id8">android-studio</a></span></dt>
+<dd><p>Wikipedia - La enciclopedia libre. Android Studio. Ene. de 2021. URL:
+<a class="reference external" href="https://en.wikipedia.org/wiki/Android_Studio">https://en.wikipedia.org/wiki/Android_Studio</a>.
+Últimso: 11/02/2021.</p>
+</dd>
+<dt class="label" id="intellij"><span class="brackets"><a class="fn-backref" href="#id9">intellij</a></span></dt>
+<dd><p>Wikipedia - La enciclopedia libre. IntelliJ IDEA. Ene. de 2021. URL:
+<a class="reference external" href="https://en.wikipedia.org/wiki/IntelliJ_IDEA">https://en.wikipedia.org/wiki/IntelliJ_IDEA</a>.
+Últimso: 11/02/2021.</p>
+</dd>
+<dt class="label" id="visual-code"><span class="brackets"><a class="fn-backref" href="#id10">visual-code</a></span></dt>
+<dd><p>Wikipedia - La enciclopedia libre. Visual Studio Code. Ene. de 2021. URL:
+<a class="reference external" href="https://en.wikipedia.org/wiki/Visual_Studio_Code">https://en.wikipedia.org/wiki/Visual_Studio_Code</a>.
+Último: 11/02/2021.</p>
+</dd>
+<dt class="label" id="flutter-desktop"><span class="brackets"><a class="fn-backref" href="#id19">flutter-desktop</a></span></dt>
+<dd><p>Flutter. Desktop support for Flutter. Feb. de 2021. URL:
+<a class="reference external" href="https://flutter.dev/desktop">https://flutter.dev/desktop</a>.
+Últimso: 11/02/2021.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="E_Manual_usuario.html" class="btn btn-neutral float-right" title="Documentación de usuario" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="C_Diseno.html" class="btn btn-neutral float-left" title="Especificación de diseño" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Derechos de autor 2021, Diego Miguel Lozano.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

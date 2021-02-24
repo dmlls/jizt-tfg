@@ -1,0 +1,879 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Plan de Proyecto Software &mdash; documentación de JIZT - AI Summarization - 0.1.0</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="docs.jizt.it/anexos/A_Plan_proyecto.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Especificación de Requisitos" href="B_Requisitos.html" />
+    <link rel="prev" title="Conclusiones y Líneas de trabajo futuras" href="../memoria/7_Conclusiones_Lineas_de_trabajo_futuras.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JIZT - AI Summarization
+          
+
+          
+            
+            <img src="../_static/jizt-docs.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Memoria</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/1_Introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/2_Objetivos_del_proyecto.html">Objetivos del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/3_Conceptos_teoricos.html">Conceptos teóricos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html">Técnicas y herramientas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.html">Aspectos relevantes del desarrollo del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/6_Trabajos_relacionados.html">Trabajos relacionados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/7_Conclusiones_Lineas_de_trabajo_futuras.html">Conclusiones y Líneas de trabajo futuras</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Anexos</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Plan de Proyecto Software</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduccion">Introducción</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#planificacion-temporal">Planificación temporal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estudio-de-viabilidad">Estudio de viabilidad</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#viabilidad-economica">Viabilidad económica</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#costes-del-proyecto">Costes del proyecto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#beneficios">Beneficios</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#analisis-dafo">Análisis DAFO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#viabilidad-legal">Viabilidad legal</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#licencia-del-codigo-fuente-del-proyecto">Licencia del código fuente del proyecto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#licencia-de-la-documentacion-del-proyecto">Licencia de la documentación del proyecto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#licencia-de-la-memoria-y-los-anexos-del-proyecto">Licencia de la Memoria y los Anexos del proyecto</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="B_Requisitos.html">Especificación de Requisitos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_Diseno.html">Especificación de diseño</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D_Manual_programador.html">Documentación técnica de programación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_Manual_usuario.html">Documentación de usuario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="F_Experimentos.html">Experimentos sobre el algoritmo de división de texto</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Ayúdanos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribuir a JIZT</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JIZT - AI Summarization</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Plan de Proyecto Software</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/anexos/A_Plan_proyecto.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="plan-de-proyecto-software">
+<span id="apendix-plan-proyecto"></span><h1>Plan de Proyecto Software<a class="headerlink" href="#plan-de-proyecto-software" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>La planificación de todo proyecto es un proceso de gestión organizado e
+integrado, centrado en las actividades necesarias para asegurar una
+exitosa consecución del proyecto. Esta planificación contribuye a una
+mejor utilización de los recursos, y a un uso óptimo del tiempo asignado
+a un proyecto, algo crucial en todo proyecto, y especialmente relevante
+en el caso de un Trabajo de Fin de Grado (TFG).</p>
+<p>En este apartado se recogen los aspectos más relevantes en cuánto a la
+planificación temporal de nuestro proyecto, así como su viabilidad,
+tanto económica como legal.</p>
+</div>
+<div class="section" id="planificacion-temporal">
+<h2>Planificación temporal<a class="headerlink" href="#planificacion-temporal" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Una de las primeras decisiones que se llevaron a cabo en el marco del
+proyecto JIZT, fue la elección de la metodología de desarrollo
+<em>software</em> que adoptaríamos.</p>
+<p>Lo primero que llevamos a cabo fue un análisis de las necesidades y
+limitaciones que presentaba nuestro proyecto, las cuales eran: tiempo
+limitado, eficiencia y velocidad, motivación y progreso del proyecto, y
+satisfacción de los usuarios.</p>
+<p>Derivado de estas necesidades, se decidió que emplearíamos una
+metodología ágil. Las principales metodologías ágiles consideradas
+fueron Scrum, Kaban y Programación Extrema (XP).</p>
+<p>Finalmente, nos decantamos por Kanban. Esta decisión estuvo en gran
+medida motivada por el hecho de que una planificación temporal rígida y
+prefijada, como ocurre por ejemplo en Scrum, era muy difícil de llevar a
+cabo en este proyecto dada nuestra inexperiencia con muchas de las
+herramientas y <em>frameworks</em> utilizados.</p>
+<p>Kanban nos permitía un flujo continuo de trabajo, permitiendo añadir
+historias de usuario no contempladas inicialmente si así se consideraba
+apropiado.</p>
+<p>En total se estimaron 523,15 horas, empleando finalmente 542,92:</p>
+<div class="figure align-center" id="id30">
+<a class="reference internal image-reference" href="../_images/hours-spent.png"><img alt="Horas estimadas frente horas empleadas." src="../_images/hours-spent.png" style="width: 60.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 37 </span><span class="caption-text">Horas estimadas frente horas empleadas.</span><a class="headerlink" href="#id30" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>En esta planificación, se emplearon dos conceptos ágiles fundamentales:</p>
+<ul class="simple">
+<li><p><strong>Historia de usuario</strong>: se trata de una descripción de una
+funcionalidad del <em>software</em> a implementar.</p></li>
+<li><p><strong>Epics</strong>: agrupan historias de usuario que conformen una misma
+<em>feature</em>, o funcionalidad a desarrollar.</p></li>
+</ul>
+<p>En total, se especificaron 99 historias de usuario repartidas entre 8
+<em>epics</em><a class="footnote-reference brackets" href="#id19" id="id1">1</a>. Estos <em>epics</em> fueron, ordenados de manera cronológica:</p>
+<ul class="simple">
+<li><p><strong>Puesta en marcha</strong>: tareas preliminares de organización y puesta en
+marcha del proyecto (elección de metodologías, herramientas, etc.).</p></li>
+<li><p><strong>Motor de Resumen v0.1</strong>: implementar una primera versión del Motor
+de Resumen a través de los modelos preentrenados proporcionados por
+el módulo <code class="docutils literal notranslate"><span class="pre">transformers</span></code> de Hugging Face <a class="reference internal" href="#transformers" id="id2"><span>[transformers]</span></a>.</p></li>
+<li><p><strong>Arquitectura Microservicios v0.1</strong>: implementar una primera versión
+reducida de la Arquitectura de Microservicios, configurando el
+componente Ingress de Kubernetes <a class="reference internal" href="#ingress" id="id3"><span>[ingress]</span></a>, y dos
+microservicios: el Dispatcher y el Pre-procesador de textos.</p></li>
+<li><p><strong>Arquitectura Microservicios v0.2</strong>: continuar con la implementación
+de la arquitectura de microservicios, añadiendo la capacidad de
+realizar peticiones asíncronas y desarrollando la arquitectura
+dirigida por eventos. De momento, se sigue trabajando con una versión
+de la misma, esto es, con el Dispatcher y el Pre-procesador de
+textos.</p></li>
+<li><p><strong>Arquitectura Microservicios v0.3</strong>: una vez disponemos de una
+versión reducida de nuestra arquitectura que funciona correctamente
+en local, el siguiente paso es desplegarla en Google Kubernetes
+Engine (GKE) <a class="reference internal" href="#gke" id="id4"><span>[gke]</span></a>. Además, se deben implementar los
+microservicios restantes (Codificador, Motor de Resumen y
+Post-procesador) y la base de datos para gestionar los resúmenes.</p></li>
+<li><p><strong>Cliente v0.1</strong>: desarrollar el cliente (aplicación) que consumirá
+la API y permitirá al usuario final obtener resúmenes de sus textos.
+Dicho cliente se implementará con ayuda de Flutter <a class="reference internal" href="#flutter-es" id="id5"><span>[flutter-es]</span></a>, por lo que en principio estará disponible en
+plataformas móvil, <em>web</em> y escritorio.</p></li>
+<li><p><strong>Arquitectura Microservicios v0.4</strong>: ampliar la especificación de la
+API para que en las peticiones se puedan detallar todos los
+parámetros del resumen. Continuar con la mejora del sistema.</p></li>
+<li><p><strong>Documentación v0.1</strong>: escribir la Memoria y los Anexos. Generar una
+primera versión de la documentación de la API REST y del código
+perteneciente a JIZT.</p></li>
+</ul>
+<p>En la siguiente figura se recoge un diagrama Gantt con el objetivo de facilitar la
+comprensión de la dimensión temporal del proyecto:</p>
+<div class="figure align-default" id="gantt">
+<img alt="El proyecto comenzó el 1 de octubre de 2021, y finalizó el 16 de febrero de 2021." src="../_images/gantt-epics.png" />
+<p class="caption"><span class="caption-number">Figura 38 </span><span class="caption-text">El proyecto comenzó el 1 de octubre de 2021, y finalizó el 16 de
+febrero de 2021.</span><a class="headerlink" href="#gantt" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Dos conceptos importantes dentro de la metodología son <em>lead time</em> y
+<em>cycle time</em> <a class="reference internal" href="#anderson10" id="id6"><span>[anderson10]</span></a>. Veamos qué significa cada uno
+de ellos.</p>
+<ul class="simple">
+<li><p><em>Lead time</em>: es el período que transcurre entre la aparición de una
+nueva tarea en el flujo de trabajo y su salida final del sistema.
+Dicho de otro modo, es el tiempo total que el cliente está esperando
+la entrega de una parte del producto.</p></li>
+<li><p><em>Cycle time</em>: es la cantidad de tiempo que el equipo realmente empleó
+en una tarea, es decir, no se cuenta el tiempo que una tarea estuvo
+«en espera». Por lo tanto, el tiempo del ciclo debe comenzar a
+medirse cuando la tarea pasa a la columna «trabajando», y no antes.</p></li>
+</ul>
+<div class="figure align-default" id="id31">
+<img alt="Explicación gráfica del *lead* y *cycle time* sobre un tablero Kanboard." src="../_images/lead-cycle-time.png" />
+<p class="caption"><span class="caption-number">Figura 39 </span><span class="caption-text">Explicación gráfica del <em>lead</em> y <em>cycle time</em> sobre un tablero
+Kanboard.</span><a class="headerlink" href="#id31" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Esta métrica nos aporta información que nos permite conocer cuánto
+tiempo tardaremos en entregar una determinada parte del producto. Es
+importante mantener el <em>lead</em> y <em>cycle time</em> tan cortos como sea
+posible, a fin de mantener pocas tareas «en ejecución» (WIP),
+permitiendo mantener un flujo constante de trabajo y aportar valor al
+cliente de manera frecuente.</p>
+<div class="figure align-default" id="average-lead-cycle">
+<img alt="Gráfico de *lead* y *cycle time* medios." src="../_images/average-lead-cycle.png" />
+<p class="caption"><span class="caption-number">Figura 40 </span><span class="caption-text">Gráfico de <em>lead</em> y <em>cycle time</em> medios.</span><a class="headerlink" href="#average-lead-cycle" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Como vemos en la anterior figura, el <em>lead time</em> medio fue de algo menos de 7 días, y
+el <em>cycle time</em> de 4 días y 8 horas. Como es lógico, las primeras tareas
+se completaron más rápido, pero según la complejidad de las mismas fue
+incrementándose, también se reflejó en los tiempos. En el punto central
+del proyecto, se alcanzó una media de <em>lead time</em> de 9 días, aunque el
+<em>cycle time</em> se mantuvo por debajo de los 5, lo que indica que existía
+un mayor número de tareas esperando a ser atendidas.</p>
+<p>Otro de los gráficos propios de Kanban que nos puede ofrecer información
+valiosa es el llamado diagrama de flujo acumulado (CFD, por sus siglas
+en inglés). Este gráfico muestra el número de tareas que hay en cada
+columna a lo largo del tiempo.</p>
+<div class="figure align-default" id="cfd">
+<img alt="Diagrama de flujo acumulado desde el comienzo del proyecto." src="../_images/cfd.png" />
+<p class="caption"><span class="caption-number">Figura 41 </span><span class="caption-text">Diagrama de flujo acumulado desde el comienzo del proyecto.</span><a class="headerlink" href="#cfd" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Como se aprecia en el anterior diagrama, el trabajo en las diferentes columnas se
+distribuyó de forma correcta, no apareciendo grandes diferencias entre
+ellas. En este gráfico, también podemos apreciar que en la parte central
+del proyecto, las tareas en «<em>Work in progress</em>» fueron algo mayores
+que en el resto de columnas, lo cual es comprensible.</p>
+<p>El diagrama de flujo acumulado obtenido muestra también que el ritmo de
+trabajo fue constante, incrementándose ligeramente hacia el final del
+proyecto.</p>
+<p>Podemos visualizar también la distribución de las tareas en función de
+su tipo:</p>
+<div class="figure align-center" id="id32">
+<a class="reference internal image-reference" href="../_images/distribucion-tareas.png"><img alt="Distribución de las tareas según su tipo." src="../_images/distribucion-tareas.png" style="width: 70.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 42 </span><span class="caption-text">Distribución de las tareas según su tipo.</span><a class="headerlink" href="#id32" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Como es lógico, la mayor parte de las tareas se dedicaron a ofrecer
+nuevas funcionalidades (<em>feature</em>), aunque gran número de ellas se
+dedicaron al aprendizaje y búsqueda de información (<em>research</em>), lo cual
+también parece ajustarse a la realidad, puesto que como ya hemos
+mencionado, muchas de las herramientas y técnicas que hemos utilizado
+eran nuevas para nosotros.</p>
+<p>Para finalizar esta sección, cabe mencionar que en el <a class="reference external" href="https://github.com/dmlls/jizt-tfg/milestones">repositorio del
+proyecto</a>, y en su <a class="reference external" href="https://web.archive.org/web/20210224162004/https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b">tablero
+Kanban</a>,
+se puede encontrar información más detallada de cada historia de usuario
+y <em>epic</em>.</p>
+</div>
+<div class="section" id="estudio-de-viabilidad">
+<span id="section-estudio-viabilidad"></span><h2>Estudio de viabilidad<a class="headerlink" href="#estudio-de-viabilidad" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="viabilidad-economica">
+<h3>Viabilidad económica<a class="headerlink" href="#viabilidad-economica" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Uno de los puntos cruciales a la hora de estudiar la viabilidad de un
+proyecto, y que en muchos casos determina el éxito o el fracaso del
+mismo, es la viabilidad económica.</p>
+<p>En esta sección analizamos los costes y beneficios de JIZT.</p>
+<div class="section" id="costes-del-proyecto">
+<h4>Costes del proyecto<a class="headerlink" href="#costes-del-proyecto" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>En nuestro caso, dividiremos los costes del proyecto en costes fijos,
+directos e indirectos.</p>
+<p><strong>Costes fijos</strong></p>
+<p>Los costes fijos son aquellos costes invariables que debemos abonar,
+independientemente del desarrollo del proyecto <a class="reference internal" href="#perez18" id="id7"><span>[perez18]</span></a>.</p>
+<table class="table-fixed-costs docutils align-default" id="id33">
+<caption><span class="caption-number">Tabla 2 </span><span class="caption-text">Desglose de costes fijos del proyecto.</span><a class="headerlink" href="#id33" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 71%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CONCEPTO</strong></p></th>
+<th class="head"><p><strong>IMPORTE</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Servicio de Internet</p></td>
+<td><p>200,00 €</p></td>
+</tr>
+<tr class="row-odd"><td><p>Servicio de Luz<a class="footnote-reference brackets" href="#id20" id="id8">2</a></p></td>
+<td><p>225,00 €</p></td>
+</tr>
+<tr class="row-even"><td><p>Materiales de oficina</p></td>
+<td><p>5,00 €</p></td>
+</tr>
+<tr class="row-odd"><td><p>Salarios<a class="footnote-reference brackets" href="#id21" id="id9">3</a></p></td>
+<td><p>9911,88 €</p></td>
+</tr>
+<tr class="row-even"><td><p>» <em>Salario mensual neto</em></p></td>
+<td><p>1000,00 €</p></td>
+</tr>
+<tr class="row-odd"><td><p>» <em>Retenciones  por IRPF (24%)</em><a class="footnote-reference brackets" href="#id22" id="id10">4</a></p></td>
+<td><p>528,63 €</p></td>
+</tr>
+<tr class="row-even"><td><p>» <em>Cuotas a la Seg. Social (30,6%)</em><a class="footnote-reference brackets" href="#id24" id="id11">5</a></p></td>
+<td><p>674,01 €</p></td>
+</tr>
+<tr class="row-odd"><td><p>» <em>Salario mensual bruto</em></p></td>
+<td><p>2202,64 €</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>TOTAL</strong></p></td>
+<td><p><strong>10341,88 €</strong></p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><strong>Costes directos</strong></p>
+<p>Los costes directos son aquellos costes derivados directamente del
+desarrollo del proyecto.</p>
+<table class="table-direct-costs docutils align-default" id="id34">
+<caption><span class="caption-number">Tabla 3 </span><span class="caption-text">Desglose de costes directos del proyecto.</span><a class="headerlink" href="#id34" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 85%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CONCEPTO</strong></p></th>
+<th class="head"><p><strong>IMPORTE</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Dominio <a class="reference external" href="https://dmlls.github.io/jizt-tfg-website">jizt.it</a></p></td>
+<td><p>4,81 €</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cuenta de Google Play</p></td>
+<td><p>20,76 €</p></td>
+</tr>
+<tr class="row-even"><td><p>Impresión de la Memoria y el cartel del TFG</p></td>
+<td><p>60,00 €</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>TOTAL</strong></p></td>
+<td><p><strong>85,57 €</strong></p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><strong>Costes indirectos</strong></p>
+<p>Los costes indirectos son aquellos que no dependen directamente del
+desarrollo del proyecto.</p>
+<table class="table-indirect-costs docutils align-default" id="id35">
+<caption><span class="caption-number">Tabla 4 </span><span class="caption-text">Desglose de costes indirectos del proyecto.</span><a class="headerlink" href="#id35" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CONCEPTO</strong></p></th>
+<th class="head"><p><strong>IMPORTE</strong></p></th>
+<th class="head"><p><strong>AMORTIZ.</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Costes de <em>hardware</em><a class="footnote-reference brackets" href="#id26" id="id12">6</a></p></td>
+<td><p>2509,58 €</p></td>
+<td><p>79,49 €</p></td>
+</tr>
+<tr class="row-odd"><td><p>» <em>Ordenador personal</em></p></td>
+<td><p>845,00 €</p></td>
+<td><p>63,37 €</p></td>
+</tr>
+<tr class="row-even"><td><p>» <em>Smartphone Android</em></p></td>
+<td><p>215,00 €</p></td>
+<td><p>16,12 €</p></td>
+</tr>
+<tr class="row-odd"><td><p>» <em>Servicio GKE</em><a class="footnote-reference brackets" href="#id27" id="id13">7</a> <em>de Google Cloud</em></p></td>
+<td><p>1449,58 €</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Costes de <em>software</em><a class="footnote-reference brackets" href="#id29" id="id14">8</a></p></td>
+<td><p>89,95 €</p></td>
+<td><p>16,86 €</p></td>
+</tr>
+<tr class="row-odd"><td><p>» <em>Adobe Illustrator</em></p></td>
+<td><p>89,95 €</p></td>
+<td><p>16,86 €</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>TOTAL</strong></p></td>
+<td><p><strong>2599,53 €</strong></p></td>
+<td><p><strong>96,35 €</strong></p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><strong>Costes totales del proyecto</strong></p>
+<p>Considerando las tres categorías de costes recogidas anteriormente, la
+suma de los costes totales del proyecto asciende a <strong>13026,98 €</strong>.</p>
+<hr class="docutils" />
+</div>
+<div class="section" id="beneficios">
+<span id="subsection-beneficios"></span><h4>Beneficios<a class="headerlink" href="#beneficios" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>La API REST de JIZT se ofrece en tres planes de suscripción diferentes.</p>
+<ul class="simple">
+<li><p><strong>Gratuito</strong>: este plan se ajusta a las necesidades de cualquier
+usuario regular que no vaya a realizar un uso exhaustivo del
+servicio. Se permiten 5.000 peticiones a la API REST, pudiendo
+hacerse hasta 5 peticiones por minuto. No incluye soporte técnico.</p></li>
+<li><p><strong>Estándar</strong>: para aquellas empresas o particulares que van a
+realizar un uso más intensivo del servicio. Se incluyen 15.000
+peticiones a la API REST, pudiendo hacerse hasta 15 peticiones por
+minuto. Incluye soporte técnico y de integración. El precio es de 166
+€/mes.</p></li>
+<li><p><strong>Personalizado</strong>: para aquellos usuarios cuyas necesidades no encajen en ninguno
+de los anteriores planes. El precio se establecerá en función de los requerimientos
+concretos del usuario. Por ejemplo, este plan podría incluir el despliegue del
+<em>backend</em> de JIZT para el cliente, bien en sus propias dependencias, o bien a
+través de un <em>cloud provider</em>. De esta forma, este tipo de clientes tendrían
+control total sobre el <em>backend</em>, sin experimentar ninguna de las limitaciones
+recogidas anteriormente. El posterior mantenimiento del servicio podría estar
+incluido o no.</p></li>
+</ul>
+<p>En cuanto a la aplicación, es totalmente gratuita y no contiene
+publicidad.</p>
+</div>
+</div>
+<div class="section" id="analisis-dafo">
+<h3>Análisis DAFO<a class="headerlink" href="#analisis-dafo" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Tras llevar a cabo un pequeño análisis de mercado, hemos identificado
+que las principales debilidades, amenazas, fortalezas y oportunidades de
+nuestro proyecto son las siguientes:</p>
+<div class="figure align-left" id="id36">
+<a class="reference internal image-reference" href="../_images/dafo.png"><img alt="Análisis DAFO de JIZT." src="../_images/dafo.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-number">Figura 43 </span><span class="caption-text">Análisis DAFO de JIZT.</span><a class="headerlink" href="#id36" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="viabilidad-legal">
+<h3>Viabilidad legal<a class="headerlink" href="#viabilidad-legal" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="section" id="licencia-del-codigo-fuente-del-proyecto">
+<h4>Licencia del código fuente del proyecto<a class="headerlink" href="#licencia-del-codigo-fuente-del-proyecto" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Desde un primer momento nuestra intencción era licenciar el proyecto
+bajo una licencia de <em>Software</em> Libre. Dentro de este entorno, se han
+considerado las tres licencias más extendidas: Apache-2.0, MIT, y GPLv3.</p>
+<p>Tras una lectura exhaustiva de las cláusulas de cada una de ellas, así
+como de opiniones en <em>blogs</em>, charlas, foros, etc., y tras una profunda
+reflexión, considerando especialmente la licencia MIT y la GPLv3, hemos
+tomado la decisión de que nuestro software estará licenciado bajo <strong>GNU
+GPLv3</strong> <a class="reference internal" href="#gplv3" id="id15"><span>[gplv3]</span></a>, cuyos puntos principales se recogen a continuación:</p>
+<div class="figure align-center" id="gnu-gpl3">
+<a class="reference internal image-reference" href="../_images/gnu-gpl3.png"><img alt="Resumen de la licencia GNU GPLv3. Imagen extraída y traducida de https://github.com/dmlls/jizt-tfg/blob/main/LICENSE." src="../_images/gnu-gpl3.png" style="width: 90%;" /></a>
+<p class="caption"><span class="caption-number">Figura 44 </span><span class="caption-text">Resumen de la licencia GNU GPLv3. Imagen extraída y traducida de
+<a class="reference external" href="https://github.com/dmlls/jizt-tfg/blob/main/LICENSE">https://github.com/dmlls/jizt-tfg/blob/main/LICENSE</a>.</span><a class="headerlink" href="#gnu-gpl3" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Se puede acceder a la licencia completa a través de
+<a class="reference external" href="https://www.gnu.org/licenses/gpl-3.0.en.html">https://www.gnu.org/licenses/gpl-3.0.en.html</a>.</p>
+<p>Las principales razones de nuestra elección son:</p>
+<ul class="simple">
+<li><p>Pese a que la licencia MIT pueda parecer más permisiva en un primer
+lugar, ya que no obliga a que el código fuente se mantenga abierto en
+un futuro, creemos que a largo plazo esta «permisividad»,
+paradójicamente, puede resultar en una limitación de sí misma. Esto
+es, el hecho de que ese supuesto <em>software</em> «libre» se pueda volver
+<em>software</em> «cerrado», lo excluye en primer lugar de esa definición
+de «libre», en nuestra opinión.</p></li>
+<li><p>Este proyecto no podría existir sin las contribuciones de <em>software</em>
+libre anteriores. Por ello, queremos asegurar que este proyecto
+siempre se mantenga abierto para poder ayudar a otros y
+retroalimentarse con los aportes de la comunidad.</p></li>
+<li><p>El simple hecho de elegir una licencia, conlleva un sinnúmero de
+implicaciones morales, económicas, sociales, etc., pero es algo
+necesario, ya que el <em>software</em> sin licencia explícita se toma por
+defecto como licenciado bajo <em>copyright</em>.</p></li>
+</ul>
+<p><strong>Listado de dependencias</strong></p>
+<p>Todas las dependencias del proyecto se encuentran licenciadas bajo
+licencias compatibles con GNU GPLv3.</p>
+<p>A continuación, se recoge una lista detallada de las mismas:</p>
+<table class="table-dependencies docutils align-default" id="id37">
+<caption><span class="caption-number">Tabla 5 </span><span class="caption-text">Listado de dependencias.</span><a class="headerlink" href="#id37" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 13%" />
+<col style="width: 50%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Dependencia</strong></p></th>
+<th class="head"><p><strong>Versión</strong></p></th>
+<th class="head"><p><strong>Descripción</strong></p></th>
+<th class="head"><p><strong>Licencia</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>API REST</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NLTK</span></code></p></td>
+<td><p>3.5</p></td>
+<td><p>Utilidades de NLP.</p></td>
+<td><p>Apache v2.0</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">transformers</span></code></p></td>
+<td><p>4.1.1</p></td>
+<td><p>Modelos pre-entrenados.</p></td>
+<td><p>Apache v2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">truecase</span></code></p></td>
+<td><p>0.0.12</p></td>
+<td><p><em>Truecaser</em>.</p></td>
+<td><p>Apache v2.0</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">confluent-kafka</span></code></p></td>
+<td><p>1.5.0</p></td>
+<td><p>Cliente de Kafka para Python</p></td>
+<td><p>Apache v2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">strimzi-operator</span></code></p></td>
+<td><p>0.21.0</p></td>
+<td><p>Kafka en Kubernetes</p></td>
+<td><p>Apache v2.0</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">postgres-operator</span></code></p></td>
+<td><p>4.5.1</p></td>
+<td><p>PostgreSQL en Kubernetes</p></td>
+<td><p>Apache v2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">blingfire</span></code></p></td>
+<td><p>0.1.3</p></td>
+<td><p>Utilidades de NLP.</p></td>
+<td><p>MIT</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">marshmallow</span></code></p></td>
+<td><p>4.5.1</p></td>
+<td><p>Serialización y desearialización.</p></td>
+<td><p>Apache v2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Aplicación</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hive</span></code></p></td>
+<td><p>1.4.4+1</p></td>
+<td><p>Base de datos noSQL.</p></td>
+<td><p>Apache v2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">flutter_bloc</span></code></p></td>
+<td><p>6.1.2</p></td>
+<td><p>Patrón bloc en Flutter.</p></td>
+<td><p>MIT</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">flutter_svg</span></code></p></td>
+<td><p>0.19.2+1</p></td>
+<td><p>Soporte para SVG.</p></td>
+<td><p>MIT</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">clipboard</span></code></p></td>
+<td><p>0.1.2+8</p></td>
+<td><p>Portapapeles.</p></td>
+<td><p>BSD</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">json_serizalizable</span></code></p></td>
+<td><p>3.5.1</p></td>
+<td><p>Serialización de JSON.</p></td>
+<td><p>BSD</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">json_annotation</span></code></p></td>
+<td><p>3.1.1</p></td>
+<td><p>Anotaciones de JSON.</p></td>
+<td><p>BSD</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">share</span></code></p></td>
+<td><p>0.6.5+4</p></td>
+<td><p>Soporte para compartir en diferentes plataformas.</p></td>
+<td><p>BSD</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">http</span></code></p></td>
+<td><p>0.12.2</p></td>
+<td><p>Soporte para HTTP.</p></td>
+<td><p>BSD</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="licencia-de-la-documentacion-del-proyecto">
+<h4>Licencia de la documentación del proyecto<a class="headerlink" href="#licencia-de-la-documentacion-del-proyecto" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>La totalidad de la documentación de JIZT se distribuye bajo licencia GNU
+Free Documentation License (GFDL) <a class="reference internal" href="#gfdl" id="id16"><span>[gfdl]</span></a>.</p>
+<p>Esta licencia es una adaptación al contexto de la documentación de la
+GNU General Public License (GPL), la cual está pensada para licenciar
+código fuente.</p>
+<p>La GFDL da permiso a los lectores de copiar, redistribuir y modificar
+una obra (excepto las «secciones invariables») y exige que todas las
+copias y derivados estén disponibles bajo la misma licencia. Las copias
+también pueden venderse comercialmente, pero, si se producen en grandes
+cantidades (más de 100), el documento original o el código fuente deben
+ponerse a disposición del destinatario de la obra <a class="reference internal" href="#gfdl" id="id17"><span>[gfdl]</span></a>.</p>
+<p>Se puede acceder a la licencia completa en
+<a class="reference external" href="https://www.gnu.org/licenses/fdl-1.3.html">https://www.gnu.org/licenses/fdl-1.3.html</a>.</p>
+</div>
+<div class="section" id="licencia-de-la-memoria-y-los-anexos-del-proyecto">
+<h4>Licencia de la Memoria y los Anexos del proyecto<a class="headerlink" href="#licencia-de-la-memoria-y-los-anexos-del-proyecto" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Los documentos referentes a la Memoria y a los Anexos (excepto los apéndices
+<a class="reference internal" href="D_Manual_programador.html#apendix-manual-programador"><span class="std std-ref">Documentación técnica de programación</span></a> y <a class="reference internal" href="E_Manual_usuario.html#apendix-manual-usuario"><span class="std std-ref">Documentación de usuario</span></a>), se encuentran
+licenciados bajo Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC
+BY-SA 4.0).</p>
+<p>Esta licencia se puede resumir en los siguientes puntos
+<a class="reference internal" href="#creative-commons" id="id18"><span>[creative-commons]</span></a>:</p>
+<ul class="simple">
+<li><p>Cualquiera es libre de:</p>
+<ul>
+<li><p>Compartir: copiar y redistribuir el material en cualquier medio o
+formato.</p></li>
+<li><p>Adaptar: remezclar, transformar y construir a partir del material
+para cualquier propósito, incluso comercialmente.</p></li>
+</ul>
+</li>
+<li><p>Bajo los siguientes términos:</p>
+<ul>
+<li><p>Atribución: se debe dar crédito de manera adecuada, brindar un
+enlace a la licencia, e indicar si se han realizado cambios. Puede
+hacerse en cualquier forma razonable, pero no de forma tal que
+sugiera que aquel que lo usa, o su uso tienen el apoyo del
+licenciante.</p></li>
+<li><p><em>CompartirIgual</em>: si remezcla, transforma o crea a partir del
+material, debe distribuir su contribución bajo la la misma
+licencia del original.</p></li>
+</ul>
+</li>
+</ul>
+<div class="line-block">
+<div class="line">Se puede acceder a la licencia completa a través de</div>
+<div class="line"><a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/legalcode.es">https://creativecommons.org/licenses/by-sa/4.0/legalcode.es</a>.</div>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Para la representación de las historias de usuarios y los <em>epics</em> a
+GitHub se emplearon <em>Issues</em> y <em>Milestones</em>, respectivamente.</p>
+</dd>
+<dt class="label" id="id20"><span class="brackets"><a class="fn-backref" href="#id8">2</a></span></dt>
+<dd><p>Costes calculados para 4,5 meses, con tarifa de mercado libre y potencia
+contratada de 3,3 kW (precio mensual medio de 50 €).</p>
+</dd>
+<dt class="label" id="id21"><span class="brackets"><a class="fn-backref" href="#id9">3</a></span></dt>
+<dd><p>Costes calculados para 4,5 meses.</p>
+</dd>
+<dt class="label" id="id22"><span class="brackets"><a class="fn-backref" href="#id10">4</a></span></dt>
+<dd><p>Según la tabla de retenciones por IRPF aplicable al ejercicio 2021 <a class="reference internal" href="#irpf21" id="id23"><span>[irpf21]</span></a>.</p>
+</dd>
+<dt class="label" id="id24"><span class="brackets"><a class="fn-backref" href="#id11">5</a></span></dt>
+<dd><p>Porcentaje para autónomos según la Ley 11/2020, de 30 de diciembre, de
+Presupuestos Generales del Estado para el año 2021 <a class="reference internal" href="#boe341" id="id25"><span>[boe341]</span></a>.</p>
+</dd>
+<dt class="label" id="id26"><span class="brackets"><a class="fn-backref" href="#id12">6</a></span></dt>
+<dd><p>Se han calculado con una amortización de 5 años, habiendo sido utilizado 4,5 meses.</p>
+</dd>
+<dt class="label" id="id27"><span class="brackets"><a class="fn-backref" href="#id13">7</a></span></dt>
+<dd><p>Google Kubernetes Engine <a class="reference internal" href="#gke" id="id28"><span>[gke]</span></a>.</p>
+</dd>
+<dt class="label" id="id29"><span class="brackets"><a class="fn-backref" href="#id14">8</a></span></dt>
+<dd><p>Se han calculado con una amortización de 2 años, habiendo sido utilizado 4,5 meses.</p>
+</dd>
+</dl>
+<dl class="citation">
+<dt class="label" id="transformers"><span class="brackets"><a class="fn-backref" href="#id2">transformers</a></span></dt>
+<dd><p>Hugging Face. Transformers. Sep. de 2020. URL:
+<a class="reference external" href="https://huggingface.co/transformers/index.html">https://huggingface.co/transformers/index.html</a>.
+Último acceso: 08/02/2021.</p>
+</dd>
+<dt class="label" id="ingress"><span class="brackets"><a class="fn-backref" href="#id3">ingress</a></span></dt>
+<dd><p>Kubernetes. Ingress. Feb. de 2021. URL:
+<a class="reference external" href="https://kubernetes.io/docs/concepts/services-networking/ingress">https://kubernetes.io/docs/concepts/services-networking/ingress</a>.
+Último acceso: 08/02/2021.</p>
+</dd>
+<dt class="label" id="gke"><span class="brackets">gke</span><span class="fn-backref">(<a href="#id4">1</a>,<a href="#id28">2</a>)</span></dt>
+<dd><p>Google Cloud. Google Kubernetes Engine (GKE). Oct. de 2020. URL:
+<a class="reference external" href="https://cloud.google.com/kubernetes-engine">https://cloud.google.com/kubernetes-engine</a>.
+Último acceso: 08/02/2021.</p>
+</dd>
+<dt class="label" id="flutter-es"><span class="brackets"><a class="fn-backref" href="#id5">flutter-es</a></span></dt>
+<dd><p>Flutter. Flutter - Hermosas apps nativas en tiempo record. Sep. de 2020. URL:
+<a class="reference external" href="https://esflutter.dev">https://esflutter.dev</a>. Último acceso: 08/02/2021.</p>
+</dd>
+<dt class="label" id="anderson10"><span class="brackets"><a class="fn-backref" href="#id6">anderson10</a></span></dt>
+<dd><p>David J. Anderson. Kanban: Successful Evolutionary Change for Your
+Technology Business. Blue Hole Press, abr. de 2010. ISBN: 0984521402.</p>
+</dd>
+<dt class="label" id="perez18"><span class="brackets"><a class="fn-backref" href="#id7">perez18</a></span></dt>
+<dd><p>Juan Antonio Pérez López. Fundamentos de la dirección de empresas.
+RIALP, abr. de 2018. ISBN: 9788432149184.</p>
+</dd>
+<dt class="label" id="irpf21"><span class="brackets"><a class="fn-backref" href="#id23">irpf21</a></span></dt>
+<dd><p>Agencia Tributaria. Cuadro informativo tipos de retención aplicables. 2021. URL:
+<a class="reference external" href="https://www.agenciatributaria.es/static_files/Sede/Programas_ayuda/Retenciones/2021/CUADRO_TIPOS_RETENC_IRPF21.doc">https://www.agenciatributaria.es/static_files/Sede/Programas_ayuda/Retenciones/2021/CUADRO_TIPOS_RETENC_IRPF21.doc</a>.
+Último acceso: 08/02/2021.</p>
+</dd>
+<dt class="label" id="boe341"><span class="brackets"><a class="fn-backref" href="#id25">boe341</a></span></dt>
+<dd><p>Agencia Estatal Boletín Oficial del Estado. Boletín Oficial del Estado,
+Núm. 341. Dic. de 2020. URL:
+<a class="reference external" href="https://www.boe.es/eli/es/l/2020/12/30/11/dof/spa/pdf">https://www.boe.es/eli/es/l/2020/12/30/11/dof/spa/pdf</a>.
+Último acceso: 08/02/2021.</p>
+</dd>
+<dt class="label" id="gplv3"><span class="brackets"><a class="fn-backref" href="#id15">gplv3</a></span></dt>
+<dd><p>The GNU Operating System y the Free Software Movement. GNU
+General Public License v3.0. Jun. de 2007. URL:
+<a class="reference external" href="https://www.gnu.org/licenses/gpl-3.0.en.html">https://www.gnu.org/licenses/gpl-3.0.en.html</a>.
+Último acceso: 09/02/2021.</p>
+</dd>
+<dt class="label" id="gfdl"><span class="brackets">gfdl</span><span class="fn-backref">(<a href="#id16">1</a>,<a href="#id17">2</a>)</span></dt>
+<dd><dl class="simple">
+<dt>The GNU Operating System y the Free Software Movement. GNU</dt><dd><p>Free Documentation License. Nov. de 2008. URL:
+<a class="reference external" href="https://www.gnu.org/licenses/fdl-1.3.html">https://www.gnu.org/licenses/fdl-1.3.html</a>.
+Último acceso: 09/02/2021.</p>
+</dd>
+</dl>
+</dd>
+<dt class="label" id="creative-commons"><span class="brackets"><a class="fn-backref" href="#id18">creative-commons</a></span></dt>
+<dd><p>Creative Commons. CC BY-SA 4.0. Feb. de 2019. URL:
+<a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">https://creativecommons.org/licenses/by-sa/4.0/deed.es</a>.
+Último acceso: 12/02/2021.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="B_Requisitos.html" class="btn btn-neutral float-right" title="Especificación de Requisitos" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../memoria/7_Conclusiones_Lineas_de_trabajo_futuras.html" class="btn btn-neutral float-left" title="Conclusiones y Líneas de trabajo futuras" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Derechos de autor 2021, Diego Miguel Lozano.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

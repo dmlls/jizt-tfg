@@ -1,0 +1,138 @@
+/*
+ * Copyright (C) 2020-2021 Diego Miguel Lozano <jizt@diegomiguel.me>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * For license information on the libraries used, see LICENSE.
+ */
+
+p {
+    font-size: 14px;
+}
+
+footer p {
+    font-size: 13px;
+}
+
+footer {
+    font-size: 12px;
+}
+
+.wy-side-nav-search {
+    background-color: #000155;
+}
+
+.wy-nav-side {
+    background: #20272B;
+}
+
+.wy-menu.wy-menu-vertical {
+    background-color: #252C31;
+}
+
+.wy-menu-vertical li.current > a, .wy-menu-vertical li.on a {
+    color: #000155;
+}
+
+.wy-breadcrumbs-aside {
+    font-size: 13px;
+}
+
+.docutils.literal.notranslate {
+    font-size: 12px;
+}
+
+h1 {
+    color: #000155;
+}
+
+h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend{
+    font-family: Rubik, sans-serif;
+}
+
+img {
+    margin-bottom: 10px;
+}
+
+a.external-link {
+    height: 100%;
+}
+
+a.external-link::after {
+    display: inline-block;
+    width: 30%;
+    height: 30%;
+    margin-left: 3%;
+    content: "";
+    background: transparent no-repeat url(../images/external-link.svg); 
+}
+
+/*
+ * Tables
+ */
+.table-related-works th:not(:first-child),
+.table-related-works td:not(:first-child),
+.table-dependencies th:nth-child(2),
+.table-dependencies td:nth-child(2),
+.table-dependencies th:last-child,
+.table-dependencies td:last-child,
+.table-name-poll th:not(:first-child),
+.table-name-poll td:not(:first-child),
+.table-exp th:first-child,
+.table-exp td[rowspan="3"] {
+    text-align: center;
+}
+
+.table-fixed-costs,
+.table-direct-costs, 
+.table-indirect-costs {
+    margin: 0 auto;
+}
+
+.table-fixed-costs th:not(:first-child), 
+.table-fixed-costs td:not(:first-child),
+.table-direct-costs th:not(:first-child), 
+.table-direct-costs td:not(:first-child),
+.table-indirect-costs th:not(:first-child), 
+.table-indirect-costs td:not(:first-child) {
+    text-align: right;
+}
+
+
+/*
+ * Fonts
+ */
+body{
+    font-family: Rubik-Light, sans-serif;
+    font-size: 14px;
+}
+
+@font-face {
+    font-family: Rubik-Medium;
+    src: url(./Rubik-Medium.ttf);
+    font-weight:400;
+}
+
+@font-face {
+    font-family: Rubik;
+    src: url(./Rubik-Regular.otf);
+    font-weight:400;
+}
+
+
+@font-face {
+    font-family: Rubik-Light;
+    src: url(./Rubik-Light.otf);
+    font-weight:400;
+}

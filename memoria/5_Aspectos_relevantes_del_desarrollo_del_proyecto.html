@@ -1,0 +1,988 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Aspectos relevantes del desarrollo del proyecto &mdash; documentación de JIZT - AI Summarization - 0.1.0</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="docs.jizt.it/memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Trabajos relacionados" href="6_Trabajos_relacionados.html" />
+    <link rel="prev" title="Técnicas y herramientas" href="4_Tecnicas_y_herramientas.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JIZT - AI Summarization
+          
+
+          
+            
+            <img src="../_static/jizt-docs.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Memoria</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_Introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Objetivos_del_proyecto.html">Objetivos del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_Conceptos_teoricos.html">Conceptos teóricos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Tecnicas_y_herramientas.html">Técnicas y herramientas</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Aspectos relevantes del desarrollo del proyecto</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#metodologia-de-desarrollo-software-kanban">Metodología de desarrollo <em>software</em>: Kanban</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#motivacion-tras-las-arquitecturas-desarrolladas">Motivación tras las arquitecturas desarrolladas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arquitectura-de-microservicios">Arquitectura de microservicios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arquitectura-dirigida-por-eventos">Arquitectura dirigida por eventos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-rest-asincrona">API REST Asíncrona</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#peticion-http-post">1. Petición HTTP POST</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#peticiones-http-get-sucesivas">2. Peticiones HTTP GET sucesivas</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#desarrollo-de-la-aplicacion">Desarrollo de la aplicación</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#capa-de-datos">Capa de datos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#capa-de-dominio">Capa de dominio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#capa-de-aplicacion">Capa de aplicación</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#capa-de-presentacion">Capa de presentación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#integracion-y-despliegue-continuos-ci-dc">Integración y despliegue continuos (CI/DC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ci-cd-en-el-repositorio-del-backend">CI/CD en el repositorio del <em>backend</em></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#deepsource-revision-automatizada-del-codigo">DeepSource - Revisión automatizada del código</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ci-cd-en-el-repositorio-de-la-aplicacion">CI/CD en el repositorio de la aplicación</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#distribucion-de-la-aplicacion">Distribución de la aplicación</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#github">GitHub</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#github-pages">GitHub Pages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#play-store">Play Store</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#f-droid">F-Droid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documentacion-del-proyecto">Documentación del proyecto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#financiacion-del-proyecto">Financiación del proyecto</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="6_Trabajos_relacionados.html">Trabajos relacionados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Conclusiones_Lineas_de_trabajo_futuras.html">Conclusiones y Líneas de trabajo futuras</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Anexos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/A_Plan_proyecto.html">Plan de Proyecto Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/B_Requisitos.html">Especificación de Requisitos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/C_Diseno.html">Especificación de diseño</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/D_Manual_programador.html">Documentación técnica de programación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/E_Manual_usuario.html">Documentación de usuario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/F_Experimentos.html">Experimentos sobre el algoritmo de división de texto</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Ayúdanos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../anexos/CONTRIBUTING.html">Contribuir a JIZT</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JIZT - AI Summarization</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Aspectos relevantes del desarrollo del proyecto</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="aspectos-relevantes-del-desarrollo-del-proyecto">
+<span id="chapter-aspectos-relevantes"></span><h1>Aspectos relevantes del desarrollo del proyecto<a class="headerlink" href="#aspectos-relevantes-del-desarrollo-del-proyecto" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>A la hora de desarrollar el proyecto, nos encontramos con una serie de
+decisiones a tomar, retos, y cuestiones que tratamos de solucionar a
+través de la formación y la aplicación de mejores prácticas. Esta
+labor fue relativamente sencilla gracias a la disponibilidad de
+recursos <em>online</em> existente hoy en día, así como el entusiasmo y la
+participación activa de la comunidad detrás de las herramientas
+empleadas en este proyecto.</p>
+<p>En este apartado cubrimos los aspectos más destacados en este respecto.</p>
+<div class="section" id="metodologia-de-desarrollo-software-kanban">
+<h2>Metodología de desarrollo <em>software</em>: Kanban<a class="headerlink" href="#metodologia-de-desarrollo-software-kanban" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>El contexto y características en los que se enmarcaba nuestro proyecto
+son las siguientes:</p>
+<ul class="simple">
+<li><p><strong>Tiempo limitado</strong>: no cabía posibilidad de alargar los plazos, y
+existían importantes restricciones de tiempo (disponíamos de
+aproximadamente cuatro meses para la compleción del proyecto).</p></li>
+<li><p><strong>Eficiencia y velocidad</strong>: debido a las restricciones mencionadas en
+el punto anterior, la implementación del proyecto había de ser rápida
+y eficiente, asegurando siempre un nivel de calidad óptimo.</p></li>
+<li><p><strong>Motivación y progreso del proyecto</strong>: requeríamos de una
+metodología que estimulase de manera natural la inversión de tiempo y
+esfuerzo en el proyecto.</p></li>
+<li><p><strong>Satisfacción de los usuarios</strong>: dado que ellos son la razón por la
+que este proyecto se desarrollaba en primer lugar.</p></li>
+</ul>
+<p>Atendiendo a los puntos descritos anteriormente, decidimos adoptar un
+enfoque ágil para el desarrollo de nuestro proyecto. Dentro de las
+metodologías ágiles, se consideraron las siguientes:</p>
+<ul class="simple">
+<li><p><strong>Scrum</strong>: desarrollo iterativo e incremental centrado en la idea de
+<em>sprints</em>, es decir, iteraciones con una duración fija prefijada, al
+final de las cuales se produce una entrega parcial del producto.</p></li>
+<li><p><strong>Kanban</strong>: esta metodología se centra en mantener un flujo constante
+de trabajo, maximizando la eficiencia del equipo de forma que cada
+tarea sea completada con la mayor celeridad posible.</p></li>
+<li><p><strong>Programación Extrema (XP)</strong>: se centra en producir <em>software</em> de la
+mejor calidad posible, siendo una de las metodologías ágiles que más
+profundiza en los aspectos de buenas prácticas de ingeniería para el
+desarrollo de <em>software</em>.</p></li>
+</ul>
+<p>Tras una valoración de las ventajas y desventajas de cada una de estas
+metodologías, decidimos adoptar la metodología Kanban, gracias también a
+su mayor flexibilidad. Esto resultó de gran ayuda, dado que, al comenzar
+este proyecto desconocíamos el funcionamiento concreto de muchas de las
+herramientas y técnicas utilizadas, por lo que habría sido muy difícil
+producir ciclos de desarrollo predefinidos y cerrados, como en el caso
+de Scrum.</p>
+<p>No obstante, sí que tomamos ciertos elementos interesantes de esta otra
+metodología, Scrum, acercándonos en cierto modo a lo que se conoce como
+Scrumban, una metodología híbrida entre Scrum y Kanban.</p>
+<p>A continuación, se recogen las principales características de nuestro
+sistema de trabajo:</p>
+<ul class="simple">
+<li><p>Empleamos un tablero Kanban para organizar las historias de usuario, y
+hacemos uso de instrumentos como los límites WIP (<em>Work In Progress</em>)
+y de herramientas como los Diagramas de Flujo Acumulado (CFD, por sus
+siglas en inglés).</p></li>
+<li><p>Definimos <em>epics</em> para agrupar historias de usuario que conformen una
+misma <em>feature</em>, o funcionalidad a desarrollar.</p></li>
+<li><p>Debido a la naturaleza de Kanban, no existen <em>sprints</em> como tal: el
+flujo de trabajo es continuo. Sin embargo, sí que se definen tiempos
+estimados para completar cada tarea (sin emplear puntos de historia;
+los tiempos se expresan en número de horas empleadas).</p></li>
+<li><p>Cada tarea tiene asociada una complejidad, que va desde 0 (mínima
+complejidad), hasta 10 (máxima complejidad).</p></li>
+<li><p>Cada tarea tiene asociada una prioridad. Los niveles de prioridad van
+desde 0 hasta 3, siendo esta última la prioridad máxima.</p></li>
+<li><p>Además del <em>product backlog</em>, en el que se recogen las futuras
+historias de usuario a desarrollar, contamos con otras cuatro
+columnas: <em>preparado</em>, <em>trabajo en progreso</em>, <em>testing</em>, y
+<em>finalizado</em>.</p></li>
+<li><p>Periódicamente, se llevaron a cabo <em>revisiones</em> y <em>retrospectivas</em>,
+en las que participaron los tutores.</p></li>
+</ul>
+<div class="figure align-center" id="id29">
+<a class="reference internal image-reference" href="../_images/kanban.png"><img alt="Tablero Kanban utilizado." src="../_images/kanban.png" style="width: 80.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 22 </span><span class="caption-text">Tablero Kanban utilizado.</span><a class="headerlink" href="#id29" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Como herramienta de gestión Kanban, empleamos Kanboard <a class="reference internal" href="#kanboard" id="id1"><span>[kanboard]</span></a>. Se trata de una
+aplicación <em>web</em> <em>open-source</em> activamente desarrollada. Contratamos un servidor EC2
+con Amazon Web Services (AWS) desde el cual podemos servir la aplicación <em>web</em> PHP, la
+cual a su vez hace uso de una base de datos PostgreSQL en la cual almacena los datos
+generados. Dicha base de datos está desplegada a través del servicio RDS, también
+perteneciente a AWS.</p>
+<p>Se puede acceder al tablero público a través de
+<a class="reference external" href="https://web.archive.org/web/20210224162004/https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b">https://kanban.jizt.it</a>.</p>
+<div class="figure align-default" id="id30">
+<img alt="Captura de pantalla de nuestro tablero Kanban en la aplicación *web* Kanboard." src="../_images/kanboard.png" />
+<p class="caption"><span class="caption-number">Figura 23 </span><span class="caption-text">Captura de pantalla de nuestro tablero Kanban en la aplicación <em>web</em>
+Kanboard.</span><a class="headerlink" href="#id30" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="motivacion-tras-las-arquitecturas-desarrolladas">
+<span id="section-arch-motivation"></span><h2>Motivación tras las arquitecturas desarrolladas<a class="headerlink" href="#motivacion-tras-las-arquitecturas-desarrolladas" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="arquitectura-de-microservicios">
+<h3>Arquitectura de microservicios<a class="headerlink" href="#arquitectura-de-microservicios" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Desde un primer momento, se concibió la arquitectura con los siguientes
+objetivos presentes:</p>
+<ul class="simple">
+<li><p><strong>Flexibilidad</strong>: la Inteligencia Artificial y, en concreto, el
+Procesamiento de Lenguaje Natural, son campos en continuo desarrollo.
+Cada pocos meses aparecen modelos más potentes que proporcionan
+mejores resultados. Es por ello que nuestra arquitectura debe
+proporcionar una estructura lo más desacoplada como sea posible de
+los modelos concretos de NLP que empleados. De este modo, si
+aparecieran modelos más avanzados, la transición de unos modelos a
+otros resultará una labor relativamente sencilla.</p></li>
+<li><p><strong>Escalabilidad</strong>: los elementos que conforman la arquitectura, deben
+tener la capacidad de replicarse a fin de responder correctamente a
+la demanda de usuarios. Adicionalmente, como se ha venido mencionado
+a lo largo de esta memoria, la implementación de otras tareas de NLP
+diferentes de la generación de resúmenes es algo que entra dentro de
+nuestros planes a medio plazo. La arquitectura debe estar
+estructurada de tal forma que esta expansión se pueda llevar a cabo
+sin inconvenientes.</p></li>
+<li><p><strong>Alta disponibilidad</strong>: relacionado con el punto anterior, se debe
+poder prestar servicio de forma continua, independientemente de que
+se produzcan picos en la carga de trabajo, o de que alguno de los
+componentes falle en un momento dado.</p></li>
+<li><p><strong>Cloud native</strong>: este punto engloba a todos los anteriores; los
+sistemas <em>cloud-native</em> están diseñados para adaptarse a entornos
+cambiantes, operar a gran escala y poseer resiliencia <a class="reference internal" href="2_Objetivos_del_proyecto.html#cloud20" id="id2"><span>[cloud20]</span></a>.</p></li>
+</ul>
+<p>Una de las arquitecturas que permiten conseguir los objetivos recogidos
+anteriormente, es la <strong>arquitectura de microservicios</strong>. Con este patrón
+arquitectónico, la aplicación se divide en pequeños servicios, cada uno
+de los cuales cumple una labor específica y encapsula todas sus
+dependencias, a fin de conseguir el máximo grado de independencia
+posible.</p>
+<p>En nuestro caso, además, existen tareas que llevan considerablemente más
+tiempo que otras, como es el caso de la generación del resumen (que
+puede durar segundos), frente al pre-procesado del texto (el cual es
+instantáneo). Una arquitectura como esta nos permite replicar el
+microservicio encargado de la generación del resumen, a fin de repartir
+la carga de trabajo entre las diferentes réplicas. E incluso, podríamos
+ejecutar los distintos microservicios en máquinas con prestaciones
+diferentes, de forma que, por ejemplo, el Generador de resúmenes se
+ejecutara en una máquina más potente, equipada con una GPU, mientras que
+el resto de microservicios corrieran en máquinas más convencionales. De
+este modo, reduciríamos los cuellos de botella, manteniendo al mismo
+tiempo los costes económicos dentro de unos márgenes razonables.</p>
+<p>Añadido a todo lo anterior, si uno de los microservicios fallara, sería
+reemplazado inmediatamente por una nueva réplica, gracias a la
+tecnología de Kubernetes.</p>
+</div>
+<div class="section" id="arquitectura-dirigida-por-eventos">
+<h3>Arquitectura dirigida por eventos<a class="headerlink" href="#arquitectura-dirigida-por-eventos" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Dado que ya ha sido introducida en la sección referente a <a class="reference internal" href="4_Tecnicas_y_herramientas.html#subsec-kafka"><span class="std std-ref">Kafka y Strimzi</span></a>, no
+entraremos en mucho detalle para evitar repetirnos.</p>
+<p>Simplemente recordaremos que este patrón arquitectónico hace posible la
+comunicación entre los microservicios de forma fiable y rápida. En
+nuestro caso, un evento sería la finalización del trabajo por parte de
+uno de los microservicios. Este evento genera una respuesta en otro de
+los microservicios, el cual procesa dicho evento y comienza su labor
+específica.</p>
+<p>Este patrón nos ofrece también flexibilidad a la hora de introducir
+nuevos microservicios, ya que, al menos en el caso de Kafka, el <em>topic</em>
+al que un microservicio produce (o consume) eventos podría ser
+modificado en tiempo de ejecución, sin necesidad de alterar el código
+fuente del microservicio.</p>
+<p>Finalmente, recordar que el hecho de incrementar el número de réplicas
+de los microservicios, no influye en el correcto funcionamiento de
+Kafka, el cual gestiona este escalado de manera transparente.</p>
+</div>
+<div class="section" id="api-rest-asincrona">
+<h3>API REST Asíncrona<a class="headerlink" href="#api-rest-asincrona" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La generación de resúmenes es un proceso que se puede dilatar varios
+segundos en el tiempo, dependiendo de factores como la longitud del
+texto o de los parámetros con los que se genere el resumen. Por lo
+tanto, realizar peticiones síncronas queda descartado, puesto que una
+petición HTTP no debe prolongarse durante tanto tiempo.</p>
+<p>La forma común de solucionar este problema, logrando asincronismo, pasa
+por realizar una primera petición dándole a conocer al sistema que
+queremos generar un resumen. El sistema, entonces, responderá
+haciéndonos saber que la petición ha sido recibida y se está procesando.
+A partir de ese momento, consultaremos periódicamente al servidor para
+conocer el estado del resumen, hasta finalmente obtenerlo, una vez haya
+sido generado.</p>
+<p>Veamos el proceso de manera un poco más detallada.</p>
+<div class="section" id="peticion-http-post">
+<h4>1. Petición HTTP POST<a class="headerlink" href="#peticion-http-post" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>El cliente comienza realizando una petición POST incluyendo en el cuerpo
+de la misma el texto que desea resumir. La API le responde con un
+identificador único del resumen, el <code class="docutils literal notranslate"><span class="pre">summary_id</span></code>, así como otros
+campos de interés:</p>
+<div class="figure align-default" id="fig-api-primer-paso">
+<img alt="El primer paso es realizar una petición POST con el texto a resumir." src="../_images/api-request-1.png" />
+<p class="caption"><span class="caption-number">Figura 24 </span><span class="caption-text">El primer paso es realizar una petición POST con el texto a resumir.</span><a class="headerlink" href="#fig-api-primer-paso" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Como vemos en la anterior figura, el estado del resumen es <code class="docutils literal notranslate"><span class="pre">&quot;resumiendo&quot;</span></code>
+(<code class="docutils literal notranslate"><span class="pre">&quot;summarizing&quot;</span></code>), y aún no tenemos acceso al resumen (<code class="docutils literal notranslate"><span class="pre">ouput</span></code>), el
+cual es por el momento <code class="docutils literal notranslate"><span class="pre">&quot;null&quot;</span></code>.</p>
+<p>Una de las principales ventajas de poder consultar el estado del
+resumen, es poder ofrecer al usuario retroalimentación de los pasos que
+se están llevando a cabo, mostrándole así que su resumen efectivamente
+está siendo procesado.</p>
+</div>
+<div class="section" id="peticiones-http-get-sucesivas">
+<h4>2. Peticiones HTTP GET sucesivas<a class="headerlink" href="#peticiones-http-get-sucesivas" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>En ese momento, el cliente puede llevar a cabo peticiones HTTP GET con
+el <em>id</em> del resumen de manera periódica a fin de consultar el estado del
+mismo.</p>
+<p>En algún momento, el estado del resumen pasará a ser <code class="docutils literal notranslate"><span class="pre">&quot;completado&quot;</span></code>
+(<code class="docutils literal notranslate"><span class="pre">&quot;completed&quot;</span></code>), y la respuesta a nuestra petición contendrá el
+resumen generado, como se ilustra en la siguiente figura:</p>
+<div class="figure align-default" id="fig-api-segundo-paso">
+<img alt="Finalmente, obtenemos el resumen generado." src="../_images/api-request-2.png" />
+<p class="caption"><span class="caption-number">Figura 25 </span><span class="caption-text">Finalmente, obtenemos el resumen generado.</span><a class="headerlink" href="#fig-api-segundo-paso" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>En el caso de que previamente se hubiera solicitado un resumen del mismo
+texto, con el mismo modelo y parámetros, el resumen ya estaría
+almacenado en la base de datos, por lo que la respuesta al primer POST
+ya contendría dicho resumen.</p>
+</div>
+</div>
+<div class="section" id="desarrollo-de-la-aplicacion">
+<span id="subsubsec-app-development"></span><h3>Desarrollo de la aplicación<a class="headerlink" href="#desarrollo-de-la-aplicacion" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>A la hora de desarrollar la aplicación, se ha dado gran importancia al
+diseño de una aplicación robusta e intuitiva, pero al mismo tiempo fácil
+de mantener y con capacidad para añadir nuevas funcionalidades.</p>
+<p>Con estos objetivos en mente, nos decantamos por implementar una
+arquitectura de cuatro capas y que se inspira principalmente en los
+patrones de <em>Clean Architecture</em> <a class="reference internal" href="2_Objetivos_del_proyecto.html#martin15" id="id3"><span>[martin15]</span></a> y
+<em>Domain-Driven Design</em> (DDD) <a class="reference internal" href="2_Objetivos_del_proyecto.html#vernon13" id="id4"><span>[vernon13]</span></a>.</p>
+<p>Como resultado, los principios fundamentales de la arquitectura
+desarrollada son:</p>
+<ul class="simple">
+<li><p>División del código de la aplicación en capas: cada capa aísla un
+área de la base de código.</p></li>
+<li><p>Cada capa es estricta con sus dependencias, pudiendo interaccionar
+únicamente con las capas inferiores.</p></li>
+<li><p>Según se avanza hacia capas superiores, el código se vuelve más
+genérico. De este modo, las capas superiores dictan políticas y
+reglas, mientras que las capas inferiores se encargan de detalles de
+implementación como bases de datos, operaciones de red o la interfaz
+de usuario.</p></li>
+<li><p>La estructura y lenguaje del código se deben basar en el dominio de
+negocio.</p></li>
+</ul>
+<p>La siguiente figura ilustra el patrón de <em>Clean Architecture</em>, y se puede aplicar
+asimismo a nuestra arquitectura.</p>
+<div class="figure align-center" id="fig-clean-arch">
+<a class="reference internal image-reference" href="../_images/clean-architecture.jpg"><img alt="Ilustración de *Clean Architecture* [martin15]_. La arquitectura se divide en capas, cada una con unas responsabilidades definidas y acotadas." src="../_images/clean-architecture.jpg" style="width: 80%;" /></a>
+<p class="caption"><span class="caption-number">Figura 26 </span><span class="caption-text">Ilustración de <em>Clean Architecture</em> <a class="reference internal" href="2_Objetivos_del_proyecto.html#martin15" id="id5"><span>[martin15]</span></a>. La
+arquitectura se divide en capas, cada una con unas responsabilidades
+definidas y acotadas.</span><a class="headerlink" href="#fig-clean-arch" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Estos principios nos garantizan que, aunque los requerimientos,
+tecnologías o la interfaz de usuario de la aplicación cambien con el
+tiempo, las funcionalidades esenciales de la aplicación no se verán
+significativamente afectadas. Además, este aislamiento entre capas nos
+proporciona una mayor escalabilidad y capacidad de testeo de nuestro
+código.</p>
+<p>A continuación, se muestra cómo está conformada la arquitectura de la aplicación. Como
+podemos ver, las cuatro capas mencionadas en las que se divide nuestra aplicación son:
+Presentación, Aplicación, Datos y Dominio.</p>
+<div class="figure align-default" id="fig-app-arch">
+<img alt="Arquitectura de la aplicación." src="../_images/jizt-app-arch1.png" />
+<p class="caption"><span class="caption-number">Figura 27 </span><span class="caption-text">Arquitectura de la aplicación.</span><a class="headerlink" href="#fig-app-arch" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Expliquemos de forma más detallada cada una de ellas, comenzando por la
+capa de <em>datos</em>, a la derecha de la imagen.</p>
+<div class="section" id="capa-de-datos">
+<h4>Capa de datos<a class="headerlink" href="#capa-de-datos" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>La capa de datos es la responsable de persistir y cargar modelos de
+dominio. En ella se emplea el patrón repositorio, que permite encapsular
+y centralizar la lógica de acceso a las fuentes de datos, facilitando el
+mantenimiento y desacoplando el resto de capas de la infraestructura y
+tecnología que finalmente almacena los datos.</p>
+<p>En nuestro caso el repositorio abstrae dos fuentes de datos:</p>
+<ul class="simple">
+<li><p>Fuente de datos remota: consume la API REST del <em>backend</em>.</p></li>
+<li><p>Fuente de datos local: se emplea una base de datos local como caché
+para almacenar los resúmenes generados. Esto permite al usuario
+acceder a su historial de resúmenes.</p></li>
+</ul>
+<p>Además de centralizar el acceso a datos, el repositorio también es
+responsable de transformar las diferentes representaciones de los
+modelos de dominio con los que trabaja la aplicación utilizando lo que
+se conoce como <em>mappers</em>. Dichas representaciones son:</p>
+<ul class="simple">
+<li><p>Modelo de dominio (<em>domain model</em>): es la representación de los datos
+a través de la estructura más apropiada para la aplicación junto con
+sus reglas de negocio.</p></li>
+<li><p>DTO (<em>Data Transfer Object</em>): se corresponde con la representación de
+los datos en los documentos JSON que se envían y reciben de la API
+REST. Su estructura es la más adecuada para la comunicación remota.</p></li>
+<li><p>Entidad de la base de datos (<em>database entity</em>): es la representación
+de los datos en la base datos local. Su estructura es la más adecuada
+para persistir la información en dicha base de datos.</p></li>
+</ul>
+<p>Como consecuencia, el hecho de separar los modelos en estas tres
+representaciones diferentes nos permite:</p>
+<ul class="simple">
+<li><p>Encapsular en los DTOs todas las anotaciones específicas del
+<em>framework</em> que nos permite serializar y deserializar los documentos
+JSON.</p></li>
+<li><p>Encapsular en las <em>database entities</em> todas las anotaciones que nos
+permiten almacenar objetos en la base de datos.</p></li>
+<li><p>Mantener los <em>domain models</em> independientes de cualquier <em>framework</em>
+específico. De este modo, si en un futuro se reemplaza, por ejemplo,
+el <em>framework</em> de serialización de los documentos JSON, la capa de
+dominio no se vería afectada.</p></li>
+<li><p>Cachear localmente la información realmente necesaria (por ejemplo,
+prescindiendo de algunos metadatos que devuelve la API REST y que no
+son relevantes para el usuario de la aplicación, o almacenando
+información adicional que no devuelve la API).</p></li>
+</ul>
+<div class="figure align-center" id="id31">
+<a class="reference internal image-reference" href="../_images/repository-pattern.png"><img alt="Patrón repositorio [brandi19]_. En esta imagen se ilustran los diferentes dominios explicados, así como la transformación de los modelos de unos dominios a otros por parte del *Data Mapper*." src="../_images/repository-pattern.png" style="width: 90.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 28 </span><span class="caption-text">Patrón repositorio <a class="reference internal" href="#brandi19" id="id6"><span>[brandi19]</span></a>. En esta imagen se
+ilustran los diferentes dominios explicados, así como la
+transformación de los modelos de unos dominios a otros por parte del
+<em>Data Mapper</em>.</span><a class="headerlink" href="#id31" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="capa-de-dominio">
+<h4>Capa de dominio<a class="headerlink" href="#capa-de-dominio" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Esta capa define la lógica de dominio de la aplicación, y es
+independiente de la plataforma de desarrollo, es decir, en nuestro caso
+estará escrita puramente en Dart, sin contener ningún elemento de
+Flutter <a class="reference internal" href="#flutter-clean-arch" id="id7"><span>[flutter-clean-arch]</span></a>. El motivo reside
+en que el dominio, como decíamos, solo debe ocuparse de la lógica de
+negocio, y no de los detalles de implementación. Esto también permite
+una fácil migración entre plataformas, en caso de ser necesario en algún
+momento.</p>
+<p>La capa de dominio contiene los <em>domain models</em> que representan los
+conceptos de negocio junto con sus reglas.</p>
+<p>Además de los <em>domain models</em>, esta capa contiene las definiciones
+(interfaces) de los repositorios implementados en la capa de datos. A
+través de esta técnica, conocida como inversión de dependencias
+(<em>dependency inversion</em>), se logra mantener la capa de dominio
+totalmente independiente de las demás capas y de los <em>frameworks</em> que
+estas usan (por ejemplo, Flutter en la capa de presentación o Hive<a class="footnote-reference brackets" href="#id26" id="id8">1</a>
+en la capa de datos), limitando su ámbito estrictamente a la
+representación de los conceptos de negocio junto con sus reglas.</p>
+</div>
+<div class="section" id="capa-de-aplicacion">
+<h4>Capa de aplicación<a class="headerlink" href="#capa-de-aplicacion" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>La capa de aplicación contiene toda la lógica de negocio de aplicación
+(<em>application business logic</em>, no confundir con la <em>domain business
+logic de</em> la capa de dominio). Esta se encarga principalmente de
+orquestar el resto de capas.</p>
+<p>En ella utilizamos el patrón BLoC (Business Logic Component)
+<a class="reference internal" href="4_Tecnicas_y_herramientas.html#miola20" id="id9"><span>[miola20]</span></a>, se basado en dos elementos principales: eventos
+y estados.</p>
+<p>Desde fuera podemos imaginarnos un BLoC como una caja negra a la que se
+le proporcionan eventos como entrada (por ejemplo «cargar todos los
+resúmenes») y el BLoC emite un estado como salida (en el ejemplo
+anterior, el nuevo estado incluiría la lista de resúmenes).</p>
+<p>En el interior del BLoC se encuentra la lógica de negocio de aplicación
+que, dado un evento de entrada, acudirá a la capa de dominio para
+recuperar, guardar o validar información, y finalmente actualizará el
+estado según el resultado de esas operaciones.</p>
+</div>
+<div class="section" id="capa-de-presentacion">
+<h4>Capa de presentación<a class="headerlink" href="#capa-de-presentacion" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>La capa de presentación es la más cercana al usuario y se encarga de
+dibujar la interfaz de usuario, así como de propagar las interacciones
+del usuario a la capa de aplicación. No posee ninguna lógica de negocio;
+únicamente presenta lógica de presentación (por ejemplo, cómo pintar un
+botón dependiendo de su estado, cómo navegar entre pantallas, cómo
+ejecutar una animación, etc.).</p>
+<p>En esta capa encontramos todo el código específico de Flutter,
+especialmente los <em>widgets</em> que componen las vistas finales de la
+interfaz <a class="reference internal" href="#flutter-widget" id="id10"><span>[flutter-widget]</span></a>, como un botón o un
+<em>layout</em>. Los <em>widgets</em> se organizan de forma jerárquica, de modo que
+toda aplicación tendrá un <em>widget</em> raíz, del cual «colgarán» el resto
+de <em>widgets</em>, como podemos ver en la siguiente figura:</p>
+<div class="figure align-default" id="flutter-widgets">
+<img alt="Ejemplo de jerarquía de *widgets* de una aplicación sencilla. Imagen del dispositivo móvil extraída de [miola20]_." src="../_images/widget-hierarchy.png" />
+<p class="caption"><span class="caption-number">Figura 29 </span><span class="caption-text">Ejemplo de jerarquía de <em>widgets</em> de una aplicación sencilla. Imagen
+del dispositivo móvil extraída de <a class="reference internal" href="4_Tecnicas_y_herramientas.html#miola20" id="id11"><span>[miola20]</span></a>.</span><a class="headerlink" href="#flutter-widgets" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Las interacciones del usuario se propagan como eventos a los BLoC de la
+capa de aplicación, y estos actualizan su estado acordemente. La capa de
+presentación «escucha» dichos estados y, cada vez que estos cambian,
+vuelve a dibujar los <em>widget</em>, actualizando la pantalla. Cabe mencionar
+que Flutter realiza esta operación de una forma muy optimizada,
+volviendo a dibujar solamente aquellas partes de la interfaz que han
+sido modificadas.</p>
+</div>
+</div>
+</div>
+<div class="section" id="integracion-y-despliegue-continuos-ci-dc">
+<h2>Integración y despliegue continuos (CI/DC)<a class="headerlink" href="#integracion-y-despliegue-continuos-ci-dc" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A fin de seguir buenas prácticas en el entorno de DevOps, hemos
+implementado integración y despliegue continuos tanto del <em>backend</em>,
+como de la aplicación.</p>
+<p>Anteriormente, el uso de estas técnicas se llevaba a cabo a través de
+herramientas de automatización como Jenkins <a class="reference internal" href="#jenkins" id="id12"><span>[jenkins]</span></a> o
+Travis CI <a class="reference internal" href="#travis" id="id13"><span>[travis]</span></a>.</p>
+<p>No obstante, GitHub (en el cual alojamos nuestros repositorios del
+proyecto) ha lanzado recientemente su propio servicio con este fin,
+llamado GitHub Actions <a class="reference internal" href="#github-actions" id="id14"><span>[github-actions]</span></a>, que permite
+implementar CI/CD directamente desde esta plataforma, sin tener que
+hacer uso de aplicaciones de terceros. Esta ha sido, por tanto, la
+opción escogida en nuestro caso.</p>
+<p>Una de las grandes ventajas de GitHub Actions reside en que existen
+«acciones» predefinidas y reutilizables, escritas previamente por
+otros usuarios, que llevan a cabo tareas comunes o rutinarias. De este
+modo, no necesitamos encargarnos de, por ejemplo, lidiar con todos los
+detalles específicos para poder conectarnos a nuestro <em>clúster</em> en
+Google Cloud desde GitHub Actions, a fin de poder desplegar el <em>backend</em>
+de forma automática.</p>
+<p>Resumamos los principales aspectos del CI/CD en el caso del <em>backend</em> y
+de la aplicación, los cuales se alojan en dos repositorios diferentes<a class="footnote-reference brackets" href="#id27" id="id15">2</a>.</p>
+<div class="section" id="ci-cd-en-el-repositorio-del-backend">
+<h3>CI/CD en el repositorio del <em>backend</em><a class="headerlink" href="#ci-cd-en-el-repositorio-del-backend" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>En el caso del <em>backend</em>, hemos reservado la rama <code class="docutils literal notranslate"><span class="pre">main</span></code> como rama
+principal de producción. Por tanto, siempre que trabajamos sobre alguna
+mejora o cambio, creamos una nueva para ello. Cuando hemos finalizado de
+implementar esos cambios, hacemos un <em>merge</em> con la rama principal.</p>
+<p>En el momento que esto ocurre, se ponen en funcionamiento las tareas de
+GitHub Actions. Lo primero que se lleva a cabo es una ejecución
+automática de los <em>tests</em> desarrollados para la prueba del <em>backend</em>.
+Solo en el caso de que todos los <em>tests</em> hayan sido exitosos, se procede
+a desplegar la nueva versión del <em>backend</em> en nuestro <em>clúster</em> de
+producción de Google Kubernetes Engine (GKE). Esta actualización se
+realiza sin tiempos de interrupción, gracias a las ventajas que ofrecen
+Kubernetes y Helm, ya explicadas con anterioridad.</p>
+<div class="section" id="deepsource-revision-automatizada-del-codigo">
+<h4>DeepSource - Revisión automatizada del código<a class="headerlink" href="#deepsource-revision-automatizada-del-codigo" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Además de los <em>tests</em> implementados, hacemos uso de una herramienta
+llamada DeepSource <a class="reference internal" href="#deepsource" id="id16"><span>[deepsource]</span></a>. Esta herramienta lleva
+a cabo análisis estáticos de nuestro código, detectando cualquier
+posible error de sintaxis, anti-patrones, problemas potenciales de
+seguridad, recomendaciones de estilo, etc.</p>
+<p>Hablando personalmente, queremos destacar que la potencia de DeepSource
+nos ha sorprendido, dado que es capaz de detectar hasta los detalles más
+sutiles, y por tanto nos ha sido de gran ayuda a la hora de potenciar la
+calidad de nuestro código.</p>
+<p>Se puede hacer uso de DeepSource de manera gratuita durante seis meses
+con el <em>pack</em> de estudiante de GitHub <a class="reference internal" href="#gh-student-pack" id="id17"><span>[gh-student-pack]</span></a>.</p>
+<div class="figure align-default" id="id32">
+<img alt="Tareas llevadas a cabo cada vez que hacemos un *commit* a la rama ``main`` del repositorio del *backend*. Imagen extraída de GitHub." src="../_images/actions-backend.png" />
+<p class="caption"><span class="caption-number">Figura 30 </span><span class="caption-text">Tareas llevadas a cabo cada vez que hacemos un <em>commit</em> a la rama
+<code class="docutils literal notranslate"><span class="pre">main</span></code> del repositorio del <em>backend</em>. Imagen extraída de GitHub.</span><a class="headerlink" href="#id32" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>El repositorio en GitHub correspondiente al <em>backend</em> es accesible a
+través de <a class="reference external" href="https://github.com/dmlls/jizt-tfg">https://github.com/dmlls/jizt-tfg</a>.</p>
+</div>
+</div>
+<div class="section" id="ci-cd-en-el-repositorio-de-la-aplicacion">
+<h3>CI/CD en el repositorio de la aplicación<a class="headerlink" href="#ci-cd-en-el-repositorio-de-la-aplicacion" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Para la aplicación, también hacemos uso de GitHub Actions para
+implementar el CI/CD de la misma.</p>
+<p>En este caso, se llevan a cabo tres tareas principales:</p>
+<ul class="simple">
+<li><p>QA: cada vez que se hace un <em>push</em> desde cualquier rama se ejecutan
+los test, se comprueba que el código está correctamente formateado, y
+se realiza un análisis estático del código. Solo si estas
+comprobaciones son exitosas se llevará a cabo el <em>merge</em> de dicha
+rama con la rama principal (<code class="docutils literal notranslate"><span class="pre">main</span></code>).</p></li>
+<li><p>Despliegue de la <em>web app</em>: cada vez que la rama principal es
+actualizada, se compila la nueva versión, y se despliega a GitHub
+Pages de manera automática.</p></li>
+<li><p>Despliegue de la <em>app</em> Android: la estrategia de despliegue que
+seguimos con la <em>web</em> no es ideal para aplicaciones nativas que se
+distribuyen a través de una <em>store</em> (por ejemplo, Play Store), ya que
+generaría actualizaciones constantemente. Por este motivo utilizamos
+<em>tags</em> de GitHub, que nos permiten lanzar actualizaciones que agrupan
+varios <em>commits</em>. Cada vez que se crea una nueva <em>tag</em> (por ejemplo,
+<code class="docutils literal notranslate"><span class="pre">v0.1.1</span></code>), se compila la nueva versión de la aplicación de Android
+y se propaga automáticamente a Google Play.</p></li>
+</ul>
+<div class="figure align-default" id="id33">
+<img alt="Tareas llevadas a cabo cada vez que hacemos un *commit* a la rama ``main`` del repositorio de la *app*. Imagen extraída de GitHub." src="../_images/actions-frontend.png" />
+<p class="caption"><span class="caption-number">Figura 31 </span><span class="caption-text">Tareas llevadas a cabo cada vez que hacemos un <em>commit</em> a la rama
+<code class="docutils literal notranslate"><span class="pre">main</span></code> del repositorio de la <em>app</em>. Imagen extraída de GitHub.</span><a class="headerlink" href="#id33" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>De nuevo, mencionar que se puede acceder al repositorio correspondiente a la
+aplicación de JIZT en <a class="reference external" href="https://github.com/dmlls/jizt-tfg-app">https://github.com/dmlls/jizt-tfg-app</a>.</p>
+</div>
+</div>
+<div class="section" id="distribucion-de-la-aplicacion">
+<h2>Distribución de la aplicación<a class="headerlink" href="#distribucion-de-la-aplicacion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>La distribución de la aplicación se lleva a cabo a través de GitHub y,
+en su versión Android, también a través de Google Play.</p>
+<div class="section" id="github">
+<h3>GitHub<a class="headerlink" href="#github" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Cada vez que se produce una nueva versión de la aplicación, se crea una
+nueva <em>Release</em> en GitHub que contiene el código fuente de la
+aplicación.</p>
+<p>Los usuarios más avanzados pueden descargarse dicho código fuente y compilar la
+aplicación ellos mismos. Esto les permite poder acceder a la <em>app</em> sin tener que
+depender directamente de los servicios de Google.</p>
+<div class="figure align-default" id="id34">
+<img alt="Distribución de la *app* a través de GitHub." src="../_images/github-distribution.png" />
+<p class="caption"><span class="caption-number">Figura 32 </span><span class="caption-text">Distribución de la <em>app</em> a través de GitHub.</span><a class="headerlink" href="#id34" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<div class="section" id="github-pages">
+<h4>GitHub Pages<a class="headerlink" href="#github-pages" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>GitHub Pages es un servicio de <em>hosting</em> para páginas <em>web</em> estáticas
+que nos permite servir nuestra aplicación en su versión <em>web</em> de manera
+gratuita.</p>
+<p>Se puede acceder a la aplicación de JIZT a través de
+<a class="reference external" href="https://dmlls.github.io/jizt-tfg-app">https://app.jizt.it</a>.</p>
+<div class="figure align-center" id="id35">
+<a class="reference internal image-reference" href="../_images/kanban.png"><img alt="Tablero Kanban utilizado." src="../_images/kanban.png" style="width: 80.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 33 </span><span class="caption-text">Tablero Kanban utilizado.</span><a class="headerlink" href="#id35" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Cabe mencionar que también hacemos uso de este servicio para alojar la <em>landing page</em>
+de JIZT (<a class="reference external" href="https://dmlls.github.io/jizt-tfg-website">https://www.jizt.it</a>), así como la documentación del
+proyecto (<a class="reference external" href="https://dmlls.github.io/jizt-tfg">https://docs.jizt.it</a>), y la documentación de la API REST
+(<a class="reference external" href="https://dmlls.github.io/jizt-tfg-api-docs">https://docs.api.jizt.it</a>). En el caso del tablero Kanban que recoge las historias de
+usuario del proyecto (<a class="reference external" href="https://web.archive.org/web/20210224162004/https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b">https://kanban.jizt.it</a>),
+al implementarse a través de una aplicación PHP (Kanboard), como mencionábamos
+anteriormente, no podemos alojarla en GitHub Pages. Para servirla, hacemos uso del
+servicio EC2 de AWS.</p>
+</div>
+</div>
+<div class="section" id="play-store">
+<h3>Play Store<a class="headerlink" href="#play-store" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La aplicación, en su versión Android, se distribuye principalmente a
+través de Play Store. La publicación de las actualizaciones de la <em>app</em>
+en esta plataforma se realizan de manera automatizada gracias al
+<em>pipeline</em> de CI/CD que hemos implementado, como explicábamos en la .</p>
+<div class="line-block">
+<div class="line">Se puede acceder a la aplicación en Google Play a través de</div>
+<div class="line"><a class="reference external" href="https://play.google.com/store/apps/details?id=it.jizt.app">https://play.google.com/store/apps/details?id=it.jizt.app</a>.</div>
+</div>
+<div class="figure align-center" id="id36">
+<a class="reference internal image-reference" href="../_images/jizt-google-play1.png"><img alt="Aplicación de JIZT publicada en Play Store." src="../_images/jizt-google-play1.png" style="width: 70%;" /></a>
+<p class="caption"><span class="caption-number">Figura 34 </span><span class="caption-text">Aplicación de JIZT publicada en Play Store.</span><a class="headerlink" href="#id36" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="f-droid">
+<h3>F-Droid<a class="headerlink" href="#f-droid" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>En un principio, se ha priorizado la distribución de la <em>app</em> a través
+de Google Play, por considerarse una plataforma más ampliamente
+utilizada, y por tanto, con una mayor audiencia potencial.</p>
+<p>No obstante, la aplicación también estará pronto disponible en F-Droid,
+un popular repositorio de aplicaciones <em>open-source</em> para Android
+<a class="reference internal" href="#id28" id="id18"><span>[f-droid]</span></a>. Con este gesto, queremos mostrar nuestro apoyo y
+compromiso con la comunidad de <em>Software</em> Libre y <em>open-source</em>.</p>
+</div>
+</div>
+<div class="section" id="documentacion-del-proyecto">
+<h2>Documentación del proyecto<a class="headerlink" href="#documentacion-del-proyecto" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A lo largo de este proyecto, se ha dado gran importancia a la
+documentación, considerándola como una parte integral del proyecto en sí
+mismo.</p>
+<p>Como consecuencia, además de la presente Memoria y sus correspondientes
+Anexos, se ha generado una versión en línea de los mismos a través de
+Sphinx, una herramienta para generar de documentación, creada
+originalmente para documentar el lenguaje de programación Python
+<a class="reference internal" href="#sphinx-doc" id="id19"><span>[sphinx-doc]</span></a>.</p>
+<p>Una vez más, recordar que se puede acceder a dicha documentación a
+través de <a class="reference external" href="https://dmlls.github.io/jizt-tfg">https://docs.jizt.it</a>. En la se muestra una captura de pantalla
+de la misma.</p>
+<div class="figure align-default" id="fig-jizt-docs">
+<img alt="Captura de pantalla de la documentación en línea de JIZT." src="../_images/jizt-docs.png" />
+<p class="caption"><span class="caption-number">Figura 35 </span><span class="caption-text">Captura de pantalla de la documentación en línea de JIZT.</span><a class="headerlink" href="#fig-jizt-docs" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Asimismo, se ha documentado de forma detallada la especificación de la
+API REST, a fin de que cualquier desarrollador interesado pueda obtener
+información clara, precisa y actualizada de la misma.</p>
+<p>En este caso, se ha empleado la herramienta Redoc <a class="reference internal" href="#redoc" id="id20"><span>[redoc]</span></a>, la
+cual a su vez es una extensión de Swagger, que abarca un conjunto de
+herramientas para el diseño, construcción y documentación de APIs
+REST(ful) <a class="reference internal" href="#swagger" id="id21"><span>[swagger]</span></a>. Para la definición y descripción de
+las APIs, estas herramientas hacen uso de la especificación OpenAPI 3.0
+<a class="reference internal" href="#openapi" id="id22"><span>[openapi]</span></a>, la cual se define a través de documentos
+<code class="docutils literal notranslate"><span class="pre">yaml</span></code> o <code class="docutils literal notranslate"><span class="pre">json</span></code>, con una sintaxis sencilla e intuitiva. Una vez
+hemos definido nuestra API a través de estos documentos, Redoc se
+encarga de generar una página <em>web</em> de la misma de manera automática, y
+con una interfaz clara y elegante.</p>
+<p>En la se puede ver una captura de pantalla de la documentación generada
+con Redoc, disponible en <a class="reference external" href="https://dmlls.github.io/jizt-tfg-api-docs">https://docs.api.jizt.it</a>.</p>
+<div class="figure align-default" id="fig-jizt-api-docs">
+<img alt="Captura de pantalla de la especificación de la API REST." src="../_images/jizt-api-docs.png" />
+<p class="caption"><span class="caption-number">Figura 36 </span><span class="caption-text">Captura de pantalla de la especificación de la API REST.</span><a class="headerlink" href="#fig-jizt-api-docs" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="financiacion-del-proyecto">
+<h2>Financiación del proyecto<a class="headerlink" href="#financiacion-del-proyecto" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Por último, creemos conveniente mencionar uno de los aspectos más
+importantes en cualquier proyecto de ingeniería: su financiación.</p>
+<p>En nuestro caso, hemos podido financiar hasta ahora el despliegue del
+servicio en la nube gracias a los créditos gratuitos que ofrecen los
+principales <em>cloud providers</em>, Google Cloud y AWS, así como la Beca de
+Colaboración de Estudiantes en Departamentos Universitarios que se nos
+concedió en noviembre del pasado año 2020.</p>
+<p>Actualmente, hacemos uso del servicio Google Kubernetes Engine (GKE) de
+Google Cloud, y disponemos de un único <em>clúster</em> de Kubernetes con un
+solo nodo que ejecuta una máquina de tipo «e2-standard-4», la cual
+cuenta con 4 CPUs virtuales y 16 GB de RAM. No obstante, un despliegue
+mínimo de la aplicación hace uso de tan solo 1,32 GB de RAM.</p>
+<p>Como parece lógico pensar, el tipo de financiación del que disponemos actualmente no
+es sostenible a medio-largo plazo. En el apartado referente a la <a class="reference internal" href="../anexos/A_Plan_proyecto.html#subsection-beneficios"><span class="std std-ref">Viabilidad
+económica</span></a> recogido en los Anexos, se propone un posible
+modelo de financiación para el proyecto.</p>
+<p>Este modelo, en esencia, pasa por establecer limitaciones en el número y
+frecuencia de peticiones a la API REST que se pueden llevar a cabo
+durante un periodo de tiempo establecido.</p>
+<p>Este medio de financiación es común dentro de las estrategias de
+monetización de APIs REST en general, y lo mismo ocurre dentro del
+contexto del NLP. Algunos ejemplos de populares APIs REST relacionadas
+con tareas de NLP que siguen métodos de financiación similares son:
+Azure Bot (Microsoft) <a class="reference internal" href="#azure-bot" id="id23"><span>[azure-bot]</span></a>, el cual es un agente
+conversacional (se establecen límites en el número de mensajes); Watson
+Speech to Text (IBM) <a class="reference internal" href="#watson-stt" id="id24"><span>[watson-stt]</span></a>, que realiza
+reconocimiento del habla (los límites, en este caso, son en minutos); o
+Cloud Translation (Google) <a class="reference internal" href="#cloud-translation" id="id25"><span>[cloud-translation]</span></a>,
+que ofrece servicios de traducción automática (límites en número de
+caracteres).</p>
+<dl class="footnote brackets">
+<dt class="label" id="id26"><span class="brackets"><a class="fn-backref" href="#id8">1</a></span></dt>
+<dd><p>Hive es un paquete para Flutter que permite implementar bases de
+datos clave-valor. En nuestro caso, lo empleamos para almacenar los
+resúmenes localmente.</p>
+</dd>
+<dt class="label" id="id27"><span class="brackets"><a class="fn-backref" href="#id15">2</a></span></dt>
+<dd><p>Recordamos que el repositorio del <em>backend</em> se puede acceder a través de
+<a class="reference external" href="https://github.com/dmlls/jizt-tfg">https://github.com/dmlls/jizt-tfg</a>, y el de la aplicación en
+<a class="reference external" href="https://github.com/dmlls/jizt-tfg-app">https://github.com/dmlls/jizt-tfg-app</a>.</p>
+</dd>
+</dl>
+<dl class="citation">
+<dt class="label" id="kanboard"><span class="brackets"><a class="fn-backref" href="#id1">kanboard</a></span></dt>
+<dd><p>Kanboard. Kanboard - Kanban Project Management Software. Feb. de
+2021. URL:
+<a class="reference external" href="https://github.com/kanboard/kanboard">https://github.com/kanboard/kanboard</a>.
+Último acceso: 06/02/2021.</p>
+</dd>
+<dt class="label" id="brandi19"><span class="brackets"><a class="fn-backref" href="#id6">brandi19</a></span></dt>
+<dd><p>Denis Brandi. The «Real» Repository Pattern in Android. Sep. de
+2019. URL:
+<a class="reference external" href="https://proandroiddev.com/the-real-repository-pattern-in-android-efba8662b754">https://proandroiddev.com/the-real-repository-pattern-in-android-efba8662b754</a>.
+Último acceso: 13/02/2021.</p>
+</dd>
+<dt class="label" id="flutter-clean-arch"><span class="brackets"><a class="fn-backref" href="#id7">flutter-clean-arch</a></span></dt>
+<dd><p>Shady Boukhary y Rafael Monteiro. Flutter Clean Architecture Package. Ene. de 2021.
+URL: <a class="reference external" href="https://pub.dev/packages/flutter_clean_architecture">https://pub.dev/packages/flutter_clean_architecture</a>. Último acceso:
+07/02/2021.</p>
+</dd>
+<dt class="label" id="flutter-widget"><span class="brackets"><a class="fn-backref" href="#id10">flutter-widget</a></span></dt>
+<dd><p>Flutter API. Widget class. Sep. de 2020. URL:
+<a class="reference external" href="https://api.flutter.dev/flutter/widgets/Widget-class.html">https://api.flutter.dev/flutter/widgets/Widget-class.html</a>.
+Último acceso: 07/02/2021.</p>
+</dd>
+<dt class="label" id="jenkins"><span class="brackets"><a class="fn-backref" href="#id12">jenkins</a></span></dt>
+<dd><p>Jenkins. Jenkins - Build great things at any scale. Ene. de 2021. URL:
+<a class="reference external" href="https://www.jenkins.io/index.html">https://www.jenkins.io/index.html</a>.
+Último acceso: 13/02/2021.</p>
+</dd>
+<dt class="label" id="travis"><span class="brackets"><a class="fn-backref" href="#id13">travis</a></span></dt>
+<dd><p>Travis CI. Travis CI - The simplest way to test and deploy your
+projects. Ene. de 2021. URL:
+<a class="reference external" href="https://travis-ci.com">https://travis-ci.com</a>.
+Último acceso: 13/02/2021.</p>
+</dd>
+<dt class="label" id="github-actions"><span class="brackets"><a class="fn-backref" href="#id14">github-actions</a></span></dt>
+<dd><p>GitHub. GitHub Actions - Docs. Ene. de 2021. URL:
+<a class="reference external" href="https://docs.github.com/en/actions">https://docs.github.com/en/actions</a>.
+Último acceso: 13/02/2021.</p>
+</dd>
+<dt class="label" id="gh-student-pack"><span class="brackets"><a class="fn-backref" href="#id17">gh-student-pack</a></span></dt>
+<dd><p>GitHub. GitHub Student Developer Pack. Feb. de 2021. URL:
+<a class="reference external" href="https://education.github.com/pack">https://education.github.com/pack</a>.
+Último acceso: 13/02/2021.</p>
+</dd>
+<dt class="label" id="deepsource"><span class="brackets"><a class="fn-backref" href="#id16">deepsource</a></span></dt>
+<dd><p>DeepSource. DeepSource - Automate code reviews with static analysis. Feb. de 2021.
+URL: <a class="reference external" href="https://deepsource.io">https://deepsource.io</a>. Último acceso: 13/02/2021.</p>
+</dd>
+<dt class="label" id="id28"><span class="brackets"><a class="fn-backref" href="#id18">f-droid</a></span></dt>
+<dd><p>F-Droid. Free and Open Source Android App Repository. Feb. de 2021. URL:
+<a class="reference external" href="https://f-droid.org">https://f-droid.org</a>.
+Último acceso: 16/02/2021.</p>
+</dd>
+<dt class="label" id="sphinx-doc"><span class="brackets"><a class="fn-backref" href="#id19">sphinx-doc</a></span></dt>
+<dd><p>Sphinx - Python Documentation Generator. Overview. 2021. URL:
+<a class="reference external" href="https://www.sphinx-doc.org/en/master">https://www.sphinx-doc.org/en/master</a>.
+Último acceso: 16/02/2021.</p>
+</dd>
+<dt class="label" id="redoc"><span class="brackets"><a class="fn-backref" href="#id20">redoc</a></span></dt>
+<dd><p>Redoc - GitHub. OpenAPI/Swagger-generated API Reference Docu-
+mentation. 2021. URL:
+<a class="reference external" href="https://www.sphinx-doc.org/en/master">https://www.sphinx-doc.org/en/master</a>.
+Último acceso: 16/02/2021.</p>
+</dd>
+<dt class="label" id="swagger"><span class="brackets"><a class="fn-backref" href="#id21">swagger</a></span></dt>
+<dd><p>Swagger. API Documentation &amp; Design Tools for Teams. 2021. URL:
+<a class="reference external" href="https://swagger.io">https://swagger.io</a>.
+Último acceso: 16/02/2021.</p>
+</dd>
+<dt class="label" id="openapi"><span class="brackets"><a class="fn-backref" href="#id22">openapi</a></span></dt>
+<dd><p>OpenAPI Initiative. OpenAPI Specification - Version 3.0.3. Feb. de
+2021.  URL:
+<a class="reference external" href="https://spec.openapis.org/oas/v3.0.3">https://spec.openapis.org/oas/v3.0.3</a>.
+Último acceso: 16/02/2021.</p>
+</dd>
+<dt class="label" id="azure-bot"><span class="brackets"><a class="fn-backref" href="#id23">azure-bot</a></span></dt>
+<dd><p>Microsoft Azure. Azure Bot Services - Pricing. URL:
+<a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/bot-services">https://azure.microsoft.com/en-us/pricing/details/bot-services</a>.
+Último acceso: 16/02/2021.</p>
+</dd>
+<dt class="label" id="watson-stt"><span class="brackets"><a class="fn-backref" href="#id24">watson-stt</a></span></dt>
+<dd><p>IBM. Watson Speech to Text - Pricing. URL:
+<a class="reference external" href="https://www.ibm.com/cloud/watson-speech-to-text/pricing">https://www.ibm.com/cloud/watson-speech-to-text/pricing</a>.
+Último acceso: 16/02/2021.</p>
+</dd>
+<dt class="label" id="cloud-translation"><span class="brackets"><a class="fn-backref" href="#id25">cloud-translation</a></span></dt>
+<dd><p>Google Cloud. Cloud Translation - Pricing. URL:
+<a class="reference external" href="https://cloud.google.com/translate/pricing">https://cloud.google.com/translate/pricing</a>.
+Último acceso: 16/02/2021.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_Trabajos_relacionados.html" class="btn btn-neutral float-right" title="Trabajos relacionados" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_Tecnicas_y_herramientas.html" class="btn btn-neutral float-left" title="Técnicas y herramientas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Derechos de autor 2021, Diego Miguel Lozano.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

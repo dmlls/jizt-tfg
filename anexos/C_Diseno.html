@@ -1,0 +1,842 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Especificación de diseño &mdash; documentación de JIZT - AI Summarization - 0.1.0</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="docs.jizt.it/anexos/C_Diseno.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Documentación técnica de programación" href="D_Manual_programador.html" />
+    <link rel="prev" title="Especificación de Requisitos" href="B_Requisitos.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JIZT - AI Summarization
+          
+
+          
+            
+            <img src="../_static/jizt-docs.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Memoria</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/1_Introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/2_Objetivos_del_proyecto.html">Objetivos del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/3_Conceptos_teoricos.html">Conceptos teóricos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html">Técnicas y herramientas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.html">Aspectos relevantes del desarrollo del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/6_Trabajos_relacionados.html">Trabajos relacionados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/7_Conclusiones_Lineas_de_trabajo_futuras.html">Conclusiones y Líneas de trabajo futuras</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Anexos</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="A_Plan_proyecto.html">Plan de Proyecto Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="B_Requisitos.html">Especificación de Requisitos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Especificación de diseño</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduccion">Introducción</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eleccion-del-nombre-del-proyecto">Elección del nombre del proyecto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#diseno-de-datos">Diseño de datos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#backend"><em>Backend</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frontend"><em>Frontend</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#diseno-procedimental">Diseño procedimental</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#diseno-arquitectonico">Diseño arquitectónico</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#backend-1"><em>Backend</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frontend-1"><em>Frontend</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#diseno-de-interfaces">Diseño de interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#diseno-del-logo">Diseño del logo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#diseno-de-la-interfaz-grafica-de-la-aplicacion">Diseño de la interfaz gráfica de la aplicación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="D_Manual_programador.html">Documentación técnica de programación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_Manual_usuario.html">Documentación de usuario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="F_Experimentos.html">Experimentos sobre el algoritmo de división de texto</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Ayúdanos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribuir a JIZT</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JIZT - AI Summarization</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Especificación de diseño</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/anexos/C_Diseno.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="especificacion-de-diseno">
+<span id="apendix-diseno"></span><h1>Especificación de diseño<a class="headerlink" href="#especificacion-de-diseno" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En este apéndice se recogen las características de diseño que
+implementan los requisitos descritos en el apéndice anterior, a fin de
+establecer los criterios que se deberán seguir en el desarrollo del
+sistema.</p>
+</div>
+<div class="section" id="eleccion-del-nombre-del-proyecto">
+<h2>Elección del nombre del proyecto<a class="headerlink" href="#eleccion-del-nombre-del-proyecto" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Para la elección del nombre bajo el cual se englobara todo el servicio
+de resumen de textos en la nube, se consideraron numerosas opciones, de
+las cuales, las más relevantes fueron:</p>
+<ul class="simple">
+<li><p><strong>Summit</strong>: acrónimo procedente de <em>Summarize it</em>. Además,
+«<em>summit</em>» tiene el significado de «cumbre» o «cima» en inglés,
+sugiriendo el alto rendimiento y potencia del servicio, alcanzando
+los más <em>altos</em> resultados.</p></li>
+<li><p><strong>Jizt</strong>: esta palabra, pronunciada en inglés, suena casi
+idénticamente a «<em>gist</em>», la cual se puede traducir como
+«esencia» o «quid de la cuestión».</p></li>
+<li><p><strong>Halb</strong>: al revés se lee «<em>blah</em>» (de <em>blah, blah, blah</em>, en
+inglés) y en alemán significa «mitad», evocando a la idea de
+resumen. Además se podría ver como una referencia al supercomputador
+HAL 9000 de la película y posterior novela <em>2001: Una Odisea del
+Espacio</em>.</p></li>
+</ul>
+<p>De estas tres, se juzgaron más interesantes las dos últimas; la primera
+resulta menos original debido a que ya existen numerosas empresas,
+productos y proyectos con este nombre.</p>
+<p>En ese momento, se llevó a cabo una pequeña encuesta para determinar el
+nombre final. Dado que el proyecto aspira a tener un carácter
+internacional, el objetivo de la encuesta no era tanto obtener un gran
+numero de votaciones, sino que las que tuviéramos fueran muy variadas: en
+total se preguntó a 22 personas de 15 nacionalidades diferentes.</p>
+<p>A continuación, se incluye una tabla resumiendo los resultados de la
+encuesta:</p>
+<table class="table-name-poll docutils align-default" id="id14">
+<caption><span class="caption-number">Tabla 14 </span><span class="caption-text">Resultados de la encuesta.</span><a class="headerlink" href="#id14" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>Elección de Nombre</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p></p></th>
+<th class="head"><p><strong>jizt</strong></p></th>
+<th class="head"><p><strong>halb</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>España</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>Alemania</p></td>
+<td><p>3</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>México</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Taiwán</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Japón</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Escocia</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>China</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Francia</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Turquía</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Vietnam</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hungría</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>Bielorrusia</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Corea del Sur</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>Malasia</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Serbia</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Total</strong></p></td>
+<td><p><strong>13</strong></p></td>
+<td><p><strong>9</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p>Aunque los resultados de la encuesta estuvieron bastante ajustados,
+finalmente la balanza se decantó del lado de JIZT. Algunos de los
+participantes destacaron su «sonido vibrante y moderno». Por otro
+lado, el término Halb pareció no convencer a los alemanes, quienes la
+veían como una palabra demasiado convencional (recordamos que en alemán
+tiene el significado de «mitad»).</p>
+</div>
+<div class="section" id="diseno-de-datos">
+<h2>Diseño de datos<a class="headerlink" href="#diseno-de-datos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>JIZT comprende dos dominios independientes: el <em>backend</em> y el
+<em>frontend</em>. El primero, el <em>backend</em>, incluye la API REST, así como los
+diferentes microservicios que hacen posible la generación de resúmenes
+en la nube. A su vez, el <em>frontend</em> está conformado por la aplicación
+multiplataforma que se comunica con el <em>backend</em> para proporcionar los
+resúmenes a los usuarios.</p>
+<p>Dado que, como decíamos, el diseño de datos es independiente en el caso
+del <em>backend</em> y del <em>frontend</em> (siempre que se introduzcan mecanismos
+para transformar los datos de un dominio al otro, el cual es nuestro
+caso), atenderemos a cada uno de estos diseños por separado.</p>
+<div class="section" id="backend">
+<h3><em>Backend</em><a class="headerlink" href="#backend" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>El <em>backend</em> sigue una arquitectura de microservicios. Debido a la
+propia naturaleza de esta arquitectura, cada uno de estos microservicios
+tiene una implementación independiente del resto.</p>
+<p>Por tanto debemos atender a las clases y sus relaciones en cada
+microservicio por separado. No obstante, existen dos clases que van a
+aparecer en todos los microservicios. Se trata de las clases
+relacionadas con Kafka, esto es, el consumidor y el productor<a class="footnote-reference brackets" href="#id12" id="id1">1</a>:</p>
+<ul class="simple">
+<li><p><strong>Productor de Kafka</strong> (<code class="docutils literal notranslate"><span class="pre">Producer</span></code>): esta clase contiene la lógica que
+posibilita el envío los mensajes correspondientes a uno o varios
+Kafka <em>topics</em>. Los Kafka <em>topics</em> concretos a los que envía el
+mensaje varían en función del microservicio.</p></li>
+<li><p><strong>Consumidor de Kafka</strong> (<code class="docutils literal notranslate"><span class="pre">Consumer</span></code>): un consumidor presta atención
+constante a los <em>topics</em> a los que está subscrito, y en el caso de
+que se haya producido algún mensaje, lo consume. Los Kafka <em>topics</em>
+concretos a los que un consumidor está subscrito varían en función
+del microservicio.</p></li>
+</ul>
+<p>Una vez introducidas estas dos clases comunes, veamos las clases
+concretas de cada microservicio.</p>
+<p><strong>Microservicio Dispatcher</strong></p>
+<p>El <em>Dispatcher</em> se encarga de recibir las peticiones de los clientes,
+validarlas, y reenviarlas hacia el microservicio correspondiente. Como
+tal, implementa la API REST.</p>
+<p>Este microservicio cuenta con las siguientes clases:</p>
+<ul class="simple">
+<li><p><strong>Servicio Dispatcher</strong> (<code class="docutils literal notranslate"><span class="pre">DispatcherService</span></code>): clase principal del
+microservicio. Dirige las interacciones entre las instancias del
+resto de clases.</p></li>
+<li><p><strong>Resumen</strong> (<code class="docutils literal notranslate"><span class="pre">Summary</span></code>): se trata de la representación de un resumen,
+por lo que es una de las clases centrales en todo el proyecto. Entre
+sus campos más importantes se encuentran su <em>id</em>, el cual permite
+identificar inequívocamente un resumen, así como el texto del propio
+resumen, y el texto fuente a partir del cual se ha generado el
+resumen.</p></li>
+<li><p><strong>Interfaz Resumen DAO</strong> (<code class="docutils literal notranslate"><span class="pre">SummaryDAOInterface</span></code>): interfaz DAO (<em>Data
+Access Object</em>) para abstraer el acceso a los datos
+independientemente de la base de datos empleada.</p></li>
+<li><p><strong>Factoría Resumen DAO</strong> (<code class="docutils literal notranslate"><span class="pre">SummaryDAOFactory</span></code>): clase que recoge las
+instancias particulares de los DAOs correspondientes cada base de
+datos.</p></li>
+<li><p><strong>PostgreSQL DAO Resumen</strong> (<code class="docutils literal notranslate"><span class="pre">SummaryDAOPostgresql</span></code>): DAO concreto para
+la base de datos PostgreSQL. esta base de datos almacena los
+resúmenes generados.</p></li>
+<li><p><strong>Esquema para Petición de Texto Plano</strong> (<code class="docutils literal notranslate"><span class="pre">PlainTextRequestSchema</span></code>):
+esta clase contiene la estructura (campos) que debe seguir el cuerpo
+de las peticiones HTTP de los clientes a la hora de realizar una
+operación POST sobre la API REST. Se incluye la distinción de «texto
+plano», dado que en un futuro se podrán realizar peticiones enviando
+una URL o un documento, y por lo tanto necesitaremos otro esquema
+diferente para cada uno de estos casos. Este esquema se emplea
+también para los mensajes producidos por el <em>Dispatcher</em> al <em>topic</em>
+del <em>Pre-procesador</em> (el siguiente microservicio).</p></li>
+<li><p><strong>Esquema para Respuesta</strong> (<code class="docutils literal notranslate"><span class="pre">ResponseSchema</span></code>): estructura (campos) del
+cuerpo de la respuesta HTTP de la API REST ante una petición POST o
+GET por parte del cliente. Contiene los detalles del resumen
+producido.</p></li>
+<li><p><strong>Esquema para Mensajes Consumidos</strong>
+(<code class="docutils literal notranslate"><span class="pre">TextPostprocessingConsumedMsgSchema</span></code>): estructura (campos) que
+presenta un mensaje consumido por el <em>Disptacher</em>. Estos mensajes
+procederán del <em>topic</em> del microservicio Post-procesador de textos.</p></li>
+</ul>
+<p><strong>Diagrama de clases</strong></p>
+<div class="figure align-default" id="id15">
+<img alt="Diagrama de clases del *Dispatcher*." src="../_images/classes-dispatcher.png" />
+<p class="caption"><span class="caption-number">Figura 46 </span><span class="caption-text">Diagrama de clases del <em>Dispatcher</em>.</span><a class="headerlink" href="#id15" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p><strong>Modelo relacional de la base de datos</strong></p>
+<p>A su vez, la base de datos gobernada por el <em>Dispatcher</em> y encargada de almacenar los
+resúmenes generados, cuenta con el siguiente esquema de tablas:</p>
+<div class="figure align-default" id="id16">
+<img alt="Modelo relacional de la base de datos (tipos de datos de PostgreSQL)." src="../_images/dispatcher-db.png" />
+<p class="caption"><span class="caption-number">Figura 47 </span><span class="caption-text">Modelo relacional de la base de datos (tipos de datos de PostgreSQL).</span><a class="headerlink" href="#id16" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p><strong>Microservicio Pre-procesador de textos</strong></p>
+<p>El Pre-procesador se encarga de realizar un primer procesado de los
+textos de entrada, a fin de que sean lo más cercanos como sea posible a
+la entrada que espera el modelo generador de resúmenes.</p>
+<p>Este microservicio está compuesto por siguientes clases:</p>
+<ul class="simple">
+<li><p><strong>Pre-procesador de textos</strong> (<code class="docutils literal notranslate"><span class="pre">TextPreprocessor</span></code>): esta clase es la
+encargada de realizar el pre-procesado del texto.</p></li>
+<li><p><strong>Esquema para Mensajes Consumidos</strong>
+(<code class="docutils literal notranslate"><span class="pre">TextPreprocessingConsumedMsgSchema</span></code>): estructura (campos) que
+presenta un mensaje consumido por el Pre-procesador. Estos mensajes
+procederán del microservicio <em>Dispatcher</em>.</p></li>
+<li><p><strong>Esquema para Mensajes Producidos</strong>
+(<code class="docutils literal notranslate"><span class="pre">TextEncodingProducedMsgSchema</span></code>): estructura (campos) que presenta
+un mensaje producido al <em>topic</em> del siguiente microservicio (el
+Codificador de textos).</p></li>
+</ul>
+<p><strong>Diagrama de clases</strong></p>
+<div class="figure align-default" id="id17">
+<img alt="Diagrama de clases del Pre-procesador de textos." src="../_images/classes-preprocessor.png" />
+<p class="caption"><span class="caption-number">Figura 48 </span><span class="caption-text">Diagrama de clases del Pre-procesador de textos.</span><a class="headerlink" href="#id17" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p><strong>Microservicio Codificador de textos</strong></p>
+<p>Este microservicio se encarga de codificar el texto y dividirlo en
+fragmentos menores, a fin de respetar la longitud máxima de entrada del
+modelo generador de resúmenes.</p>
+<p>El Codificador cuenta con las siguientes clases:</p>
+<ul class="simple">
+<li><p><strong>Codificador y divisor de textos</strong> (<code class="docutils literal notranslate"><span class="pre">SplitterEncoder</span></code>): esta clase es
+la encargada de realizar el codificado y división del texto.</p></li>
+<li><p><strong>Esquema para Mensajes Consumidos</strong>
+(<code class="docutils literal notranslate"><span class="pre">TextEncodingsConsumedMsgSchema</span></code>): estructura (campos) que presenta
+un mensaje consumido por el Codificador. Estos mensajes procederán
+del microservicio Pre-procesador de textos.</p></li>
+<li><p><strong>Esquema para Mensajes Producidos</strong>
+(<code class="docutils literal notranslate"><span class="pre">TextSumarizationProducedMsgSchema</span></code>): estructura (campos) que
+presenta un mensaje producido al <em>topic</em> del siguiente microservicio
+(el Generador de resumen).</p></li>
+</ul>
+<p><strong>Diagrama de clases</strong></p>
+<div class="figure align-default" id="id18">
+<img alt="Diagrama de clases del Codificador de textos." src="../_images/classes-encoder.png" />
+<p class="caption"><span class="caption-number">Figura 49 </span><span class="caption-text">Diagrama de clases del Codificador de textos.</span><a class="headerlink" href="#id18" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p><strong>Microservicio Generador de resúmenes</strong></p>
+<p>Este microservicio se encarga de generar resúmenes a partir del texto
+codificado que recibe del Codificador.</p>
+<p>Las clases del Generador de resúmenes son:</p>
+<ul class="simple">
+<li><p><strong>Generador de resúmenes</strong> (<code class="docutils literal notranslate"><span class="pre">Summarizer</span></code>): esta clase es la encargada
+de generar los resúmenes.</p></li>
+<li><p><strong>Esquema para Mensajes Consumidos</strong>
+(<code class="docutils literal notranslate"><span class="pre">TextSummarizationConsumedMsgSchema</span></code>): estructura (campos) que
+presenta un mensaje consumido por el Generador de resúmenes. Estos
+mensajes procederán del microservicio Codificador de textos.</p></li>
+<li><p><strong>Esquema para Mensajes Producidos</strong>
+(<code class="docutils literal notranslate"><span class="pre">TextPostprocessingProducedMsgSchema</span></code>): estructura (campos) que
+presenta un mensaje producido al <em>topic</em> del siguiente microservicio
+(el Post-procesador de textos).</p></li>
+</ul>
+<p><strong>Diagrama de clases</strong></p>
+<div class="figure align-default" id="id19">
+<img alt="Diagrama de clases del Generador de resúmenes." src="../_images/classes-summarizer.png" />
+<p class="caption"><span class="caption-number">Figura 50 </span><span class="caption-text">Diagrama de clases del Generador de resúmenes.</span><a class="headerlink" href="#id19" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p><strong>Microservicio Post-procesador de textos</strong></p>
+<p>Este microservicio lleva a cabo el post-procesado del resumen entregado
+por el Generador de resúmenes.</p>
+<p>El Post-procesador de textos tiene las siguientes clases.</p>
+<ul class="simple">
+<li><p><strong>Post-procesador de textos</strong> (<code class="docutils literal notranslate"><span class="pre">TextPostprocessor</span></code>): esta clase es la
+encargada de post-procesar el texto.</p></li>
+<li><p><strong>Esquema para Mensajes Consumidos</strong>
+(<code class="docutils literal notranslate"><span class="pre">TextPostprocessingConsumedMsgSchema</span></code>): estructura (campos) que
+presenta un mensaje consumido por el Post-procesador de textos. Estos
+mensajes procederán del microservicio Generador de resúmenes.</p></li>
+<li><p><strong>Esquema para Mensajes Producidos</strong>
+(<code class="docutils literal notranslate"><span class="pre">ReadyProducedMsgSchema</span></code>): estructura (campos) que presenta un
+mensaje producido al siguiente <em>topic</em>, <em>Ready</em>.</p></li>
+</ul>
+<p><strong>Diagrama de clases</strong></p>
+<div class="figure align-default" id="id20">
+<img alt="Diagrama de clases del Post-procesador de textos." src="../_images/classes-postprocessor.png" />
+<p class="caption"><span class="caption-number">Figura 51 </span><span class="caption-text">Diagrama de clases del Post-procesador de textos.</span><a class="headerlink" href="#id20" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="frontend">
+<h3><em>Frontend</em><a class="headerlink" href="#frontend" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>El <em>frontend</em> está compuesto por la aplicación multiplataforma
+desarrollada siguiendo los patrones de <em>Clean Architecture</em> y Diseño
+guiado por el dominio <em>Domain Driven Design</em>. Para conocer los detalles
+concretos de la implementación de la arquitectura de la <em>app</em>, se
+recomienda acudir a la sección «<a class="reference internal" href="../memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.html#section-arch-motivation"><span class="std std-ref">Motivación tras las arquitecturas desarrolladas</span></a>»
+de la Memoria.</p>
+<p>Las clases identificadas en la aplicación son las siguientes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">JiztApp</span></code>: esta clase representa la aplicación en su conjunto. En
+el <code class="docutils literal notranslate"><span class="pre">main</span></code> de la aplicación, se ejecuta una instancia de esta clase.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NewSummaryPage</span></code>: se corresponde con la pantalla desde la cual los
+usuarios pueden solicitar nuevos resúmenes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SummaryPage</span></code>: se corresponde con la pantalla en la que se muestra
+el resumen generado.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NewSummaryCubit</span></code>: clase encargada de transformar los eventos
+procedentes de los usuarios en la pantalla <code class="docutils literal notranslate"><span class="pre">NewSummaryPage</span></code> (por
+ejemplo, un <em>click</em>), en acciones particulares de la aplicación.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SummaryCubit</span></code>: análoga a la anterior solo que en este caso para la
+pantalla <code class="docutils literal notranslate"><span class="pre">SummaryPage</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JiztRepository</span></code>: clase que encapsula y centraliza la lógica de
+acceso a las fuentes de datos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JiztCacheClient</span></code>: clase que gestiona el acceso a la base de datos
+local.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JiztApiClient</span></code>: clase que gestiona la comunicación con la REST API
+de JIZT.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Summary</span></code>: representa un resumen. En realidad, disponemos de tres
+representaciones de un resumen, cada una correspondiéndose con cada
+uno de los dominios (capa de dominio, caché y REST API). No obstante,
+la estructura de las mismas es análoga; por consiguiente, las
+sintetizamos todas en una única clase para simplificar el esquema de
+diseño.</p></li>
+</ul>
+<div class="figure align-default" id="id21">
+<img alt="Diagrama de clases de la aplicación de JIZT." src="../_images/classes-app.png" />
+<p class="caption"><span class="caption-number">Figura 52 </span><span class="caption-text">Diagrama de clases de la aplicación de JIZT.</span><a class="headerlink" href="#id21" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="diseno-procedimental">
+<h2>Diseño procedimental<a class="headerlink" href="#diseno-procedimental" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En esta sección repasamos una vez más los pasos que se llevan a cabo
+tanto en el <em>backend</em> a la hora de atender las peticiones de los
+clientes y generar los resúmenes, como en la aplicación, encargada de
+gestionar los resúmenes de los usuarios.</p>
+<p>En la sección correspondiente al <em>backend</em> del capítulo
+<a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html#chapter-tecnicas-herramientas"><span class="std std-ref">Técnicas y herramientas</span></a> explicábamos cómo se gestionaba la comunicación
+entre los clientes y la REST API a través de peticiones HTTP. Recordemos el proceso:</p>
+<ol class="arabic simple">
+<li><p>El cliente realiza una petición HTTP POST, incluyendo en el cuerpo el
+texto a resumir, así como los parámetros del resumen a generar.</p></li>
+<li><p>Ingress (API <em>Gateway</em>) comprueba que dicha petición se está haciendo
+a un <em>endpoint</em> válido, y en ese caso la redirige hacia el
+<em>Dispatcher</em>.</p></li>
+<li><p>El <em>Dispatcher</em> realiza una serie de comprobaciones:</p>
+<ol class="arabic simple">
+<li><p>Se consulta en la base de datos si ya existe un resumen generado para
+ese texto con esos parámetros. En ese caso, se responde al cliente
+con los datos del resumen (<code class="docutils literal notranslate"><span class="pre">output</span></code>, <code class="docutils literal notranslate"><span class="pre">source</span></code>, <code class="docutils literal notranslate"><span class="pre">started_at</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ended_at</span></code>, etc.). El <code class="docutils literal notranslate"><span class="pre">status</span></code> del resumen será <code class="docutils literal notranslate"><span class="pre">completed</span></code>
+(«completado»).</p></li>
+<li><p>En caso contrario, se responde con el mismo esquema de datos, solo
+que el <code class="docutils literal notranslate"><span class="pre">output</span></code> será <code class="docutils literal notranslate"><span class="pre">null</span></code>, y el <code class="docutils literal notranslate"><span class="pre">status</span></code> será <code class="docutils literal notranslate"><span class="pre">summarizing</span></code>
+(«resumiendo»). Al mismo tiempo, se produce un mensaje al <em>topic</em>
+del pre-procesador de textos, conteniendo el texto y los parámetros
+del resumen, comenzando el proceso de generación</p></li>
+</ol>
+</li>
+<li><p>El pre-procesador está constantemente comprobando si existen mensajes
+nuevos en su <em>topic</em>. En ese caso los consume, realiza las tareas de
+pre-procesado, y produce el resultado en el <em>topic</em> del codificador.</p></li>
+<li><p>Este proceso continua de forma análoga hasta llegar al
+post-procesador, el cual produce el resumen final al <em>topic</em>
+«Listo» (<em>Ready</em>). El <em>Dispatcher</em>, en ese momento, consume el
+mensaje, y actualiza la base de datos.</p></li>
+<li><p>Mientras el proceso de resumen se completa, el cliente realiza
+peticiones GET de manera periódica, hasta que la API REST finalmente
+responde con el resumen generado.</p></li>
+</ol>
+<p>La siguiente figura ilustra este proceso de forma gráfica, a través de un diagrama de
+secuencia:</p>
+<div class="figure align-default" id="seq-api">
+<img alt="Diagrama de secuencia del *backend*." src="../_images/seq-diagram-api.png" />
+<p class="caption"><span class="caption-number">Figura 53 </span><span class="caption-text">Diagrama de secuencia del <em>backend</em>.</span><a class="headerlink" href="#seq-api" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>A su vez, en la aplicación, es decir, el <em>frontend</em>, de llevan a cabo
+los siguientes pasos:</p>
+<ol class="arabic simple">
+<li><p>El usuario solicita generar un nuevo resumen, pulsando para ello
+sobre la pantalla.</p></li>
+<li><p>El evento se transforma a través del <em>cubit</em> en un petición de
+resumen al repositorio.</p></li>
+<li><p>El repositorio realiza una petición HTTP POST al <em>backend</em> para
+obtener el <em>id</em> del resumen a partir del texto fuente, los parámetros
+del resumen, y el modelo.</p></li>
+<li><p>Una vez obtenido el <em>id</em> del resumen, se consulta la base de datos
+local (capa de caché) para conocer si ya se dispone localmente del
+resumen solicitado. En ese caso, se devuelve el resumen, y se
+actualiza la pantalla para mostrárselo al usuario.</p></li>
+<li><p>En caso contrario, se realiza peticiones GET periódicas a la API REST
+hasta que el resumen se completa. Finalmente, se actualiza la
+pantalla.</p></li>
+</ol>
+<p>A continuación, se incluye un diagrama de clases que describe el proceso de
+manera más detallada.</p>
+<div class="figure align-default" id="seq-app">
+<img alt="Diagrama de secuencia de la aplicación." src="../_images/seq-diagram-app.png" />
+<p class="caption"><span class="caption-number">Figura 54 </span><span class="caption-text">Diagrama de secuencia de la aplicación.</span><a class="headerlink" href="#seq-app" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="diseno-arquitectonico">
+<h2>Diseño arquitectónico<a class="headerlink" href="#diseno-arquitectonico" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Dado que el diseño arquitectónico conforma uno de los principales
+aspectos a destacar de todo el proyecto, se ha incluido de manera
+detallada en la Memoria.</p>
+<div class="section" id="backend-1">
+<span id="id2"></span><h3><em>Backend</em><a class="headerlink" href="#backend-1" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Por tanto, en esta sección llevaremos a cabo un resumen de los
+principales puntos de la arquitectura, e incluiremos información
+adicional acerca de los retos que surgieron, y cómo se resolvieron,
+dando con el diseño arquitectónico final.</p>
+<p>Como se indica en la Memoria, para el <em>backend</em> se ha desarrollado una
+<strong>arquitectura de microservicios</strong>, a través de la cual podemos separar
+cada paso en la generación de resúmenes (pre-procesado, codificación,
+generación del resumen, post-procesado), en módulos independientes,
+favoreciendo los siguientes aspectos:</p>
+<ul class="simple">
+<li><p>Gracias a la división en microservicios, conseguimos una gran
+flexibilidad; los cambios en uno de los pasos en la generación del
+resumen no influyen al resto.</p></li>
+<li><p>Facilita la detección y corrección de cuellos de botella en el
+proceso, dado que podemos monitorizar de forma precisa el rendimiento
+de cada microservicio.</p></li>
+<li><p>La arquitectura es fácilmente escalable tanto en términos de los
+microservicios ya existentes, aumentando el número de réplicas de
+cada microservicio (permitiendo la generación en paralelo de varios
+resúmenes), como en términos de la adicción de nuevos microservicios,
+por ejemplo, diferentes modelos para distintos idiomas.</p></li>
+<li><p>Asegura una alta disponibilidad, ya si uno de los microservicios
+falla, el sistema crea una nueva instancia y finaliza el
+microservicio defectuoso. Adicionalmente, con una arquitectura de
+microservicios eliminamos cualquier posible punto de único fallo
+(<em>single point of failure</em>).</p></li>
+</ul>
+<p>Otro de los principales aspectos de la arquitectura es cómo se lleva a
+cabo la comunicación y el correcto enrutado de los mensajes entre los
+diferentes microservicios. Al tratarse de un proceso secuencial, la
+salido de un microservicio será la entrada del siguiente.</p>
+<p>Inicialmente, se pensó en resolver esta situación mediante el patrón de
+<em>routing-slips</em> (hojas de ruta) <a class="reference internal" href="#routing-slip" id="id3"><span>[routing-slip]</span></a>. Con
+este patrón se incluye en el propio mensaje la ruta que este debe
+seguir, por lo que, implementando un <em>router</em> en cada microservicio que
+interpretara la hoja de ruta, podríamos, resolver el problema del
+enrutado. En cuanto a cómo se llevaría a cabo la comunicación, esta se
+podría hacer mediante peticiones HTTP, de forma que cada microservicio
+implementara su propia REST API.</p>
+<p>Siguiendo esta estrategia, junto con el patrón de API <em>gateway</em>, a
+través que se ofrece un punto de entrada al <em>backend</em>, el diseño de la
+arquitectura quedaba como se muestra en la siguiente figura:</p>
+<div class="figure align-default" id="fig-deprecated-arch">
+<img alt="Primera aproximación para el diseño arquitectónico del *backend*." src="../_images/deprecated-arch.png" />
+<p class="caption"><span class="caption-number">Figura 55 </span><span class="caption-text">Primera aproximación para el diseño arquitectónico del <em>backend</em>.</span><a class="headerlink" href="#fig-deprecated-arch" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Poco después, conocimos acerca de la <strong>arquitectura dirigida por eventos</strong>
+<a class="reference internal" href="#event-driven" id="id4"><span>[event-driven]</span></a>, y de Kafka <a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html#apache-kafka" id="id5"><span>[apache-kafka]</span></a>, una de las herramientas más apropiadas y
+avanzadas a día de hoy para este tipo de arquitectura<a class="footnote-reference brackets" href="#id13" id="id6">2</a>.</p>
+<p>Con este nuevo diseño, la arquitectura se simplificaba en gran medida, y
+problemas como el escalado, o la entrega fiable de mensajes, corrían a
+cargo de Kafka, quienes gestionaba estos y otros aspectos de manera
+automática.</p>
+<p>La arquitectura final del <em>backend</em> quedó, por tanto, del siguiente modo:</p>
+<div class="figure align-default" id="fig-final-arch-backend">
+<img alt="Diseño final de la arquitectura del *backend*." src="../_images/overview-arch.png" />
+<p class="caption"><span class="caption-number">Figura 56 </span><span class="caption-text">Diseño final de la arquitectura del <em>backend</em>.</span><a class="headerlink" href="#fig-final-arch-backend" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="frontend-1">
+<span id="id7"></span><h3><em>Frontend</em><a class="headerlink" href="#frontend-1" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Gracias a la vibrante comunidad de Flutter <a class="reference internal" href="A_Plan_proyecto.html#flutter-es" id="id8"><span>[flutter-es]</span></a>,
+dar con la arquitectura más apropiada para la aplicación resultó un
+proceso más fluido.</p>
+<p>Antes de comenzar este proyecto, habíamos oído del concepto de <em>Clean Architecture</em>
+<a class="reference internal" href="../memoria/2_Objetivos_del_proyecto.html#martin15" id="id9"><span>[martin15]</span></a>, aunque lo conocíamos únicamente de manera superficial. No obstante,
+en nuestra formación de Flutter, apareció de nuevo, y esta vez sí que profundizamos en
+él.</p>
+<p>A continuación, nos informamos sobre el patrón BLoC <a class="reference internal" href="#bloc-pattern" id="id10"><span>[bloc-pattern]</span></a>, muy popular
+también dentro de la comunidad Flutter. Por suerte, también existe un paquete para la
+implementación de este patrón <a class="reference internal" href="#bloc-package" id="id11"><span>[bloc-package]</span></a>.</p>
+<p>Finalmente, la arquitectura quedó como se muestra a continuación:</p>
+<div class="figure align-default" id="fig-final-arch-app">
+<img alt="Diseño final de la arquitectura de la aplicación." src="../_images/jizt-app-arch.png" />
+<p class="caption"><span class="caption-number">Figura 57 </span><span class="caption-text">Diseño final de la arquitectura de la aplicación.</span><a class="headerlink" href="#fig-final-arch-app" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>La información completa acerca de la <a class="reference internal" href="../memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.html#subsubsec-app-development"><span class="std std-ref">arquitectura de la aplicación</span></a> se encuentra, asimismo, en la Memoria.</p>
+</div>
+</div>
+<div class="section" id="diseno-de-interfaces">
+<h2>Diseño de interfaces<a class="headerlink" href="#diseno-de-interfaces" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="diseno-del-logo">
+<h3>Diseño del logo<a class="headerlink" href="#diseno-del-logo" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Una de las intenciones detrás de este proyecto siempre ha sido tratar de
+crear una cierta imagen corporativa y de producto. Como consecuencia, el
+diseño de nuestra carta de presentación, es decir, nuestro logo, ocupó
+un papel central en las primeras iteraciones del proyecto.</p>
+<p>En la búsqueda creativa de un logo atractivo, moderno y memorable, se
+experimentó con numerosos posibles diseños en papel.</p>
+<div class="figure align-default" id="id22">
+<img alt="Ideas, ideas, y más ideas. Pero solo unas pocas buenas." src="../_images/logo-drafts.jpeg" />
+<p class="caption"><span class="caption-number">Figura 58 </span><span class="caption-text">Ideas, ideas, y más ideas. Pero solo unas pocas buenas.</span><a class="headerlink" href="#id22" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Finalmente, dimos con un diseño que parecía tener potencial. Cogimos
+nuestro ordenador, y nos sumergimos en Adobe Illustrator, un editor de
+gráficos vectoriales muy popular. Por experiencia previa en diseño
+gráfico (autodidacta), sabemos que, teniendo una buena idea de partida,
+equivale a tener una gran parte del trabajo hecho.</p>
+<p>Así pues, el logo final, nuestra carta de presentación, acabó luciendo
+como se muestra a continuación. En nuestra opinión, cumple con los requisitos
+esperados.</p>
+<div class="figure align-center" id="fig-jizt-logo">
+<a class="reference internal image-reference" href="../_images/jizt-logo.png"><img alt="JIZT - Generación de resúmenes mediante IA." src="../_images/jizt-logo.png" style="width: 80.0%;" /></a>
+<p class="caption"><span class="caption-number">Figura 59 </span><span class="caption-text">JIZT - Generación de resúmenes mediante IA.</span><a class="headerlink" href="#fig-jizt-logo" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Asimismo, se desarrollaron una serie de variaciones sobre el logo, a fin de</p>
+<div class="figure align-default" id="fig-logo-variations">
+<img alt="Variaciones sobre el logo de JIZT." src="../_images/jizt-logo-variations.png" />
+<p class="caption"><span class="caption-number">Figura 60 </span><span class="caption-text">Variaciones sobre el logo de JIZT.</span><a class="headerlink" href="#fig-logo-variations" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="diseno-de-la-interfaz-grafica-de-la-aplicacion">
+<h3>Diseño de la interfaz gráfica de la aplicación<a class="headerlink" href="#diseno-de-la-interfaz-grafica-de-la-aplicacion" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Para el diseño de la interfaz gráfica de usuario de la aplicación,
+trabajamos directamente sobre el ordenador, esta vez con el programa
+Inkscape, también editor de gráficos vectoriales, pero en este caso
+<em>open-source</em> y gratuito.</p>
+<p>Se llevaron a cabo diferentes iteraciones hasta dar con un diseño que
+nos acabó pareciendo adecuado.</p>
+<div class="figure align-default" id="id23">
+<img alt="Iteraciones sobre la pantalla principal." src="../_images/ui-design.png" />
+<p class="caption"><span class="caption-number">Figura 61 </span><span class="caption-text">Iteraciones sobre la pantalla principal.</span><a class="headerlink" href="#id23" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Siguiendo el estilo de la pantalla principal, se diseñaron el resto de
+pantallas:</p>
+<div class="figure align-default" id="fig-app-screens">
+<img alt="Capturas de pantalla de la aplicación para su publicación en Play Store." src="../_images/app-screens.png" />
+<p class="caption"><span class="caption-number">Figura 62 </span><span class="caption-text">Capturas de pantalla de la aplicación para su publicación en Play
+Store.</span><a class="headerlink" href="#fig-app-screens" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Para más información sobre Kafka, se recomienda acudir a la sección
+relativa a <a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html#subsec-kafka"><span class="std std-ref">Kafka y Strimzi</span></a> de la Memoria.</p>
+</dd>
+<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id6">2</a></span></dt>
+<dd><p>De nuevo, referimos al lector a la Memoria, donde se recogen las
+principales ventajas, tanto de este patrón arquitectónico, como de
+Kafka.</p>
+</dd>
+</dl>
+<dl class="citation">
+<dt class="label" id="routing-slip"><span class="brackets"><a class="fn-backref" href="#id3">routing-slip</a></span></dt>
+<dd><p>Codit. The Routing Slip Pattern. Jul. de 2019. URL:
+<a class="reference external" href="https://www.codit.eu/blog/the-routing-slip-pattern">https://www.codit.eu/blog/the-routing-slip-pattern</a>.
+Último acceso: 10/02/2021.</p>
+</dd>
+<dt class="label" id="event-driven"><span class="brackets"><a class="fn-backref" href="#id4">event-driven</a></span></dt>
+<dd><p>Wikipedia - La enciclopedia libre. Arquitectura dirigida por eventos.
+Ago. de 2020. URL:
+<a class="reference external" href="https://es.wikipedia.org/wiki/Arquitectura_dirigida_por_eventos">https://es.wikipedia.org/wiki/Arquitectura_dirigida_por_eventos</a>.
+Último acceso: 10/02/2021.</p>
+</dd>
+<dt class="label" id="bloc-pattern"><span class="brackets"><a class="fn-backref" href="#id10">bloc-pattern</a></span></dt>
+<dd><p>Didier Boelens. Reactive Programming - Streams -BLoC. Ago. de
+2018. URL:
+<a class="reference external" href="https://www.didierboelens.com/2018/08/reactive-programming-streams-bloc">https://www.didierboelens.com/2018/08/reactive-programming-streams-bloc</a>.
+Último acceso: 10/02/2021.</p>
+</dd>
+<dt class="label" id="bloc-package"><span class="brackets"><a class="fn-backref" href="#id11">bloc-package</a></span></dt>
+<dd><p>Felix Angelov. Bloc Package. Dic. de 2020. URL:
+<a class="reference external" href="https://pub.dev/packages/bloc">https://pub.dev/packages/bloc</a>.
+Último acceso: 10/02/2021.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="D_Manual_programador.html" class="btn btn-neutral float-right" title="Documentación técnica de programación" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="B_Requisitos.html" class="btn btn-neutral float-left" title="Especificación de Requisitos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Derechos de autor 2021, Diego Miguel Lozano.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

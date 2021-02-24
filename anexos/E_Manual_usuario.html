@@ -1,0 +1,458 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Documentación de usuario &mdash; documentación de JIZT - AI Summarization - 0.1.0</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="docs.jizt.it/anexos/E_Manual_usuario.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Experimentos sobre el algoritmo de división de texto" href="F_Experimentos.html" />
+    <link rel="prev" title="Documentación técnica de programación" href="D_Manual_programador.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JIZT - AI Summarization
+          
+
+          
+            
+            <img src="../_static/jizt-docs.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Memoria</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/1_Introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/2_Objetivos_del_proyecto.html">Objetivos del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/3_Conceptos_teoricos.html">Conceptos teóricos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html">Técnicas y herramientas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.html">Aspectos relevantes del desarrollo del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/6_Trabajos_relacionados.html">Trabajos relacionados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/7_Conclusiones_Lineas_de_trabajo_futuras.html">Conclusiones y Líneas de trabajo futuras</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Anexos</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="A_Plan_proyecto.html">Plan de Proyecto Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="B_Requisitos.html">Especificación de Requisitos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_Diseno.html">Especificación de diseño</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D_Manual_programador.html">Documentación técnica de programación</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentación de usuario</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduccion">Introducción</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requisitos-de-usuarios">Requisitos de usuarios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion">Instalación</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#android">Android</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#instalacion-recomendada">Instalación recomendada</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ios">iOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#web"><em>Web</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#manual-del-usuario">Manual del usuario</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#generar-un-nuevo-resumen">Generar un nuevo resumen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ajustar-la-longitud-del-resumen-a-generar">Ajustar la longitud del resumen a generar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ver-todos-los-resumenes-generados">Ver todos los resúmenes generados</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#borrar-un-resumen">Borrar un resumen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#copiar-un-resumen">Copiar un resumen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compartir-un-resumen">Compartir un resumen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ver-el-texto-a-partir-del-cual-se-genero-un-resumen">Ver el texto a partir del cual se generó un resumen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtener-mas-informacion-acerca-de-un-resumen">Obtener más información acerca de un resumen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generar-un-resumen-a-partir-de-un-documento">Generar un resumen a partir de un documento</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generar-un-resumen-a-partir-de-una-imagen">Generar un resumen a partir de una imagen</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="F_Experimentos.html">Experimentos sobre el algoritmo de división de texto</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Ayúdanos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribuir a JIZT</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JIZT - AI Summarization</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Documentación de usuario</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/anexos/E_Manual_usuario.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documentacion-de-usuario">
+<span id="apendix-manual-usuario"></span><h1>Documentación de usuario<a class="headerlink" href="#documentacion-de-usuario" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En esta sección se recogen los requisitos que requiere nuestra
+aplicación, así como los detalles para la instalación y uso de la misma
+por el usuario final<a class="footnote-reference brackets" href="#id4" id="id1">1</a>.</p>
+</div>
+<div class="section" id="requisitos-de-usuarios">
+<h2>Requisitos de usuarios<a class="headerlink" href="#requisitos-de-usuarios" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Para la versión <strong>Android</strong>, se deben cumplir los siguientes requisitos:</p>
+<ul class="simple">
+<li><p>Mínimo 18 MB de espacio de almacenamiento libre. El paquete de instalación tiene un
+tamaño de 6,3 MB, y una vez instalada ocupa 16,36 MB. No obstante, ese tamaño
+aumentará ligeramente según se vayan almacenando resúmenes.</p></li>
+<li><p>Versión de Android igual o superior a la 4.1 (<em>JellyBean</em> - API 16).</p></li>
+</ul>
+<p>En el caso de <strong>iOS</strong>:</p>
+<ul class="simple">
+<li><p>Mínimo 20 MB de espacio de almacenamiento libre. En este caso, el peso del paquete
+es de 6,9 MB, y una vez instalada ocupa 17,2 MB.</p></li>
+<li><p>Versión de iOS 8 o superior.</p></li>
+</ul>
+<p>Y en el caso de la versión <strong>web</strong>:</p>
+<ul class="simple">
+<li><p>Los navegadores <em>web</em> soportados son Google Chrome<a class="footnote-reference brackets" href="#id6" id="id2">2</a>, Mozilla Firefox,
+Safari o Edge.</p></li>
+</ul>
+<p>En todos los casos se requiere conexión a Internet para generar nuevos
+resúmenes (los resúmenes ya generados se pueden consultar <em>offline</em>). La
+<em>app</em> de JIZT no requiere de permisos adicionales en ninguna de las
+plataformas.</p>
+<p>La aplicación solo está disponible por el momento en inglés, dado que
+este es el único lenguaje soportado actualmente por el servicio de
+generación de resúmenes.</p>
+</div>
+<div class="section" id="instalacion">
+<h2>Instalación<a class="headerlink" href="#instalacion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En esta sección detallamos el proceso de instalación en las diferentes
+plataformas.</p>
+<div class="section" id="android">
+<h3>Android<a class="headerlink" href="#android" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="section" id="instalacion-recomendada">
+<h4>Instalación recomendada<a class="headerlink" href="#instalacion-recomendada" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Se recomienda que el usuario instale la aplicación desde Google Play.</p>
+<p>Para ello, simplemente basta con buscar la aplicación «JIZT AI Summarization» y
+pulsar en «Instalar».</p>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../_images/jizt-google-play.png"><img alt="Instalar JIZT desde Google Play." src="../_images/jizt-google-play.png" style="width: 70%;" /></a>
+<p class="caption"><span class="caption-number">Figura 63 </span><span class="caption-text">Instalar JIZT desde Google Play.</span><a class="headerlink" href="#id8" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="ios">
+<h3>iOS<a class="headerlink" href="#ios" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Por el momento, la aplicación no ha sido publicada en la App Store, e
+iOS no proporciona ninguna manera oficial para la instalación de
+aplicaciones desde fichero<a class="footnote-reference brackets" href="#id7" id="id3">3</a>.</p>
+<p>Por tanto, se recomienda a los usuarios que accedan desde su navegador
+móvil a la versión <em>web</em> de JIZT (ver siguiente sección).</p>
+</div>
+<div class="section" id="web">
+<h3><em>Web</em><a class="headerlink" href="#web" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Se puede acceder a la aplicación directamente a través de
+<a class="reference external" href="https://dmlls.github.io/jizt-tfg-app">app.jizt.it</a>, sin ser necesario realizar
+ninguna instalación.</p>
+</div>
+</div>
+<div class="section" id="manual-del-usuario">
+<h2>Manual del usuario<a class="headerlink" href="#manual-del-usuario" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Una vez instalada la aplicación, el usuario está en disposición de
+comenzar a utilizarla. El funcionamiento en interfaz de la aplicación en
+las diferentes plataformas es homogéneo, por lo que todo lo explicado a
+continuación es válido para cualquiera de ellas.</p>
+<div class="section" id="generar-un-nuevo-resumen">
+<span id="subsection-nuevo-resumen"></span><h3>Generar un nuevo resumen<a class="headerlink" href="#generar-un-nuevo-resumen" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La generación de resúmenes se trata de una de las funciones principales
+de la aplicación.</p>
+<p>Los pasos que debemos seguir para generar un nuevo resumen son los
+siguientes:</p>
+<ol class="arabic simple">
+<li><p>En la pantalla de inicio, pulsar sobre el campo de texto central, el
+cual contiene escrito «<em>Type or paste your text</em>» (en español,
+«Escribe o pega tu texto»).</p></li>
+<li><p>Escribir el texto o pulsar en el icono de la esquina superior
+derecha, el sirve para pegar el texto desde el portapapeles.</p></li>
+<li><p>Pulsar en «<em>Summarize</em>» («resumir»).</p></li>
+<li><p>Se mostrará una barra que simboliza que el resumen está siendo
+generado.</p></li>
+<li><p>Una vez completado el resumen, se mostrará una nueva pantalla con el
+resumen.</p></li>
+</ol>
+<p>Se puede visualizar un vídeo que recoge el proceso <a class="reference external" href="https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/1-generar-nuevo-resumen.mp4">aquí</a>.</p>
+</div>
+<div class="section" id="ajustar-la-longitud-del-resumen-a-generar">
+<h3>Ajustar la longitud del resumen a generar<a class="headerlink" href="#ajustar-la-longitud-del-resumen-a-generar" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>JIZT nos permite establecer la longitud deseada del resumen generado. Esta longitud se
+establece como un porcentaje de la longitud del texto original.</p>
+<p>Para ajustar la longitud del resumen que vamos a generar, debemos seguir los dos
+primeros pasos indicados en la sección «<a class="reference internal" href="#subsection-nuevo-resumen"><span class="std std-ref">Generar un nuevo resumen</span></a>».</p>
+<p>Una vez en la pantalla de nuevo resumen, podemos ajustar el <em>slider</em> que aparece
+en la parte inferior de la pantalla, estableciendo la longitud mínima y máxima de
+nuestro resumen.</p>
+<p>Se puede visualizar un vídeo que recoge el proceso <a class="reference external" href="https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/2-ajustar-longitud.mp4">aquí</a>.</p>
+</div>
+<div class="section" id="ver-todos-los-resumenes-generados">
+<h3>Ver todos los resúmenes generados<a class="headerlink" href="#ver-todos-los-resumenes-generados" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La aplicación muestra en la pantalla principal una vista previa de los
+últimos resúmenes generados en forma de lista deslizable. Pulsando sobre
+cualquiera de ellos, se accede a los detalles del mismo.</p>
+<p>Si se quieren ver todos los resúmenes, se puede pulsar en «<em>See all</em>»
+(«ver todos»). Se mostrará una nueva pantalla en la que aparece una
+lista con todos los resúmenes, ordenados temporalmente de más recientes
+a más antiguos. Se puede pulsar sobre cualquiera de ellos para obtener
+más detalles.</p>
+<p>Se puede visualizar un vídeo que recoge el proceso <a class="reference external" href="https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/3-ver-todos-resúmenes.mp4">aquí</a>.</p>
+</div>
+<div class="section" id="borrar-un-resumen">
+<span id="subsection-borrar"></span><h3>Borrar un resumen<a class="headerlink" href="#borrar-un-resumen" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Para borrar un resumen, se puede pulsar en el símbolo que aparece en la
+esquina superior derecha en la pantalla de «<em>Summary</em>» (resumen).</p>
+<p>Se puede acceder a esta pantalla de tres formas diferentes:</p>
+<ol class="arabic simple">
+<li><p>Tras generar un resumen, se muestra dicha pantalla por defecto.</p></li>
+<li><p>Haciendo <em>click</em> en cualquiera de los resúmenes que aparecen en la
+parte inferior de la pantalla principal.</p></li>
+<li><p>Pulsando en «<em>See all</em>» («ver todos») y haciendo <em>click</em> en
+cualquiera de los resúmenes.</p></li>
+</ol>
+<p>Se puede visualizar un vídeo que recoge el proceso <a class="reference external" href="https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/4-borrar-resumen.mp4">aquí</a>.</p>
+</div>
+<div class="section" id="copiar-un-resumen">
+<h3>Copiar un resumen<a class="headerlink" href="#copiar-un-resumen" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Para copiar un resumen, se debe estar en la pantalla de «<em>Summary</em>»
+(resumen). Para acceder a esta pantalla, seguir cualquiera de las
+alternativas listadas en la sección .</p>
+<p>Una vez en esta pantalla, se debe pulsar en el siguiente icono:</p>
+<p>Tras pulsar dicho icono, el texto se habrá copiado al portapapeles de
+nuestro dispositivo.</p>
+<p>Se puede visualizar un vídeo que recoge el proceso <a class="reference external" href="https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/5-copiar-resumen.mp4">aquí</a>.</p>
+</div>
+<div class="section" id="compartir-un-resumen">
+<h3>Compartir un resumen<a class="headerlink" href="#compartir-un-resumen" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Para copiar un resumen, se debe estar en la pantalla de «<em>Summary</em>»
+(resumen). Para acceder a esta pantalla, seguir cualquiera de las
+alternativas listadas en la sección .</p>
+<p>Una vez en esta pantalla, se debe pulsar en el siguiente icono:</p>
+<p>A continuación, se mostrará una lista de aplicaciones a través de las
+cuales se puede compartir el resumen.</p>
+<p>Se puede visualizar un vídeo que recoge el proceso <a class="reference external" href="https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/6-compartir-resumen.mp4">aquí</a>.</p>
+</div>
+<div class="section" id="ver-el-texto-a-partir-del-cual-se-genero-un-resumen">
+<h3>Ver el texto a partir del cual se generó un resumen<a class="headerlink" href="#ver-el-texto-a-partir-del-cual-se-genero-un-resumen" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Para ver el texto original de un resumen, se debe estar en la pantalla
+de «<em>Summary</em>» (resumen). Para acceder a esta pantalla, seguir
+cualquiera de las alternativas listadas en la sección .</p>
+<p>Una vez en dicha pantalla, se debe pulsar sobre «<em>Original</em>».</p>
+<p>Se puede visualizar un vídeo que recoge el proceso <a class="reference external" href="https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/7-ver-original.mp4">aquí</a>.</p>
+</div>
+<div class="section" id="obtener-mas-informacion-acerca-de-un-resumen">
+<h3>Obtener más información acerca de un resumen<a class="headerlink" href="#obtener-mas-informacion-acerca-de-un-resumen" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Para obtener más información de un resumen, se debe estar en la pantalla
+de «<em>Summary</em>» (resumen). Para acceder a esta pantalla, seguir
+cualquiera de las alternativas listadas en la sección .</p>
+<p>Una vez en dicha pantalla, se debe pulsar sobre «<em>More info</em>» («Más
+información»).</p>
+<p>Se puede visualizar un vídeo que recoge el proceso <a class="reference external" href="https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/8-m%C3%A1s-info.mp4">aquí</a>.</p>
+</div>
+<div class="section" id="generar-un-resumen-a-partir-de-un-documento">
+<h3>Generar un resumen a partir de un documento<a class="headerlink" href="#generar-un-resumen-a-partir-de-un-documento" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Por el momento, esta opción no está disponible. No obstante, pronto será
+implementada.</p>
+</div>
+<div class="section" id="generar-un-resumen-a-partir-de-una-imagen">
+<h3>Generar un resumen a partir de una imagen<a class="headerlink" href="#generar-un-resumen-a-partir-de-una-imagen" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Por el momento, esta opción no está disponible. No obstante, pronto será
+implementada.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Por ahora, no se incluyen los detalles referentes a la versión de
+escritorio, dado que el soporte de Flutter para estas plataformas
+está aún en fase <em>alfa</em> <a class="reference internal" href="D_Manual_programador.html#flutter-desktop" id="id5"><span>[flutter-desktop]</span></a>.</p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Hemos probado la <em>app</em> en navegadores basados en Chromium, como Brave, y
+también parecen funcionar.</p>
+</dd>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Como aclaración al margen de Manual de Usuario, la aplicación no ha
+sido publicada en la App Store por su elevado precio (99$ al año por
+la cuenta de desarrollador, frente a los 25$ de por vida, en el caso
+de Play Store).</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="F_Experimentos.html" class="btn btn-neutral float-right" title="Experimentos sobre el algoritmo de división de texto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="D_Manual_programador.html" class="btn btn-neutral float-left" title="Documentación técnica de programación" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Derechos de autor 2021, Diego Miguel Lozano.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

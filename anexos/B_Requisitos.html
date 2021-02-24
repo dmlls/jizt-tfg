@@ -1,0 +1,989 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Especificación de Requisitos &mdash; documentación de JIZT - AI Summarization - 0.1.0</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="docs.jizt.it/anexos/B_Requisitos.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Especificación de diseño" href="C_Diseno.html" />
+    <link rel="prev" title="Plan de Proyecto Software" href="A_Plan_proyecto.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JIZT - AI Summarization
+          
+
+          
+            
+            <img src="../_static/jizt-docs.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Memoria</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/1_Introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/2_Objetivos_del_proyecto.html">Objetivos del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/3_Conceptos_teoricos.html">Conceptos teóricos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html">Técnicas y herramientas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.html">Aspectos relevantes del desarrollo del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/6_Trabajos_relacionados.html">Trabajos relacionados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/7_Conclusiones_Lineas_de_trabajo_futuras.html">Conclusiones y Líneas de trabajo futuras</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Anexos</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="A_Plan_proyecto.html">Plan de Proyecto Software</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Especificación de Requisitos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduccion">Introducción</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#proposito">Propósito</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#alcance">Alcance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definiciones-siglas-y-abreviaciones">Definiciones, siglas, y abreviaciones</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#descripcion-global">Descripción global</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objetivos-generales">Objetivos generales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#caracteristicas-del-usuario">Características del usuario</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#catalogo-de-requisitos">Catalogo de requisitos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requisitos-funcionales">Requisitos funcionales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requisitos-no-funcionales">Requisitos no funcionales</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Especificación de requisitos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#diagrama-de-casos-de-uso">Diagrama de casos de uso</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#actores">Actores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#casos-de-uso">Casos de uso</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="C_Diseno.html">Especificación de diseño</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D_Manual_programador.html">Documentación técnica de programación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_Manual_usuario.html">Documentación de usuario</a></li>
+<li class="toctree-l1"><a class="reference internal" href="F_Experimentos.html">Experimentos sobre el algoritmo de división de texto</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Ayúdanos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribuir a JIZT</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JIZT - AI Summarization</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Especificación de Requisitos</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/anexos/B_Requisitos.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="especificacion-de-requisitos">
+<span id="apendix-requisitos"></span><h1>Especificación de Requisitos<a class="headerlink" href="#especificacion-de-requisitos" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En este apéndice se recoge una descripción del sistema <em>software</em> a
+desarrollar. Más concretamente, se presentan aspectos como el propósito,
+alcance y objetivos generales del mismo, así como los requisitos
+específicos que el sistema debe implementar.</p>
+<p>La forma en la que hemos organizado la Especificación está basada
+parcialmente en las recomendaciones del estándar IEEE 830-1998,
+considerado como la principal referencia para la aplicación de buenas
+prácticas en la escritura del Documento de Especificación de Requistios
+(SRS).</p>
+<div class="section" id="proposito">
+<h3>Propósito<a class="headerlink" href="#proposito" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>El propósito de la presente Especificación de Requisitos tiene como
+objetivo ofrecer una descripción detallada del sistema <em>software</em>
+desarrollado.</p>
+<p>Este documento está orientado principalmente al equipo de desarrollo del
+proyecto, pero queda también a libre disposición de cualquier persona
+que pudiera estar interesada.</p>
+</div>
+<div class="section" id="alcance">
+<h3>Alcance<a class="headerlink" href="#alcance" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>El sistema <em>software</em> a desarrollar recibirá el nombre de JIZT. El
+objetivo y funcionalidad principal de JIZT será la generación de
+resúmenes abstractivos en la nube. Dicho sistema estará orientado tanto
+a usuarios con conocimientos de informática básicos, así como usuarios
+con experiencia en el campo.</p>
+<p>Para los primeros, es decir, usuarios con conocimientos básicos, se
+ofrecerá una aplicación multiplataforma desarrollada con la usabilidad
+en mente.</p>
+<p>Para aquellos usuarios más avanzados, además de la aplicación, se
+proporcionará una API REST, permitiéndoles realizar peticiones
+directamente, e incluso desarrollar sus propias aplicaciones que
+consuman dicha API.</p>
+<p>Se pondrá especial atención en el desarrollo de una documentación
+completa, accesible y de fácil comprensión. Esta documentación recogerá
+tanto los aspectos técnicos de la aplicación y la API REST, así como
+manuales de uso para el usuario y para el desarrollador.</p>
+</div>
+<div class="section" id="definiciones-siglas-y-abreviaciones">
+<h3>Definiciones, siglas, y abreviaciones<a class="headerlink" href="#definiciones-siglas-y-abreviaciones" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>A continuación se recogen las definiciones, siglas y abreviaciones más
+relevantes para el proyecto:</p>
+<ul class="simple">
+<li><p><strong>NLP</strong>: Procesamiento de Lenguaje Natural (<em>Natural Language
+Processing</em>).</p></li>
+<li><p><strong>Resumen extractivo</strong>: aquel resumen generado a partir de la
+<em>extracción</em> de las frases del texto consideradas más relevantes. Es
+decir, este tipo de resúmenes contienen únicamente frases tomadas
+literalmente del texto original.</p></li>
+<li><p><strong>Resumen abstractivo</strong>: aquel resumen que incluye palabras o
+expresiones que no aparecen en el texto original.</p></li>
+<li><p><strong>API REST</strong>: servicio <em>web</em> que proporciona una serie de <em>endpoints</em>
+para llevar a cabo operaciones HTTP (métodos), que proporcionan
+acceso para crear, recuperar, actualizar o eliminar los recursos del
+servicio.</p></li>
+<li><p><strong>Endpoint</strong>: punto de entrada en un canal de comunicación cuando dos
+sistemas interactúan. En una API REST los <em>endpoints</em> son
+generalmente URLs.</p></li>
+<li><p><strong>HTTP</strong>: <em>Hypertext Transfer Protocol</em>, protocolo para sistemas de
+información distribuidos, colaborativos e hipermedia. Este protocolo
+es la base de la comunicación de datos para la World Wide Web (WWW).</p></li>
+<li><p><strong>URL</strong>: <em>Uniform Resource Locator</em>, referencia a un recurso web que
+especifica su ubicación en una red informática y un mecanismo para
+recuperarlo.</p></li>
+<li><p><strong>Frontend</strong>: la infraestructura <em>frontend</em> incluye todos aquellos
+elementos del sistema con los que el usuario final interactúa.</p></li>
+<li><p><strong>Backend</strong>:parte de la infraestructura que contiene el conjunto de
+servidores, bases de datos, APIs y los sistemas operativos que
+alimentan el <em>frontend</em> de una aplicación.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="descripcion-global">
+<h2>Descripción global<a class="headerlink" href="#descripcion-global" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="objetivos-generales">
+<h3>Objetivos generales<a class="headerlink" href="#objetivos-generales" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Los principales objetivos del sistema <em>software</em> a desarrollar son los
+siguientes:</p>
+<ul class="simple">
+<li><p>Implementar un servicio de generación de resúmenes abstractivos en la
+nube, empleando modelos pre-entrenados del estado del arte.</p></li>
+<li><p>Implementar el <em>backend</em> que haga posible esta generación de
+resúmenes, así como una API REST para exponer el <em>backend</em>.</p></li>
+<li><p>Diseñar la arquitectura del <em>backend</em> con aspectos como la
+flexibilidad, la escalabilidad y la alta disponibilidad como pilares
+fundamentales.</p></li>
+<li><p>Implementar un <em>frontend</em> (aplicación multiplataforma) que consuma la
+REST API y dé la posibilidad de generar resúmenes a cualquier
+usuario.</p></li>
+<li><p>Implementar una interfaz (tanto en el <em>backend</em> como en el <em>fontend</em>)
+que permita a los usuarios especificar los parámetros con los que el
+resumen será generado, como por ejemplo, su longitud relativa al
+texto original.</p></li>
+</ul>
+</div>
+<div class="section" id="caracteristicas-del-usuario">
+<h3>Características del usuario<a class="headerlink" href="#caracteristicas-del-usuario" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Los usuarios potenciales de JIZT se pueden dividir en dos categorías
+fundamentales:</p>
+<ul class="simple">
+<li><p>Estudiantes de edades comprendidas entre los 15 y 25 años. El uso
+principal que harán del producto será el resumen de textos
+académicos.</p></li>
+<li><p>Personas de edades comprendidas entre los 25 y 50 años, cuyo
+principal uso será el resumen de noticias y artículos periodísticos.</p></li>
+</ul>
+<p>En cuanto al sexo, el uso por parte tanto de hombres como mujeres será
+aproximadamente equivalente.</p>
+<p>Un tercer tipo de usuario, no incluido anteriormente, serían partidos interesados en
+el uso del producto (empresas, particulares, etc.), que fueran a hacer un uso
+extensivo y exhaustivo del mismo. Este tipo de usuario requiere unas prestaciones más
+exigentes, pudiendo llegar a solicitar el despliegue de JIZT en sus propias
+dependencias.</p>
+<p>Es por ello que el producto desarrollado deberá ser lo más independiente
+del entorno en el que se despliegue como sea posible.</p>
+</div>
+</div>
+<div class="section" id="catalogo-de-requisitos">
+<h2>Catalogo de requisitos<a class="headerlink" href="#catalogo-de-requisitos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A continuación se detallan los requisitos funcionales y no funcionales
+del producto a desarrollar. Estos requisitos son globales al proyecto y,
+por tanto, involucran tanto al <em>backend</em> como a la aplicación a
+desarrollar.</p>
+<div class="section" id="requisitos-funcionales">
+<h3>Requisitos funcionales<a class="headerlink" href="#requisitos-funcionales" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul class="simple">
+<li><p><strong>RF-1 Solicitar resumen</strong>: la API REST debe proporcionar un
+<em>endpoint</em> para que el usuario pueda solicitar un resumen de un
+texto.</p>
+<ul>
+<li><p><strong>RF-1.1 Elegir modelo de generación de resumen</strong>: el usuario
+deberá ser capaz de especificar el modelo de generar su
+resumen<a class="footnote-reference brackets" href="#id4" id="id1">1</a>.</p></li>
+<li><p><strong>RF-1.2 Especificar longitud relativa del resumen</strong>: el usuario
+deberá ser capaz de especificar la longitud del resumen generado,
+de manera relativa al texto original.</p></li>
+<li><p><strong>RF-1.3 Especificar parámetros del resumen</strong>: el usuario deberá
+ser capaz de especificar los parámetros concretos con los que se
+generará su resumen<a class="footnote-reference brackets" href="#id5" id="id2">2</a>.</p></li>
+</ul>
+</li>
+<li><p><strong>RF-2 Historial de resúmenes</strong>: el usuario podrá acceder a los
+resúmenes que ha generado recientemente.</p></li>
+<li><p><strong>RF-3 Compartir resumen</strong>: se le brindará al usuario la opción de
+compartir el resumen generado a través de otra aplicación a su
+elección.</p></li>
+<li><p><strong>RF-4 Copiar resumen</strong>: se le brindará al usuario la opción de
+copiar el resumen generado.</p></li>
+<li><p><strong>RF-5 Borrar resumen</strong>: el usuario deberá ser capaz de borrar
+permanentemente un resumen previamente generado.</p></li>
+<li><p><strong>RF-6 Pegar desde el portapapeles</strong>: la aplicación ofrecerá una
+opción para que el usuario pueda pegar el texto a resumir desde el
+portapapeles de forma sencilla.</p></li>
+<li><p><strong>RF-7 Mostrar metadatos</strong>: el sistema brindará al usuario los
+metadatos relativos al resumen generado, como la hora a la que fue
+creado.</p></li>
+<li><p><strong>RF-8 Pre-procesado del texto</strong>: el sistema será capaz de recibir
+texto con errores de formateo (exceso de espacios, saltos de carro
+situados en mitad de una frase, etc.), así como caracteres
+&lt;&lt;extraños&gt;&gt;. Independientemente de lo anterior, el resumen generado
+aparecerá correctamente formateado y sin los mencionados caracteres.</p></li>
+<li><p><strong>RF-9 Textos arbitrariamente largos</strong>: el sistema será capaz de
+producir resúmenes de cualquier texto, independientemente de la
+longitud de los mismos. No se espera, no obstante, que el tiempo de
+resumen de textos extremadamente largos esté por debajo del orden del
+minuto.</p></li>
+</ul>
+</div>
+<div class="section" id="requisitos-no-funcionales">
+<h3>Requisitos no funcionales<a class="headerlink" href="#requisitos-no-funcionales" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul class="simple">
+<li><p><strong>RNF-1 Escalabilidad</strong>: la arquitectura del sistema deberá permitir
+el escalado del mismo de forma rápida y sencilla.</p>
+<ul>
+<li><p><strong>RNF-1.1 Autoescalado</strong>: el sistema podrá escalarse de manera
+automática en momentos en los que la carga de trabajo así lo
+requiera. Del mismo modo, cuando dicha carga remita, deberá
+disminuir su escala, a fin de consumir los mínimos recursos
+posibles.</p></li>
+</ul>
+</li>
+<li><p><strong>RNF-2 Alta disponibilidad</strong>: el sistema deberá garantizar el acceso
+al mismo por parte de los usuarios en el 99,99 % de los casos.</p>
+<ul>
+<li><p><strong>RNF-2.1 Tolerancia frente a fallos</strong>: el sistema deberá ser
+capaz de recuperarse de forma automática de posibles errores o
+problemas de funcionamiento de cualquiera de sus componentes en un
+tiempo menor a los 2 minutos.</p></li>
+</ul>
+</li>
+<li><p><strong>RNF-3 Eficiencia</strong>: el sistema deberá ser capaz de generar un
+elevado número de resúmenes provenientes de diferentes usuarios de
+forma simultánea, sin que el tiempo medio de resumen se vea afectado.</p></li>
+<li><p><strong>RNF-4 Seguridad lógica y de datos</strong>: se debe garantizar la correcta
+protección de todos los datos manejados por el sistema.</p></li>
+<li><p><strong>RNF-5 Privacidad</strong>: se debe asegurar la protección de los datos de
+carácter personal.</p>
+<ul>
+<li><p><strong>RNF-5.1 Anonimidad</strong>: en ningún caso se recopilará información
+de los usuarios que permita determinar la identidad de los mismos.
+No obstante, el sistema no es responsable de garantizar que los
+textos introducidos no contienen información de carácter personal.</p></li>
+</ul>
+</li>
+<li><p><strong>RNF-6 Usabilidad</strong>: el tiempo medio de aprendizaje de la aplicación
+por parte de los usuarios deberá ser inferior a los 5 minutos.
+Además, el sistema contará con documentación en línea detallada del
+producto.</p></li>
+<li><p><strong>RNF-7 Multiplataforma</strong>: se distribuirán los binarios de la
+aplicación necesarios para su ejecución en móvil (Android e iOS),
+<em>web</em> (Google Chrome, Mozilla Firefox, Safari y Microsoft Edge), y
+escritorio (Linux, Apple y Windows).</p></li>
+<li><p><strong>RNF-8 Tamaño reducido</strong>: el peso de la aplicación no debe superar
+los 30 MB.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>Especificación de requisitos<a class="headerlink" href="#id3" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En esta sección, nos centramos en la definición de los casos de uso de
+nuestro producto.</p>
+<p>Dado que el usuario interactuará únicamente con la aplicación
+(<em>frontend</em>), el <em>backend</em> no se considera en este caso, aunque sigue
+siendo vital para que los casos de uso de la aplicación se puedan
+completar con éxito.</p>
+<div class="section" id="diagrama-de-casos-de-uso">
+<h3>Diagrama de casos de uso<a class="headerlink" href="#diagrama-de-casos-de-uso" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="figure align-default" id="flutter-widgets-2">
+<img alt="Diagrama de casos de uso." src="../_images/use-case-diagram.png" />
+<p class="caption"><span class="caption-number">Figura 45 </span><span class="caption-text">Diagrama de casos de uso.</span><a class="headerlink" href="#flutter-widgets-2" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="actores">
+<h3>Actores<a class="headerlink" href="#actores" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Existe un único actor: el usuario que hace uso de la aplicación.</p>
+</div>
+<div class="section" id="casos-de-uso">
+<h3>Casos de uso<a class="headerlink" href="#casos-de-uso" title="Enlazar permanentemente con este título">¶</a></h3>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-number">Tabla 6 </span><span class="caption-text">CU-01 Solicitar resumen</span><a class="headerlink" href="#id6" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CU-01</strong></p></th>
+<th class="head"><p><strong>Solicitar resumen</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Descripción</p></td>
+<td><p>Solicitar la generación de un resumen a partir de un texto.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Autor</p></td>
+<td><p>Diego Miguel Lozano</p></td>
+</tr>
+<tr class="row-even"><td><p>Requisitos</p></td>
+<td><p>RF-1, RF-6, RF-8, RF-9</p></td>
+</tr>
+<tr class="row-odd"><td><p>Precondición</p></td>
+<td><p>La API REST se encuentra accesible.</p></td>
+</tr>
+<tr class="row-even"><td><p>Flujo normal</p></td>
+<td><div class="line-block">
+<div class="line">1. El usuario inicia la aplicación.</div>
+<div class="line">2. El usuario hace <em>click</em> en el área de texto.</div>
+<div class="line">3. El usuario introduce el texto a resumir o, alternativamente lo pega desde el portapapeles.</div>
+<div class="line">4. El usuario pulsa en el botón «Resumir».</div>
+<div class="line">5. Se muestra un indicador de «procesando».</div>
+<div class="line">6. Se muestra un indicador de «resumen completado».</div>
+<div class="line">7. Se muestra el resumen generado.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Postcondición</p></td>
+<td><p>El usuario ha obtenido el resumen de su texto.</p></td>
+</tr>
+<tr class="row-even"><td><p>Excepciones</p></td>
+<td><p>API REST inaccesible.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Incluye</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Extiende</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Prioridad</p></td>
+<td><p>Muy alta.</p></td>
+</tr>
+<tr class="row-even"><td><p>Frecuencia</p></td>
+<td><p>Muy alta.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Importancia</p></td>
+<td><p>Crítica</p></td>
+</tr>
+<tr class="row-even"><td><p>Comentarios</p></td>
+<td><p>-</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">Tabla 7 </span><span class="caption-text">CU-02 Establecer longitud relativa mínima del resumen</span><a class="headerlink" href="#id7" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CU-02</strong></p></th>
+<th class="head"><p><strong>Establecer longitud relativa mínima del resumen</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Descripción</p></td>
+<td><div class="line-block">
+<div class="line">Establecer la longitud mínima que puede tener el resumen</div>
+<div class="line">generado de manera relativa al texto original.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Autor</p></td>
+<td><p>Diego Miguel Lozano</p></td>
+</tr>
+<tr class="row-even"><td><p>Requisitos</p></td>
+<td><p>RF-1.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Precondición</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Flujo normal</p></td>
+<td><div class="line-block">
+<div class="line">1. El usuario pulsa sobre el cuadro de texto en la pantalla principal.</div>
+<div class="line">2. El usuario ajusta la longitud mínima a través del <em>slider</em> que aparece en la parte inferior de la pantalla.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Postcondición</p></td>
+<td><p>Se ha establecido la longitud mínima.</p></td>
+</tr>
+<tr class="row-even"><td><p>Excepciones</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Incluye</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Extiende</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Prioridad</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-even"><td><p>Frecuencia</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Importancia</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-even"><td><p>Comentarios</p></td>
+<td><p>-</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">Tabla 8 </span><span class="caption-text">CU-03 Establecer longitud relativa máxima del resumen</span><a class="headerlink" href="#id8" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CU-03</strong></p></th>
+<th class="head"><p><strong>Establecer longitud relativa máxima del resumen</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Descripción</p></td>
+<td><div class="line-block">
+<div class="line">Establecer la longitud máxima que puede tener el resumen</div>
+<div class="line">generado de manera relativa al texto original.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Autor</p></td>
+<td><p>Diego Miguel Lozano</p></td>
+</tr>
+<tr class="row-even"><td><p>Requisitos</p></td>
+<td><p>RF-1.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Precondición</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Flujo normal</p></td>
+<td><div class="line-block">
+<div class="line">1. El usuario pulsa sobre el cuadro de texto en la pantalla principal.</div>
+<div class="line">2. El usuario ajusta la longitud máxima a través del <em>slider</em> que aparece en la parte inferior de la pantalla.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Postcondición</p></td>
+<td><p>Se ha establecido la longitud máxima.</p></td>
+</tr>
+<tr class="row-even"><td><p>Excepciones</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Incluye</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Extiende</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Prioridad</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-even"><td><p>Frecuencia</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Importancia</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-even"><td><p>Comentarios</p></td>
+<td><p>-</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">Tabla 9 </span><span class="caption-text">CU-04 Consultar historial de resúmenes</span><a class="headerlink" href="#id9" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 82%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CU-04</strong></p></th>
+<th class="head"><p><strong>Consultar historial de resúmenes</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Descripción</p></td>
+<td><p>Visualizar la lista de resúmenes generados previamente.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Autor</p></td>
+<td><p>Diego Miguel Lozano</p></td>
+</tr>
+<tr class="row-even"><td><p>Requisitos</p></td>
+<td><p>RF-2, RF-3, RF-4, RF-5, RF-7</p></td>
+</tr>
+<tr class="row-odd"><td><p>Precondición</p></td>
+<td><p>Haber generado al menos un resumen previamente.</p></td>
+</tr>
+<tr class="row-even"><td><p>Flujo normal</p></td>
+<td><div class="line-block">
+<div class="line">1. El usuario pulsa en «Ver todos» en la pantalla principal.</div>
+<div class="line">2. Se muestra la lista de resúmenes previos.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Postcondición</p></td>
+<td><p>Se visualizan los resúmenes generados.</p></td>
+</tr>
+<tr class="row-even"><td><p>Excepciones</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Incluye</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Extiende</p></td>
+<td><p>CU-07</p></td>
+</tr>
+<tr class="row-odd"><td><p>Prioridad</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-even"><td><p>Frecuencia</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Importancia</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-even"><td><p>Comentarios</p></td>
+<td><p>Si aún no se ha generado ningún resumen, la lista se mostrará vacía.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">Tabla 10 </span><span class="caption-text">CU-05 Consultar resumen</span><a class="headerlink" href="#id10" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CU-05</strong></p></th>
+<th class="head"><p><strong>Consultar resumen</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Descripción</p></td>
+<td><p>Consultar un resumen generado previamente.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Autor</p></td>
+<td><p>Diego Miguel Lozano</p></td>
+</tr>
+<tr class="row-even"><td><p>Requisitos</p></td>
+<td><p>RF-2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Precondición</p></td>
+<td><p>Haber generado al menos un resumen previamente.</p></td>
+</tr>
+<tr class="row-even"><td><p>Flujo normal</p></td>
+<td><div class="line-block">
+<div class="line">Flujo 1:</div>
+<div class="line">1. El usuario pulsa en uno de los resúmenes que aperecen en el inferior de la pantalla.</div>
+<div class="line">2. Se muestra la lista de resúmenes previos.</div>
+<div class="line">Flujo 2 (alternativa):</div>
+<div class="line">1. El usuario pulsa en «Ver todos» en la pantalla prinpal.</div>
+<div class="line">2. Se muestra la lista de resúmenes previos.</div>
+<div class="line">3. El usuario pulsa en uno de los resúmenes.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Postcondición</p></td>
+<td><p>Se ha mostrado el resumen seleccionado.</p></td>
+</tr>
+<tr class="row-even"><td><p>Excepciones</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Incluye</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Extiende</p></td>
+<td><p>CU-06</p></td>
+</tr>
+<tr class="row-odd"><td><p>Prioridad</p></td>
+<td><p>Muy alta.</p></td>
+</tr>
+<tr class="row-even"><td><p>Frecuencia</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Importancia</p></td>
+<td><p>Crítica.</p></td>
+</tr>
+<tr class="row-even"><td><p>Comentarios</p></td>
+<td><p>-</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">Tabla 11 </span><span class="caption-text">CU-06 Ver texto original</span><a class="headerlink" href="#id11" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CU-06</strong></p></th>
+<th class="head"><p><strong>Ver texto original</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Descripción</p></td>
+<td><p>Visualizar el texto a partir del cual se ha generado un resumen.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Autor</p></td>
+<td><p>Diego Miguel Lozano</p></td>
+</tr>
+<tr class="row-even"><td><p>Requisitos</p></td>
+<td><p>RF-2, RF-7</p></td>
+</tr>
+<tr class="row-odd"><td><p>Precondición</p></td>
+<td><p>Haber generado un resumen.</p></td>
+</tr>
+<tr class="row-even"><td><p>Flujo normal</p></td>
+<td><ol class="arabic simple">
+<li><p>El usuario pulsa en «Original».</p></li>
+</ol>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Postcondición</p></td>
+<td><p>Se ha mostrado el texto original.</p></td>
+</tr>
+<tr class="row-even"><td><p>Excepciones</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Incluye</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Extiende</p></td>
+<td><p>CU-07</p></td>
+</tr>
+<tr class="row-odd"><td><p>Prioridad</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-even"><td><p>Frecuencia</p></td>
+<td><p>Alta.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Importancia</p></td>
+<td><p>Crítica.</p></td>
+</tr>
+<tr class="row-even"><td><p>Comentarios</p></td>
+<td><p>-</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">Tabla 12 </span><span class="caption-text">CU-07 Compartir el resumen</span><a class="headerlink" href="#id12" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CU-07</strong></p></th>
+<th class="head"><p><strong>Compartir el resumen</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Descripción</p></td>
+<td><p>Compartir el resumen generado a través de otra aplicación.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Autor</p></td>
+<td><p>Diego Miguel Lozano</p></td>
+</tr>
+<tr class="row-even"><td><p>Requisitos</p></td>
+<td><p>RF-3</p></td>
+</tr>
+<tr class="row-odd"><td><p>Precondición</p></td>
+<td><p>Haber generado un resumen.</p></td>
+</tr>
+<tr class="row-even"><td><p>Flujo normal</p></td>
+<td><div class="line-block">
+<div class="line">1. El usuario pulsa en el icono de compartir.</div>
+<div class="line">2. Se muestra una lista de aplicaciones.</div>
+<div class="line">3. El usuario pulsa en la aplicación a través de la cualquiere compartir el resumen.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Postcondición</p></td>
+<td><p>Se ha compartido el resumen.</p></td>
+</tr>
+<tr class="row-even"><td><p>Excepciones</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Incluye</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Extiende</p></td>
+<td><p>CU-07</p></td>
+</tr>
+<tr class="row-odd"><td><p>Prioridad</p></td>
+<td><p>Media.</p></td>
+</tr>
+<tr class="row-even"><td><p>Frecuencia</p></td>
+<td><p>Media.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Importancia</p></td>
+<td><p>Media.</p></td>
+</tr>
+<tr class="row-even"><td><p>Comentarios</p></td>
+<td><p>-</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">Tabla 13 </span><span class="caption-text">CU-08 Borrar el resumen</span><a class="headerlink" href="#id13" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>CU-08</strong></p></th>
+<th class="head"><p><strong>Borrar el resumen</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Descripción</p></td>
+<td><p>Compartir el resumen generado a través de otra aplicación.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Autor</p></td>
+<td><p>Diego Miguel Lozano</p></td>
+</tr>
+<tr class="row-even"><td><p>Requisitos</p></td>
+<td><p>RF-5</p></td>
+</tr>
+<tr class="row-odd"><td><p>Precondición</p></td>
+<td><p>Haber generado un resumen.</p></td>
+</tr>
+<tr class="row-even"><td><p>Flujo normal</p></td>
+<td><div class="line-block">
+<div class="line">1. El usuario pulsa en el icono de borrar.</div>
+<div class="line">2. Se elimina el resumen y la aplicación vuelve a la pantalla principal.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Postcondición</p></td>
+<td><p>Se ha borrado el resumen.</p></td>
+</tr>
+<tr class="row-even"><td><p>Excepciones</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>Incluye</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Extiende</p></td>
+<td><p>CU-07</p></td>
+</tr>
+<tr class="row-odd"><td><p>Prioridad</p></td>
+<td><p>Media.</p></td>
+</tr>
+<tr class="row-even"><td><p>Frecuencia</p></td>
+<td><p>Media.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Importancia</p></td>
+<td><p>Media.</p></td>
+</tr>
+<tr class="row-even"><td><p>Comentarios</p></td>
+<td><p>-</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Este requisito solo se ha implementado en el <em>backend</em>. En la
+aplicación decidimos no incluirlo dado que por el momento solo
+hacemos uso de un modelo.</p>
+</dd>
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Este requisito solo se ha implementado en el <em>backend</em>. En la
+aplicación se añadirá en futuras iteraciones, al considerarse no
+prioritario, dado que se trata de opciones avanzadas.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="C_Diseno.html" class="btn btn-neutral float-right" title="Especificación de diseño" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="A_Plan_proyecto.html" class="btn btn-neutral float-left" title="Plan de Proyecto Software" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Derechos de autor 2021, Diego Miguel Lozano.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

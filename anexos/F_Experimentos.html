@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Experimentos sobre el algoritmo de división de texto &mdash; documentación de JIZT - AI Summarization - 0.1.0</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="docs.jizt.it/anexos/F_Experimentos.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/custom.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Contribuir a JIZT" href="CONTRIBUTING.html" />
+    <link rel="prev" title="Documentación de usuario" href="E_Manual_usuario.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> JIZT - AI Summarization
+          
+
+          
+            
+            <img src="../_static/jizt-docs.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Memoria</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/1_Introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/2_Objetivos_del_proyecto.html">Objetivos del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/3_Conceptos_teoricos.html">Conceptos teóricos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/4_Tecnicas_y_herramientas.html">Técnicas y herramientas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/5_Aspectos_relevantes_del_desarrollo_del_proyecto.html">Aspectos relevantes del desarrollo del proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/6_Trabajos_relacionados.html">Trabajos relacionados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memoria/7_Conclusiones_Lineas_de_trabajo_futuras.html">Conclusiones y Líneas de trabajo futuras</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Anexos</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="A_Plan_proyecto.html">Plan de Proyecto Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="B_Requisitos.html">Especificación de Requisitos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_Diseno.html">Especificación de diseño</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D_Manual_programador.html">Documentación técnica de programación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_Manual_usuario.html">Documentación de usuario</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Experimentos sobre el algoritmo de división de texto</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Ayúdanos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribuir a JIZT</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JIZT - AI Summarization</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Experimentos sobre el algoritmo de división de texto</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/anexos/F_Experimentos.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="experimentos-sobre-el-algoritmo-de-division-de-texto">
+<span id="apendix-experimentos"></span><h1>Experimentos sobre el algoritmo de división de texto<a class="headerlink" href="#experimentos-sobre-el-algoritmo-de-division-de-texto" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>En la sección relativa a la <a class="reference internal" href="../memoria/3_Conceptos_teoricos.html#sec-codificacion"><span class="std std-ref">Codificación del texto</span></a>
+de la Memoria, se introduce el problema que presentan muchos
+de los modelos de generación del lenguaje, entre ellos el modelo T5,
+el cual utilizamos.</p>
+<p>Dicho problema deriva del hecho de que estos modelos admiten un número
+de <em>tókenes</em> de entrada máximo, 512 en el caso del modelo T5.</p>
+<p>Por tanto, desarrollamos un algoritmo que divide el texto en fragmentos,
+sin que ninguna frase quede partida, y siendo las diferencias entre el
+número de <em>tókenes</em> en cada una de las divisiones tan pequeñas como sea
+posible.</p>
+<p>Para ello, primero dividimos el texto de manera voraz, de forma
+que se van añadiendo frases a una subdivisión siempre que estas quepan
+sin ser fragmentadas.</p>
+<p>Esto puede resultar en que la última subdivisión contenga un número de
+frases muy inferior a la del resto de subdivisiones. Para solucionar
+este problema, se realiza un &lt;&lt;balanceo&gt;&gt; de las subdivisiones, moviendo
+frases de unas a otras, pero conservando su orden.</p>
+<p>La muestra el proceso de manera visual a través de un ejemplo:</p>
+<div class="figure align-default" id="fig-balanceo">
+<img alt="Proceso de balanceo de las subdivisones generadas de forma voraz. Ejemplo con una longitud máxima de 100 *tókenes*." src="../_images/algoritmo-balanceo.png" />
+<p class="caption"><span class="caption-number">Figura 64 </span><span class="caption-text">Proceso de balanceo de las subdivisones generadas de forma voraz.
+Ejemplo con una longitud máxima de 100 <em>tókenes</em>.</span><a class="headerlink" href="#fig-balanceo" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>En las tablas recogidas en las siguientes páginas, se muestra el número
+de <em>tókenes</em> por subdivisión resultante de aplicar la división voraz, y
+el número de <em>tókenes</em> por subdivisión una vez realizado el balanceo.
+Para los textos de los experimentos, se emplearon hilos de Twitter,
+teniendo el más corto 191 palabras, y artículos extraídos de Internet,
+el más largo de los cuales contiene 46.911 palabras.</p>
+<p>Las diferencias entre el número de <em>tókenes</em> antes y después de realizar
+la división son claras, lo que indica el correcto funcionamiento del
+algoritmo propuesto. Además, el incremento de tiempo que introduce el
+balanceo es, por lo general, mínimo<a class="footnote-reference brackets" href="#id2" id="id1">1</a>.</p>
+<table class="table-exp docutils align-default" id="id3">
+<caption><span class="caption-number">Tabla 15 </span><span class="caption-text">Resultados en la codificación de hilos de Twitter reales. Desviación estándar calculada sobre el número de <em>tókenes</em> por subdivisión.</span><a class="headerlink" href="#id3" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 20%" />
+<col style="width: 29%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Palabras (<em>tókenes</em>)</p></th>
+<th class="head"></th>
+<th class="head"><p>Voraz</p></th>
+<th class="head"><p>Balanceado</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="3"><p>191 (280)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[280]</p></td>
+<td><p>[280]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Desv. estándar</p></td>
+<td><p><strong>0,0</strong></p></td>
+<td><p><strong>0,0</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Tiempo</p></td>
+<td><p>5,23 ms</p></td>
+<td><p>5,23 ms</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>394 (534)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[506, 28]</p></td>
+<td><p>[273, 261]</p></td>
+</tr>
+<tr class="row-even"><td><p>Desv. estándar</p></td>
+<td><p><strong>239,0</strong></p></td>
+<td><p><strong>6,0</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tiempo</p></td>
+<td><p>8,15 ms</p></td>
+<td><p>8,21 ms</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>646(906)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[504, 402]</p></td>
+<td><p>[448, 458]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Desv. estándar</p></td>
+<td><p><strong>51,0</strong></p></td>
+<td><p><strong>5,0</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Tiempo</p></td>
+<td><p>13,4 ms</p></td>
+<td><p>13,8 ms</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>1.089(1.417)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[488, 477, 452]</p></td>
+<td><p>[478, 487, 452]</p></td>
+</tr>
+<tr class="row-even"><td><p>Desv. estándar</p></td>
+<td><p><strong>15,06</strong></p></td>
+<td><p><strong>14,84</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tiempo</p></td>
+<td><p>26,10 ms</p></td>
+<td><p>25,70 ms</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>1.536 (2.069)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[509, 508, 507, 501, 44]</p></td>
+<td><p>[437, 419, 409, 407, 397]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Desv. estándar</p></td>
+<td><p><strong>184,92</strong></p></td>
+<td><p><strong>13,54</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Tiempo</p></td>
+<td><p>41 ms</p></td>
+<td><p>41,2 ms</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>1.871 (4.531)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[409, 426, … , 475, 414]</p></td>
+<td><p>[409, 426, … , 422, 467]</p></td>
+</tr>
+<tr class="row-even"><td><p>Desv. estándar</p></td>
+<td><p><strong>39,70</strong></p></td>
+<td><p><strong>32,11</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tiempo</p></td>
+<td><p>34,7 ms</p></td>
+<td><p>35,4 ms</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>2,060 (2,060)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[501, 497, … , 402, 509]</p></td>
+<td><p>[501, 497, … , 402, 509]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Desv. estándar</p></td>
+<td><p><strong>54,40</strong></p></td>
+<td><p><strong>37,65</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Tiempo</p></td>
+<td><p>26,1 ms</p></td>
+<td><p>26,7 ms</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>3,753 (5,293)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[504, 505, … , 503, 386]</p></td>
+<td><p>[504, 505, … , 469, 437]</p></td>
+</tr>
+<tr class="row-even"><td><p>Desv. estándar</p></td>
+<td><p><strong>36,75</strong></p></td>
+<td><p><strong>19,72</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tiempo</p></td>
+<td><p>62,1 ms</p></td>
+<td><p>62,9 ms</p></td>
+</tr>
+</tbody>
+</table>
+<table class="table-exp docutils align-default" id="id4">
+<caption><span class="caption-number">Tabla 16 </span><span class="caption-text">Resultados en la codificación de textos muy largos. Desviación estándar calculada sobre el número de <em>tókenes</em> por subdivisión.</span><a class="headerlink" href="#id4" title="Enlace permanente a esta tabla">¶</a></caption>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 20%" />
+<col style="width: 29%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Palabras (<em>tókenes</em>)</p></th>
+<th class="head"></th>
+<th class="head"><p>Voraz</p></th>
+<th class="head"><p>Balanceado</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="3"><p>5.022 (8.051)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[498, 499, … , 497, 77]</p></td>
+<td><p>[498, 499, … , 418, 396]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Desv. estándar</p></td>
+<td><p><strong>99,88</strong></p></td>
+<td><p><strong>39,21</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Tiempo</p></td>
+<td><p>118 ms</p></td>
+<td><p>120 ms</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>10.058 (15.761)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[498, 499, … , 496, 415]</p></td>
+<td><p>[498, 499, … , 461, 484]</p></td>
+</tr>
+<tr class="row-even"><td><p>Desv. estándar</p></td>
+<td><p><strong>23,54</strong></p></td>
+<td><p><strong>15,52</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tiempo</p></td>
+<td><p>250 ms</p></td>
+<td><p>251 ms</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>20.203 (30.989)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[498, 499, … , 481, 311]</p></td>
+<td><p>[498, 499, … , 425, 420]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Desv. estándar</p></td>
+<td><p><strong>29,51</strong></p></td>
+<td><p><strong>18,95</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Tiempo</p></td>
+<td><p>470 ms</p></td>
+<td><p>488 ms</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>46.911 (69.772)</p></td>
+<td><p><em>Tókenes</em>/subdiv.</p></td>
+<td><p>[498, 499, … , 505, 121]</p></td>
+<td><p>[498, 499, … , 392, 385]</p></td>
+</tr>
+<tr class="row-even"><td><p>Desv. estándar</p></td>
+<td><p><strong>35,05</strong></p></td>
+<td><p><strong>17,01</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tiempo</p></td>
+<td><p>1,08 s</p></td>
+<td><p>1,11 s</p></td>
+</tr>
+</tbody>
+</table>
+<p>Por último, queremos mencionar que, al comienzo del proyecto, escribimos
+diferentes <em>notebooks</em> de Jupyter que explican cómo llegamos a ciertas
+conclusiones a la hora de realizar el pre-procesado y post-procesado de
+los textos, así como un pequeño estudio comparativo realizado con dos
+modelos de generación de textos. Se puede acceder a dichos <em>notebooks</em> a
+través de <a class="reference external" href="https://https://github.com/dmlls/jizt-tfg/tree/main/notebooks">https://https://github.com/dmlls/jizt-tfg/tree/main/notebooks</a>.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Posteriormente a la realización de este experimento, se optimizó
+notablemente el rendimiento global del algoritmo para el modelo T5.
+Para más información, se puede consultar la siguiente <em>Issue</em> en el
+repositorio del proyecto en GitHub:
+<a class="reference external" href="https://https://github.com/dmlls/jizt-tfg/issues/97">https://https://github.com/dmlls/jizt-tfg/issues/97</a>.</p>
+</dd>
+</dl>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="CONTRIBUTING.html" class="btn btn-neutral float-right" title="Contribuir a JIZT" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="E_Manual_usuario.html" class="btn btn-neutral float-left" title="Documentación de usuario" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Derechos de autor 2021, Diego Miguel Lozano.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
