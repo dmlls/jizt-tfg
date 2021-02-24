@@ -86,6 +86,12 @@ a.external-link {
     text-align: center;
 }
 
+.table-fixed-costs,
+.table-direct-costs, 
+.table-indirect-costs {
+    margin: 0 auto;
+}
+
 .table-fixed-costs th:not(:first-child), 
 .table-fixed-costs td:not(:first-child),
 .table-direct-costs th:not(:first-child), 

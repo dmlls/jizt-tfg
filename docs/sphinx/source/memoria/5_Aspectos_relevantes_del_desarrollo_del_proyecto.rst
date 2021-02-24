@@ -297,9 +297,9 @@ desarrollada son:
 -  Cada capa es estricta con sus dependencias, pudiendo interaccionar
    únicamente con las capas inferiores.
 
--  Según se avanza hacia capas inferiores, el código se vuelve más
-   genérico. De este modo, las capas inferiores dictan políticas y
-   reglas, mientras que las capas superiores se encargan de detalles de
+-  Según se avanza hacia capas superiores, el código se vuelve más
+   genérico. De este modo, las capas superiores dictan políticas y
+   reglas, mientras que las capas inferiores se encargan de detalles de
    implementación como bases de datos, operaciones de red o la interfaz
    de usuario.
 
@@ -359,7 +359,7 @@ En nuestro caso el repositorio abstrae dos fuentes de datos:
 Además de centralizar el acceso a datos, el repositorio también es
 responsable de transformar las diferentes representaciones de los
 modelos de dominio con los que trabaja la aplicación utilizando lo que
-se conoce como *mappers*. Dichos representaciones son:
+se conoce como *mappers*. Dichas representaciones son:
 
 -  Modelo de dominio (*domain model*): es la representación de los datos
    a través de la estructura más apropiada para la aplicación junto con
@@ -383,7 +383,7 @@ representaciones diferentes nos permite:
 -  Encapsular en las *database entities* todas las anotaciones que nos
    permiten almacenar objetos en la base de datos.
 
--  Mantener los *domain models* independientes de cualquier *frameworks*
+-  Mantener los *domain models* independientes de cualquier *framework*
    específico. De este modo, si en un futuro se reemplaza, por ejemplo,
    el *framework* de serialización de los documentos JSON, la capa de
    dominio no se vería afectada.

@@ -143,7 +143,7 @@ Como resultado, los principios fundamentales de la arquitectura desarrollada son
 	
 	\item Cada capa es estricta con sus dependencias, pudiendo interaccionar únicamente con las capas inferiores.
 	
-	\item Según se avanza hacia capas inferiores, el código se vuelve más genérico. De este modo, las capas inferiores dictan políticas y reglas, mientras que las capas superiores se encargan de detalles de implementación como bases de datos, operaciones de red o la interfaz de usuario.
+	\item Según se avanza hacia capas superiores, el código se vuelve más genérico. De este modo, las capas superiores dictan políticas y reglas, mientras que las capas inferiores se encargan de detalles de implementación como bases de datos, operaciones de red o la interfaz de usuario.
 	
 	\item La estructura y lenguaje del código se deben basar en el dominio de negocio.
 \end{itemize}
@@ -184,7 +184,7 @@ En nuestro caso el repositorio abstrae dos fuentes de datos:
 	\item Fuente de datos local: se emplea una base de datos local como caché para almacenar los resúmenes generados. Esto permite al usuario acceder a su historial de resúmenes.
 \end{itemize}
 
-Además de centralizar el acceso a datos, el repositorio también es responsable de transformar las diferentes representaciones de los modelos de dominio con los que trabaja la aplicación utilizando lo que se conoce como \emph{mappers}. Dichos representaciones son:
+Además de centralizar el acceso a datos, el repositorio también es responsable de transformar las diferentes representaciones de los modelos de dominio con los que trabaja la aplicación utilizando lo que se conoce como \emph{mappers}. Dichas representaciones son:
 
 \vspace{-0.3cm}
 \begin{itemize} [\textbullet]
@@ -201,7 +201,7 @@ Como consecuencia, el hecho de separar los modelos en estas tres representacione
 	
 	\item Encapsular en las \emph{database entities} todas las anotaciones que nos permiten almacenar objetos en la base de datos.
 	
-	\item Mantener los \emph{domain models} independientes de cualquier \emph{frameworks} específico. De este modo, si en un futuro se reemplaza, por ejemplo, el \emph{framework} de serialización de los documentos JSON, la capa de dominio no se vería afectada.
+	\item Mantener los \emph{domain models} independientes de cualquier \emph{framework} específico. De este modo, si en un futuro se reemplaza, por ejemplo, el \emph{framework} de serialización de los documentos JSON, la capa de dominio no se vería afectada.
 	
 	\item Cachear localmente la información realmente necesaria (por ejemplo, prescindiendo de algunos metadatos que devuelve la API REST y que no son relevantes para el usuario de la aplicación, o almacenando información adicional que no devuelve la API).
 \end{itemize}

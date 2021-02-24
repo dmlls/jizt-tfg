@@ -267,6 +267,28 @@ desarrollo del proyecto.
 .. rst-class:: .table-direct-costs
 .. table:: Desglose de costes directos del proyecto.
 
+   +----------------------------------------------+-------------+
+   | **CONCEPTO**                                 | **IMPORTE** |
+   +==============================================+=============+
+   | Dominio `jizt.it <https://www.jizt.it>`__    | 4,81 €      |
+   +----------------------------------------------+-------------+
+   | Cuenta de Google Play                        | 20,76 €     |
+   +----------------------------------------------+-------------+
+   | Impresión de la Memoria y el cartel del TFG  | 60,00 €     |
+   +----------------------------------------------+-------------+
+   | **TOTAL**                                    | **85,57 €** |
+   +----------------------------------------------+-------------+
+
+-------
+
+**Costes indirectos**
+
+Los costes indirectos son aquellos que no dependen directamente del
+desarrollo del proyecto.
+
+.. rst-class:: .table-indirect-costs
+.. table:: Desglose de costes indirectos del proyecto.
+
    +------------------------------------------+---------------+---------------+
    | **CONCEPTO**                             | **IMPORTE**   | **AMORTIZ.**  |
    +==========================================+===============+===============+
@@ -287,32 +309,10 @@ desarrollo del proyecto.
 
 -------
 
-**Costes indirectos**
-
-Los costes indirectos son aquellos que no dependen directamente del
-desarrollo del proyecto.
-
-.. rst-class:: .table-indirect-costs
-.. table:: Desglose de costes indirectos del proyecto.
-
-   +----------------------------------------------+-------------+
-   | **CONCEPTO**                                 | **IMPORTE** |
-   +==============================================+=============+
-   | Dominio `jizt.it <https://www.jizt.it>`__    | 4,81 €      |
-   +----------------------------------------------+-------------+
-   | Cuenta de Google Play                        | 20,76 €     |
-   +----------------------------------------------+-------------+
-   | Impresión de la Memoria y el cartel del TFG  | 40,00 €     |
-   +----------------------------------------------+-------------+
-   | **TOTAL**                                    | **65,57 €** |
-   +----------------------------------------------+-------------+
-
--------
-
 **Costes totales del proyecto**
 
 Considerando las tres categorías de costes recogidas anteriormente, la
-suma de los costes totales del proyecto asciende a **13006,10 €**.
+suma de los costes totales del proyecto asciende a **13026,98 €**.
 
 -------
 
