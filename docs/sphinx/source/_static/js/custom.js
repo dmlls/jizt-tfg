@@ -11,7 +11,7 @@ function addTocEntry(caption, link) {
         <p class="caption" style="padding:0;">
             <span class="caption-text">
             <a href="${link}" class="external-link" target="_blank"
-               style="padding:0; color:#55a5d9; line-height: 32px; padding: 0 1.618em; background-position:40%;">${caption}</a>
+               style="padding: 0 1.618em; color:#55a5d9; line-height: 32px;">${caption}</a>
             </span>
         </p>
     `;

@@ -66,8 +66,16 @@ img {
 }
 
 a.external-link {
-    background: url(../images/external-link.svg) center right no-repeat;
-    background-size: 3%;
+    height: 100%;
+}
+
+a.external-link::after {
+    display: inline-block;
+    width: 30%;
+    height: 30%;
+    margin-left: 3%;
+    content: "";
+    background: transparent no-repeat url(../images/external-link.svg); 
 }
 
 /*
