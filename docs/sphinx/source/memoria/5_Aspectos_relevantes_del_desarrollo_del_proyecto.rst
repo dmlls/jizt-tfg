@@ -117,7 +117,7 @@ generados. Dicha base de datos está desplegada a través del servicio RDS, tamb
 perteneciente a AWS.
 
 Se puede acceder al tablero público a través de
-`https://kanban.jizt.it <https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__.
+`https://kanban.jizt.it <https://web.archive.org/web/20210224162004/https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__.
 
 .. figure:: ../_static/images/memoria_y_anexos/kanboard.png
    :alt: Captura de pantalla de nuestro tablero Kanban en la aplicación *web* Kanboard.
@@ -551,7 +551,7 @@ con el *pack* de estudiante de GitHub [gh-student-pack]_.
    ``main`` del repositorio del *backend*. Imagen extraída de GitHub.
 
 El repositorio en GitHub correspondiente al *backend* es accesible a
-través de https://github.com/dmlls/jizt.
+través de https://github.com/dmlls/jizt-tfg.
 
 CI/CD en el repositorio de la aplicación
 ----------------------------------------
@@ -587,7 +587,7 @@ En este caso, se llevan a cabo tres tareas principales:
    ``main`` del repositorio de la *app*. Imagen extraída de GitHub.
 
 De nuevo, mencionar que se puede acceder al repositorio correspondiente a la
-aplicación de JIZT en https://github.com/dmlls/jizt-app.
+aplicación de JIZT en https://github.com/dmlls/jizt-tfg-app.
 
 Distribución de la aplicación
 =============================
@@ -620,7 +620,7 @@ que nos permite servir nuestra aplicación en su versión *web* de manera
 gratuita.
 
 Se puede acceder a la aplicación de JIZT a través de
-https://app.jizt.it.
+`https://app.jizt.it <https://dmlls.github.io/jizt-tfg-app>`__.
 
 .. figure:: ../_static/images/memoria_y_anexos/kanban.png
    :alt: Tablero Kanban utilizado.
@@ -630,11 +630,11 @@ https://app.jizt.it.
    Tablero Kanban utilizado.
 
 Cabe mencionar que también hacemos uso de este servicio para alojar la *landing page*
-de JIZT (https://www.jizt.it}{https://www.jizt.it), así como la documentación del
-proyecto (https://docs.jizt.it), y la documentación de la API REST
-(https://docs.api.jizt.it). En el caso del tablero Kanban que recoge las historias de
+de JIZT (`https://www.jizt.it <https://dmlls.github.io/jizt-tfg-website>`__), así como la documentación del
+proyecto (`https://docs.jizt.it <https://dmlls.github.io/jizt-tfg>`__), y la documentación de la API REST
+(`https://docs.api.jizt.it <https://dmlls.github.io/jizt-tfg-api-docs>`__). En el caso del tablero Kanban que recoge las historias de
 usuario del proyecto (`https://kanban.jizt.it
-<https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__),
+<https://web.archive.org/web/20210224162004/https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__),
 al implementarse a través de una aplicación PHP (Kanboard), como mencionábamos
 anteriormente, no podemos alojarla en GitHub Pages. Para servirla, hacemos uso del
 servicio EC2 de AWS.
@@ -683,7 +683,7 @@ originalmente para documentar el lenguaje de programación Python
 [sphinx-doc]_.
 
 Una vez más, recordar que se puede acceder a dicha documentación a
-través de https://docs.jizt.it. En la se muestra una captura de pantalla
+través de `https://docs.jizt.it <https://dmlls.github.io/jizt-tfg>`__. En la se muestra una captura de pantalla
 de la misma.
 
 .. figure:: ../_static/images/memoria_y_anexos/jizt-docs.png
@@ -708,7 +708,7 @@ encarga de generar una página *web* de la misma de manera automática, y
 con una interfaz clara y elegante.
 
 En la se puede ver una captura de pantalla de la documentación generada
-con Redoc, disponible en https://docs.api.jizt.it.
+con Redoc, disponible en `https://docs.api.jizt.it <https://dmlls.github.io/jizt-tfg-api-docs>`__.
 
 .. figure:: ../_static/images/memoria_y_anexos/jizt-api-docs.png
    :alt: Captura de pantalla de la especificación de la API REST.
@@ -763,8 +763,8 @@ caracteres).
 
 .. [2]
    Recordamos que el repositorio del *backend* se puede acceder a través de
-   https://github.com/dmlls/jizt, y el de la aplicación en
-   https://github.com/dmlls/jizt-app.
+   https://github.com/dmlls/jizt-tfg, y el de la aplicación en
+   https://github.com/dmlls/jizt-tfg-app.
 
 .. [kanboard]
    Kanboard. Kanboard - Kanban Project Management Software. Feb. de

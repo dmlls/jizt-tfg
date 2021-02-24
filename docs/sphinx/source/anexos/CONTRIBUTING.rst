@@ -51,7 +51,7 @@ considerar tu contribución.
 
 Los reportes de errores nos ayudan a mejorar. Si has encontrado un
 error, puedes abrir una *Issue* utilizando la
-`plantilla <https://github.com/dmlls/jizt/issues/new?assignees=&labels=bug&template=reportar-error.md&title=>`__
+`plantilla <https://github.com/dmlls/jizt-tfg/issues/new?assignees=&labels=bug&template=reportar-error.md&title=>`__
 habilitada para ello.
 
 Por favor, revisa primero que el error que has encontrado no ha sido
@@ -67,7 +67,7 @@ reportado previamente.
 
 Si tienes una idea genial de una funcionalidad que crees que JIZT
 debería tener, ¡no dudes en contárnosla! Para ello, crea una `nueva
-discusión <https://github.com/dmlls/jizt/discussions/new>`__ con el
+discusión <https://github.com/dmlls/jizt-tfg//discussions/new>`__ con el
 título "[Feature Request]" seguido de tu idea.
 
 Por favor, revisa primero que la funcionalidad deseada no ha sido

@@ -1,6 +1,6 @@
 # Bienvenido a la documentación de JIZT
 
-La documentación está disponible a través de [docs.jizt.it](https://docs.jizt.it). No
+La documentación está disponible a través de [docs.jizt.it](https://dmlls.github.io/jizt-tfg). No
 obstante, si quieres compilar la documentación en local, debes seguir los pasos
 indicados a continuación.
 

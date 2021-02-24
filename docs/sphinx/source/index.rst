@@ -66,4 +66,4 @@ contienen palabras y expresiones que no están presentes en el texto original.
    anexos/CONTRIBUTING.rst
 
 ¿Estás buscando la documentación de la REST API? Puedes acceder a ella
-`aquí <https://docs.api.jizt.it>`__.
+`aquí <https://dmlls.github.io/jizt-tfg-api-docs>`__.

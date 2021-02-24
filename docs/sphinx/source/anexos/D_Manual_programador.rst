@@ -33,7 +33,7 @@ Estructura de directorios
 
 La estructura de directorios del *backend* de JIZT, a la cual se puede
 acceder a través de
-`github.com/dmlls/jizt <https://github.com/dmlls/jizt>`__, es la
+`github.com/dmlls/jizt-tfg <https://https://github.com/dmlls/jizt-tfg>`__, es la
 siguiente:
 
 -  ``/src``: este directorio contiene el código fuente completo del
@@ -84,7 +84,7 @@ Instalación y despliegue del *backend*
 El primer paso será descargarnos el código fuente correspondiente al
 *backend*, clonando el repositorio del proyecto alojado en GitHub:
 
-``git clone https://github.com/dmlls/jizt.git``
+``git clone https://github.com/dmlls/jizt-tfg.git``
 
 Una vez disponemos del código fuente, debemos proceder primero a la
 instalación y provisión de los prerrequisitos necesarios para la
@@ -421,7 +421,7 @@ peticiones HTTP, como de las respuestas del *backend*.
 
 .. note::
 
-   En `docs.api.jizt.it <https://docs.api.jizt.it>`__ se puede encontrar la
+   En `docs.api.jizt.it <https://dmlls.github.io/jizt-tfg-api-docs>`__ se puede encontrar la
    documentación en línea referente a la API REST. Dado que dicha
    documentación está en inglés, recogemos su traducción al español. El
    usuario puede referirse a cualquiera de las dos documentaciones, ya que
@@ -622,7 +622,7 @@ Estructura de directorios
 
 La estructura de directorios de la aplicación de JIZT, a la cual se
 puede acceder a través de
-`github.com/dmlls/jizt-app <https://github.com/dmlls/jizt-app>`__, es la
+`github.com/dmlls/jizt-tfg-app <https://github.com/dmlls/jizt-tfg-app>`__, es la
 siguiente:
 
 -  ``/``: el directorio raíz contiene todos los ficheros que componen el
@@ -721,7 +721,7 @@ Compilación de la aplicación
 La compilación de la *app* requiere únicamente de tres comandos:
 
 -  | Clonar el repositorio desde GitHub:
-   | ``git clone https://github.com/dmlls/jizt-app.git``
+   | ``git clone https://github.com/dmlls/jizt-tfg-app.git``
 
 -  | Descargar los paquetes requeridos por la aplicación:
    | ``flutter pub get``

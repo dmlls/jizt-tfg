@@ -202,8 +202,8 @@ mencionado, muchas de las herramientas y técnicas que hemos utilizado
 eran nuevas para nosotros.
 
 Para finalizar esta sección, cabe mencionar que en el `repositorio del
-proyecto <https://github.com/dmlls/jizt/milestones>`__, y en su `tablero
-Kanban <https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__,
+proyecto <https://github.com/dmlls/jizt-tfg/milestones>`__, y en su `tablero
+Kanban <https://web.archive.org/web/20210224162004/https://board.jizt.it/public/board/c08ea3322e2876652a0581e79d6430e2dc0c27720d8a06d7853e84c3cd2b>`__,
 se puede encontrar información más detallada de cada historia de usuario
 y *epic*.
 
@@ -267,17 +267,17 @@ desarrollo del proyecto.
 .. rst-class:: .table-direct-costs
 .. table:: Desglose de costes directos del proyecto.
 
-   +----------------------------------------------+-------------+
-   | **CONCEPTO**                                 | **IMPORTE** |
-   +==============================================+=============+
-   | Dominio `jizt.it <https://www.jizt.it>`__    | 4,81 €      |
-   +----------------------------------------------+-------------+
-   | Cuenta de Google Play                        | 20,76 €     |
-   +----------------------------------------------+-------------+
-   | Impresión de la Memoria y el cartel del TFG  | 60,00 €     |
-   +----------------------------------------------+-------------+
-   | **TOTAL**                                    | **85,57 €** |
-   +----------------------------------------------+-------------+
+   +------------------------------------------------------------------------+-------------+
+   | **CONCEPTO**                                                           | **IMPORTE** |
+   +========================================================================+=============+
+   | Dominio `jizt.it <https://dmlls.github.io/jizt-tfg-website>`__         | 4,81 €      |
+   +------------------------------------------------------------------------+-------------+
+   | Cuenta de Google Play                                                  | 20,76 €     |
+   +------------------------------------------------------------------------+-------------+
+   | Impresión de la Memoria y el cartel del TFG                            | 60,00 €     |
+   +------------------------------------------------------------------------+-------------+
+   | **TOTAL**                                                              | **85,57 €** |
+   +------------------------------------------------------------------------+-------------+
 
 -------
 
@@ -377,13 +377,13 @@ tomado la decisión de que nuestro software estará licenciado bajo **GNU
 GPLv3** [gplv3]_, cuyos puntos principales se recogen a continuación:
 
 .. figure:: ../_static/images/memoria_y_anexos/gnu-gpl3.png
-   :alt: Resumen de la licencia GNU GPLv3. Imagen extraída y traducida de https://github.com/dmlls/jizt/blob/main/LICENSE.
+   :alt: Resumen de la licencia GNU GPLv3. Imagen extraída y traducida de https://github.com/dmlls/jizt-tfg/blob/main/LICENSE.
    :name: gnu-gpl3
    :width: 90%
    :align: center
 
    Resumen de la licencia GNU GPLv3. Imagen extraída y traducida de
-   https://github.com/dmlls/jizt/blob/main/LICENSE.
+   https://github.com/dmlls/jizt-tfg/blob/main/LICENSE.
 
 Se puede acceder a la licencia completa a través de
 https://www.gnu.org/licenses/gpl-3.0.en.html.

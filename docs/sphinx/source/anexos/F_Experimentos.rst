@@ -147,11 +147,11 @@ diferentes *notebooks* de Jupyter que explican cómo llegamos a ciertas
 conclusiones a la hora de realizar el pre-procesado y post-procesado de
 los textos, así como un pequeño estudio comparativo realizado con dos
 modelos de generación de textos. Se puede acceder a dichos *notebooks* a
-través de https://github.com/dmlls/jizt/tree/main/notebooks.
+través de https://https://github.com/dmlls/jizt-tfg/tree/main/notebooks.
 
 .. [1]
    Posteriormente a la realización de este experimento, se optimizó
    notablemente el rendimiento global del algoritmo para el modelo T5.
    Para más información, se puede consultar la siguiente *Issue* en el
    repositorio del proyecto en GitHub:
-   https://github.com/dmlls/jizt/issues/97.
+   https://https://github.com/dmlls/jizt-tfg/issues/97.

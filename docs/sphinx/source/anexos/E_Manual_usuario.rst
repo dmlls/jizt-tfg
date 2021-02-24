@@ -91,7 +91,7 @@ móvil a la versión *web* de JIZT (ver siguiente sección).
 -----
 
 Se puede acceder a la aplicación directamente a través de
-`app.jizt.it <https://app.jizt.it>`__, sin ser necesario realizar
+`app.jizt.it <https://dmlls.github.io/jizt-tfg-app>`__, sin ser necesario realizar
 ninguna instalación.
 
 Manual del usuario
@@ -129,7 +129,7 @@ siguientes:
    resumen.
 
 Se puede visualizar un vídeo que recoge el proceso `aquí
-<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/1-generar-nuevo-resumen.mp4>`__.
+<https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/1-generar-nuevo-resumen.mp4>`__.
 
 Ajustar la longitud del resumen a generar
 -----------------------------------------
@@ -145,7 +145,7 @@ en la parte inferior de la pantalla, estableciendo la longitud mínima y máxima
 nuestro resumen.
 
 Se puede visualizar un vídeo que recoge el proceso `aquí
-<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/2-ajustar-longitud.mp4>`__.
+<https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/2-ajustar-longitud.mp4>`__.
 
 Ver todos los resúmenes generados
 ---------------------------------
@@ -161,7 +161,7 @@ a más antiguos. Se puede pulsar sobre cualquiera de ellos para obtener
 más detalles.
 
 Se puede visualizar un vídeo que recoge el proceso `aquí
-<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/3-ver-todos-resúmenes.mp4>`__.
+<https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/3-ver-todos-resúmenes.mp4>`__.
 
 .. _subsection:borrar:
 
@@ -182,7 +182,7 @@ Se puede acceder a esta pantalla de tres formas diferentes:
    cualquiera de los resúmenes.
 
 Se puede visualizar un vídeo que recoge el proceso `aquí
-<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/4-borrar-resumen.mp4>`__.
+<https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/4-borrar-resumen.mp4>`__.
 
 Copiar un resumen
 -----------------
@@ -197,7 +197,7 @@ Tras pulsar dicho icono, el texto se habrá copiado al portapapeles de
 nuestro dispositivo.
 
 Se puede visualizar un vídeo que recoge el proceso `aquí
-<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/5-copiar-resumen.mp4>`__.
+<https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/5-copiar-resumen.mp4>`__.
 
 Compartir un resumen
 --------------------
@@ -212,7 +212,7 @@ A continuación, se mostrará una lista de aplicaciones a través de las
 cuales se puede compartir el resumen.
 
 Se puede visualizar un vídeo que recoge el proceso `aquí
-<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/6-compartir-resumen.mp4>`__.
+<https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/6-compartir-resumen.mp4>`__.
 
 
 Ver el texto a partir del cual se generó un resumen
@@ -225,7 +225,7 @@ cualquiera de las alternativas listadas en la sección .
 Una vez en dicha pantalla, se debe pulsar sobre "*Original*".
 
 Se puede visualizar un vídeo que recoge el proceso `aquí
-<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/7-ver-original.mp4>`__.
+<https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/7-ver-original.mp4>`__.
 
 Obtener más información acerca de un resumen
 --------------------------------------------
@@ -238,7 +238,7 @@ Una vez en dicha pantalla, se debe pulsar sobre "*More info*" ("Más
 información").
 
 Se puede visualizar un vídeo que recoge el proceso `aquí
-<https://github.com/dmlls/jizt/blob/main/docs/video-tutorials/8-m%C3%A1s-info.mp4>`__.
+<https://github.com/dmlls/jizt-tfg/blob/main/docs/video-tutorials/8-m%C3%A1s-info.mp4>`__.
 
 Generar un resumen a partir de un documento
 -------------------------------------------

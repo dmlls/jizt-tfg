@@ -19,7 +19,7 @@ function addTocEntry(caption, link) {
 }
 
 function onLoad() {
-    addTocEntry("Docs API REST", "https://docs.api.jizt.it");
+    addTocEntry("Docs API REST", "https://dmlls.github.io/jizt-tfg-api-docs");
     addGithubButton();
 }
 
